@@ -12,8 +12,8 @@ Instructions
 * Below is a list of the current features supported by the application; as well as additional features that have been requested by the business owner.
 * In order to work on this take a fork into your own GitHub area; make whatever changes you feel are necessary and when you are satisfied submit back via a pull request. See details on GitHub's [Fork & Pull](https://help.github.com/articles/using-pull-requests) model
 * Be sure to put your name in the pull request comment so your work can be easily identified.
-* The project is written utilising some Java 8 features (java.time), we encourage using Java 7 or 8, but this is your project now, so you are free to choose a different version.
-* The project uses maven to resolve dependencies however if you want to avoid maven configuration the only external JARs that are required is junit-4.12 and gson-2.5.
+* The project is written using .net 4.6.1, we encourage using the latest version of .net and C#, but this is your project now, so you are free to choose a different version.
+* The project uses nuget to resolve dependencies however if you want to avoid nuget configuration the only external package is json.net.
 * Refactor and add features (from the below list) as you see fit; there is no need to add all the features in order to "complete" the exercise.
 * We will only consider candidates that implemented at least the "essential" features.
 * Keep in mind that code quality is the critical measure and there should be an obvious focus on __TESTING__.

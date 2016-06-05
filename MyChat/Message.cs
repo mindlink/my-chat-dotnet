@@ -1,44 +1,23 @@
+using System;
+
 namespace MindLink.Recruitment.MyChat
 {
-    using System;
-
-    /// <summary>
-    /// Represents a chat message.
-    /// </summary>
-    public sealed class Message
+    public class Message
     {
-        /// <summary>
-        /// The message content.
-        /// </summary>
-        public string content;
+        public string Content { get; }
+
+        public DateTimeOffset Timestamp { get; }
 
         /// <summary>
-        /// The message timestamp.
+        /// Sender name or randomly generated ID if obfuscation is on.
         /// </summary>
-        public DateTimeOffset timestamp;
+        public string Sender { get; }
 
-        /// <summary>
-        /// The message sender.
-        /// </summary>
-        public string senderId;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Message"/> class.
-        /// </summary>
-        /// <param name="timestamp">
-        /// The message timestamp.
-        /// </param>
-        /// <param name="senderId">
-        /// The ID of the sender.
-        /// </param>
-        /// <param name="content">
-        /// The message content.
-        /// </param>
-        public Message(DateTimeOffset timestamp, string senderId, string content)
+        public Message(DateTimeOffset timestamp, string sender, string content)
         {
-            this.content = content;
-            this.timestamp = timestamp;
-            this.senderId = senderId;
+            Content = content;
+            Timestamp = timestamp;
+            Sender = sender;
         }
     }
 }

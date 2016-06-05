@@ -2,63 +2,191 @@
 using System.Linq;
 using MyChat;
 using Newtonsoft.Json;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MindLink.Recruitment.MyChat.Tests
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-    /// <summary>
-    /// Tests for the <see cref="ConversationExporter"/>.
-    /// </summary>
+    using System.Text.RegularExpressions;
+    using System.Collections.Generic;
     [TestClass]
     public class ConversationExporterTests
     {
-        /// <summary>
-        /// Tests that exporting the conversation exports conversation.
-        /// </summary>
+        private ProgramOptions ProgramOptionsBasic()
+        {
+            return new ProgramOptions
+            {
+                InputFile = "chat.txt",
+                OutputFile = "chat.json",
+            };
+        }
+
+        [TestCleanup]
+        public void TestCleanUp()
+        {
+            File.Delete("chat.json");
+        }
+
         [TestMethod]
-        public void ExportingConversationExportsConversation()
+        public void TestSenderFilter()
+        {
+            ProgramOptions options = ProgramOptionsBasic();
+            options.UserFilter = "bob";
+
+            ConversationExporter exporter = new ConversationExporter();
+            bool exportResult = exporter.ExportConversation(options);
+            Assert.IsTrue(exportResult);
+
+            using (var serialisedConversation = new StreamReader("chat.json"))
+            {
+                var savedConversation = JsonConvert.DeserializeObject<Conversation>(serialisedConversation.ReadToEnd());
+                Assert.AreEqual(3, savedConversation.Messages.Count());
+                Assert.IsTrue(savedConversation.Messages.All(m => m.Sender == "bob"));
+            }
+        }
+
+        [TestMethod]
+        public void TestSenderFilterSenderDoesntExist()
+        {
+            ProgramOptions options = ProgramOptionsBasic();
+            options.UserFilter = "anna";
+
+            ConversationExporter exporter = new ConversationExporter();
+            bool exportResult = exporter.ExportConversation(options);
+            Assert.IsTrue(exportResult);
+
+            using (var serialisedConversation = new StreamReader("chat.json"))
+            {
+                var savedConversation = JsonConvert.DeserializeObject<Conversation>(serialisedConversation.ReadToEnd());
+                Assert.AreEqual(0, savedConversation.Messages.Count());
+            }
+        }
+
+        [TestMethod]
+        public void TestCreditCardAndPhoneNumberObfuscation()
+        {
+            ProgramOptions options = ProgramOptionsBasic();
+            options.HideCCAndPhoneNumbers = true;
+
+            ConversationExporter exporter = new ConversationExporter();
+            bool exportResult = exporter.ExportConversation(options);
+            Assert.IsTrue(exportResult);
+
+            using (var serialisedConversation = new StreamReader("chat.json"))
+            {
+                var savedConversation = JsonConvert.DeserializeObject<Conversation>(serialisedConversation.ReadToEnd());
+                Assert.AreEqual(7, savedConversation.Messages.Count());
+
+                var redactedMessage = savedConversation.Messages.ElementAt(0);
+                Assert.AreEqual(2, Regex.Matches(redactedMessage.Content, @"\*redacted\*").Count);
+            }
+        }
+
+        [TestMethod]
+        public void TestBlackListWordFiltering()
+        {
+            ProgramOptions options = ProgramOptionsBasic();
+            options.BlacklistedWords = new List<string>() { "pie" };
+
+            ConversationExporter exporter = new ConversationExporter();
+            bool exportResult = exporter.ExportConversation(options);
+            Assert.IsTrue(exportResult);
+
+            using (var serialisedConversation = new StreamReader("chat.json"))
+            {
+                var savedConversation = JsonConvert.DeserializeObject<Conversation>(serialisedConversation.ReadToEnd());
+                Assert.AreEqual(7, savedConversation.Messages.Count());
+
+                int actualRedacted = 0;
+                foreach(var m in savedConversation.Messages)
+                {
+                    actualRedacted += Regex.Matches(m.Content, @"\*redacted\*").Count;
+                }
+
+                Assert.AreEqual(4, actualRedacted);
+            }
+        }
+
+        [TestMethod]
+        public void TestKeywordFiltering()
+        {
+            ProgramOptions options = ProgramOptionsBasic();
+            options.KeywordFilter = "Hello";
+
+            ConversationExporter exporter = new ConversationExporter();
+            bool exportResult = exporter.ExportConversation(options);
+            Assert.IsTrue(exportResult);
+
+            using (var serialisedConversation = new StreamReader("chat.json"))
+            {
+                var savedConversation = JsonConvert.DeserializeObject<Conversation>(serialisedConversation.ReadToEnd());
+                Assert.AreEqual(1, savedConversation.Messages.Count());
+            }
+        }
+
+        [TestMethod]
+        public void TestUserObfuscation()
+        {
+            ProgramOptions options = ProgramOptionsBasic();
+            options.ObfuscateUserIDs = true;
+
+            ConversationExporter exporter = new ConversationExporter();
+            bool exportResult = exporter.ExportConversation(options);
+            Assert.IsTrue(exportResult);
+
+            using (var serialisedConversation = new StreamReader("chat.json"))
+            {
+                var savedConversation = JsonConvert.DeserializeObject<Conversation>(serialisedConversation.ReadToEnd());
+                Assert.AreEqual(7, savedConversation.Messages.Count());
+
+                Assert.IsTrue(savedConversation.Messages.All(m => m.Sender.All(c => char.IsDigit(c))));
+            }
+        }
+
+        [TestMethod]
+        public void TestReportGeneration()
+        {
+            ProgramOptions options = ProgramOptionsBasic();
+            options.GenerateReport = true;
+
+            ConversationExporter exporter = new ConversationExporter();
+            bool exportResult = exporter.ExportConversation(options);
+            Assert.IsTrue(exportResult);
+
+            using (var serialisedConversation = new StreamReader("chat.json"))
+            {
+                var savedConversation = JsonConvert.DeserializeObject<Conversation>(serialisedConversation.ReadToEnd());
+                Assert.IsTrue(savedConversation.ReportMostActiveUser == "bob");
+                //Test it's sorted by who has the most activity (i.e descending by message count)
+                Assert.IsTrue(savedConversation.UserMessageCount.First().Key == "bob");
+            }
+
+        }
+
+        [TestMethod]
+        public void TestFailWhenNoOptions()
         {
             ConversationExporter exporter = new ConversationExporter();
+            Assert.IsFalse(exporter.ExportConversation(null));
+        }
 
-            exporter.ExportConversation("chat.txt", "chat.json");
+        [TestMethod]
+        public void TestFailBadFileInputPath()
+        {
+            ProgramOptions options = ProgramOptionsBasic();
+            options.InputFile = "qwerty.txt";
+            ConversationExporter exporter = new ConversationExporter();
+            Assert.IsFalse(exporter.ExportConversation(options));
+        }
 
-            var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
-
-            Conversation savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
-
-            Assert.AreEqual("My Conversation", savedConversation.name);
-
-            var messages = savedConversation.messages.ToList();
-
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470901), messages[0].timestamp);
-            Assert.AreEqual("bob", messages[0].senderId);
-            Assert.AreEqual("Hello there!", messages[0].content);
-
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470905), messages[1].timestamp);
-            Assert.AreEqual("mike", messages[1].senderId);
-            Assert.AreEqual("how are you?", messages[1].content);
-
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470906), messages[2].timestamp);
-            Assert.AreEqual("bob", messages[2].senderId);
-            Assert.AreEqual("I'm good thanks, do you like pie?", messages[2].content);
-
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470910), messages[3].timestamp);
-            Assert.AreEqual("mike", messages[3].senderId);
-            Assert.AreEqual("no, let me ask Angus...", messages[3].content);
-
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470912), messages[4].timestamp);
-            Assert.AreEqual("angus", messages[4].senderId);
-            Assert.AreEqual("Hell yes! Are we buying some pie?", messages[4].content);
-
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470914), messages[5].timestamp);
-            Assert.AreEqual("bob", messages[5].senderId);
-            Assert.AreEqual("No, just want to know if there's anybody else in the pie society...", messages[5].content);
-
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470915), messages[6].timestamp);
-            Assert.AreEqual("angus", messages[6].senderId);
-            Assert.AreEqual("YES! I'm the head pie eater there...", messages[6].content);
+        [TestMethod]
+        public void TestFailBadFileOutputPath()
+        {
+            ProgramOptions options = ProgramOptionsBasic();
+            options.OutputFile = "\\ThisDirectoryIsntReal\\asdf.json";
+            ConversationExporter exporter = new ConversationExporter();
+            Assert.IsFalse(exporter.ExportConversation(options));
         }
     }
 }

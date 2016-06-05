@@ -1,5 +1,6 @@
 namespace MindLink.Recruitment.MyChat
 {
+    using Newtonsoft.Json;
     using System.Collections.Generic;
 
     /// <summary>
@@ -7,29 +8,20 @@ namespace MindLink.Recruitment.MyChat
     /// </summary>
     public sealed class Conversation
     {
-        /// <summary>
-        /// The name of the conversation.
-        /// </summary>
-        public string name;
+        public string Name { get; }
 
-        /// <summary>
-        /// The messages in the conversation.
-        /// </summary>
-        public IEnumerable<Message> messages;
+        public IEnumerable<Message> Messages { get; }
+        
+        public string ReportMostActiveUser { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Conversation"/> class.
-        /// </summary>
-        /// <param name="name">
-        /// The name of the conversation.
-        /// </param>
-        /// <param name="messages">
-        /// The messages in the conversation.
-        /// </param>
-        public Conversation(string name, IEnumerable<Message> messages)
+        public Dictionary<string, int> UserMessageCount { get; set; }
+
+        public Conversation(string name, IEnumerable<Message> messages, string reportMostActiveUser, Dictionary<string, int> userMessageCount)
         {
-            this.name = name;
-            this.messages = messages;
+            Name = name;
+            Messages = messages;
+            ReportMostActiveUser = reportMostActiveUser;
+            UserMessageCount = userMessageCount;
         }
     }
 }

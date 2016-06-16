@@ -15,7 +15,7 @@ namespace MindLink.Recruitment.MyChat
         /// <summary>
         /// The messages in the conversation.
         /// </summary>
-        public IEnumerable<Message> messages;
+        public IEnumerable<Message> messages; //using composition
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Conversation"/> class.

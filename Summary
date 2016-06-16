@@ -1,0 +1,7 @@
+Bugs removed:
+  - The entire message content was not previously loaded into the programme and the file, this is now fixed and the relavant unit test passes.
+
+Added Features:
+  - All Essential features have been added.
+  - The new features can be used as    inputPath outputPath --option val
+  - example C:users\user\Documents\chat.txt  C:users\user\Documents\chat.json --FilterBySender bob 

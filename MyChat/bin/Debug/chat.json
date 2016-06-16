@@ -1,0 +1,40 @@
+{
+  "name": "My Conversation",
+  "messages": [
+    {
+      "content": "Hello there!",
+      "timestamp": "2015-11-25T17:01:41+00:00",
+      "senderId": "bob"
+    },
+    {
+      "content": "how are *redacted*",
+      "timestamp": "2015-11-25T17:01:45+00:00",
+      "senderId": "mike"
+    },
+    {
+      "content": "I'm good thanks, do *redacted* like *redacted*",
+      "timestamp": "2015-11-25T17:01:46+00:00",
+      "senderId": "bob"
+    },
+    {
+      "content": "no, let me ask *redacted*",
+      "timestamp": "2015-11-25T17:01:50+00:00",
+      "senderId": "mike"
+    },
+    {
+      "content": "Hell yes! Are we buying some *redacted*",
+      "timestamp": "2015-11-25T17:01:52+00:00",
+      "senderId": "angus"
+    },
+    {
+      "content": "No, just want to know if there's anybody else in the *redacted* society...",
+      "timestamp": "2015-11-25T17:01:54+00:00",
+      "senderId": "bob"
+    },
+    {
+      "content": "YES! I'm the head *redacted* eater there...",
+      "timestamp": "2015-11-25T17:01:55+00:00",
+      "senderId": "angus"
+    }
+  ]
+}

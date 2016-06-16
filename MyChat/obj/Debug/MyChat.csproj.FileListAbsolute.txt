@@ -1,0 +1,9 @@
+C:\Users\Aboudi's\Desktop\my-chat-dotnet-master\MyChat\bin\Debug\chat.txt
+C:\Users\Aboudi's\Desktop\my-chat-dotnet-master\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe.config
+C:\Users\Aboudi's\Desktop\my-chat-dotnet-master\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Aboudi's\Desktop\my-chat-dotnet-master\MyChat\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Aboudi's\Desktop\my-chat-dotnet-master\MyChat\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Aboudi's\Desktop\my-chat-dotnet-master\MyChat\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Aboudi's\Desktop\my-chat-dotnet-master\MyChat\obj\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Aboudi's\Desktop\my-chat-dotnet-master\MyChat\obj\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Aboudi's\Desktop\my-chat-dotnet-master\MyChat\obj\Debug\MyChat.csprojResolveAssemblyReference.cache

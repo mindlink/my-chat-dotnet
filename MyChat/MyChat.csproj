@@ -50,12 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLineArgumentParser.cs" />
-    <Compile Include="Conversation.cs" />
+    <Compile Include="Controlers\ViewModelController.cs" />
     <Compile Include="ConversationExporter.cs" />
-    <Compile Include="ConversationExporterConfiguration.cs" />
-    <Compile Include="Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MyChatViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -65,6 +63,15 @@
     <Content Include="chat.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyChat.Core\MyChat.Core.csproj">
+      <Project>{9da3e1d3-7f02-47df-9c5a-ecf4fa1c90ab}</Project>
+      <Name>MyChat.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

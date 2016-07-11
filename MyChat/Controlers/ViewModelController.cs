@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MindLink.Recruitment.MyChat.Core.ViewModels;
+using MindLink.Recruitment.MyChat.Core;
 
 namespace MindLink.Recruitment.MyChat.Controlers
 {
     public class ViewModelController<TViewModel> where TViewModel : ViewModel, new()
     {
-        //Get the exceptions here
-
         protected TViewModel ViewModel { get; private set; }
 
         public ViewModelController()
@@ -18,9 +17,9 @@ namespace MindLink.Recruitment.MyChat.Controlers
             ViewModel = new TViewModel();
         }
 
-        public void Start(String[] args)
+        public Conversation Export(String[] args)
         {
-            ViewModel.ExportConversation(args);            
+            return ViewModel.ExportConversation(args);            
         }
     }
 }

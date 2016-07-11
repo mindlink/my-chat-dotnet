@@ -40,16 +40,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IIOHelper.cs" />
+    <Compile Include="Abstract\ISerialize.cs" />
     <Compile Include="Helpers\IOHelperBase.cs" />
     <Compile Include="Managers\IOCManager.cs" />
     <Compile Include="Managers\DataManager.cs" />
+    <Compile Include="Helpers\CommandLineArgumentParser.cs" />
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\ConversationExporterConfiguration.cs" />
+    <Compile Include="Models\ExtraArgument.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

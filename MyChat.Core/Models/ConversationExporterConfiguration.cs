@@ -1,7 +1,8 @@
 namespace MindLink.Recruitment.MyChat.Core
 {
     using System;
-
+    using System.Collections.Generic;
+    using System.Linq;
     /// <summary>
     /// Represents the configuration for the exporter.
     /// </summary>
@@ -10,32 +11,20 @@ namespace MindLink.Recruitment.MyChat.Core
         /// <summary>
         /// The input file path.
         /// </summary>
-        public string inputFilePath;
+        public string inputFilePath {get; set;}
 
         /// <summary>
         /// The output file path.
         /// </summary>
-        public string outputFilePath;
+        public string outputFilePath { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
-        /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown when any of the given arguments is <c>null</c>.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// Thrown when any of the given arguments is empty.
-        /// </exception>
-        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath)
+        public IEnumerable<ExtraArgument> Extra { get; set; }
+
+
+
+        public IEnumerable<ExtraArgument> getFilterArgsByType(ExtraArgument.FilterType input)
         {
-            this.inputFilePath = inputFilePath;
-            this.outputFilePath = outputFilePath;
+            return Extra.Where(i => i.Filter == input);
         }
     }
 }

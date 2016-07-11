@@ -1,0 +1,292 @@
+
+--------------
+Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 10:53:56  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 10:54:18  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 10:54:37  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 10:54:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 10:54:50  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:03:26  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:03:29  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:03:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:04:39  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:04:39  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:05:42  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:05:42  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:05:42  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:05:47  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:07:28  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:08:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:10:15  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:10:15  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:10:15  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:11:26  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:11:26  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:11:26  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:11:26  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:11:35  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:18:11  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:19:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:19:28  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:19:55  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:23:24  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:25:49  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:25:49  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:25:49  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:25:49  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:25:49  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:25:53  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:26:20  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:26:39  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:26:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:27:01  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:27:06  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:27:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:28:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:31:14  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:31:51  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:36:31  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:37:34  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:42:49  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:43:22  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:44:35  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:44:52  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:44:55  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:45:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:46:02  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:47:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:50:17  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:51:05  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:51:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:52:49  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:53:07  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:55:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:55:51  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:57:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:58:50  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:58:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:59:34  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 11:59:52  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------

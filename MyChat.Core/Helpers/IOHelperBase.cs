@@ -1,4 +1,6 @@
-﻿using MyChat.Core.Abstract;
+﻿using MindLink.Recruitment.MyChat.Core;
+using MyChat.Core.Abstract;
+using MyChat.Core.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +9,21 @@ using System.Threading.Tasks;
 
 namespace MyChat.Core.Helpers
 {
-    public class IOHelperBase : IIOHelperBase
+    public class IOHelperBase
     {
 
-        public void readFile()
+        public string LogsFolder { get; set; }
+        public string CurrentLogFile { get; set; }
+
+        public virtual void Log(Exception e)
         {
-
-
+            Logger.Log(e);
         }
 
-        public void writeFile()
+        public virtual void Log(String e)
         {
-
+            Logger.Log(e);
         }
+ 
     }
 }

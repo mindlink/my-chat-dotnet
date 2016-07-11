@@ -1,0 +1,608 @@
+
+--------------
+Logged at 12:00:23  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:01:07  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:01:39  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:01:42  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:01:42  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:01:42  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:01:42  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:01:42  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:06:03  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:06:03  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:06:03  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:06:03  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:06:03  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:15:32  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:15:32  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:15:32  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:15:32  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:15:32  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:15:32  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:15:37  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:15:42  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:17:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:17:26  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:19:08  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:19:08  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:19:08  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:19:08  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:19:08  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:19:08  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:19:08  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:23:01  : Message is null or empty
+--------------
+
+--------------
+Logged at 12:23:01  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:24:47  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:24:48  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:25:53  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:25:53  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:25:53  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:25:53  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:25:53  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:25:53  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:25:53  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:25:53  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:25:53  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:25:53  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:07  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:26:07  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:10  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:11  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:11  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:11  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:11  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:11  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:11  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:11  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:26:11  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:11  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:11  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:21  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:26:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:21  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:59  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:26:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:26:59  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:27:44  : Message or keyword is null or empty
+--------------
+
+--------------
+Logged at 12:27:44  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Message or keyword is null or empty
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:32:36  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Message or keyword is null or empty
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:33:40  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Message or keyword is null or empty
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:34:54  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Message or user is null or empty
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Message or keyword is null or empty
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Logged at 12:35:25  : Message or keyword is null or empty
+--------------
+
+--------------
+Logged at 12:35:25  : Conversation exported from 'chat.txt' to 'chat.json'
+--------------

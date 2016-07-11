@@ -1,40 +1,4 @@
 {
   "name": "My Conversation",
-  "messages": [
-    {
-      "content": "Hello",
-      "timestamp": "2015-11-25T17:01:41+00:00",
-      "senderId": "bob"
-    },
-    {
-      "content": "how",
-      "timestamp": "2015-11-25T17:01:45+00:00",
-      "senderId": "mike"
-    },
-    {
-      "content": "I'm",
-      "timestamp": "2015-11-25T17:01:46+00:00",
-      "senderId": "bob"
-    },
-    {
-      "content": "no,",
-      "timestamp": "2015-11-25T17:01:50+00:00",
-      "senderId": "mike"
-    },
-    {
-      "content": "Hell",
-      "timestamp": "2015-11-25T17:01:52+00:00",
-      "senderId": "angus"
-    },
-    {
-      "content": "No,",
-      "timestamp": "2015-11-25T17:01:54+00:00",
-      "senderId": "bob"
-    },
-    {
-      "content": "YES!",
-      "timestamp": "2015-11-25T17:01:55+00:00",
-      "senderId": "angus"
-    }
-  ]
+  "messages": []
 }

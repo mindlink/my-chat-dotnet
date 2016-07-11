@@ -1,0 +1,8 @@
+
+--------------
+Logged at 12:22:56  : Invalid arguments passed
+--------------
+
+--------------
+Logged at 12:22:56  : CommandLine Arguments Parsing failed. Exiting MyChat
+--------------

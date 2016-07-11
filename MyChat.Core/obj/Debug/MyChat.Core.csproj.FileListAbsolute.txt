@@ -1,0 +1,10 @@
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Core\bin\Debug\MyChat.Core.dll
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Core\bin\Debug\MyChat.Core.pdb
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Core\obj\Debug\MyChat.Core.csprojResolveAssemblyReference.cache
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Core\obj\Debug\MyChat.Core.dll
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Core\obj\Debug\MyChat.Core.pdb
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Core\obj\Debug\MyChat.Core.dll
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Core\obj\Debug\MyChat.Core.pdb
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Core\bin\Debug\MyChat.Core.dll
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Core\bin\Debug\MyChat.Core.pdb
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Core\obj\Debug\MyChat.Core.csprojResolveAssemblyReference.cache

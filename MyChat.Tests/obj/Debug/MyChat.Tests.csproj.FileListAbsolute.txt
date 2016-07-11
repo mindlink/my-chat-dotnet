@@ -1,0 +1,22 @@
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Tests\bin\Debug\chat.txt
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Tests\obj\Debug\MyChat.Tests.csprojResolveAssemblyReference.cache
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\Kyriakos\Desktop\my-chat-dotnet-master\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\obj\Debug\MyChat.Tests.csprojResolveAssemblyReference.cache
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\chat.txt
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.dll
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\MyChat.Core.dll
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.dll
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\MyChat.Core.pdb
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.pdb
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.xml
+E:\My Programs\New folder\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb

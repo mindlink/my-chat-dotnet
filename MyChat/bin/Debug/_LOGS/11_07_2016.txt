@@ -1,0 +1,105 @@
+
+--------------
+Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Invalid arguments passed
+--------------
+
+--------------
+Object reference not set to an instance of an object.: 		   at MindLink.Recruitment.MyChat.ViewModels.MyChatViewModel.ExportConversation(ConversationExporterConfiguration config) in e:\My Programs\New folder\my-chat-dotnet\MyChat\ViewModels\MyChatViewModel.cs:line 42
+   at MindLink.Recruitment.MyChat.ViewModels.MyChatViewModel.ExportConversation(String[] args) in e:\My Programs\New folder\my-chat-dotnet\MyChat\ViewModels\MyChatViewModel.cs:line 22
+   at MindLink.Recruitment.MyChat.Controlers.ViewModelController`1.Export(String[] args) in e:\My Programs\New folder\my-chat-dotnet\MyChat\Controlers\ViewModelController.cs:line 23
+   at MyChat.ConversationExporter.Main(String[] args) in e:\My Programs\New folder\my-chat-dotnet\MyChat\ConversationExporter.cs:line 53
+   at System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)
+   at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)
+   at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()
+   at System.Threading.ThreadHelper.ThreadStart_Context(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.ThreadHelper.ThreadStart()
+--------------
+
+--------------
+Invalid arguments passed
+--------------
+
+--------------
+Object reference not set to an instance of an object.: 		   at MindLink.Recruitment.MyChat.ViewModels.MyChatViewModel.ExportConversation(ConversationExporterConfiguration config) in e:\My Programs\New folder\my-chat-dotnet\MyChat\ViewModels\MyChatViewModel.cs:line 42
+   at MindLink.Recruitment.MyChat.ViewModels.MyChatViewModel.ExportConversation(String[] args) in e:\My Programs\New folder\my-chat-dotnet\MyChat\ViewModels\MyChatViewModel.cs:line 22
+   at MindLink.Recruitment.MyChat.Controlers.ViewModelController`1.Export(String[] args) in e:\My Programs\New folder\my-chat-dotnet\MyChat\Controlers\ViewModelController.cs:line 23
+   at MyChat.ConversationExporter.Main(String[] args) in e:\My Programs\New folder\my-chat-dotnet\MyChat\ConversationExporter.cs:line 53
+   at System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)
+   at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)
+   at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()
+   at System.Threading.ThreadHelper.ThreadStart_Context(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.ThreadHelper.ThreadStart()
+--------------
+
+--------------
+Invalid arguments passed
+--------------
+
+--------------
+CommandLine Arguments Parsing failed. Exiting MyChat
+--------------
+
+--------------
+Object reference not set to an instance of an object.: 		   at MindLink.Recruitment.MyChat.ViewModels.MyChatViewModel.ExportConversation(ConversationExporterConfiguration config) in e:\My Programs\New folder\my-chat-dotnet\MyChat\ViewModels\MyChatViewModel.cs:line 48
+   at MindLink.Recruitment.MyChat.ViewModels.MyChatViewModel.ExportConversation(String[] args) in e:\My Programs\New folder\my-chat-dotnet\MyChat\ViewModels\MyChatViewModel.cs:line 28
+   at MindLink.Recruitment.MyChat.Controlers.ViewModelController`1.Export(String[] args) in e:\My Programs\New folder\my-chat-dotnet\MyChat\Controlers\ViewModelController.cs:line 23
+   at MyChat.ConversationExporter.Main(String[] args) in e:\My Programs\New folder\my-chat-dotnet\MyChat\ConversationExporter.cs:line 53
+   at System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)
+   at System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)
+   at Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()
+   at System.Threading.ThreadHelper.ThreadStart_Context(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.ThreadHelper.ThreadStart()
+--------------
+
+--------------
+Invalid arguments passed
+--------------
+
+--------------
+CommandLine Arguments Parsing failed. Exiting MyChat
+--------------
+
+--------------
+Conversation exported from 'chat.txt' to 'chat.json'
+--------------
+
+--------------
+Invalid arguments passed
+--------------
+
+--------------
+Invalid arguments passed
+--------------
+
+--------------
+Invalid arguments passed
+--------------
+
+--------------
+Invalid arguments passed
+--------------
+
+--------------
+LoA.D.e11 aP 10:53:21  : Invalid arguments passed
+--------------
+
+--------------
+Logged at 10:55:35  : Invalid arguments passed
+--------------
+
+--------------
+Logged at 10:55:35  : CommandLine Arguments Parsing failed. Exiting MyChat
+--------------

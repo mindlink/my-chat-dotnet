@@ -69,6 +69,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="chatout.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

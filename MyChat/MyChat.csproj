@@ -51,10 +51,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLineArgumentParser.cs" />
-    <Compile Include="Conversation.cs" />
     <Compile Include="ConversationExporter.cs" />
     <Compile Include="ConversationExporterConfiguration.cs" />
-    <Compile Include="Message.cs" />
+    <Compile Include="ConversationFilterer.cs" />
+    <Compile Include="Helpers\ConversationHelper.cs" />
+    <Compile Include="Helpers\ObfuscatorHelper.cs" />
+    <Compile Include="Helpers\RegexHelper.cs" />
+    <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\Conversation.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

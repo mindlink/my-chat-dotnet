@@ -1,0 +1,16 @@
+*.suo
+*.dll
+*.xml
+*.cache
+MyChat.Tests/obj/Debug/MindLink.Recruitment.MyChat.Tests.pdb
+*.cs
+MyChat/bin/Debug/MindLink.Recruitment.MyChat.exe
+*.exe
+MyChat.Tests/bin/Debug/MindLink.Recruitment.MyChat.pdb
+*.pdb
+MyChat/bin/Debug/MindLink.Recruitment.MyChat.vshost.exe.config
+*.config
+MyChat.Tests/obj/Debug/MyChat.Tests.csproj.FileListAbsolute.txt
+*.ps1
+packages/Newtonsoft.Json.8.0.3/Newtonsoft.Json.8.0.3.nupkg
+MyChat/obj/Debug/MyChat.csproj.FileListAbsolute.txt

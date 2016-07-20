@@ -1,12 +1,11 @@
 ﻿namespace MyChat
 {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Security;
-    using System.Text;
     using MindLink.Recruitment.MyChat;
-    using Newtonsoft.Json;
+    using static MindLink.Recruitment.MyChat.Models.Response;
+    using MindLink.Recruitment.MyChat.Helpers;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
@@ -21,10 +20,69 @@
         /// </param>
         static void Main(string[] args)
         {
+            args = new String[2];
+            string inputProceedAnswer = string.Empty;
+            string inputFilePath = string.Empty;
+            string outputFilePath = string.Empty;
+            string outputProceedAnswer = string.Empty;
+
+            #region Input filepath
+            while (String.IsNullOrEmpty(inputProceedAnswer) || inputProceedAnswer.ToLower() == "n")
+            {
+                Console.WriteLine("Please provide the full path of the chat text file you want to export: ");
+                inputFilePath = Console.ReadLine();
+
+                while (String.IsNullOrEmpty(inputFilePath))
+                {
+                    Console.WriteLine("Please provide the full path of the chat text file you want to export:");
+                    inputFilePath = Console.ReadLine();
+                }
+
+                Console.WriteLine("You have selected the following filepath: '{0}'", inputFilePath);
+                Console.WriteLine("Are you sure you this is the correct path? [Y/N]");
+                inputProceedAnswer = Console.ReadLine();
+
+                while (String.IsNullOrEmpty(inputProceedAnswer) || (inputProceedAnswer.ToLower() != "y" && inputProceedAnswer.ToLower() != "n"))
+                {
+                    Console.WriteLine("Please type in 'Y' or 'N' to proceed.");
+                    inputProceedAnswer = Console.ReadLine();
+                }
+            }
+            args[0] = inputFilePath;
+            #endregion
+
+            #region Output filepath
+            while (String.IsNullOrEmpty(outputProceedAnswer) || outputProceedAnswer.ToLower() == "n")
+            {
+                Console.WriteLine("Please provide the full path of the folder you want to export to: ");
+                outputFilePath = Console.ReadLine();
+
+                while (String.IsNullOrEmpty(outputFilePath))
+                {
+                    Console.WriteLine("Please provide the full path of the folder you want to export to: ");
+                    outputFilePath = Console.ReadLine();
+                }
+
+                Console.WriteLine("You have selected the following filepath: '{0}'", outputFilePath);
+                Console.WriteLine("Are you sure you this is the correct path? [Y/N]");
+                outputProceedAnswer = Console.ReadLine();
+
+                while (String.IsNullOrEmpty(outputProceedAnswer) || (outputProceedAnswer.ToLower() != "y" && (outputProceedAnswer.ToLower() != "n")))
+                {
+                    Console.WriteLine("Please type in 'Y' or 'N' to proceed.");
+                    outputProceedAnswer = Console.ReadLine();
+                }
+            }
+            args[1] = outputFilePath;
+            #endregion
+
             var conversationExporter = new ConversationExporter();
             ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
-
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            ExportResponse eResponse = conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            
+            if (!eResponse.Successful)
+                Console.WriteLine(eResponse.Message);
+            Console.ReadLine();
         }
 
         /// <summary>
@@ -42,102 +100,44 @@
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public ExportResponse ExportConversation(string inputFilePath, string outputFilePath)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
-
-            this.WriteConversation(conversation, outputFilePath);
-
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
-        }
-
-        /// <summary>
-        /// Helper method to read the conversation from <paramref name="inputFilePath"/>.
-        /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Conversation"/> model representing the conversation.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// Thrown when the input file could not be found.
-        /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something else went wrong.
-        /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
-        {
-            try
+            ConversationResponse conversationResponse = ConversationHelper.ReadConversation(inputFilePath);
+            if (conversationResponse.Successful && conversationResponse.Target != null)
             {
-                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
-                    Encoding.ASCII);
+                Conversation conversation = conversationResponse.Target;
 
-                string conversationName = reader.ReadLine();
-                var messages = new List<Message>();
+                Console.WriteLine("Would you like to filter the conversation? [Y/N]");
+                string filterProceedAnswer = Console.ReadLine();
 
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
+                while (String.IsNullOrEmpty(filterProceedAnswer) || (filterProceedAnswer.ToLower() != "y" && (filterProceedAnswer.ToLower() != "n")))
                 {
-                    var split = line.Split(' ');
-
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    Console.WriteLine("Please type in 'Y' or 'N' to proceed.");
+                    filterProceedAnswer = Console.ReadLine();
                 }
+                if (filterProceedAnswer.ToLower() == "y")
+                    conversation = ConversationFilterer.AskUserForFilters(conversation);
 
-                return new Conversation(conversationName, messages);
-            }
-            catch (FileNotFoundException)
-            {
-                throw new ArgumentException("The file was not found.");
-            }
-            catch (IOException)
-            {
-                throw new Exception("Something went wrong in the IO.");
-            }
-        }
+                List<string> distinctListOfUsers = conversation.Messages.Select(e => e.SenderId).Distinct().ToList();
 
-        /// <summary>
-        /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
-        /// </summary>
-        /// <param name="conversation">
-        /// The conversation.
-        /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// Thrown when there is a problem with the <paramref name="outputFilePath"/>.
-        /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something else bad happens.
-        /// </exception>
-        public void WriteConversation(Conversation conversation, string outputFilePath)
-        {
-            try
-            {
-                var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
+                foreach (var usr in distinctListOfUsers)
+                {
+                    conversation.UsersActivity.Add(new Activity() { SenderId = usr, NumberOfMessages = conversation.Messages.Count(s => s.SenderId.Contains(usr)) });
+                }
+                conversation.UsersActivity.Sort((x, y) => x.NumberOfMessages.CompareTo(y.NumberOfMessages));
+                conversation.UsersActivity.Reverse();
 
-                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
-
-                writer.Write(serialized);
-
-                writer.Flush();
-
-                writer.Close();
+                WriteResponse wResponse = ConversationHelper.WriteConversation(conversation, outputFilePath);
+                if (wResponse.Successful)
+                {
+                    Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+                    return new ExportResponse { Successful = true, Message = wResponse.Message };
+                }
+                else
+                    return new ExportResponse { Successful = false, Message = wResponse.Message };
             }
-            catch (SecurityException)
-            {
-                throw new ArgumentException("No permission to file.");
-            }
-            catch (DirectoryNotFoundException)
-            {
-                throw new ArgumentException("Path invalid.");
-            }
-            catch (IOException)
-            {
-                throw new Exception("Something went wrong in the IO.");
-            }
+            else
+                return new ExportResponse { Successful = false, Message = conversationResponse.Message };
         }
     }
 }

@@ -1,0 +1,27 @@
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe.config
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat\bin\Debug\chat.txt
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat\obj\Debug\MyChat.csprojResolveAssemblyReference.cache
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat\obj\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat\obj\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Ykakouris\Desktop\mindlink\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe.config
+C:\Users\Ykakouris\Desktop\mindlink\my-chat-dotnet\MyChat\obj\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Ykakouris\Desktop\mindlink\my-chat-dotnet\MyChat\obj\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Ykakouris\Desktop\mindlink\my-chat-dotnet\MyChat\obj\Debug\MyChat.csprojResolveAssemblyReference.cache
+C:\Users\Ykakouris\Desktop\mindlink\my-chat-dotnet\MyChat\bin\Debug\chat.txt
+C:\Users\Ykakouris\Desktop\mindlink\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Ykakouris\Desktop\mindlink\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Ykakouris\Desktop\mindlink\my-chat-dotnet\MyChat\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ykakouris\Desktop\mindlink\my-chat-dotnet\MyChat\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe.config
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat\obj\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat\obj\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat\bin\Debug\chat.txt
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat\obj\Debug\MyChat.csprojResolveAssemblyReference.cache

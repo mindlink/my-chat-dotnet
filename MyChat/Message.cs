@@ -20,7 +20,7 @@ namespace MindLink.Recruitment.MyChat
         /// <summary>
         /// The message sender.
         /// </summary>
-        public string senderId;
+        public User sender;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Message"/> class.
@@ -28,17 +28,17 @@ namespace MindLink.Recruitment.MyChat
         /// <param name="timestamp">
         /// The message timestamp.
         /// </param>
-        /// <param name="senderId">
+        /// <param name="sender">
         /// The ID of the sender.
         /// </param>
         /// <param name="content">
         /// The message content.
         /// </param>
-        public Message(DateTimeOffset timestamp, string senderId, string content)
+        public Message(DateTimeOffset timestamp, string senderUsername, string content)
         {
             this.content = content;
             this.timestamp = timestamp;
-            this.senderId = senderId;
+            this.sender = new User(senderUsername);
         }
     }
 }

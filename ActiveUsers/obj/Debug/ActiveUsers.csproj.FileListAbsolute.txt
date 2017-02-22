@@ -1,0 +1,5 @@
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ActiveUsers\bin\Debug\ActiveUsers.dll
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ActiveUsers\bin\Debug\ActiveUsers.pdb
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ActiveUsers\obj\Debug\ActiveUsers.csprojResolveAssemblyReference.cache
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ActiveUsers\obj\Debug\ActiveUsers.dll
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ActiveUsers\obj\Debug\ActiveUsers.pdb

@@ -36,8 +36,16 @@
     <StartupObject>MyChat.ConversationExporter</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine, Version=1.9.71.2, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -65,6 +73,20 @@
     <Content Include="chat.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ActiveUsers\ActiveUsers.csproj">
+      <Project>{07c079f0-946e-4153-a883-72125cd642bb}</Project>
+      <Name>ActiveUsers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProgramArguments\ProgramArguments.csproj">
+      <Project>{aa3ee1ab-7f1f-476d-afe8-11f51ff55f5e}</Project>
+      <Name>ProgramArguments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReadConditions\ReadConditions.csproj">
+      <Project>{d6826f02-71cf-4e3e-9e59-e70db6420ca2}</Project>
+      <Name>ReadConditions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

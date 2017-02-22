@@ -1,6 +1,7 @@
 namespace MindLink.Recruitment.MyChat
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Represents the configuration for the exporter.
@@ -18,6 +19,21 @@ namespace MindLink.Recruitment.MyChat
         public string outputFilePath;
 
         /// <summary>
+        /// Include Keyboard.
+        /// </summary>
+        public string keyboard = "";
+
+        /// <summary>
+        /// Search by User.
+        /// </summary>
+        public string user = "";
+
+        /// <summary>
+        /// Blacklisted word.
+        /// </summary>
+        public string blacklist = "";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
         /// </summary>
         /// <param name="inputFilePath">
@@ -32,10 +48,13 @@ namespace MindLink.Recruitment.MyChat
         /// <exception cref="ArgumentException">
         /// Thrown when any of the given arguments is empty.
         /// </exception>
-        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath)
+        public ConversationExporterConfiguration(ProgramArguments args)
         {
-            this.inputFilePath = inputFilePath;
-            this.outputFilePath = outputFilePath;
+            this.inputFilePath = args.inputFile;
+            this.outputFilePath = args.outFile;
+            this.user = args.user;
+            this.keyboard = args.keyboard;
+            this.blacklist = args.blacklist;
         }
     }
 }

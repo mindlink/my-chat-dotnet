@@ -7,6 +7,7 @@
     using System.Text;
     using MindLink.Recruitment.MyChat;
     using Newtonsoft.Json;
+    using System.Linq;
 
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
@@ -19,12 +20,20 @@
         /// <param name="args">
         /// The command line arguments.
         /// </param>
+        /// 
+
+        public List<string> bList = new List<string>();
+        public List<string> logUsers = new List<string>();
+        public List<ActiveUsers> activeUsers = new List<ActiveUsers>();
+
+
         static void Main(string[] args)
         {
             var conversationExporter = new ConversationExporter();
             ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            //Console.WriteLine(configuration.inputFilePath + " " + configuration.outputFilePath);
+            conversationExporter.ExportConversation(configuration);
         }
 
         /// <summary>
@@ -42,13 +51,13 @@
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public void ExportConversation(ConversationExporterConfiguration configuration)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            Conversation conversation = this.ReadConversation(configuration.inputFilePath, configuration.user, configuration.keyboard, configuration.blacklist);
 
-            this.WriteConversation(conversation, outputFilePath);
+            this.WriteConversation(conversation, configuration.outputFilePath);
 
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+            Console.WriteLine("Conversation exported from '{0}' to '{1}'", configuration.inputFilePath, configuration.outputFilePath);
         }
 
         /// <summary>
@@ -66,10 +75,11 @@
         /// <exception cref="Exception">
         /// Thrown when something else went wrong.
         /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
+        public Conversation ReadConversation(string inputFilePath, string user, string keyword = "", string blacklist = "")
         {
             try
-            {
+            {                
+
                 var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
                     Encoding.ASCII);
 
@@ -78,14 +88,62 @@
 
                 string line;
 
-                while ((line = reader.ReadLine()) != null)
+                //check for black words
+                if (blacklist != "")
                 {
-                    var split = line.Split(' ');
-
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    bList = blacklist.Split(new char[] { ',' }).ToList();
                 }
 
-                return new Conversation(conversationName, messages);
+                while ((line = reader.ReadLine()) != null)
+                {
+                    var split = line.Split(' ');//.Contains(user);
+                    if (user != null)
+                    {
+                        if (split[1] != user)
+                        {
+                            continue;
+                        }
+                    }
+
+                    //Combine the message
+                    string message = String.Join(" ", split.Where((x, index) => index >= 2).ToArray());
+                    if (keyword != null)
+                    {
+                        if (!message.ToLower().Contains(keyword.ToLower()))
+                        {
+                            continue;
+                        }
+                    }
+
+                    if (bList.Count > 0)
+                    {
+                        //check if any black word exists in message
+                        foreach(var word in bList)
+                        {
+                            message = message.ToLower().Replace(word.ToLower(), "*redacted*");
+                        }
+                    }
+
+                    logUsers.Add(split[1]);
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], message));
+                }
+
+                //find out active users
+                if (logUsers.Count > 0)
+                {
+                    List<string> uniqueUsers = logUsers.Distinct().ToList();
+
+                    foreach(string us in uniqueUsers)
+                    {
+                        int count = logUsers.Where(s => s == us).Count();
+                        ActiveUsers acUser = new ActiveUsers() { name = us, times = count };
+                        activeUsers.Add(acUser);
+               
+                    }
+
+                }
+
+                return new Conversation(conversationName, messages, activeUsers[0].name, activeUsers);
             }
             catch (FileNotFoundException)
             {

@@ -1,3 +1,17 @@
+USAGE:
+
+MindLink.Recruitment.MyChat.exe -i chat.txt -o out.json
+MindLink.Recruitment.MyChat.exe -i chat.txt -o out.json -u bob
+MindLink.Recruitment.MyChat.exe -i chat.txt -o out.json -u bob -k no
+MindLink.Recruitment.MyChat.exe -i chat.txt -o out.json -u bob -k no -b want
+
+-i: input file
+-o: output file
+-u: user
+-k: find keyword 
+-b: blacklisted word
+
+ 
 Programming Exercise
 ====================
 

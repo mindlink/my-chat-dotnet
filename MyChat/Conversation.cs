@@ -17,6 +17,8 @@ namespace MindLink.Recruitment.MyChat
         /// </summary>
         public IEnumerable<Message> messages;
 
+       
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Conversation"/> class.
         /// </summary>
@@ -30,6 +32,7 @@ namespace MindLink.Recruitment.MyChat
         {
             this.name = name;
             this.messages = messages;
+           
         }
     }
 }

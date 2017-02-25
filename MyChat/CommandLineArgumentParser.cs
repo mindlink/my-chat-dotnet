@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+
 namespace MindLink.Recruitment.MyChat
 {
     /// <summary>
@@ -15,9 +18,26 @@ namespace MindLink.Recruitment.MyChat
         /// <returns>
         /// A <see cref="ConversationExporterConfiguration"/> representing the command line arguments.
         /// </returns>
-        public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
+        public ConversationExporterConfiguration ParseCommandLineArguments(string[] args)
         {
-            return new ConversationExporterConfiguration(arguments[0], arguments[1]);
+            ProgramArguments arguments = new ProgramArguments();
+
+            if (args == null || args.Length == 0)
+            {
+                throw new System.ArgumentNullException("Arguments are missing");           
+            }
+
+            if (!CommandLine.Parser.Default.ParseArguments(args, arguments))
+            {                
+
+                throw new System.ArgumentException("Invalid Arguments");
+            }
+
+            if (arguments.inputFile == null || arguments.outFile == null)
+            {
+                throw new System.ArgumentException("Input and Output files are necessary");
+            }
+            return new ConversationExporterConfiguration(arguments);
         }
     }
 }

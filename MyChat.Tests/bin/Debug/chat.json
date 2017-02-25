@@ -1,0 +1,22 @@
+{
+  "name": "My Conversation",
+  "messages": [
+    {
+      "content": "how are you?",
+      "timestamp": "2015-11-25T17:01:45+00:00",
+      "senderId": "mike"
+    },
+    {
+      "content": "no, let me ask angus...",
+      "timestamp": "2015-11-25T17:01:50+00:00",
+      "senderId": "mike"
+    }
+  ],
+  "mostActive": "mike",
+  "activeUsers": [
+    {
+      "name": "mike",
+      "times": 2
+    }
+  ]
+}

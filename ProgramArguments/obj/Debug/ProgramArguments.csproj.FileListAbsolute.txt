@@ -1,0 +1,7 @@
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ProgramArguments\obj\Debug\ProgramArguments.csprojResolveAssemblyReference.cache
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ProgramArguments\bin\Debug\ProgramArguments.dll
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ProgramArguments\bin\Debug\ProgramArguments.pdb
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ProgramArguments\bin\Debug\CommandLine.dll
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ProgramArguments\bin\Debug\CommandLine.xml
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ProgramArguments\obj\Debug\ProgramArguments.dll
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ProgramArguments\obj\Debug\ProgramArguments.pdb

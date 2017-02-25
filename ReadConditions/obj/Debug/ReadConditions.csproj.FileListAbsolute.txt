@@ -1,0 +1,5 @@
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ReadConditions\bin\Debug\ReadConditions.dll
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ReadConditions\bin\Debug\ReadConditions.pdb
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ReadConditions\obj\Debug\ReadConditions.csprojResolveAssemblyReference.cache
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ReadConditions\obj\Debug\ReadConditions.dll
+C:\Users\evdok\Source\Repos\my-chat-dotnet\ReadConditions\obj\Debug\ReadConditions.pdb

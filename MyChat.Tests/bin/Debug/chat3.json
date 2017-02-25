@@ -1,0 +1,29 @@
+{
+  "conversation": {
+    "name": "My Conversation",
+    "messages": [
+      {
+        "content": "no, just *redacted* to know if there's anybody else in the pie society...",
+        "timestamp": "2015-11-25T17:01:54+00:00",
+        "senderId": "bob"
+      }
+    ]
+  },
+  "mActiveUsers": {
+    "mostActiveUser": "bob",
+    "activeUsers": [
+      {
+        "name": "bob",
+        "times": 8
+      },
+      {
+        "name": "mike",
+        "times": 2
+      },
+      {
+        "name": "angus",
+        "times": 2
+      }
+    ]
+  }
+}

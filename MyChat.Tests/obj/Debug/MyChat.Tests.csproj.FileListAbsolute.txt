@@ -1,0 +1,11 @@
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\bin\Debug\chat.txt
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\obj\Debug\MyChat.Tests.csprojResolveAssemblyReference.cache
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb

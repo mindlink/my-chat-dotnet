@@ -44,7 +44,7 @@
         /// </exception>
         public void ExportConversation(string inputFilePath, string outputFilePath)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            oldConversation conversation = this.ReadConversation(inputFilePath);
 
             this.WriteConversation(conversation, outputFilePath);
 
@@ -58,7 +58,7 @@
         /// The input file path.
         /// </param>
         /// <returns>
-        /// A <see cref="Conversation"/> model representing the conversation.
+        /// A <see cref="oldConversation"/> model representing the conversation.
         /// </returns>
         /// <exception cref="ArgumentException">
         /// Thrown when the input file could not be found.
@@ -66,7 +66,7 @@
         /// <exception cref="Exception">
         /// Thrown when something else went wrong.
         /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
+        public oldConversation ReadConversation(string inputFilePath)
         {
             try
             {
@@ -74,7 +74,7 @@
                     Encoding.ASCII);
 
                 string conversationName = reader.ReadLine();
-                var messages = new List<Message>();
+                var messages = new List<OldMessage>();
 
                 string line;
 
@@ -82,14 +82,15 @@
                 {
                     var split = line.Split(' ');
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    messages.Add(new OldMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
                 }
 
-                return new Conversation(conversationName, messages);
+                return new oldConversation(conversationName, messages);
             }
             catch (FileNotFoundException)
             {
-                throw new ArgumentException("The file was not found.");
+                throw new ArgumentException(String.Format("The text has {0} '{' characters and {1}  {2} '}' characters.",
+                       this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name ,"The file was not found."));
             }
             catch (IOException)
             {
@@ -112,7 +113,7 @@
         /// <exception cref="Exception">
         /// Thrown when something else bad happens.
         /// </exception>
-        public void WriteConversation(Conversation conversation, string outputFilePath)
+        public void WriteConversation(oldConversation conversation, string outputFilePath)
         {
             try
             {

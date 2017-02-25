@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Output.cs" />
     <Compile Include="CommandLineArgumentParser.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="ConversationExporter.cs" />
@@ -78,6 +79,10 @@
     <ProjectReference Include="..\ActiveUsers\ActiveUsers.csproj">
       <Project>{07c079f0-946e-4153-a883-72125cd642bb}</Project>
       <Name>ActiveUsers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\messageActiveUsers\messageActiveUsers.csproj">
+      <Project>{9dfe0bad-d7c5-4594-a76c-a0d46da87838}</Project>
+      <Name>messageActiveUsers</Name>
     </ProjectReference>
     <ProjectReference Include="..\ProgramArguments\ProgramArguments.csproj">
       <Project>{aa3ee1ab-7f1f-476d-afe8-11f51ff55f5e}</Project>

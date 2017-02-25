@@ -26,23 +26,20 @@ namespace MindLink.Recruitment.MyChat.Tests
         [TestCase(@"chat.txt", @"chat1.json", "bob",  "", "", "test1")]
         [TestCase(@"chat.txt", @"chat2.json", "bob", "no", "", "test2")]
         [TestCase(@"chat.txt", @"chat3.json", "bob", "no", "want", "test3")]
+        //[TestCase(@"chat_wrong.txt", @"chat3.json", "", "", "", "ExceptionFile", ExpectedException = typeof(FileNotFoundException), ExpectedMessage = "File not found")]
 
         public void ExportingConversationExportsConversation(string input, string output, string user = "", string keyword = "", string blacklist = "", string test = "test0")
         {
             ConversationExporter exporter = new ConversationExporter();
-
             ProgramArguments args = new ProgramArguments() { inputFile = AppDomain.CurrentDomain.BaseDirectory + input, outFile = AppDomain.CurrentDomain.BaseDirectory + output, user = user, keyboard = keyword, blacklist = blacklist };
             ConversationExporterConfiguration conf = new ConversationExporterConfiguration(args);
             exporter.ExportConversation(conf);
-
+            
             var serializedConversation = new StreamReader(new FileStream(AppDomain.CurrentDomain.BaseDirectory + output, FileMode.Open)).ReadToEnd();
+            Output savedConversation = JsonConvert.DeserializeObject<Output>(serializedConversation);
+            Assert.AreEqual("My Conversation", savedConversation.conversation.name);
 
-            Conversation savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
-
-            Assert.AreEqual("My Conversation", savedConversation.name);
-
-            var messages = savedConversation.messages.ToList();
-
+            var messages = savedConversation.conversation.messages.ToList();
             switch (test)
             {
                 case "test1":
@@ -69,6 +66,9 @@ namespace MindLink.Recruitment.MyChat.Tests
                     Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470914), messages[0].timestamp);
                     Assert.AreEqual("bob", messages[0].senderId);
                     Assert.AreEqual("No, just *redacted* to know if there's anybody else in the pie society...".ToLower(), messages[0].content);
+                    break;
+                case "ExceptionFile":
+                    
                     break;
                 default:
            

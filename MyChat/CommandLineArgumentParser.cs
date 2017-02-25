@@ -21,10 +21,21 @@ namespace MindLink.Recruitment.MyChat
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] args)
         {
             ProgramArguments arguments = new ProgramArguments();
-            
-            if (!CommandLine.Parser.Default.ParseArguments(args, arguments))
+
+            if (args == null || args.Length == 0)
             {
+                throw new System.ArgumentNullException("Arguments are missing");           
+            }
+
+            if (!CommandLine.Parser.Default.ParseArguments(args, arguments))
+            {                
+
                 throw new System.ArgumentException("Invalid Arguments");
+            }
+
+            if (arguments.inputFile == null || arguments.outFile == null)
+            {
+                throw new System.ArgumentException("Input and Output files are necessary");
             }
             return new ConversationExporterConfiguration(arguments);
         }

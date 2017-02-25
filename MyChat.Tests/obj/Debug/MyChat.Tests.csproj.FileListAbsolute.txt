@@ -24,3 +24,5 @@ C:\Users\evdok\Source\Repos\my-chat-dotnet\MyChat.Tests\bin\Debug\Microsoft.Visu
 C:\Users\evdok\Source\Repos\my-chat-dotnet\MyChat.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
 C:\Users\evdok\Source\Repos\my-chat-dotnet\MyChat.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
 C:\Users\evdok\Source\Repos\my-chat-dotnet\MyChat.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\evdok\Source\Repos\my-chat-dotnet\MyChat.Tests\bin\Debug\messageActiveUsers.dll
+C:\Users\evdok\Source\Repos\my-chat-dotnet\MyChat.Tests\bin\Debug\messageActiveUsers.pdb

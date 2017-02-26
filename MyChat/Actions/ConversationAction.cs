@@ -9,8 +9,16 @@ namespace MindLink.Recruitment.MyChat.Actions
 {
     public abstract class ConversationAction
     {
+        // actions priority which determines which action is executed first, we execute first the report action them the filtering actions and lastly the hide actions
+        public enum Priority
+        {
+            Higth = 10,
+            Normal = 5,
+            Low = 0,
+        }
+
         protected string actionID;
-        protected int priority = 0;
+        protected Priority actionPriority = Priority.Low;
 
         public abstract Conversation PerformOn(Conversation conversation);
 
@@ -22,6 +30,17 @@ namespace MindLink.Recruitment.MyChat.Actions
             get
             {
                 return actionID;
+            }
+        }
+
+        /// <summary>
+        /// Return the priority
+        /// </summary>
+        public Priority ActionPriority
+        {
+            get
+            {
+                return actionPriority;
             }
         }
     }

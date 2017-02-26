@@ -18,7 +18,7 @@ namespace MindLink.Recruitment.MyChat.Actions
         public HideBlackList()
         {
             this.actionID = "/b";
-            this.priority = 0;
+            this.actionPriority = Priority.Low;
         }
 
         /// <summary>

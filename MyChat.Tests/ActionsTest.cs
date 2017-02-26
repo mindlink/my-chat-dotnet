@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MindLink.Recruitment.MyChat.Tests
 {
     /// <summary>
-    /// Tests for the <see cref="ConversationExporter"/>.
+    /// Tests for the Actions.
     /// </summary>
     [TestClass]
     public class ActionsTest
@@ -69,7 +69,7 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             ConversationAction action = new FilterUser("bob");
 
-            Conversation conversation = new Conversation();
+            Conversation conversation = new Conversation("test");
 
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there!");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
@@ -83,7 +83,7 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             if (conversation.Messages.Count(x => x.msgSender.senderID == "bob") <= 0)
             {
-                Assert.Fail("Messages of the user we were filtering were not found");
+                Assert.Fail("Messages of the user that we were filtering were not found");
             }
 
            
@@ -99,7 +99,7 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             ConversationAction action = new FilterUser("bob");
 
-            Conversation conversation = new Conversation();
+            Conversation conversation = new Conversation("test");
 
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there!");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
@@ -168,7 +168,7 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             ConversationAction action = new FilterWord("pie");
 
-            Conversation conversation = new Conversation();
+            Conversation conversation = new Conversation("test");
 
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there!");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
@@ -198,7 +198,7 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             ConversationAction action = new FilterWord("pie");
 
-            Conversation conversation = new Conversation();
+            Conversation conversation = new Conversation("test");
 
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there!");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
@@ -293,7 +293,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             action.addBlackListWord("buying");
             action.addBlackListWord("hello");
 
-            Conversation conversation = new Conversation();
+            Conversation conversation = new Conversation("test");
 
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there!");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
@@ -328,7 +328,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             action.addBlackListWord("buying");
             action.addBlackListWord("hello");
 
-            Conversation conversation = new Conversation();
+            Conversation conversation = new Conversation("test");
 
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there!");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
@@ -382,9 +382,9 @@ namespace MindLink.Recruitment.MyChat.Tests
             ConversationAction action = new HideCreditcartPhone();
 
 
-            Conversation conversation = new Conversation();
+            Conversation conversation = new Conversation("test");
 
-            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there my land line 00357 22389618!");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there my land line 00357 22389517!");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470906")), "bob", "I'm good thanks, do you like 25897 pie?");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470910")), "mike", "no, let me ask Angus... my mobile phone number +357 99355993");
@@ -416,9 +416,9 @@ namespace MindLink.Recruitment.MyChat.Tests
             ConversationAction action = new HideCreditcartPhone();
 
 
-            Conversation conversation = new Conversation();
+            Conversation conversation = new Conversation("test");
 
-            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there my land line 00357 22389618");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there my land line 00357 22389517");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470906")), "bob", "I'm good thanks, do you like 25897 pie?");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470910")), "mike", "no, let me ask Angus... my mobile phone number +357 99355993");
@@ -438,7 +438,7 @@ namespace MindLink.Recruitment.MyChat.Tests
                 Assert.Fail("Messages conatains a phone number that shoould have been removed");
             }
 
-            if (conversation.Messages.Count(x => x.Content.Contains("00357 22389618")) > 0)
+            if (conversation.Messages.Count(x => x.Content.Contains("00357 22389517")) > 0)
             {
                 Assert.Fail("Messages conatains a phone number that shoould have been removed");
             }
@@ -457,12 +457,12 @@ namespace MindLink.Recruitment.MyChat.Tests
         public void HideCreditcartPhoneDontRemovesNumbers()
         {
 
-            ConversationAction action = new HideCreditcartPhone();
+            ConversationAction action = new CreateReport();
 
 
-            Conversation conversation = new Conversation();
+            Conversation conversation = new Conversation("test");
 
-            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there my land line 00357 22389618");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there my land line 00357 22389517");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470906")), "bob", "I'm good thanks, do you like 25897 pie?");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470910")), "mike", "no, let me ask Angus... my mobile phone number +357 99355993");
@@ -474,12 +474,12 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             if (conversation.Messages.Count(x => x.Content.Contains("25897")) <= 0)
             {
-                Assert.Fail("A not phone or credit card like number was removed.The number 25897 should not be removed");
+                Assert.Fail("A number which is not phone or credit card like was removed.");
             }
 
          if (conversation.Messages.Count(x => x.Content.Contains("23-2-1928 ")) <= 0)
             {
-                Assert.Fail("A not phone or credit card like number was removed.The date 23-2-1928 should not be removed");
+                Assert.Fail("A number which is not phone or credit card like was removed.");
             }
 
         }
@@ -494,9 +494,9 @@ namespace MindLink.Recruitment.MyChat.Tests
             ConversationAction action = new HideCreditcartPhone();
 
 
-            Conversation conversation = new Conversation();
+            Conversation conversation = new Conversation("test");
 
-            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there my land line 00357 22389618");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there my land line 00357 22389517");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470906")), "bob", "I'm good thanks, do you like 25897 pie?");
             conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470910")), "mike", "no, let me ask Angus... my mobile phone number +357 99355993");
@@ -513,6 +513,83 @@ namespace MindLink.Recruitment.MyChat.Tests
 
         }
 
+        #endregion
+
+     #region CrateReport Test 
+
+        /// <summary>
+        /// Tests that CreateReport PerformOn function throw exception when Conversation is null
+        /// </summary>
+        [TestMethod]
+        public void CreateReportConversationNull()
+        {
+            try
+            {
+                ConversationAction action = new CreateReport();
+                action.PerformOn(null);
+            }
+            catch (ArgumentNullException e)
+            {
+                // assert  
+                StringAssert.Contains(e.Message, "PerfromOn received a null argument!");
+                return;
+            }
+            Assert.Fail("No exception was thrown.");
+
+
+        }
+
+        /// <summary>
+        /// Tests that CreateReport calculates correctly the most active user
+        /// </summary>
+        [TestMethod]
+        public void CreateReportMostActiveUserCalculated()
+        {
+
+            ConversationAction action = new CreateReport();
+
+
+            Conversation conversation = new Conversation("test");
+
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there!");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470906")), "bob", "I'm good thanks, do you 14 like pie?");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470910")), "mike", "no, let me ask Angus...");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470912")), "angus", "Hell yes! Are we buying some pie?");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470914")), "bob", "No, just want to know if there's anybody else in the pie society...");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470915")), "angus", "YES! I'm the head pie eater there...");
+            action.PerformOn(conversation);
+
+            Assert.AreEqual(conversation.MostActiveSender.senderID , "bob", "The most active user was not calculated correctly");
+
+        }
+
+        /// <summary>
+        /// Tests that CreateReport calculates correctly the each user's messages
+        /// </summary>
+        [TestMethod]
+        public void CreateReportCalculateUserMessages()
+        {
+
+            ConversationAction action = new CreateReport();
+
+
+            Conversation conversation = new Conversation("test");
+
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "Hello there!");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470905")), "mike", "how are you?");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470906")), "bob", "I'm good thanks, do you 14 like pie?");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470910")), "mike", "no, let me ask Angus...");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470912")), "angus", "Hell yes! Are we buying some pie?");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470914")), "bob", "No, just want to know if there's anybody else in the pie society...");
+            conversation.addMessage(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470915")), "angus", "YES! I'm the head pie eater there...");
+            action.PerformOn(conversation);
+
+            Assert.AreEqual(conversation.SendersInfos["bob"].count, 3 ,"The user's messages were calculated incorrectly");
+            Assert.AreEqual(conversation.SendersInfos["mike"].count, 2, "The user's messages were calculated incorrectly");
+            Assert.AreEqual(conversation.SendersInfos["angus"].count, 2, "The user's messages were calculated incorrectly");
+
+        }
         #endregion
 
     }

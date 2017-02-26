@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MindLink.Recruitment.MyChat.FilesProcessing
 {
-    class FileExporter
+   public class FileExporter
     {
         /// <summary>
         /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
@@ -28,15 +28,28 @@ namespace MindLink.Recruitment.MyChat.FilesProcessing
         /// <exception cref="Exception">
         /// Thrown when something else bad happens.
         /// </exception>
-        public void WriteConversationToJson(JObject output, string outputFilePath)
+        public void WriteConversationToJson(JObject outputJsonObject, string outputFilePath)
         {
+            //if outputFilePath is empty we throw an exception
+            if (String.IsNullOrWhiteSpace(outputFilePath))
+            {
+                throw new ArgumentNullException("outputFilePath", String.Format("Exception in {0}, Error message : {1}",
+                        this.GetType().Name + "." + System.Reflection.MethodBase.GetCurrentMethod().Name, "outputFilePath can not be empty when exporting a conversation to a file"));
+            }
+
+            //if outputJsonObject is empty we throw an exception
+            if (outputJsonObject == null)
+            {
+                throw new ArgumentNullException("outputFilePath", String.Format("Exception in {0}, Error message : {1}",
+                        this.GetType().Name + "." + System.Reflection.MethodBase.GetCurrentMethod().Name, "outputJsonObject can not be empty when exporting a conversation to a file"));
+            }
+
             try
             {
+
                 var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
 
-               
-
-                writer.Write(output);
+                writer.Write(outputJsonObject);
 
                 writer.Flush();
 
@@ -44,15 +57,18 @@ namespace MindLink.Recruitment.MyChat.FilesProcessing
             }
             catch (SecurityException)
             {
-                throw new ArgumentException("No permission to file.");
+                throw new ArgumentException("outputFilePath", String.Format("Exception in {0}, Error message : {1}",
+                         this.GetType().Name + "." + System.Reflection.MethodBase.GetCurrentMethod().Name, "No permission to acess the output file : " + outputFilePath ));
             }
             catch (DirectoryNotFoundException)
             {
-                throw new ArgumentException("Path invalid.");
+                throw new ArgumentException("outputFilePath", String.Format("Exception in {0}, Error message : {1}",
+                          this.GetType().Name + "." + System.Reflection.MethodBase.GetCurrentMethod().Name, "The output file : " + outputFilePath + " was not found."));
             }
-            catch (IOException)
+            catch (IOException ex)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new IOException(String.Format("Exception in {0}, Error message : {1}",
+                       this.GetType().Name + "." + System.Reflection.MethodBase.GetCurrentMethod().Name, "Something went wrong while trying  to access the file " + outputFilePath + " Exception message : " + ex.Message));
             }
         }
 }

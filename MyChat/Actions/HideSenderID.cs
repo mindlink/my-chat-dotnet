@@ -15,7 +15,7 @@ namespace MindLink.Recruitment.MyChat.Actions
         public HideSenderID()
         {
             this.actionID = "/hs";
-            this.priority = 0;
+            this.actionPriority = Priority.Low;
         }
 
         /// <summary>

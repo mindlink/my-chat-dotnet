@@ -11,7 +11,18 @@ namespace MindLink.Recruitment.MyChat.Elements
         private String ID;
         private String HidenID;
 
+        /// <summary>
+        /// Constractor
+        /// </summary>
+        /// <param name="id"></param>
         public Sender(String id) {
+
+            //if id is empty we throw an exception
+            if (String.IsNullOrWhiteSpace(id))
+            {
+                throw new ArgumentNullException("id", String.Format("Exception in {0}, Error message : {1}",
+                        this.GetType().Name + "." +System.Reflection.MethodBase.GetCurrentMethod().Name, "Sender id can not be empty when creating new sender"));
+            }
             this.ID = id;
             HidenID = GenerateId();
 

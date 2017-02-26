@@ -8,14 +8,14 @@ using static MindLink.Recruitment.MyChat.Elements.Conversation;
 
 namespace MindLink.Recruitment.MyChat.Actions
 {
-    class CrateReport : ConversationAction
+    public class CreateReport : ConversationAction
     {
         /// <summary>
         /// Constractor
         /// </summary>
-        public CrateReport() {
+        public CreateReport() {
             this.actionID = "/r";
-            this.priority = 10;
+            this.actionPriority = Priority.Higth;
         }
 
         /// <summary>

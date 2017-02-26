@@ -11,7 +11,7 @@ using static MindLink.Recruitment.MyChat.Elements.Conversation;
 
 namespace MindLink.Recruitment.MyChat
 {
-    class ConversationsManager
+    public class ConversationsManager
     {
 
         /// <summary>
@@ -60,8 +60,25 @@ namespace MindLink.Recruitment.MyChat
             internal static readonly ConversationsManager instance = new ConversationsManager();
         }
 
-        public void PerformActions() {
+
+        // perform all the actions
+        public void PerformActions()
+        {
+            //sort actions based on priority we execute first the report action them the filtering actions and lastly the hide actions
+            actions = actions.OrderByDescending(o => (int)o.ActionPriority).ToList();
             actions.ForEach(i => i.PerformOn(curentConversation));
+        }
+
+        /// <summary>
+        /// Return actions list
+        /// </summary>
+        public List<ConversationAction> Actions
+        {
+            get
+            {
+                return actions;
+            }
+
         }
 
         /// <summary>
@@ -94,53 +111,55 @@ namespace MindLink.Recruitment.MyChat
             }
         }
 
+        // Add action to the actions list
         public void addAction(ConversationAction myAction) {
+            //if word is empty we throw an exception
+            if (myAction == null)
+            {
+                throw new ArgumentNullException("myAction", String.Format("Exception in {0}, Error message : {1}",
+                        this.GetType().Name + "." +System.Reflection.MethodBase.GetCurrentMethod().Name, "myAction can nto be bull when adding a new action to the action to perform list"));
+            }
             actions.Add(myAction);
         }
 
+        // load conversation from the pre define file
         public void loadConversation() {
             curentConversation = fileImporter.ReadConversationFromTextFile(inputFilePath);
         }
 
+        // export conversation from the pre define file
         public void exportConversation() {
             fileExporter.WriteConversationToJson(ConversationToJson(curentConversation), outputFilePath);
         }
 
+        // retrun the curent conversation to a json odject
         public JObject converedConversationToJson() {
             return ConversationToJson(curentConversation);
         }
 
+        // convert a conversation to a json objet
         private JObject ConversationToJson(Conversation conversation) {
             JObject JconConversation = new JObject();
             JconConversation.Add(new JProperty("name", conversation.Name));
             if (conversation.SendersInfoSorted != null && conversation.SendersInfoSorted.Count > 0 )
             {
                 JArray Jsenders = new JArray();
-                if (conversation.HideSenders)
-                {
-                    JconConversation.Add(new JProperty("most active user", conversation.MostActiveSender.senderHidenID));
-                    foreach (SenderInfo senderInfo in conversation.SendersInfoSorted)
+                //create most active users repot
+                if (conversation.HideSenders) JconConversation.Add(new JProperty("MostActiveSender", conversation.MostActiveSender.senderHidenID));
+                else JconConversation.Add(new JProperty("MostActiveSender", conversation.MostActiveSender.senderID));
+       
+                foreach (SenderInfo senderInfo in conversation.SendersInfoSorted)
                     {
                         JObject temp = new JObject();
-                        temp.Add(new JProperty("sender", senderInfo.sender.senderHidenID));
-                        temp.Add(new JProperty("number of messages", senderInfo.count));
+                        // hide sender id if the hide id flags was selected
+                        if (conversation.HideSenders) temp.Add(new JProperty("sender", senderInfo.sender.senderHidenID));
+                        else temp.Add(new JProperty("sender", senderInfo.sender.senderID));
+                        temp.Add(new JProperty("messages", senderInfo.count));
                         Jsenders.Add(temp);
                     }
-                }
-                else {
-                    foreach (SenderInfo senderInfo in conversation.SendersInfoSorted)
-                    {
-                        JObject temp = new JObject();
-                        JconConversation.Add(new JProperty("most active user", conversation.MostActiveSender.senderID));
-                        temp.Add(new JProperty("sender", senderInfo.sender.senderID));
-                        temp.Add(new JProperty("number of messages", senderInfo.count));
-                        Jsenders.Add(temp);
-                    }
-                }
-
-                JconConversation.Add("Report", Jsenders);
+                JconConversation.Add("report", Jsenders);
             }
-
+            // convert converasation to json
             JArray Jmsg = new JArray();
             foreach (Message msg in conversation.Messages)
             {

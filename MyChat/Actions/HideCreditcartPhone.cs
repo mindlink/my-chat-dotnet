@@ -16,10 +16,10 @@ namespace MindLink.Recruitment.MyChat.Actions
         public HideCreditcartPhone()
         {
             this.actionID = "/ct";
-            this.priority = 0;
+            this.actionPriority = Priority.Low;
         }
         /// <summary>
-        ///  Replace the blacklisted words in the conversation with redacted
+        ///  Replace the Creditcart and Phone number in the conversation with *redacted*
         /// </summary>
         /// <param name="conversation"></param>
         /// <returns></returns>
@@ -43,10 +43,10 @@ namespace MindLink.Recruitment.MyChat.Actions
         private void removeWords(Message msg)
         {
             Regex rgx;
-            // hide phone number
+            // hide phone number, match for most europian phone numbers
             rgx = new Regex(@"(^|\s)([0|\+[0-9]{1,5})?(\s?[0-9]{6,10})(\s|$)");
             msg.Content = rgx.Replace(msg.Content, " *redacted* ").Trim();
-            // hide credit cart
+            // hide credit cart number, match for Visa, MasterCard, American Express, and Discover Cards
             rgx = new Regex(@"\b(?:3[47]\d{2}([\ \-]?)\d{6}\1\d|(?:(?:4\d|5[1-5]|65)\d{2}|6011)([\ \-]?)\d{4}\2\d{4}\2)\d{4}\b");
             msg.Content = rgx.Replace(msg.Content, "*redacted*").Trim();
 

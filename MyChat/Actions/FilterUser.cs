@@ -20,11 +20,11 @@ namespace MindLink.Recruitment.MyChat.Actions
             if (String.IsNullOrWhiteSpace(userId))
             {
                 throw new ArgumentNullException("userId", String.Format("Exception in {0}, Error message : {1}",
-                       this.GetType().Name + System.Reflection.MethodBase.GetCurrentMethod().Name, "User id can not be empty when filering by user"));
+                        this.GetType().Name + "." +System.Reflection.MethodBase.GetCurrentMethod().Name, "User id can not be empty when filering by user"));
             }
             this.userId = userId;
             this.actionID = "/u";
-            this.priority = 0;
+            this.actionPriority = Priority.Normal;
         }
 
         /// <summary>

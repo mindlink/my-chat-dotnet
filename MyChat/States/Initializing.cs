@@ -8,13 +8,32 @@ using System.Threading.Tasks;
 
 namespace MindLink.Recruitment.MyChat.Sates
 {
+    /// <summary>
+    /// Process the user input
+    /// </summary>
     class Initializing : State
     {
         string[] args;
         ConversationsManager cm;
 
+        /// <summary>
+        ///  Constractor
+        /// </summary>
+        /// <param name="arguments"></param>
+        /// <param name="CM"></param>
         public  Initializing(string[] arguments, ConversationsManager CM)
         {
+            if (CM == null)
+            {
+                throw new ArgumentNullException("ConversationsManager", String.Format("Exception in {0}, Error message : {1}",
+                        this.GetType().Name + "." +System.Reflection.MethodBase.GetCurrentMethod().Name, "ConversationsManager can not be null when creating a new initializing state"));
+            }
+
+            if (arguments == null)
+            {
+                throw new ArgumentNullException("arguments", String.Format("Exception in {0}, Error message : {1}",
+                        this.GetType().Name + "." +System.Reflection.MethodBase.GetCurrentMethod().Name, "arguments can not be null when creating a new initializing state"));
+            }
             args = arguments;
             this.cm = CM;
 
@@ -29,12 +48,13 @@ namespace MindLink.Recruitment.MyChat.Sates
 
                 parameterName = args[i];
                 DispalyHelp curent;
+                // parse the user arguments
                 switch (parameterName.ToLower())
                 {
                     case "/i":
 
                         i++;
-                        if (i < args.Length)
+                        if (i < args.Length && !String.IsNullOrWhiteSpace(args[i]))
                         {
                            cm.InputFilePath = args[i];
                         }
@@ -50,14 +70,14 @@ namespace MindLink.Recruitment.MyChat.Sates
                     case "/u":
 
                         i++;
-                        if (i < args.Length)
+                        if (i < args.Length && !String.IsNullOrWhiteSpace(args[i]))
                         {
                             cm.addAction(new FilterUser(args[i]));
                         }
                         else
                         {
                             curent = new DispalyHelp();
-                            curent.setErrorMsg("Expected a file to be specified with the input file parameter.");
+                            curent.setErrorMsg("Expected a userid to be specified with the filter by user parameter.");
                             return curent;
                         }
                         break;
@@ -65,7 +85,7 @@ namespace MindLink.Recruitment.MyChat.Sates
                         cm.addAction(new HideSenderID());
                         break;
                     case "/r":
-                        cm.addAction(new CrateReport());
+                        cm.addAction(new CreateReport());
                         break;
                     case "/ct":
                             cm.addAction(new HideCreditcartPhone());
@@ -73,21 +93,21 @@ namespace MindLink.Recruitment.MyChat.Sates
                     case "/w":
 
                         i++;
-                        if (i < args.Length)
+                        if (i < args.Length && !String.IsNullOrWhiteSpace(args[i]))
                         {
                             cm.addAction(new FilterWord(args[i]));
                         }
                         else
                         {
                             curent = new DispalyHelp();
-                            curent.setErrorMsg("Expected a file to be specified with the input file parameter.");
+                            curent.setErrorMsg("Expected a word to be specified with the filter word parameter.");
                             return curent;
                         }
                         break;
                     case "/b":
 
                         i++;
-                        if (i < args.Length)
+                        if (i < args.Length && !String.IsNullOrWhiteSpace(args[i]))
                         {
                             HideBlackList cation = new HideBlackList();
                             while ((i < args.Length) && (!args[i].StartsWith("/")))
@@ -101,13 +121,13 @@ namespace MindLink.Recruitment.MyChat.Sates
                         else
                         {
                             curent = new DispalyHelp();
-                            curent.setErrorMsg("Expected a file to be specified with the input file parameter.");
+                            curent.setErrorMsg("Expected a sequence of words with the filter black list parameter.");
                             return curent;
                         }
                         break;
                     case "/o":
                         i++;
-                        if (i < args.Length)
+                        if (i < args.Length && !String.IsNullOrWhiteSpace(args[i]))
                         {
                             cm.OutputFilePath = args[i];
                         }
@@ -120,7 +140,6 @@ namespace MindLink.Recruitment.MyChat.Sates
                         break;
                     case "/?":
                     case "/help":
-                        //showHelp = true;
                         return new DispalyHelp();
                     default:
                         curent = new DispalyHelp();

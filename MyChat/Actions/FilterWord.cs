@@ -10,7 +10,7 @@ namespace MindLink.Recruitment.MyChat.Actions
    public class FilterWord : ConversationAction
     {
         protected string word;
-        protected int priority = 0;
+        protected int priority = 5;
 
         /// <summary>
         /// Constrator
@@ -22,11 +22,11 @@ namespace MindLink.Recruitment.MyChat.Actions
             if (String.IsNullOrWhiteSpace(word))
             {
                 throw new ArgumentNullException("word", String.Format("Exception in {0}, Error message : {1}",
-                       this.GetType().Name + System.Reflection.MethodBase.GetCurrentMethod().Name, "Word can not be empty when filering using a word"));
+                        this.GetType().Name + "." +System.Reflection.MethodBase.GetCurrentMethod().Name, "Word can not be empty when filering using a word"));
             }
             this.word = word;
             this.actionID = "/w";
-            this.priority = 0;
+            this.actionPriority = Priority.Normal;
         }
 
         /// <summary>

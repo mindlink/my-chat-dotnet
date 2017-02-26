@@ -1,0 +1,9 @@
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe.config
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat\bin\Debug\chat.txt
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat\obj\Debug\MyChat.csprojResolveAssemblyReference.cache
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat\obj\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Wizard\Desktop\New folder (6)\my-chat-dotnet\MyChat\obj\Debug\MindLink.Recruitment.MyChat.pdb

@@ -58,6 +58,10 @@
   <ItemGroup>
     <Compile Include="ConversationExporterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="CommandLineArgumentParserTests.cs" />
+>>>>>>> origin/master
     <Compile Include="ConversationFiltersTests.cs" />
   </ItemGroup>
   <ItemGroup>

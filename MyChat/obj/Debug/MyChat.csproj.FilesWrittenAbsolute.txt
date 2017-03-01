@@ -1,0 +1,2 @@
+/Users/Yiannis/Desktop/my-chat-dotnet/MyChat/obj/Debug/.NETFramework,Version=v4.6.1.AssemblyAttribute.cs
+/Users/Yiannis/Desktop/my-chat-dotnet/MyChat/bin/Debug/Newtonsoft.Json.dll

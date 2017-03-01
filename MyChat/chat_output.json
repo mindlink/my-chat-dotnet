@@ -23,11 +23,7 @@
       }
     },
     {
-<<<<<<< HEAD
       "content": "no, let me ask Angus...",
-=======
-      "content": "\\*redacted\\* let me ask Angus...",
->>>>>>> origin/master
       "timestamp": "2015-11-25T17:01:50+00:00",
       "sender": {
         "username": "mike"
@@ -41,11 +37,7 @@
       }
     },
     {
-<<<<<<< HEAD
       "content": "No, just want to know if there's anybody else in the pie society...",
-=======
-      "content": "\\*redacted\\* just want to know if there's anybody else in the pie society...",
->>>>>>> origin/master
       "timestamp": "2015-11-25T17:01:54+00:00",
       "sender": {
         "username": "bob"

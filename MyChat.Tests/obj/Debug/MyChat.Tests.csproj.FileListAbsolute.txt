@@ -1,0 +1,22 @@
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\chat.txt
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\obj\Debug\MyChat.Tests.csprojResolveAssemblyReference.cache
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\Ykakouris\Desktop\New folder\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat.Tests\bin\Debug\chat.txt
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat.Tests\obj\Debug\MyChat.Tests.csprojResolveAssemblyReference.cache
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\Ykakouris\Desktop\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb

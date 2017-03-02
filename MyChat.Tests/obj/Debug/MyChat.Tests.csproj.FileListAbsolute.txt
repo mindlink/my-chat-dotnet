@@ -1,0 +1,10 @@
+E:\Mint\MyChat.Tests\obj\Debug\MyChat.Tests.csprojResolveAssemblyReference.cache
+E:\Mint\MyChat.Tests\bin\Debug\chat.txt
+E:\Mint\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.dll
+E:\Mint\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+E:\Mint\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe
+E:\Mint\MyChat.Tests\bin\Debug\Newtonsoft.Json.dll
+E:\Mint\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.pdb
+E:\Mint\MyChat.Tests\bin\Debug\Newtonsoft.Json.xml
+E:\Mint\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
+E:\Mint\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb

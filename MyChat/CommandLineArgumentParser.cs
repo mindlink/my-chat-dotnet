@@ -17,7 +17,7 @@ namespace MindLink.Recruitment.MyChat
         /// </returns>
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
-            return new ConversationExporterConfiguration(arguments[0], arguments[1]);
+            return new ConversationExporterConfiguration(arguments);
         }
     }
 }

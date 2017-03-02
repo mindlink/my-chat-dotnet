@@ -1,0 +1,9 @@
+E:\Mint\MyChat\bin\Debug\chat.txt
+E:\Mint\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe.config
+E:\Mint\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe
+E:\Mint\MyChat\bin\Debug\MindLink.Recruitment.MyChat.pdb
+E:\Mint\MyChat\bin\Debug\Newtonsoft.Json.dll
+E:\Mint\MyChat\bin\Debug\Newtonsoft.Json.xml
+E:\Mint\MyChat\obj\Debug\MindLink.Recruitment.MyChat.exe
+E:\Mint\MyChat\obj\Debug\MindLink.Recruitment.MyChat.pdb
+E:\Mint\MyChat\obj\Debug\MyChat.csprojResolveAssemblyReference.cache

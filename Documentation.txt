@@ -1,0 +1,26 @@
+
+
+Commandline Parameter
+---------------------
+
+Parameter				Function								Example
+---------				--------								-------
+
+input output			Show all Messages						myChat chat.txt chat.json
+
+user					Select a UserId							myChat chat.txt chat.json user=angus
+
+keyword_include			Show all Messages including 
+						this Keyword							myChat chat.txt chat.json keyword_include=pie
+
+keyword_exclude			Hides all Messages including 
+						this Keyword							myChat chat.txt chat.json keyword_exclude=pie
+
+blacklist				Hides defined words, separated
+						by comma								myChat chat.txt chat.json blacklist=pie,No,no,Angus
+
+hideCreditCard			Hides all Credit Card Numbers			myChat chat.txt chat.json hideCreditCard
+
+hidePhone				Hides Phone Numbers						myChat chat.txt chat.json showCreditCardType
+
+obfuscateUser			Obfuscate the USername by Number		myChat chat.txt chat.json obfuscateUser

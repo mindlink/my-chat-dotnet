@@ -1,0 +1,8 @@
+E:\Mint\MyChat\bin\Release\MindLink.Recruitment.MyChat.exe.config
+E:\Mint\MyChat\bin\Release\chat.txt
+E:\Mint\MyChat\bin\Release\MindLink.Recruitment.MyChat.exe
+E:\Mint\MyChat\bin\Release\MindLink.Recruitment.MyChat.pdb
+E:\Mint\MyChat\bin\Release\Newtonsoft.Json.dll
+E:\Mint\MyChat\bin\Release\Newtonsoft.Json.xml
+E:\Mint\MyChat\obj\Release\MindLink.Recruitment.MyChat.exe
+E:\Mint\MyChat\obj\Release\MindLink.Recruitment.MyChat.pdb

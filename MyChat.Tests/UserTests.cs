@@ -2,8 +2,8 @@
 using MindLink.Recruitment.MyChat;
 using System.IO;
 using System.Linq;
-using MyChat;
 using Newtonsoft.Json;
+using MyChatLibrary;
 
 namespace MindLink.Recruitment.MyChat.Tests
 {

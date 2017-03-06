@@ -1,9 +1,27 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MindLink.Recruitment.MyChat;
 using System.IO;
 using System.Linq;
-using MyChat;
 using Newtonsoft.Json;
+using MyChatLibrary;
+
+namespace MyChatLibrary.Tests
+{
+    [TestClass()]
+    public class ConversationExporterTests
+    {
+        [TestMethod()]
+        public void TriggerTrigger()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void WriteConversationWriteConversation()
+        {
+            Assert.Fail();
+        }
+    }
+}
 
 namespace MindLink.Recruitment.MyChat.Tests
 {

@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MindLink.Recruitment.MyChat;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MyChatLibrary;
 
 namespace MindLink.Recruitment.MyChat.Tests
 {

@@ -1,7 +1,27 @@
-﻿using System.IO;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 using System.Linq;
-using MyChat;
 using Newtonsoft.Json;
+using MyChatLibrary;
+
+namespace MyChatLibrary.Tests
+{
+    [TestClass()]
+    public class ConversationExporterTests
+    {
+        [TestMethod()]
+        public void TriggerTrigger()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void WriteConversationWriteConversation()
+        {
+            Assert.Fail();
+        }
+    }
+}
 
 namespace MindLink.Recruitment.MyChat.Tests
 {
@@ -21,8 +41,9 @@ namespace MindLink.Recruitment.MyChat.Tests
         public void ExportingConversationExportsConversation()
         {
             ConversationExporter exporter = new ConversationExporter();
+            ConversationExporterConfiguration configuration = new ConversationExporterConfiguration("chat.txt", "chat.json", null);
 
-            exporter.ExportConversation("chat.txt", "chat.json");
+            exporter.ExportConversation(configuration);
 
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 
@@ -59,6 +80,38 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470915), messages[6].timestamp);
             Assert.AreEqual("angus", messages[6].senderId);
             Assert.AreEqual("YES! I'm the head pie eater there...", messages[6].content);
+        }
+
+        [TestMethod()]
+        public void ConversationmostActiveUser()
+        {
+            ConversationExporter exporter = new ConversationExporter();
+            ConversationExporterConfiguration configuration = new ConversationExporterConfiguration("chat.txt", "chat.json", null);
+
+            exporter.ExportConversation(configuration);
+            var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+            Conversation savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+            var con = new Conversation("Test Conversation", messages, configuration);
+            Console.WriteLine(con.mostActiveUser);
+            Assert.AreEqual("User: bob made 3 Chats", con.mostActiveUser);
+        }
+
+        [TestMethod()]
+        public void ConversationUserActivity()
+        {
+            ConversationExporter exporter = new ConversationExporter();
+            ConversationExporterConfiguration configuration = new ConversationExporterConfiguration("chat.txt", "chat.json", null);
+
+            exporter.ExportConversation(configuration);
+            var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+            Conversation savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+            var con = new Conversation("Test Conversation", messages, configuration);
+            Console.WriteLine("User {0} made {1} Chats", con.userActivity.ElementAt(0).UserId, con.userActivity.ElementAt(0).Chats);
+            Assert.AreEqual("User: bob made 3 Chats", con.mostActiveUser);
         }
     }
 }

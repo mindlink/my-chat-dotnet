@@ -66,7 +66,7 @@ Implementing any of these features well will make your submission stand-out. Fea
 * Hide credit card and phone numbers
     * A flag can be specified to hide credit card and phone numbers
     * Any identified credit card or phone numbers are replaced with "\*redacted\*" in the output.
-* Obfuscate user IDs
+* c user IDs
     * A flag can be specified to obfuscate user IDs
     * All user IDs are obfuscated in the output.
     * The same original user ID in any single export is replaced with the same obfuscated user ID i.e. messages retain their relationship with the sender, only the ID that represents the sender is changed.

@@ -1,15 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChat", "MyChat\MyChat.csproj", "{246D2511-9B28-44F3-8D05-7EBFAB79C95F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChat.Tests", "MyChat.Tests\MyChat.Tests.csproj", "{35295892-C40D-484F-967C-44328F8C0BCC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B2B677FB-2C5E-45CF-B2BE-E3744D5E81C8} = {B2B677FB-2C5E-45CF-B2BE-E3744D5E81C8}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8B27D2A5-E7E6-46C3-BEE2-5930B7C0F831}"
 	ProjectSection(SolutionItems) = preProject
+		Documentation.txt = Documentation.txt
 		readme.md = readme.md
+		REMARKS.txt = REMARKS.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChatLibrary", "MyChatLibrary\MyChatLibrary.csproj", "{84DABF38-2360-4646-8783-CFA0587A91C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChatService", "MyChatService\MyChatService.csproj", "{B2B677FB-2C5E-45CF-B2BE-E3744D5E81C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChatWeb", "MyChatWeb\MyChatWeb.csproj", "{BCB09A91-AEB0-4A7C-8D99-1C8C7CAFE1B3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B2B677FB-2C5E-45CF-B2BE-E3744D5E81C8} = {B2B677FB-2C5E-45CF-B2BE-E3744D5E81C8}
 	EndProjectSection
 EndProject
 Global
@@ -26,6 +40,18 @@ Global
 		{35295892-C40D-484F-967C-44328F8C0BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35295892-C40D-484F-967C-44328F8C0BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35295892-C40D-484F-967C-44328F8C0BCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84DABF38-2360-4646-8783-CFA0587A91C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84DABF38-2360-4646-8783-CFA0587A91C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84DABF38-2360-4646-8783-CFA0587A91C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84DABF38-2360-4646-8783-CFA0587A91C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2B677FB-2C5E-45CF-B2BE-E3744D5E81C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2B677FB-2C5E-45CF-B2BE-E3744D5E81C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2B677FB-2C5E-45CF-B2BE-E3744D5E81C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2B677FB-2C5E-45CF-B2BE-E3744D5E81C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCB09A91-AEB0-4A7C-8D99-1C8C7CAFE1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCB09A91-AEB0-4A7C-8D99-1C8C7CAFE1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCB09A91-AEB0-4A7C-8D99-1C8C7CAFE1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCB09A91-AEB0-4A7C-8D99-1C8C7CAFE1B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

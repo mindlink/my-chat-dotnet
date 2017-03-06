@@ -23,4 +23,14 @@ hideCreditCard			Hides all Credit Card Numbers			myChat chat.txt chat.json hideC
 
 hidePhone				Hides Phone Numbers						myChat chat.txt chat.json showCreditCardType
 
-obfuscateUser			Obfuscate the USername by Number		myChat chat.txt chat.json obfuscateUser
+obfuscateUser			Obfuscate the Username by Number		myChat chat.txt chat.json obfuscateUser
+
+
+WEB CLIENT
+----------
+!!! The web client is only tested with CHROME Browser !!!
+
+The Web Client is using Web Services 
+1. Start up MyChatServe on IIS
+2. Start MyChatWeb
+

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChat", "MyChat\MyChat.csproj", "{246D2511-9B28-44F3-8D05-7EBFAB79C95F}"
 EndProject
@@ -20,6 +20,7 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{246D2511-9B28-44F3-8D05-7EBFAB79C95F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{246D2511-9B28-44F3-8D05-7EBFAB79C95F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{246D2511-9B28-44F3-8D05-7EBFAB79C95F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{246D2511-9B28-44F3-8D05-7EBFAB79C95F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{246D2511-9B28-44F3-8D05-7EBFAB79C95F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{35295892-C40D-484F-967C-44328F8C0BCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

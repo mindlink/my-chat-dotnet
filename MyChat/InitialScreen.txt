@@ -1,0 +1,26 @@
+﻿--------------------
+Message Export Util.
+--------------------
+Help on Commands/Syntax:
+-Basic Usage: Export a file to JSON = <inputfile>.txt <outputfile>.json (Optional arguments: [option1,option2,option3,option4,option5])
+
+-Option1: Filter messages by sender = <inputfile>.txt <outputfile>.json <senderNameArg>
+
+-Option2: Filter messages by content = <inputfile>.txt <outputfile>.json <KeywordArg - Not case sensitive>
+
+-Option3: Usage of blacklist for bad words censoring = <inputfile>.txt <outputfile>.json <word1|word2|word3 etc..>
+
+-Option4: Usage of censoring credit card num and phones = <inputfile>.txt <outputfile>.json <word1|word2|word3 etc..> -Sensitive
+
+-Option5: Obfuscation of sender identity = <inputfile>.txt <outputfile>.json -Sensitive+OBF
+
+(NOTE) - A report is also printed in the end of each exported chat (for all exports).
+
+
+Examples:
+---------
+.\chat1.txt .\output1.json Deb    Exports the chat file to json including only the messages of Deb
+.\chat1.txt .\output1.json Hello all   Exports the chat file to json including only the messages that have the word "Hello" in their content.
+.\chat1.txt .\output1.json bad|test|phone -Sensitive   Exports the chat file to json by removing the words "bad","test","phone" from all content and all credit card and phone numbers.
+
+Enter your commands here:

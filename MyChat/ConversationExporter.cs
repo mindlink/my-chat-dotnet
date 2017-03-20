@@ -2,12 +2,7 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Net.Configuration;
-using System.Runtime.CompilerServices;
-using System.Security.Principal;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace MyChat
 {
@@ -36,7 +31,7 @@ namespace MyChat
             //Display general information for usage of tool.
             string screen = System.IO.File.ReadAllText(@".\InitialScreen.txt");
             Console.WriteLine(screen);
-            
+
             args = Console.ReadLine().Split(' ');
             if (args.Length == 0) return;
 
@@ -56,7 +51,7 @@ namespace MyChat
                     conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath,
                         configuration.ObfuscateSenders);
                 }
-                else
+                else if(configuration.Filter != null && configuration.Filter.Equals(args[2]))
                     conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath,
                         configuration.Filter);
             }
@@ -186,7 +181,7 @@ namespace MyChat
             //const int addToSeed = 3893;
             int addToSeed = 0;
             for (int i = 0; i < senderId.Length; i++)
-             addToSeed += senderId.Select(c => c).ElementAt(i);
+               addToSeed += senderId.Select(c => c).ElementAt(i);
 
             Random randChar = new Random(addToSeed + System.Environment.TickCount);
 
@@ -221,7 +216,7 @@ namespace MyChat
             this.WriteConversation(conversation, outputFilePath);
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
-            Console.ReadKey();
+            Console.ReadLine();
         }
 
 
@@ -245,7 +240,7 @@ namespace MyChat
             this.WriteConversation(conversation, outputFilePath);
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}', filtered by name: '{2}'", inputFilePath, outputFilePath, Filter);
-            Console.ReadKey();
+            Console.ReadLine();
         }
 
         /// <summary>
@@ -263,7 +258,7 @@ namespace MyChat
         /// <param name="sensitiveInfo">
         /// Including/Excluding sensitive info such as credit card numbers or phone numbers.
         /// </param>
-        public void ExportConversation(string inputFilePath, string outputFilePath, string[] blacklistedStrings ,bool sensitiveInfo)
+        public void ExportConversation(string inputFilePath, string outputFilePath, string[] blacklistedStrings, bool sensitiveInfo)
         {
             Conversation conversation = this.ReadConversation(inputFilePath, false);
             conversation.messages = RedactBadWords(conversation, blacklistedStrings,sensitiveInfo);
@@ -271,7 +266,8 @@ namespace MyChat
             this.WriteConversation(conversation, outputFilePath);
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}' - *BAD WORDS REDACTED OUTPUT*", inputFilePath, outputFilePath);
-            Environment.Exit(222);
+            Console.ReadLine();
+            //Environment.Exit(222);
         }
 
         /// <summary>

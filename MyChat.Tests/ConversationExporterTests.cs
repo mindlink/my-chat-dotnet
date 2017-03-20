@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
-using System.Net.Configuration;
-using System.Runtime.Remoting.Messaging;
+using System.Text;
 using System.Text.RegularExpressions;
 using MyChat;
 using Newtonsoft.Json;
@@ -19,6 +17,9 @@ namespace MindLink.Recruitment.MyChat.Tests
     [TestClass]
     public class ConversationExporterTests
     {
+
+        private const string defaultdir = @"C:\Users\standarduser\Source\Repos\my-chat-dotnet\MyChat\";
+
         /// <summary>
         /// Testing that exporting the conversation gives the proper output.
         /// </summary>
@@ -28,12 +29,12 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             ConversationExporter exporter = new ConversationExporter();
 
-            exporter.ExportConversation("chat.txt", "chat.json");
-            exporter.ExportConversation("chatvalid2.txt","chatformat2.json");
+            exporter.ExportConversation(defaultdir+"chat.txt", "chatformat1.json");
+            exporter.ExportConversation(defaultdir+"chatvalid2.txt", "chatformat2.json");
 
             //Verify that both input file formats are supported by checking their corrsponding conversations.
-            var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
-            var serializedConversationformat2 = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+            var serializedConversation = new StreamReader(new FileStream("chatformat1.json", FileMode.Open)).ReadToEnd();
+            var serializedConversationformat2 = new StreamReader(new FileStream("chatformat2.json", FileMode.Open)).ReadToEnd();
 
             Conversation savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
             Conversation savedConversationformat2 = JsonConvert.DeserializeObject<Conversation>(serializedConversationformat2);
@@ -84,8 +85,8 @@ namespace MindLink.Recruitment.MyChat.Tests
             ConversationExporter exporter = new ConversationExporter();
 
             //Check for json exports when filtering by senderId.
-            exporter.ExportConversation("chat.txt", "chatfilteredCorrect.json", "bob");
-            exporter.ExportConversation("chat.txt","chatfilteredWrong.json","wasdy");
+            exporter.ExportConversation(defaultdir+"chat.txt", "chatfilteredCorrect.json", "bob");
+            exporter.ExportConversation(defaultdir+"chat.txt", "chatfilteredWrong.json","wasdy");
 
             var serializedConversation = new StreamReader(new FileStream("chatfilteredCorrect.json", FileMode.Open)).ReadToEnd();
             var serializConvBlank = new StreamReader(new FileStream("chatfilteredWrong.json", FileMode.Open)).ReadToEnd();
@@ -98,7 +99,7 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             Assert.IsTrue(filtered1.name.Equals(filtered2.name));
 
-            Assert.AreNotEqual(filtered2ndConversation[0].content,filteredConversation[0].content);
+            //Assert.AreNotEqual(filtered2ndConversation[0].content,filteredConversation[0].content);
             Assert.IsTrue(filteredConversation.Any() && !filtered2ndConversation.Any());
 
             //Additional checks on exported content of Json files..
@@ -120,8 +121,8 @@ namespace MindLink.Recruitment.MyChat.Tests
             ConversationExporter exp = new ConversationExporter();
 
             //Check for json exports with the appropriate keyword filtering on message content.
-            exp.ExportConversation("chat.txt", "chatfilteredNoCase.json", "hello");
-            exp.ExportConversation("chat.txt", "chatfilteredCase.json", "PIE");
+            exp.ExportConversation(defaultdir+"chat.txt", "chatfilteredNoCase.json", "hello");
+            exp.ExportConversation(defaultdir+"chat.txt", "chatfilteredCase.json", "PIE");
 
             //Testing for filtering by content using the specified keywords. Test includes UPpercase and lowercase keywords.
             var filtOutput1 = new StreamReader(new FileStream("chatfilteredNoCase.json", FileMode.Open)).ReadToEnd();
@@ -158,9 +159,9 @@ namespace MindLink.Recruitment.MyChat.Tests
             ConversationExporter exp = new ConversationExporter();
 
             //Check for json exports with the blacklisted words redacted from message content.
-            exp.ExportConversation("chat.txt", "chatRedacted.json", "hello|pie|the");
+            exp.ExportConversation(defaultdir+"chat.txt", "chatRedacted.json", "hello|pie|the".Split('|'), false);
 
-            var redactedByBlacklist = new StreamReader(new FileStream("chatRedacted.json", FileMode.Open)).ReadToEnd();
+            var redactedByBlacklist = new StreamReader(new FileStream("chatRedacted.json", FileMode.Open,FileAccess.ReadWrite)).ReadToEnd();
             Conversation conversatOutRed = JsonConvert.DeserializeObject<Conversation>(redactedByBlacklist);
 
             //Validate properly redacted output per conversation/per message.
@@ -188,10 +189,10 @@ namespace MindLink.Recruitment.MyChat.Tests
             //Using: extended conversation file to include credit card and phone numbers.
 
             //Filtering only credit card and phone numbers - Include UNUSED words in blacklist and the "-Sensitive" command option.
-            convExporter.ExportConversation("chatextended.txt","chatExtRedacted.json","hello|test".Split('|'), true);
+            convExporter.ExportConversation(defaultdir+"chatextended.txt","chatExtRedacted.json","hello|test".Split('|'), true);
 
             //Filtering both sensitive info AND blacklisted words - Include USED words and the "-Sensitive" command option.
-            convExporter.ExportConversation("chatextended.txt","chatExtRedacted2.json","pie|Hello".Split('|'),true);
+            convExporter.ExportConversation(defaultdir+"chatextended.txt","chatExtRedacted2.json","pie|Hello".Split('|'),true);
 
 
             var redactedBySensitiveInfo = new StreamReader(new FileStream("chatExtRedacted.json", FileMode.Open)).ReadToEnd();
@@ -240,11 +241,20 @@ namespace MindLink.Recruitment.MyChat.Tests
             //Additional checks for further randomization of namings..
             Assert.AreNotEqual(exportConv.ObfuscateIds(testStrings[0]), exportConv.ObfuscateIds(testStrings[1]));
             Assert.AreNotEqual(exportConv.ObfuscateIds(testStrings[3]), exportConv.ObfuscateIds(testStrings[2]));
-            Assert.AreEqual(exportConv.ObfuscateIds(testStrings[4]), exportConv.ObfuscateIds(testStrings[4].Reverse().ToString()));
-            Assert.AreNotEqual(exportConv.ObfuscateIds(testStrings[4]), exportConv.ObfuscateIds(testStrings[4].ToLower().Reverse().ToString()));
+
+
+            StringBuilder sb = new StringBuilder();
+            foreach (char  C in testStrings[4].Reverse())
+                sb.Append(C);
+            Assert.AreEqual(exportConv.ObfuscateIds(testStrings[4]), exportConv.ObfuscateIds(sb.ToString()));
+            sb.Clear();
+
+            foreach (char C in testStrings[4].ToLower().Reverse())
+                sb.Append(C);
+            Assert.AreNotEqual(exportConv.ObfuscateIds(testStrings[4]), exportConv.ObfuscateIds(sb.ToString()));
 
             //Validate that all senderIds in exported content is in its proper form (alphanumeric strings).
-            exportConv.ExportConversation("chat.txt", "chatOut.json", true);
+            exportConv.ExportConversation(defaultdir+"chat.txt", "chatOut.json", true);
 
             var obfuscatedOutput = new StreamReader(new FileStream("chatOut.json", FileMode.Open)).ReadToEnd();
             Conversation conversatOutOBf = JsonConvert.DeserializeObject<Conversation>(obfuscatedOutput);
@@ -266,25 +276,25 @@ namespace MindLink.Recruitment.MyChat.Tests
             //Check for the content of the most active users report.
             //Using: extended conversation file for the reporting.
             //NOTE: The report is appended in every exported file by default.
-            convExport.ExportConversation("chatextended.txt", "chatReport.json");
+            convExport.ExportConversation(defaultdir+"chatextended.txt", "chatReport.json");
 
-            var standardOutputWithReport = new StreamReader(new FileStream("chatReport.json", FileMode.Open)).ReadToEnd();
+            var standardOutputWithReport = new StreamReader(new FileStream("chatReport.json", FileMode.Open, FileAccess.Read)).ReadToEnd();
             Conversation convReport = JsonConvert.DeserializeObject<Conversation>(standardOutputWithReport);
-
+            
             Assert.IsTrue(convReport.activeusers.Any());
 
-            Assert.AreEqual(8, convReport.activeusers.Count(user => user.UserId == "bob"));
-            Assert.AreNotEqual(6, convReport.activeusers.Count( user => user.UserId == "mike"));
-            Assert.AreEqual(4, convReport.activeusers.Count(user => user.UserId == "mike"));
-            Assert.AreEqual(6, convReport.activeusers.Count(user => user.UserId == "angus"));
+            Assert.AreEqual(8, convReport.messages.Count(user => user.senderId == "bob"));
+            Assert.AreNotEqual(6, convReport.messages.Count( user => user.senderId == "mike"));
+            Assert.AreEqual(4, convReport.messages.Count(user => user.senderId == "mike"));
+            Assert.AreEqual(6, convReport.messages.Count(user => user.senderId == "angus"));
 
-            Assert.AreEqual(convReport.activeusers.Count(u => u.UserId == "bob").ToString(),
+            Assert.AreEqual(convReport.messages.Count(u => u.senderId == "bob").ToString(),
                 convReport.activeusers[0].TotalOfMsgs);
 
-            Assert.AreEqual(convReport.activeusers.Count(u => u.UserId == "mike").ToString(),
+            Assert.AreEqual(convReport.messages.Count(u => u.senderId == "mike").ToString(),
                 convReport.activeusers[2].TotalOfMsgs);
 
-            Assert.AreEqual(convReport.activeusers.Count(u => u.UserId == "angus").ToString(),
+            Assert.AreEqual(convReport.messages.Count(u => u.senderId == "angus").ToString(),
                 convReport.activeusers[1].TotalOfMsgs);
         }
 

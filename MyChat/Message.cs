@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Newtonsoft.Json.Serialization;
 
 namespace MindLink.Recruitment.MyChat
 {

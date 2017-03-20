@@ -1,8 +1,5 @@
 using System;
-using System.CodeDom;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
 
 namespace MindLink.Recruitment.MyChat
 {

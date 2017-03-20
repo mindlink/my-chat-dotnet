@@ -1,3 +1,4 @@
+
 namespace MindLink.Recruitment.MyChat
 {
     using System;

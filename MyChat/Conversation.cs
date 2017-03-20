@@ -18,6 +18,11 @@ namespace MindLink.Recruitment.MyChat
         public IEnumerable<Message> messages;
 
         /// <summary>
+        /// The summary report for each conversation file.
+        /// </summary>
+        public List<ActiveUser> activeusers;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Conversation"/> class.
         /// </summary>
         /// <param name="name">
@@ -26,10 +31,14 @@ namespace MindLink.Recruitment.MyChat
         /// <param name="messages">
         /// The messages in the conversation.
         /// </param>
-        public Conversation(string name, IEnumerable<Message> messages)
+        /// <param name="activeusers">
+        /// The list of active users presented as a report to the end of the conversation JSON document.
+        /// </param>
+        public Conversation(string name, IEnumerable<Message> messages, List<ActiveUser> activeusers )
         {
             this.name = name;
             this.messages = messages;
+            this.activeusers = activeusers;
         }
     }
 }

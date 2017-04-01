@@ -27,6 +27,9 @@ namespace MindLink.MyChat
             var blacklist = application.Option("-b | --blacklist <keyword>",
                 "Hide specified keywords from messages", CommandOptionType.MultipleValue);
 
+            var sensitive = application.Option("-s | --sensitive",
+                "Hide sensitive data from messages", CommandOptionType.NoValue);
+
             application.HelpOption("-? | -h | --help");
             application.OnExecute(() =>
             {
@@ -51,6 +54,11 @@ namespace MindLink.MyChat
                 if (blacklist.HasValue())
                 {
                     configuration.AddTransformer(new BlacklistTransformer(blacklist.Values));
+                }
+
+                if (sensitive.HasValue())
+                {
+                    configuration.AddTransformer(new CreditCardTransformer());
                 }
 
                 new ConversationExporter(configuration).ExportConversation();

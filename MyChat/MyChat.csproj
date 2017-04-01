@@ -64,6 +64,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transformers\BlacklistTransformer.cs" />
+    <Compile Include="Transformers\CreditCardTransformer.cs" />
     <Compile Include="Transformers\IMessageTransformer.cs" />
   </ItemGroup>
   <ItemGroup>

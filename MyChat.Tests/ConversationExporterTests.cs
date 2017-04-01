@@ -18,13 +18,13 @@ namespace MindLink.MyChat.Tests
         [TestMethod]
         public void ExportingConversationExportsConversation()
         {
-            ConversationExporter exporter = new ConversationExporter();
+            var exporter = new ConversationExporter();
 
             exporter.ExportConversation("chat.txt", "chat.json");
 
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 
-            Conversation savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
             Assert.AreEqual("My Conversation", savedConversation.name);
 

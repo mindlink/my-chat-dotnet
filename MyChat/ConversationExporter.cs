@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security;
 using Newtonsoft.Json;
 
@@ -79,7 +80,8 @@ namespace MindLink.MyChat
                     {
                         var split = line.Split(' ');
 
-                        messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                        var content = string.Join(" ", split.Skip(2));
+                        messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], content));
                     }
 
                     return new Conversation(conversationName, messages);

@@ -22,7 +22,7 @@ namespace MindLink.MyChat.Tests
 
             exporter.ExportConversation("chat.txt", "chat.json");
 
-            var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+            var serializedConversation = File.ReadAllText("chat.json");
 
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 

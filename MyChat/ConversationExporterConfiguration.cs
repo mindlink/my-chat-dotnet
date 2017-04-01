@@ -1,6 +1,6 @@
 using System;
 
-namespace MindLink.Recruitment.MyChat
+namespace MindLink.MyChat
 {
     /// <summary>
     ///     Represents the configuration for the exporter.

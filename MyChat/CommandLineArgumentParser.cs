@@ -1,4 +1,4 @@
-namespace MindLink.Recruitment.MyChat
+namespace MindLink.MyChat
 {
     /// <summary>
     /// Represents a helper to parse command line arguments.

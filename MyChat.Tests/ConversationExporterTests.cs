@@ -1,13 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
-using MyChat;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
-namespace MindLink.Recruitment.MyChat.Tests
+namespace MindLink.MyChat.Tests
 {
-    using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
     /// <summary>
     /// Tests for the <see cref="ConversationExporter"/>.
     /// </summary>

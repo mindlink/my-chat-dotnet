@@ -1,7 +1,7 @@
-namespace MindLink.Recruitment.MyChat
-{
-    using System.Collections.Generic;
+using System.Collections.Generic;
 
+namespace MindLink.MyChat
+{
     /// <summary>
     /// Represents the model of a conversation.
     /// </summary>

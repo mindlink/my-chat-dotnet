@@ -1,13 +1,11 @@
-﻿namespace MyChat
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Security;
-    using System.Text;
-    using MindLink.Recruitment.MyChat;
-    using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Security;
+using Newtonsoft.Json;
 
+namespace MindLink.MyChat
+{
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
     /// </summary>
@@ -70,8 +68,7 @@
         {
             try
             {
-                using (var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
-                    Encoding.ASCII))
+                using (var reader = File.OpenText(inputFilePath))
                 {
                     var conversationName = reader.ReadLine();
                     var messages = new List<Message>();
@@ -117,7 +114,7 @@
         {
             try
             {
-                using (var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite)))
+                using (var writer = File.CreateText(outputFilePath))
                 {
                     var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
 

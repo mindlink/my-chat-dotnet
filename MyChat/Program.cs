@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.CommandLineUtils;
 using MindLink.MyChat.Filters;
+using MindLink.MyChat.Transformers;
 
 namespace MindLink.MyChat
 {
@@ -23,6 +24,9 @@ namespace MindLink.MyChat
             var userFilter = application.Option("-u | --user <username>",
                 "Filter messages by specified username", CommandOptionType.SingleValue);
 
+            var blacklist = application.Option("-b | --blacklist <keyword>",
+                "Hide specified keywords from messages", CommandOptionType.MultipleValue);
+
             application.HelpOption("-? | -h | --help");
             application.OnExecute(() =>
             {
@@ -42,6 +46,11 @@ namespace MindLink.MyChat
                 if (userFilter.HasValue())
                 {
                     configuration.AddFilter(new UserFilter(userFilter.Value()));
+                }
+
+                if (blacklist.HasValue())
+                {
+                    configuration.AddTransformer(new BlacklistTransformer(blacklist.Values));
                 }
 
                 new ConversationExporter(configuration).ExportConversation();

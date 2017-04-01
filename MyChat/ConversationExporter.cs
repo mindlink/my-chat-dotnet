@@ -22,7 +22,7 @@
         static void Main(string[] args)
         {
             var conversationExporter = new ConversationExporter();
-            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+            var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
             conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
         }
@@ -44,7 +44,7 @@
         /// </exception>
         public void ExportConversation(string inputFilePath, string outputFilePath)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            var conversation = this.ReadConversation(inputFilePath);
 
             this.WriteConversation(conversation, outputFilePath);
 
@@ -70,30 +70,31 @@
         {
             try
             {
-                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
-                    Encoding.ASCII);
-
-                string conversationName = reader.ReadLine();
-                var messages = new List<Message>();
-
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
+                using (var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
+                    Encoding.ASCII))
                 {
-                    var split = line.Split(' ');
+                    var conversationName = reader.ReadLine();
+                    var messages = new List<Message>();
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    string line;
+
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        var split = line.Split(' ');
+
+                        messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    }
+
+                    return new Conversation(conversationName, messages);
                 }
-
-                return new Conversation(conversationName, messages);
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException e)
             {
-                throw new ArgumentException("The file was not found.");
+                throw new ArgumentException("The file was not found.", e);
             }
-            catch (IOException)
+            catch (IOException e)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new Exception("Something went wrong in the IO.", e);
             }
         }
 
@@ -116,27 +117,24 @@
         {
             try
             {
-                var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
+                using (var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite)))
+                {
+                    var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
 
-                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
-
-                writer.Write(serialized);
-
-                writer.Flush();
-
-                writer.Close();
+                    writer.Write(serialized);
+                }
             }
-            catch (SecurityException)
+            catch (SecurityException e)
             {
-                throw new ArgumentException("No permission to file.");
+                throw new ArgumentException("No permission to file.", e);
             }
-            catch (DirectoryNotFoundException)
+            catch (DirectoryNotFoundException e)
             {
-                throw new ArgumentException("Path invalid.");
+                throw new ArgumentException("Path invalid.", e);
             }
-            catch (IOException)
+            catch (IOException e)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new Exception("Something went wrong in the IO.", e);
             }
         }
     }

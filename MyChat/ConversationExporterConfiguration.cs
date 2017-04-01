@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MindLink.MyChat.Filters;
+using MindLink.MyChat.Transformers;
 
 namespace MindLink.MyChat
 {
@@ -23,6 +24,10 @@ namespace MindLink.MyChat
         public ReadOnlyCollection<IMessageFilter> Filters => this.filters.AsReadOnly();
 
         private readonly List<IMessageFilter> filters = new List<IMessageFilter>();
+
+        public ReadOnlyCollection<IMessageTransformer> Transformers => this.transformers.AsReadOnly();
+
+        private readonly List<IMessageTransformer> transformers = new List<IMessageTransformer>();
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ConversationExporterConfiguration" /> class.
@@ -48,6 +53,11 @@ namespace MindLink.MyChat
         public void AddFilter(IMessageFilter filter)
         {
             this.filters.Add(filter);
+        }
+
+        public void AddTransformer(IMessageTransformer transformer)
+        {
+            this.transformers.Add(transformer);
         }
     }
 }

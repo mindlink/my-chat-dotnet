@@ -67,6 +67,7 @@
     <Content Include="chat.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="chat_with_creditcard.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

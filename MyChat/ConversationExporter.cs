@@ -38,11 +38,21 @@ namespace MindLink.MyChat
         {
             var conversation = this.ReadConversation();
             conversation = this.Filter(conversation);
+            conversation = this.Transform(conversation);
 
             this.WriteConversation(conversation);
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", this.configuration.InputFilePath,
                 this.configuration.OutputFilePath);
+        }
+
+        private Conversation Transform(Conversation conversation)
+        {
+            var result = conversation.Messages.Select(
+                m => this.configuration.Transformers.Aggregate(m,
+                    (message, transformer) => transformer.TransformMessage(m)));
+            
+            return new Conversation(conversation.Name, result);
         }
 
         private Conversation Filter(Conversation conversation)

@@ -10,12 +10,12 @@ namespace MindLink.MyChat
         /// <summary>
         /// The name of the conversation.
         /// </summary>
-        public string name;
+        public string Name { get; }
 
         /// <summary>
         /// The messages in the conversation.
         /// </summary>
-        public IEnumerable<Message> messages;
+        public IEnumerable<Message> Messages { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Conversation"/> class.
@@ -28,8 +28,8 @@ namespace MindLink.MyChat
         /// </param>
         public Conversation(string name, IEnumerable<Message> messages)
         {
-            this.name = name;
-            this.messages = messages;
+            this.Name = name;
+            this.Messages = messages;
         }
     }
 }

@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using MindLink.MyChat.Filters;
 
 namespace MindLink.MyChat
 {
@@ -10,12 +13,16 @@ namespace MindLink.MyChat
         /// <summary>
         ///     The input file path.
         /// </summary>
-        public string inputFilePath;
+        public string InputFilePath { get; }
 
         /// <summary>
         ///     The output file path.
         /// </summary>
-        public string outputFilePath;
+        public string OutputFilePath { get; }
+
+        public ReadOnlyCollection<IMessageFilter> Filters => this.filters.AsReadOnly();
+
+        private readonly List<IMessageFilter> filters = new List<IMessageFilter>();
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ConversationExporterConfiguration" /> class.
@@ -34,8 +41,13 @@ namespace MindLink.MyChat
         /// </exception>
         public ConversationExporterConfiguration(string inputFilePath, string outputFilePath)
         {
-            this.inputFilePath = inputFilePath;
-            this.outputFilePath = outputFilePath;
+            this.InputFilePath = inputFilePath;
+            this.OutputFilePath = outputFilePath;
+        }
+
+        public void AddFilter(IMessageFilter filter)
+        {
+            this.filters.Add(filter);
         }
     }
 }

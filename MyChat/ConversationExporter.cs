@@ -8,68 +8,69 @@ using Newtonsoft.Json;
 namespace MindLink.MyChat
 {
     /// <summary>
-    /// Represents a conversation exporter that can read a conversation and write it out in JSON.
+    ///     Represents a conversation exporter that can read a conversation and write it out in JSON.
     /// </summary>
     public sealed class ConversationExporter
     {
-        /// <summary>
-        /// The application entry point.
-        /// </summary>
-        /// <param name="args">
-        /// The command line arguments.
-        /// </param>
-        static void Main(string[] args)
-        {
-            var conversationExporter = new ConversationExporter();
-            var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+        private readonly ConversationExporterConfiguration configuration;
 
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="configuration">
+        ///     Configuration for exporter
+        /// </param>
+        public ConversationExporter(ConversationExporterConfiguration configuration)
+        {
+            this.configuration = configuration;
         }
 
         /// <summary>
-        /// Exports the conversation at <paramref name="inputFilePath"/> as JSON to <paramref name="outputFilePath"/>.
+        ///     Exports the conversation.
         /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
-        /// </param>
         /// <exception cref="ArgumentException">
-        /// Thrown when a path is invalid.
+        ///     Thrown when a path is invalid.
         /// </exception>
         /// <exception cref="Exception">
-        /// Thrown when something bad happens.
+        ///     Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public void ExportConversation()
         {
-            var conversation = this.ReadConversation(inputFilePath);
+            var conversation = this.ReadConversation();
+            conversation = this.Filter(conversation);
 
-            this.WriteConversation(conversation, outputFilePath);
+            this.WriteConversation(conversation);
 
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+            Console.WriteLine("Conversation exported from '{0}' to '{1}'", this.configuration.InputFilePath,
+                this.configuration.OutputFilePath);
+        }
+
+        private Conversation Filter(Conversation conversation)
+        {
+            var result =
+                conversation.Messages.Where(m => this.configuration.Filters.All(f => f.IncludeMessage(m.Content)))
+                    .ToList();
+
+            return new Conversation(conversation.Name, result);
         }
 
         /// <summary>
-        /// Helper method to read the conversation from <paramref name="inputFilePath"/>.
+        ///     Helper method to read the conversation from input file"/>.
         /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
         /// <returns>
-        /// A <see cref="Conversation"/> model representing the conversation.
+        ///     A <see cref="Conversation" /> model representing the conversation.
         /// </returns>
         /// <exception cref="ArgumentException">
-        /// Thrown when the input file could not be found.
+        ///     Thrown when the input file could not be found.
         /// </exception>
         /// <exception cref="Exception">
-        /// Thrown when something else went wrong.
+        ///     Thrown when something else went wrong.
         /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
+        private Conversation ReadConversation()
         {
             try
             {
-                using (var reader = File.OpenText(inputFilePath))
+                using (var reader = File.OpenText(this.configuration.InputFilePath))
                 {
                     var conversationName = reader.ReadLine();
                     var messages = new List<Message>();
@@ -81,7 +82,8 @@ namespace MindLink.MyChat
                         var split = line.Split(' ');
 
                         var content = string.Join(" ", split.Skip(2));
-                        messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], content));
+                        messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])),
+                            split[1], content));
                     }
 
                     return new Conversation(conversationName, messages);
@@ -98,25 +100,19 @@ namespace MindLink.MyChat
         }
 
         /// <summary>
-        /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
+        ///     Helper method to write the <paramref name="conversation" /> as JSON to output file/>.
         /// </summary>
         /// <param name="conversation">
-        /// The conversation.
+        ///     The conversation.
         /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// Thrown when there is a problem with the <paramref name="outputFilePath"/>.
-        /// </exception>
         /// <exception cref="Exception">
-        /// Thrown when something else bad happens.
+        ///     Thrown when something else bad happens.
         /// </exception>
-        public void WriteConversation(Conversation conversation, string outputFilePath)
+        private void WriteConversation(Conversation conversation)
         {
             try
             {
-                using (var writer = File.CreateText(outputFilePath))
+                using (var writer = File.CreateText(this.configuration.OutputFilePath))
                 {
                     var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
 

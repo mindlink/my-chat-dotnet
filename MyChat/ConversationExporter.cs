@@ -48,7 +48,7 @@ namespace MindLink.MyChat
         private Conversation Filter(Conversation conversation)
         {
             var result =
-                conversation.Messages.Where(m => this.configuration.Filters.All(f => f.IncludeMessage(m.Content)))
+                conversation.Messages.Where(m => this.configuration.Filters.All(f => f.IncludeMessage(m)))
                     .ToList();
 
             return new Conversation(conversation.Name, result);

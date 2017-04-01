@@ -20,6 +20,9 @@ namespace MindLink.MyChat
             var keywordFilter = application.Option("-f | --filter <keyword>",
                 "Filter messages by specified keyword", CommandOptionType.SingleValue);
 
+            var userFilter = application.Option("-u | --user <username>",
+                "Filter messages by specified username", CommandOptionType.SingleValue);
+
             application.HelpOption("-? | -h | --help");
             application.OnExecute(() =>
             {
@@ -34,6 +37,11 @@ namespace MindLink.MyChat
                 if (keywordFilter.HasValue())
                 {
                     configuration.AddFilter(new KeywordFilter(keywordFilter.Value()));
+                }
+
+                if (userFilter.HasValue())
+                {
+                    configuration.AddFilter(new UserFilter(userFilter.Value()));
                 }
 
                 new ConversationExporter(configuration).ExportConversation();

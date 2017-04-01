@@ -88,5 +88,29 @@ namespace MindLink.MyChat.Tests
             Assert.AreEqual("angus", messages[3].SenderId);
             Assert.AreEqual("YES! I'm the head pie eater there...", messages[3].Content);
         }
+
+        [TestMethod]
+        public void EnsureUserFilterWorks()
+        {
+            var config = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            config.AddFilter(new UserFilter("angus"));
+
+            var exporter = new ConversationExporter(config);
+            exporter.ExportConversation();
+            var serializedConversation = File.ReadAllText("chat.json");
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            Assert.AreEqual("My Conversation", savedConversation.Name);
+
+            var messages = savedConversation.Messages.ToList();
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470912), messages[0].Timestamp);
+            Assert.AreEqual("angus", messages[0].SenderId);
+            Assert.AreEqual("Hell yes! Are we buying some pie?", messages[0].Content);
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470915), messages[1].Timestamp);
+            Assert.AreEqual("angus", messages[1].SenderId);
+            Assert.AreEqual("YES! I'm the head pie eater there...", messages[1].Content);
+        }
     }
 }

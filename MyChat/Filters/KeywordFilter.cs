@@ -9,9 +9,9 @@ namespace MindLink.MyChat.Filters
             this.keyword = keyword;
         }
 
-        public bool IncludeMessage(string message)
+        public bool IncludeMessage(Message message)
         {
-            return message.Contains(this.keyword);
+            return message.Content.Contains(this.keyword);
         }
     }
 }

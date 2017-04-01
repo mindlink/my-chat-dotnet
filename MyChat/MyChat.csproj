@@ -59,6 +59,7 @@
     <Compile Include="ConversationExporterConfiguration.cs" />
     <Compile Include="Filters\IMessageFilter.cs" />
     <Compile Include="Filters\KeywordFilter.cs" />
+    <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

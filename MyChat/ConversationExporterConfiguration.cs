@@ -5,17 +5,34 @@ namespace MindLink.Recruitment.MyChat
     /// <summary>
     /// Represents the configuration for the exporter.
     /// </summary>
-    public sealed class ConversationExporterConfiguration
+    public class ConversationExporterConfiguration
     {
         /// <summary>
         /// The input file path.
         /// </summary>
-        public string inputFilePath;
+        string inputFilePath;
 
         /// <summary>
         /// The output file path.
         /// </summary>
-        public string outputFilePath;
+        string outputFilePath;
+
+        /// <summary>
+        /// Sets  or returns the input file path
+        /// </summary>
+        public string InputFilePath
+        {                   
+            get { return this.inputFilePath; }
+            set { this.inputFilePath = value; }
+        }   
+
+        /// <summary>
+        /// Sets or returns the output file path
+        /// </summary>
+        public string OutputFilePath { 
+            get { return this.outputFilePath;}
+            set { this.outputFilePath = value;}
+         }  
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
@@ -34,8 +51,8 @@ namespace MindLink.Recruitment.MyChat
         /// </exception>
         public ConversationExporterConfiguration(string inputFilePath, string outputFilePath)
         {
-            this.inputFilePath = inputFilePath;
-            this.outputFilePath = outputFilePath;
+            InputFilePath = inputFilePath;
+            OutputFilePath = outputFilePath;
         }
     }
 }

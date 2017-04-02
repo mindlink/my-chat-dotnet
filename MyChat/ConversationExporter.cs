@@ -1,13 +1,13 @@
-﻿namespace MyChat
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Security;
-    using System.Text;
-    using MindLink.Recruitment.MyChat;
-    using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Security;
+using System.Text;
+using MindLink.Recruitment.MyChat;
+using Newtonsoft.Json;
 
+namespace MyChat
+{
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
     /// </summary>
@@ -22,122 +22,71 @@
         static void Main(string[] args)
         {
             var conversationExporter = new ConversationExporter();
-            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
-        }
+            //An instance of this class contains arguments read from args[] argument
+            CommandLineArgumentParser options = new CommandLineArgumentParser();
 
-        /// <summary>
-        /// Exports the conversation at <paramref name="inputFilePath"/> as JSON to <paramref name="outputFilePath"/>.
-        /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// Thrown when a path is invalid.
-        /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something bad happens.
-        /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
-        {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            //ExportCreteria holds the output preferences of the user;
+            ExportCreteria exportCreteria;
 
-            this.WriteConversation(conversation, outputFilePath);
-
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
-        }
-
-        /// <summary>
-        /// Helper method to read the conversation from <paramref name="inputFilePath"/>.
-        /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Conversation"/> model representing the conversation.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// Thrown when the input file could not be found.
-        /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something else went wrong.
-        /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
-        {
+            /// ---------- Program options: 
+            ///-i input,the input file
+            ///-o output, the output file
+            ///-f user , filter by user 
+            ///-k keyword, filter by keyword
+            ///-L word1,word2,...,wordn  -- set black list
+            ///-r include report
+            ///-h hide user id
+           
+            
             try
             {
-                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
-                    Encoding.ASCII);
-
-                string conversationName = reader.ReadLine();
-                var messages = new List<Message>();
-
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
+                if (CommandLine.Parser.Default.ParseArguments(args, options))                   
                 {
-                    var split = line.Split(' ');
+                    //Export creteria initialization
+                    exportCreteria = new ExportCreteria(options.InputFile, options.OutputFile); 
+                    exportCreteria.HideUserName = options.HideUserId;
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    if(options.User != null)
+                        exportCreteria.Export_by_User = new User(options.User);
+
+                    if(options.Keyword != null) 
+                        exportCreteria.Export_by_Keyword = options.Keyword;
+
+                    if (options.blackList != null)
+                        exportCreteria.SetBlackListItems(options.blackList);
+
+                    exportCreteria.IncludeReport = options.IncludeReport;
+          
+                    //ExportHandler contains a serie of functions
+                    //for exporting a convertation, based on exportCreteria defined
+                    //defined by the user
+                    ExportHandler.ExportConversation(exportCreteria);
+
+                    ///successful export
+                    Console.WriteLine("Conversation exported successfully.");
                 }
 
-                return new Conversation(conversationName, messages);
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException fileNotFoundException)
             {
-                throw new ArgumentException("The file was not found.");
+                Console.WriteLine(fileNotFoundException.Message);
             }
-            catch (IOException)
+            catch (IOException ioException)
             {
-                throw new Exception("Something went wrong in the IO.");
+                Console.WriteLine(ioException.Message);
             }
-        }
+            catch (ArgumentNullException nullArgumentException)
+            {
+                Console.WriteLine(nullArgumentException.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Press any key to continue");
+                Console.Read();
+            }
+        }   
 
-        /// <summary>
-        /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
-        /// </summary>
-        /// <param name="conversation">
-        /// The conversation.
-        /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// Thrown when there is a problem with the <paramref name="outputFilePath"/>.
-        /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something else bad happens.
-        /// </exception>
-        public void WriteConversation(Conversation conversation, string outputFilePath)
-        {
-            try
-            {
-                var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
-
-                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
-
-                writer.Write(serialized);
-
-                writer.Flush();
-
-                writer.Close();
-            }
-            catch (SecurityException)
-            {
-                throw new ArgumentException("No permission to file.");
-            }
-            catch (DirectoryNotFoundException)
-            {
-                throw new ArgumentException("Path invalid.");
-            }
-            catch (IOException)
-            {
-                throw new Exception("Something went wrong in the IO.");
-            }
-        }
+      
     }
 }

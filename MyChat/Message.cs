@@ -1,7 +1,7 @@
+using System;
+
 namespace MindLink.Recruitment.MyChat
 {
-    using System;
-
     /// <summary>
     /// Represents a chat message.
     /// </summary>
@@ -10,17 +10,44 @@ namespace MindLink.Recruitment.MyChat
         /// <summary>
         /// The message content.
         /// </summary>
-        public string content;
+        string content;
 
         /// <summary>
         /// The message timestamp.
         /// </summary>
-        public DateTimeOffset timestamp;
+        DateTimeOffset timestamp;
 
         /// <summary>
         /// The message sender.
         /// </summary>
-        public string senderId;
+        string senderId;
+
+        /// <summary>
+        /// Sets or returns the Content of the message
+        /// </summary>
+        public string Content 
+        {
+            get { return this.content; }
+            set { this.content = value; }
+        }          
+
+        /// <summary>
+        /// Sets or returns the time stamp of a message
+        /// </summary>
+        public DateTimeOffset Timestamp 
+        {
+            get { return this.timestamp; }
+            set { this.timestamp = value; }
+        }
+
+        /// <summary>
+        /// Sets or returns the id of a Sender 
+        /// </summary>
+        public string SenderId 
+        {
+            get { return this.senderId; }
+            set { this.senderId = value; }
+        }        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Message"/> class.
@@ -36,9 +63,9 @@ namespace MindLink.Recruitment.MyChat
         /// </param>
         public Message(DateTimeOffset timestamp, string senderId, string content)
         {
-            this.content = content;
-            this.timestamp = timestamp;
-            this.senderId = senderId;
+            Content = content;
+            Timestamp = timestamp;
+            SenderId = senderId;
         }
     }
 }

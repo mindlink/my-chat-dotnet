@@ -1,0 +1,44 @@
+{
+  "Name": "My Conversation",
+  "Messages": [
+    {
+      "Content": "\\*redacted\\* there!",
+      "Timestamp": "2015-11-25T17:01:41+00:00",
+      "SenderId": "9f9d51bc70ef21ca5c14f307980a29d8"
+    },
+    {
+      "Content": "how are you?",
+      "Timestamp": "2015-11-25T17:01:45+00:00",
+      "SenderId": "18126e7bd3f84b3f3e4df094def5b7de"
+    },
+    {
+      "Content": "I'm good thanks, do you like pie?",
+      "Timestamp": "2015-11-25T17:01:46+00:00",
+      "SenderId": "9f9d51bc70ef21ca5c14f307980a29d8"
+    },
+    {
+      "Content": "no, let me ask \\*redacted\\*...",
+      "Timestamp": "2015-11-25T17:01:50+00:00",
+      "SenderId": "18126e7bd3f84b3f3e4df094def5b7de"
+    },
+    {
+      "Content": "\\*redacted\\* yes! Are we buying some pie?",
+      "Timestamp": "2015-11-25T17:01:52+00:00",
+      "SenderId": "e7a70020ac0d23a2db880f2003bb4e46"
+    },
+    {
+      "Content": "No, just want to know if there's anybody else in the pie society...",
+      "Timestamp": "2015-11-25T17:01:54+00:00",
+      "SenderId": "9f9d51bc70ef21ca5c14f307980a29d8"
+    },
+    {
+      "Content": "YES! I'm the head pie eater there...",
+      "Timestamp": "2015-11-25T17:01:55+00:00",
+      "SenderId": "e7a70020ac0d23a2db880f2003bb4e46"
+    }
+  ]
+}[
+  "User id:9f9d51bc70ef21ca5c14f307980a29d8, Messages:3",
+  "User id:18126e7bd3f84b3f3e4df094def5b7de, Messages:2",
+  "User id:e7a70020ac0d23a2db880f2003bb4e46, Messages:2"
+]

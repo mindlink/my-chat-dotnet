@@ -42,8 +42,17 @@ namespace MindLink.MyChat
         /// <summary>
         ///     Conversation stats.
         /// </summary>
-        public IEnumerable<ConversationStatsItem> Stats => this.Messages.GroupBy(m => m.SenderId)
-            .Select(g => new ConversationStatsItem {SenderId = g.Key, MessagesSent = g.Count()})
-            .OrderByDescending(i => i.MessagesSent);
+        public IEnumerable<ConversationStatsItem> Stats
+        {
+            get
+            {
+                return this.Messages.GroupBy(m => m.SenderId)
+                    .Select(g => new ConversationStatsItem {SenderId = g.Key, MessagesSent = g.Count()})
+                    .OrderByDescending(i => i.MessagesSent);
+            }
+            // ReSharper disable once ValueParameterNotUsed
+            // Ignore on deserialization
+            set { }
+        }
     }
 }

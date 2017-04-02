@@ -44,6 +44,10 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PhoneNumbers, Version=8.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\libphonenumber-csharp.8.3.1.1\lib\PhoneNumbers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -66,6 +70,7 @@
     <Compile Include="Transformers\BlacklistTransformer.cs" />
     <Compile Include="Transformers\CreditCardTransformer.cs" />
     <Compile Include="Transformers\IMessageTransformer.cs" />
+    <Compile Include="Transformers\PhoneNumberTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

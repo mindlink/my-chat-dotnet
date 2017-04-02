@@ -18,16 +18,16 @@ namespace MindLink.MyChat
 
             var inputFile = application.Argument("input", "Input file");
             var outputFile = application.Argument("output", "Output file");
-            var keywordFilter = application.Option("-f | --filter <keyword>",
+            var keywordFilterFlag = application.Option("-f | --filter <keyword>",
                 "Filter messages by specified keyword", CommandOptionType.SingleValue);
 
-            var userFilter = application.Option("-u | --user <username>",
+            var userFilterFlag = application.Option("-u | --user <username>",
                 "Filter messages by specified username", CommandOptionType.SingleValue);
 
-            var blacklist = application.Option("-b | --blacklist <keyword>",
+            var blacklistFlag = application.Option("-b | --blacklist <keyword>",
                 "Hide specified keywords from messages", CommandOptionType.MultipleValue);
 
-            var sensitive = application.Option("-s | --sensitive",
+            var sensitiveFlag = application.Option("-s | --sensitive",
                 "Hide sensitive data from messages", CommandOptionType.NoValue);
 
             application.HelpOption("-? | -h | --help");
@@ -41,24 +41,25 @@ namespace MindLink.MyChat
 
                 var configuration = new ConversationExporterConfiguration(inputFile.Value, outputFile.Value);
 
-                if (keywordFilter.HasValue())
+                if (keywordFilterFlag.HasValue())
                 {
-                    configuration.AddFilter(new KeywordFilter(keywordFilter.Value()));
+                    configuration.AddFilter(new KeywordFilter(keywordFilterFlag.Value()));
                 }
 
-                if (userFilter.HasValue())
+                if (userFilterFlag.HasValue())
                 {
-                    configuration.AddFilter(new UserFilter(userFilter.Value()));
+                    configuration.AddFilter(new UserFilter(userFilterFlag.Value()));
                 }
 
-                if (blacklist.HasValue())
+                if (blacklistFlag.HasValue())
                 {
-                    configuration.AddTransformer(new BlacklistTransformer(blacklist.Values));
+                    configuration.AddTransformer(new BlacklistTransformer(blacklistFlag.Values));
                 }
 
-                if (sensitive.HasValue())
+                if (sensitiveFlag.HasValue())
                 {
                     configuration.AddTransformer(new CreditCardTransformer());
+                    configuration.AddTransformer(new PhoneNumberTransformer());
                 }
 
                 new ConversationExporter(configuration).ExportConversation();

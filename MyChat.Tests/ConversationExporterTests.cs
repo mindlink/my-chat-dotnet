@@ -245,5 +245,49 @@ namespace MindLink.MyChat.Tests
             Assert.AreEqual("angus", messages[6].SenderId);
             Assert.AreEqual("YES! I'm the head pie eater there... my another phone *redacted*", messages[6].Content);
         }
+
+        [TestMethod]
+        public void EnsureUserHidingWorks()
+        {
+            var config = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            config.AddTransformer(new UserObfuscateTransformer());
+
+            var exporter = new ConversationExporter(config);
+            exporter.ExportConversation();
+            var serializedConversation = File.ReadAllText("chat.json");
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            Assert.AreEqual("My Conversation", savedConversation.Name);
+
+            var messages = savedConversation.Messages.ToList();
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470901), messages[0].Timestamp);
+            Assert.AreEqual("f27b5ba8", messages[0].SenderId);
+            Assert.AreEqual("Hello there!", messages[0].Content);
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470905), messages[1].Timestamp);
+            Assert.AreEqual("8c10bda1", messages[1].SenderId);
+            Assert.AreEqual("how are you?", messages[1].Content);
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470906), messages[2].Timestamp);
+            Assert.AreEqual("f27b5ba8", messages[2].SenderId);
+            Assert.AreEqual("I'm good thanks, do you like pie?", messages[2].Content);
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470910), messages[3].Timestamp);
+            Assert.AreEqual("8c10bda1", messages[3].SenderId);
+            Assert.AreEqual("no, let me ask Angus...", messages[3].Content);
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470912), messages[4].Timestamp);
+            Assert.AreEqual("1b8e1a6b", messages[4].SenderId);
+            Assert.AreEqual("Hell yes! Are we buying some pie?", messages[4].Content);
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470914), messages[5].Timestamp);
+            Assert.AreEqual("f27b5ba8", messages[5].SenderId);
+            Assert.AreEqual("No, just want to know if there's anybody else in the pie society...", messages[5].Content);
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470915), messages[6].Timestamp);
+            Assert.AreEqual("1b8e1a6b", messages[6].SenderId);
+            Assert.AreEqual("YES! I'm the head pie eater there...", messages[6].Content);
+        }
     }
 }

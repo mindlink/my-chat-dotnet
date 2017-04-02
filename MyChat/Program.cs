@@ -30,6 +30,9 @@ namespace MindLink.MyChat
             var sensitiveFlag = application.Option("-s | --sensitive",
                 "Hide sensitive data from messages", CommandOptionType.NoValue);
 
+            var obfuscateUserFlag = application.Option("-o | --obfuscate",
+                "Obfuscate usernames in conversation", CommandOptionType.NoValue);
+
             application.HelpOption("-? | -h | --help");
             application.OnExecute(() =>
             {
@@ -60,6 +63,11 @@ namespace MindLink.MyChat
                 {
                     configuration.AddTransformer(new CreditCardTransformer());
                     configuration.AddTransformer(new PhoneNumberTransformer());
+                }
+
+                if (obfuscateUserFlag.HasValue())
+                {
+                    configuration.AddTransformer(new UserObfuscateTransformer());
                 }
 
                 new ConversationExporter(configuration).ExportConversation();

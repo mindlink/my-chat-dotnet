@@ -1,4 +1,4 @@
-﻿namespace MindLink.MyChat.Transformers
+﻿namespace MindLink.MyChat.Domain.Transformers
 {
     public interface IMessageTransformer
     {

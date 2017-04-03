@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Murmur;
 
-namespace MindLink.MyChat.Transformers
+namespace MindLink.MyChat.Domain.Transformers
 {
     public class UserObfuscateTransformer : IMessageTransformer
     {

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace MindLink.MyChat.Transformers
+namespace MindLink.MyChat.Domain.Transformers
 {
     public class CreditCardTransformer : IMessageTransformer
     {

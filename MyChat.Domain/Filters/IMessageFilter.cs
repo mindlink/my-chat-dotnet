@@ -1,4 +1,4 @@
-namespace MindLink.MyChat.Filters
+namespace MindLink.MyChat.Domain.Filters
 {
     public interface IMessageFilter
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MindLink.MyChat.Transformers
+namespace MindLink.MyChat.Domain.Transformers
 {
     public class BlacklistTransformer : IMessageTransformer
     {

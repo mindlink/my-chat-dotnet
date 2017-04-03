@@ -41,9 +41,6 @@ namespace MindLink.MyChat.Domain
             conversation = this.Transform(conversation);
 
             this.WriteConversation(conversation);
-
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", this.configuration.InputFilePath,
-                this.configuration.OutputFilePath);
         }
 
         private Conversation Transform(Conversation conversation)
@@ -80,7 +77,7 @@ namespace MindLink.MyChat.Domain
         {
             try
             {
-                using (var reader = File.OpenText(this.configuration.InputFilePath))
+                using (var reader = new StreamReader(this.configuration.InputStream))
                 {
                     var conversationName = reader.ReadLine();
                     var messages = new List<Message>();
@@ -122,7 +119,7 @@ namespace MindLink.MyChat.Domain
         {
             try
             {
-                using (var writer = File.CreateText(this.configuration.OutputFilePath))
+                using (var writer = new StreamWriter(this.configuration.OutputStream))
                 {
                     var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
 

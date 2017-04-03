@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.CommandLineUtils;
-using MindLink.MyChat.Filters;
-using MindLink.MyChat.Transformers;
+﻿using System.IO;
+using Microsoft.Extensions.CommandLineUtils;
+using MindLink.MyChat.Domain;
+using MindLink.MyChat.Domain.Filters;
+using MindLink.MyChat.Domain.Transformers;
 
 namespace MindLink.MyChat
 {
@@ -42,7 +44,7 @@ namespace MindLink.MyChat
                     return 2;
                 }
 
-                var configuration = new ConversationExporterConfiguration(inputFile.Value, outputFile.Value);
+                var configuration = new ConversationExporterConfiguration(File.OpenRead(inputFile.Value), File.Create(outputFile.Value));
 
                 if (keywordFilterFlag.HasValue())
                 {

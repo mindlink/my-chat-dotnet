@@ -58,6 +58,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyChat.Domain\MyChat.Domain.csproj">
+      <Project>{1FDC2F8F-E0EC-4636-B74E-5CDBD647143B}</Project>
+      <Name>MyChat.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyChat\MyChat.csproj">
       <Project>{246D2511-9B28-44F3-8D05-7EBFAB79C95F}</Project>
       <Name>MyChat</Name>

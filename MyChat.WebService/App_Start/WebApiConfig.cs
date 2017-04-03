@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace MyChat.WebService
+namespace MindLink.MyChat.WebService
 {
     public static class WebApiConfig
     {

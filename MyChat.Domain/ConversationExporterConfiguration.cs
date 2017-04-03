@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using MindLink.MyChat.Domain.Filters;
 using MindLink.MyChat.Domain.Transformers;
 
@@ -12,14 +13,14 @@ namespace MindLink.MyChat.Domain
     public sealed class ConversationExporterConfiguration
     {
         /// <summary>
-        ///     The input file path.
+        ///     The input stream.
         /// </summary>
-        public string InputFilePath { get; }
+        public Stream InputStream { get; }
 
         /// <summary>
-        ///     The output file path.
+        ///     The output stream.
         /// </summary>
-        public string OutputFilePath { get; }
+        public Stream OutputStream { get; }
 
         public ReadOnlyCollection<IMessageFilter> Filters => this.filters.AsReadOnly();
 
@@ -32,10 +33,10 @@ namespace MindLink.MyChat.Domain
         /// <summary>
         ///     Initializes a new instance of the <see cref="ConversationExporterConfiguration" /> class.
         /// </summary>
-        /// <param name="inputFilePath">
+        /// <param name="inputStream">
         ///     The input file path.
         /// </param>
-        /// <param name="outputFilePath">
+        /// <param name="outputStream">
         ///     The output file path.
         /// </param>
         /// <exception cref="ArgumentNullException">
@@ -44,10 +45,10 @@ namespace MindLink.MyChat.Domain
         /// <exception cref="ArgumentException">
         ///     Thrown when any of the given arguments is empty.
         /// </exception>
-        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath)
+        public ConversationExporterConfiguration(Stream inputStream, Stream outputStream)
         {
-            this.InputFilePath = inputFilePath;
-            this.OutputFilePath = outputFilePath;
+            this.InputStream = inputStream;
+            this.OutputStream = outputStream;
         }
 
         public void AddFilter(IMessageFilter filter)

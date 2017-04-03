@@ -2,8 +2,9 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MindLink.MyChat.Filters;
-using MindLink.MyChat.Transformers;
+using MindLink.MyChat.Domain;
+using MindLink.MyChat.Domain.Filters;
+using MindLink.MyChat.Domain.Transformers;
 using Newtonsoft.Json;
 
 namespace MindLink.MyChat.Tests
@@ -20,8 +21,10 @@ namespace MindLink.MyChat.Tests
         [TestMethod]
         public void ExportingConversationExportsConversation()
         {
-            var exporter = new ConversationExporter(new ConversationExporterConfiguration("chat.txt", "chat.json"));
+            var config = new ConversationExporterConfiguration(File.OpenRead("chat.txt"), File.Create("chat.json"));
+            var exporter = new ConversationExporter(config);
             exporter.ExportConversation();
+            config.OutputStream.Close();
             var serializedConversation = File.ReadAllText("chat.json");
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
@@ -61,11 +64,12 @@ namespace MindLink.MyChat.Tests
         [TestMethod]
         public void EnsureKeywordFilterWorks()
         {
-            var config = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            var config = new ConversationExporterConfiguration(File.OpenRead("chat.txt"), File.Create("chat.json"));
             config.AddFilter(new KeywordFilter("pie"));
 
             var exporter = new ConversationExporter(config);
             exporter.ExportConversation();
+            config.OutputStream.Close();
             var serializedConversation = File.ReadAllText("chat.json");
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
@@ -93,11 +97,12 @@ namespace MindLink.MyChat.Tests
         [TestMethod]
         public void EnsureUserFilterWorks()
         {
-            var config = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            var config = new ConversationExporterConfiguration(File.OpenRead("chat.txt"), File.Create("chat.json"));
             config.AddFilter(new UserFilter("angus"));
 
             var exporter = new ConversationExporter(config);
             exporter.ExportConversation();
+            config.OutputStream.Close();
             var serializedConversation = File.ReadAllText("chat.json");
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
@@ -117,11 +122,12 @@ namespace MindLink.MyChat.Tests
         [TestMethod]
         public void EnsureBlacklistWorks()
         {
-            var config = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            var config = new ConversationExporterConfiguration(File.OpenRead("chat.txt"), File.Create("chat.json"));
             config.AddTransformer(new BlacklistTransformer(new []{ "pie", "yes"}));
 
             var exporter = new ConversationExporter(config);
             exporter.ExportConversation();
+            config.OutputStream.Close();
             var serializedConversation = File.ReadAllText("chat.json");
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
@@ -161,11 +167,12 @@ namespace MindLink.MyChat.Tests
         [TestMethod]
         public void EnsureCreditcardsWorks()
         {
-            var config = new ConversationExporterConfiguration("chat_with_creditcard.txt", "chat_with_creditcard.json");
+            var config = new ConversationExporterConfiguration(File.OpenRead("chat_with_creditcard.txt"), File.Create("chat_with_creditcard.json"));
             config.AddTransformer(new CreditCardTransformer());
 
             var exporter = new ConversationExporter(config);
             exporter.ExportConversation();
+            config.OutputStream.Close();
             var serializedConversation = File.ReadAllText("chat_with_creditcard.json");
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
@@ -205,11 +212,13 @@ namespace MindLink.MyChat.Tests
         [TestMethod]
         public void EnsurePhonesWorks()
         {
-            var config = new ConversationExporterConfiguration("chat_with_phones.txt", "chat_with_phones.json");
+            var config = new ConversationExporterConfiguration(File.OpenRead("chat_with_phones.txt"), File.Create("chat_with_phones.json"));
             config.AddTransformer(new PhoneNumberTransformer());
 
             var exporter = new ConversationExporter(config);
             exporter.ExportConversation();
+            config.OutputStream.Close();
+
             var serializedConversation = File.ReadAllText("chat_with_phones.json");
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
@@ -249,11 +258,12 @@ namespace MindLink.MyChat.Tests
         [TestMethod]
         public void EnsureUserHidingWorks()
         {
-            var config = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            var config = new ConversationExporterConfiguration(File.OpenRead("chat.txt"), File.Create("chat.json"));
             config.AddTransformer(new UserObfuscateTransformer());
 
             var exporter = new ConversationExporter(config);
             exporter.ExportConversation();
+            config.OutputStream.Close();
             var serializedConversation = File.ReadAllText("chat.json");
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 

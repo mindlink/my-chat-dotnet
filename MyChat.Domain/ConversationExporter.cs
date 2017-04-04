@@ -47,7 +47,7 @@ namespace MindLink.MyChat.Domain
         {
             var result = conversation.Messages.Select(
                 m => this.configuration.Transformers.Aggregate(m,
-                    (message, transformer) => transformer.TransformMessage(m)));
+                    (message, transformer) => transformer.TransformMessage(message)));
             
             return new Conversation(conversation.Name, result);
         }

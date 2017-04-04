@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.Extensions.CommandLineUtils;
 using MindLink.MyChat.Domain;
 using MindLink.MyChat.Domain.Filters;
@@ -72,7 +73,15 @@ namespace MindLink.MyChat
                     configuration.AddTransformer(new UserObfuscateTransformer());
                 }
 
-                new ConversationExporter(configuration).ExportConversation();
+                try
+                {
+                    new ConversationExporter(configuration).ExportConversation();
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Something went wrong {e.Message}");
+                    return -1;
+                }
                 return 0;
             });
 

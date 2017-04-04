@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace MindLink.MyChat.WebService.Controllers
                 return this.Request.CreateResponse(HttpStatusCode.UnsupportedMediaType);
             }
 
-            //var provider = new MultipartFormDataStreamProvider()
             var provider = await this.Request.Content.ReadAsMultipartAsync();
 
             if (provider.Contents.Count < 1)
@@ -34,39 +34,46 @@ namespace MindLink.MyChat.WebService.Controllers
 
             response.Content = new PushStreamContent((stream, content, transportContext) =>
             {
-                var configuration = new ConversationExporterConfiguration(inputStream, stream);
-
-                if (!string.IsNullOrEmpty(filter))
-                {
-                    configuration.AddFilter(new KeywordFilter(filter));
-                }
-
-                if (!string.IsNullOrEmpty(user))
-                {
-                    configuration.AddFilter(new UserFilter(user));
-                }
-
-                if (blacklist != null)
-                {
-                    configuration.AddTransformer(new BlacklistTransformer(blacklist));
-                }
-
-                if (sensitive)
-                {
-                    configuration.AddTransformer(new CreditCardTransformer());
-                    configuration.AddTransformer(new PhoneNumberTransformer());
-                }
-
-                if (obfuscate)
-                {
-                    configuration.AddTransformer(new UserObfuscateTransformer());
-                }
+                var configuration = MakeConfiguration(sensitive, obfuscate, blacklist, filter, user, inputStream, stream);
 
                 var exporter = new ConversationExporter(configuration);
                 exporter.ExportConversation();
             }, new MediaTypeHeaderValue("application/json"));
 
             return response;
+        }
+
+        private static ConversationExporterConfiguration MakeConfiguration(bool sensitive, bool obfuscate, string[] blacklist,
+            string filter, string user, Stream inputStream, Stream stream)
+        {
+            var configuration = new ConversationExporterConfiguration(inputStream, stream);
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                configuration.AddFilter(new KeywordFilter(filter));
+            }
+
+            if (!string.IsNullOrEmpty(user))
+            {
+                configuration.AddFilter(new UserFilter(user));
+            }
+
+            if (blacklist != null)
+            {
+                configuration.AddTransformer(new BlacklistTransformer(blacklist));
+            }
+
+            if (sensitive)
+            {
+                configuration.AddTransformer(new CreditCardTransformer());
+                configuration.AddTransformer(new PhoneNumberTransformer());
+            }
+
+            if (obfuscate)
+            {
+                configuration.AddTransformer(new UserObfuscateTransformer());
+            }
+            return configuration;
         }
     }
 }

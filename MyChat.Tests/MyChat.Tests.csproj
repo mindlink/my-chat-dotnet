@@ -6,8 +6,8 @@
     <ProjectGuid>{35295892-C40D-484F-967C-44328F8C0BCC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MindLink.Recruitment.MyChat.Tests</RootNamespace>
-    <AssemblyName>MindLink.Recruitment.MyChat.Tests</AssemblyName>
+    <RootNamespace>MindLink.MyChat.Tests</RootNamespace>
+    <AssemblyName>MindLink.MyChat.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -58,6 +58,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyChat.Domain\MyChat.Domain.csproj">
+      <Project>{1FDC2F8F-E0EC-4636-B74E-5CDBD647143B}</Project>
+      <Name>MyChat.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyChat\MyChat.csproj">
       <Project>{246D2511-9B28-44F3-8D05-7EBFAB79C95F}</Project>
       <Name>MyChat</Name>
@@ -65,6 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="chat.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="chat_with_creditcard.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="chat_with_phones.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

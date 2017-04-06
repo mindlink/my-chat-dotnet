@@ -78,3 +78,16 @@ Implementing any of these features well will make your submission stand-out. Fea
     * The web-service allows the same options to be specified in form fields,
     * A conversation is uploaded as a file,
     * A JSON response is returned containing the transformed conversation.
+
+
+### Usage: Arguments to be used in CLI
+  /name:[usernameToFilter] **filters messages by username**
+
+  /keyword:[keywordToFilter] **filters messages by keyword (case-insensitive)**
+
+  /blacklist:[blackListedWord,AnotherBlackListedWord] **replaces blacklisted words with '*' **
+
+  /encrypt **encrypts usernames **
+
+  /hidenums **masks sensitive numbers. sensitive number identification is configurable by RegEx in App.config**
+

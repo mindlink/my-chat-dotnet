@@ -1,0 +1,62 @@
+﻿<div class="jumbotron">
+  <h1>My Chat Exporter</h1>
+  <p class="lead">Upload a chat.txt file to export to JSON.</p>
+
+  @using (Html.BeginForm("MyChat", "api", FormMethod.Post, new { enctype = "multipart/form-data" }))
+  {
+      <label>Select the file you want to upload.</label>
+      <input type="file" name="FileUpload" />
+
+       <!-- Filters-->
+      <div class="container">
+        <!-- Username filter-->
+        <div class="row">
+          <div class="col-xs-6">
+            <label>Username:</label>
+          </div>
+          <div class="col-xs-6">
+            <input type="text" name="Username" />
+          </div>
+        </div>
+        <!-- Keyword filter-->
+        <div class="row">
+          <div class="col-xs-6">
+            <label>Keyword:</label>
+          </div>
+          <div class="col-xs-6">
+            <input type="text" name="Keyword" />
+          </div>
+        </div>
+        <!-- Keyword filter-->
+        <div class="row">
+          <div class="col-xs-6">
+            <label>Blacklisted words (comma separated):</label>
+          </div>
+          <div class="col-xs-6">
+            <input type="text" name="Blacklist" />
+          </div>
+        </div>
+        <!-- Username encryption selection-->
+        <div class="row">
+          <div class="col-xs-6">
+            <label>Encrypt usernames:</label>
+          </div>
+          <div class="col-xs-6">
+            <input type="checkbox" name="EncryptUsernames" />
+          </div>
+        </div>
+        <!-- Hidden numbers selection-->
+        <div class="row">
+          <div class="col-xs-6">
+            <label>Hide sensitive numbers:</label>
+          </div>
+          <div class="col-xs-6">
+            <input type="checkbox" name="HideNumbers" />
+          </div>
+        </div>
+
+      </div>
+
+      <input type="submit" name="Submit" id="Submit" value="Upload" class="btn-primary" />
+  }
+</div>

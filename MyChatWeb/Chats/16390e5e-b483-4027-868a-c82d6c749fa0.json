@@ -1,0 +1,31 @@
+{
+  "name": "My Conversation",
+  "userActivity": [
+    {
+      "username": "bob",
+      "messagesNo": 4
+    }
+  ],
+  "messages": [
+    {
+      "content": "Hello there!",
+      "timestamp": "2015-11-25T17:01:41+00:00",
+      "senderId": "bob"
+    },
+    {
+      "content": "I'm good thanks, do you like pie?",
+      "timestamp": "2015-11-25T17:01:46+00:00",
+      "senderId": "bob"
+    },
+    {
+      "content": "No, just want to know if there's anybody else in the pie society...",
+      "timestamp": "2015-11-25T17:01:54+00:00",
+      "senderId": "bob"
+    },
+    {
+      "content": "Call me on 281-342-2452 to give me your credit card details.",
+      "timestamp": "2015-11-25T17:02:05+00:00",
+      "senderId": "bob"
+    }
+  ]
+}

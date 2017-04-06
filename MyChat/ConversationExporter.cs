@@ -1,12 +1,12 @@
 ﻿namespace MyChat
 {
+    using MindLink.Recruitment.MyChat;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Security;
     using System.Text;
-    using MindLink.Recruitment.MyChat;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
@@ -24,7 +24,14 @@
             var conversationExporter = new ConversationExporter();
             ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            conversationExporter.ExportConversation(
+                configuration.InputFilePath, 
+                configuration.OutputFilePath, 
+                configuration.UserName, 
+                configuration.Keyword, 
+                configuration.Blacklist, 
+                configuration.EncryptUsernames,
+                configuration.HideNumbers);
         }
 
         /// <summary>
@@ -36,15 +43,43 @@
         /// <param name="outputFilePath">
         /// The output file path.
         /// </param>
+        /// <param name="userName">
+        /// The username to filter.
+        /// </param>
+        /// <param name="encryptUserNames">
+        /// Boolean flag indicating whether to encrypt usernames or not.
+        /// </param>
+        /// <param name="hideNumbers">
+        /// Boolean flag indicating whether to hide numbers or not.
+        /// </param>
         /// <exception cref="ArgumentException">
         /// Thrown when a path is invalid.
         /// </exception>
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public void ExportConversation(
+            string inputFilePath, 
+            string outputFilePath, 
+            string userName, 
+            string keyword, 
+            string blacklist, 
+            bool encryptUserNames, 
+            bool hideNumbers)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            Conversation conversation = this.ReadConversation(inputFilePath, userName, keyword, blacklist);
+
+            if (hideNumbers)
+            {
+                ContentParser.HideNumbersFromConvesation(conversation);
+            }
+
+            if (encryptUserNames)
+            {
+                UserNameEncryption.EncryptUserNames(conversation);
+            }
+
+            Activity.SetUserActivityInConversation(conversation);
 
             this.WriteConversation(conversation, outputFilePath);
 
@@ -57,6 +92,21 @@
         /// <param name="inputFilePath">
         /// The input file path.
         /// </param>
+        /// <param name="userName">
+        /// The string representing the username to filter messages with.
+        /// </param>
+        /// <param name="keyword">
+        /// The string used in to match message content by keyword.
+        /// </param>
+        /// <param name="blacklist">
+        /// The strings to be blacklisted from message content.
+        /// </param>
+        /// <param name="encryptUsernames">
+        /// Boolean flag indicating whether to encrypt usernames or not.
+        /// </param>
+        /// <param name="hideNumbers">
+        /// Boolean flag indicating whether to hide numbers or not.
+        /// </param>
         /// <returns>
         /// A <see cref="Conversation"/> model representing the conversation.
         /// </returns>
@@ -66,34 +116,40 @@
         /// <exception cref="Exception">
         /// Thrown when something else went wrong.
         /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
+        public Conversation ReadConversation(string inputFilePath, string userName, string keyword, string blacklist)
         {
             try
             {
-                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
-                    Encoding.ASCII);
-
-                string conversationName = reader.ReadLine();
-                var messages = new List<Message>();
-
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
+                FileStream stream = new FileStream(inputFilePath, FileMode.Open, FileAccess.Read);
+                // using statement to properly dispose reader at end of scope.
+                using (StreamReader reader = new StreamReader(stream, Encoding.ASCII))
                 {
-                    var split = line.Split(' ');
+                    string conversationName = reader.ReadLine();
+                    var messages = new List<Message>();
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    string line;
+
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        Message msg = MessageGenerator.CreateNewMessage(line, blacklist);
+
+                        if (MessageFilter.Filter(msg, userName, keyword))
+                        {
+                            // add the newly instantiated message in List.
+                            messages.Add(msg);
+                        }
+                    }
+                    
+                    return new Conversation(conversationName, messages);
                 }
-
-                return new Conversation(conversationName, messages);
             }
             catch (FileNotFoundException)
             {
-                throw new ArgumentException("The file was not found.");
+                throw new FileNotFoundException("The file was not found.");
             }
             catch (IOException)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new IOException("Something went wrong in the IO.");
             }
         }
 
@@ -116,15 +172,16 @@
         {
             try
             {
-                var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
+                FileStream stream = new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite);
+                // using statement to properly dispose writer at end of scope.
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
 
-                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
+                    writer.Write(serialized);
 
-                writer.Write(serialized);
-
-                writer.Flush();
-
-                writer.Close();
+                    writer.Flush();
+                }
             }
             catch (SecurityException)
             {
@@ -136,7 +193,7 @@
             }
             catch (IOException)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new IOException("Something went wrong in the IO.");
             }
         }
     }

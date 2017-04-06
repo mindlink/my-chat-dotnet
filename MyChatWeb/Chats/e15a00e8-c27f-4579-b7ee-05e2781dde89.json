@@ -1,0 +1,69 @@
+{
+  "Name": "My Conversation",
+  "UserActivity": [
+    {
+      "UserName": "R7a+lQGdyGMEQRyvY7PErg==",
+      "MessagesNo": 4
+    },
+    {
+      "UserName": "9IkfCaAonrsE358ZxuhhkQ==",
+      "MessagesNo": 3
+    },
+    {
+      "UserName": "DgaUN+Gap9bH0t+Gs4b4zA==",
+      "MessagesNo": 3
+    }
+  ],
+  "Messages": [
+    {
+      "Content": "Hello there!",
+      "Timestamp": "2015-11-25T17:01:41+00:00",
+      "SenderId": "R7a+lQGdyGMEQRyvY7PErg=="
+    },
+    {
+      "Content": "how are you?",
+      "Timestamp": "2015-11-25T17:01:45+00:00",
+      "SenderId": "9IkfCaAonrsE358ZxuhhkQ=="
+    },
+    {
+      "Content": "I'm good thanks, do you like pie?",
+      "Timestamp": "2015-11-25T17:01:46+00:00",
+      "SenderId": "R7a+lQGdyGMEQRyvY7PErg=="
+    },
+    {
+      "Content": "no, let me ask Angus...",
+      "Timestamp": "2015-11-25T17:01:50+00:00",
+      "SenderId": "9IkfCaAonrsE358ZxuhhkQ=="
+    },
+    {
+      "Content": "Hell yes! Are we buying some pie?",
+      "Timestamp": "2015-11-25T17:01:52+00:00",
+      "SenderId": "DgaUN+Gap9bH0t+Gs4b4zA=="
+    },
+    {
+      "Content": "No, just want to know if there's anybody else in the pie society...",
+      "Timestamp": "2015-11-25T17:01:54+00:00",
+      "SenderId": "R7a+lQGdyGMEQRyvY7PErg=="
+    },
+    {
+      "Content": "YES! I'm the head pie eater there...",
+      "Timestamp": "2015-11-25T17:01:55+00:00",
+      "SenderId": "DgaUN+Gap9bH0t+Gs4b4zA=="
+    },
+    {
+      "Content": "Call me on ************ to give me your credit card details.",
+      "Timestamp": "2015-11-25T17:02:05+00:00",
+      "SenderId": "R7a+lQGdyGMEQRyvY7PErg=="
+    },
+    {
+      "Content": "Its ************5100",
+      "Timestamp": "2015-11-25T17:02:07+00:00",
+      "SenderId": "DgaUN+Gap9bH0t+Gs4b4zA=="
+    },
+    {
+      "Content": "Mine is ************1881",
+      "Timestamp": "2015-11-25T17:02:09+00:00",
+      "SenderId": "9IkfCaAonrsE358ZxuhhkQ=="
+    }
+  ]
+}

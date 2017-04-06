@@ -82,8 +82,12 @@ Implementing any of these features well will make your submission stand-out. Fea
 
 ### Usage: Arguments to be used in CLI
   /name:[usernameToFilter] **filters messages by username**
+
   /keyword:[keywordToFilter] **filters messages by keyword (case-insensitive)**
+
   /blacklist:[blackListedWord,AnotherBlackListedWord] **replaces blacklisted words with '*' **
+
   /encrypt **encrypts usernames **
+
   /hidenums **masks sensitive numbers. sensitive number identification is configurable by RegEx in App.config**
 

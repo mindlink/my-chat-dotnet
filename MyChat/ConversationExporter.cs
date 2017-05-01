@@ -22,19 +22,24 @@
         static void Main(string[] args)
         {
             var conversationExporter = new ConversationExporter();
-            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+            try
+            {
+                ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            conversationExporter.ExportConversation(configuration);
+                conversationExporter.ExportConversation(configuration);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Exiting application");
+            }
         }
 
         /// <summary>
         /// Exports the conversation at <paramref name="inputFilePath"/> as JSON to <paramref name="outputFilePath"/>.
         /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
+        /// <param name="configuration">
+        /// Contains the IO file paths and message filtering infomation.
         /// </param>
         /// <exception cref="ArgumentException">
         /// Thrown when a path is invalid.
@@ -79,12 +84,31 @@
                 while ((line = reader.ReadLine()) != null)
                 {
                     var split = line.Split(' ');
+
+                    if (split.Length < 3)
+                    {
+                        throw new FormatException();
+                    }
+
                     //Remove the timestamp and user parts to get the full message contents.
                     string content = line.Substring(split[0].Length + split[1].Length + 2);
+
                     messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], content));
                 }
                 reader.Close();
                 return new Conversation(conversationName, messages);
+            }
+            catch (FormatException)
+            {
+                throw new ArgumentException("Input file format is incorrect.");
+            }
+            catch (SecurityException)
+            {
+                throw new ArgumentException("No permission to file.");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw new ArgumentException("No permission to file.");
             }
             catch (FileNotFoundException)
             {
@@ -119,6 +143,10 @@
                 writer.Close();
             }
             catch (SecurityException)
+            {
+                throw new ArgumentException("No permission to file.");
+            }
+            catch (UnauthorizedAccessException)
             {
                 throw new ArgumentException("No permission to file.");
             }

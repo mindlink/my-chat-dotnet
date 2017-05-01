@@ -59,10 +59,19 @@ namespace MindLink.Recruitment.MyChat
         /// </exception>
         public ConversationExporterConfiguration(string inputFilePath, string outputFilePath, string user = "", string keyword = "", List<string> blacklist = null)
         {
-            this.inputFilePath = inputFilePath;
-            this.outputFilePath = outputFilePath;
-            this.user = user;
-            this.keyword = keyword;
+            if (inputFilePath == "")
+            {
+                throw new ArgumentException("Input file path empty.");
+            }
+            if (outputFilePath == "")
+            {
+                throw new ArgumentException("Output file path empty.");
+            }
+
+            this.inputFilePath = inputFilePath ?? throw new ArgumentNullException("Input file path null.");
+            this.outputFilePath = outputFilePath ?? throw new ArgumentNullException("Output file path null.");
+            this.user = user ?? throw new ArgumentNullException("User filter null.");
+            this.keyword = keyword ?? throw new ArgumentNullException("Keyword filter null.");
             this.blacklist = blacklist;
         }
     }

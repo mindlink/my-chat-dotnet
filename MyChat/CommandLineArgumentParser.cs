@@ -14,11 +14,19 @@ namespace MindLink.Recruitment.MyChat
         /// <param name="arguments">
         /// The command line arguments.
         /// </param>
+        /// <exception cref="ArgumentException">
+        /// Thrown when not enough command line arguments provided.
+        /// </exception>
         /// <returns>
         /// A <see cref="ConversationExporterConfiguration"/> representing the command line arguments.
         /// </returns>
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
+            if (arguments.Length < 2)
+            {
+                throw new ArgumentException("Must provide at least an input file path and an output file path.");
+            }
+
             string user = ParseParameterSingle("-u", arguments);
             string keyword = ParseParameterSingle("-k", arguments);
             var blacklist = ParseParameterList("-b", arguments);

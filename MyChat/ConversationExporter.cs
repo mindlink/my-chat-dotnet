@@ -43,6 +43,8 @@
         {
             Conversation conversation = ReadConversation(configuration.inputFilePath);
 
+            conversation.FilterByUser(configuration.user);
+
             WriteConversation(conversation, configuration.outputFilePath);
 
             Console.WriteLine($"Conversation exported from '{configuration.inputFilePath}' to '{configuration.outputFilePath}'");

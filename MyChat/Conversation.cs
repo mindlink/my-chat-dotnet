@@ -38,5 +38,28 @@ namespace MindLink.Recruitment.MyChat
             this.name = name;
             _messages = messages;
         }
+
+        /// <summary>
+        /// Discards any messages not sent by <paramref name="user"/>.
+        /// </summary>
+        /// <param name="user">
+        /// The user to filter messages by.
+        /// </param>
+        public void FilterByUser(string user)
+        {
+            if (user == "")
+            {
+                return;
+            }
+            var filteredMessages = new List<Message>();
+            foreach (Message m in messages)
+            {
+                if (m.senderId == user)
+                {
+                    filteredMessages.Add(m);
+                }
+            }
+            _messages = filteredMessages;
+        }
     }
 }

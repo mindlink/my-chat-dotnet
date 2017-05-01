@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using MyChat;
 using Newtonsoft.Json;
 
@@ -26,7 +27,11 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             exporter.ExportConversation(configuration);
 
-            var serializedConversation = new StreamReader(new FileStream(configuration.outputFilePath, FileMode.Open)).ReadToEnd();
+            string serializedConversation;
+            using (var reader = new StreamReader(new FileStream(configuration.outputFilePath, FileMode.Open)))
+            {
+                serializedConversation = reader.ReadToEnd();
+            }
 
             Conversation savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
@@ -61,6 +66,54 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470915), messages[6].timestamp);
             Assert.AreEqual("angus", messages[6].senderId);
             Assert.AreEqual("YES! I'm the head pie eater there...", messages[6].content);
+        }
+
+        [TestMethod]
+        public void ExportingConversationExportsConversationWithFilters()
+        {
+            ConversationExporter exporter = new ConversationExporter();
+
+            var blacklist = new List<string>();
+            blacklist.Add("the");
+            blacklist.Add("good");
+
+            ConversationExporterConfiguration configuration = new ConversationExporterConfiguration("chat.txt", "chat.json", "bob", "pie", blacklist);
+
+            exporter.ExportConversation(configuration);
+
+            string serializedConversation;
+            using (var reader = new StreamReader(new FileStream(configuration.outputFilePath, FileMode.Open)))
+            {
+                serializedConversation = reader.ReadToEnd();
+            }
+
+            Conversation savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            Assert.AreEqual("My Conversation", savedConversation.name);
+
+            var messages = savedConversation.messages.ToList();
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470906), messages[0].timestamp);
+            Assert.AreEqual("bob", messages[0].senderId);
+            Assert.AreEqual("I'm *redacted* thanks, do you like pie?", messages[0].content);
+
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470914), messages[1].timestamp);
+            Assert.AreEqual("bob", messages[1].senderId);
+            Assert.AreEqual("No, just want to know if there's anybody else in *redacted* pie society...", messages[1].content);
+        }
+
+        [TestMethod]
+        public void ParseCommandLineArgumentsParsesCommandLineArguments()
+        {
+            string[] args = { "chat.txt", "chat.json", "-u", "bob", "-k", "pie", "-b", "the", "good" };
+            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+
+            Assert.AreEqual(configuration.inputFilePath, "chat.txt");
+            Assert.AreEqual(configuration.outputFilePath, "chat.json");
+            Assert.AreEqual(configuration.user, "bob");
+            Assert.AreEqual(configuration.keyword, "pie");
+            Assert.AreEqual(configuration.blacklist[0], "the");
+            Assert.AreEqual(configuration.blacklist[1], "good");
         }
     }
 }

@@ -44,6 +44,8 @@
             Conversation conversation = ReadConversation(configuration.inputFilePath);
 
             conversation.FilterByUser(configuration.user);
+            conversation.FilterByKeyword(configuration.keyword);
+            conversation.HideBlacklistWords(configuration.blacklist);
 
             WriteConversation(conversation, configuration.outputFilePath);
 

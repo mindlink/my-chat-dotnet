@@ -47,5 +47,24 @@ namespace MindLink.Recruitment.MyChat
             this.timestamp = timestamp;
             this.senderId = senderId;
         }
+
+        /// <summary>
+        /// Removes <paramref name="count"/> characters from the message content starting at <paramref name="index"/>.
+        /// Then inserts <paramref name="replaceWith"/> in place of the removed characters.
+        /// </summary>
+        /// <param name="index">
+        /// Index where word is replaced.
+        /// </param>
+        /// <param name="count">
+        /// Number of charactrers to remove.
+        /// </param>
+        /// <param name="replaceWith">
+        /// String to be inserted at <paramref name="index"/>.
+        /// </param>
+        public void ReplaceWord(int index, int count, string replaceWith)
+        {
+            _content = _content.Remove(index, count);
+            _content = _content.Insert(index, replaceWith);
+        }
     }
 }

@@ -39,9 +39,6 @@
         /// <exception cref="ArgumentException">
         /// Thrown when a path is invalid.
         /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something bad happens.
-        /// </exception>
         public void ExportConversation(string inputFilePath, string outputFilePath)
         {
             Conversation conversation = this.ReadConversation(inputFilePath);
@@ -63,10 +60,7 @@
         /// <exception cref="ArgumentException">
         /// Thrown when the input file could not be found.
         /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something else went wrong.
-        /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
+        private Conversation ReadConversation(string inputFilePath)
         {
             try
             {
@@ -81,19 +75,16 @@
                 while ((line = reader.ReadLine()) != null)
                 {
                     var split = line.Split(' ');
-
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    //Remove the timestamp and user parts to get the full message contents.
+                    string content = line.Substring(split[0].Length + split[1].Length + 2);
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], content));
                 }
-
+                reader.Close();
                 return new Conversation(conversationName, messages);
             }
             catch (FileNotFoundException)
             {
                 throw new ArgumentException("The file was not found.");
-            }
-            catch (IOException)
-            {
-                throw new Exception("Something went wrong in the IO.");
             }
         }
 
@@ -109,10 +100,7 @@
         /// <exception cref="ArgumentException">
         /// Thrown when there is a problem with the <paramref name="outputFilePath"/>.
         /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something else bad happens.
-        /// </exception>
-        public void WriteConversation(Conversation conversation, string outputFilePath)
+        private void WriteConversation(Conversation conversation, string outputFilePath)
         {
             try
             {
@@ -133,10 +121,6 @@
             catch (DirectoryNotFoundException)
             {
                 throw new ArgumentException("Path invalid.");
-            }
-            catch (IOException)
-            {
-                throw new Exception("Something went wrong in the IO.");
             }
         }
     }

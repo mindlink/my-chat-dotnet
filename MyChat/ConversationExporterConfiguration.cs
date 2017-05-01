@@ -10,12 +10,12 @@ namespace MindLink.Recruitment.MyChat
         /// <summary>
         /// The input file path.
         /// </summary>
-        public string inputFilePath;
+        public string inputFilePath { get; }
 
         /// <summary>
         /// The output file path.
         /// </summary>
-        public string outputFilePath;
+        public string outputFilePath { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.

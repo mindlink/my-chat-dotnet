@@ -24,7 +24,7 @@
             var conversationExporter = new ConversationExporter();
             ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            conversationExporter.ExportConversation(configuration);
         }
 
         /// <summary>
@@ -39,13 +39,13 @@
         /// <exception cref="ArgumentException">
         /// Thrown when a path is invalid.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public void ExportConversation(ConversationExporterConfiguration configuration)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            Conversation conversation = ReadConversation(configuration.inputFilePath);
 
-            this.WriteConversation(conversation, outputFilePath);
+            WriteConversation(conversation, configuration.outputFilePath);
 
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+            Console.WriteLine($"Conversation exported from '{configuration.inputFilePath}' to '{configuration.outputFilePath}'");
         }
 
         /// <summary>

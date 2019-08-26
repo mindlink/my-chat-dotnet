@@ -1,0 +1,50 @@
+{
+  "name": "My Conversation",
+  "messages": [
+    {
+      "content": "Hello there!",
+      "senderId": "User#0",
+      "timestamp": "2015-11-25T17:01:41+00:00"
+    },
+    {
+      "content": "how are you?",
+      "senderId": "User#1",
+      "timestamp": "2015-11-25T17:01:45+00:00"
+    },
+    {
+      "content": "I'm good thanks, do you like pie?",
+      "senderId": "User#0",
+      "timestamp": "2015-11-25T17:01:46+00:00"
+    },
+    {
+      "content": "no, let me ask Angus...",
+      "senderId": "User#1",
+      "timestamp": "2015-11-25T17:01:50+00:00"
+    },
+    {
+      "content": "Hell yes! Are we buying some pie?",
+      "senderId": "User#2",
+      "timestamp": "2015-11-25T17:01:52+00:00"
+    },
+    {
+      "content": "No, just want to know if there's anybody else in the Pie Society...",
+      "senderId": "User#0",
+      "timestamp": "2015-11-25T17:01:54+00:00"
+    },
+    {
+      "content": "YES! I'm the head pie eater there...",
+      "senderId": "User#2",
+      "timestamp": "2015-11-25T17:01:55+00:00"
+    },
+    {
+      "content": "My credit card number is 4724860934565114 and my phone number is 07765 487576.",
+      "senderId": "User#0",
+      "timestamp": "2015-11-25T17:01:57+00:00"
+    }
+  ],
+  "activityReport": [
+    "UserId: User#0, Messages sent = 4",
+    "UserId: User#1, Messages sent = 2",
+    "UserId: User#2, Messages sent = 2"
+  ]
+}

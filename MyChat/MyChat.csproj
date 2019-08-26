@@ -53,7 +53,6 @@
     <Compile Include="CommandLineArgumentParser.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="ConversationExporter.cs" />
-    <Compile Include="ConversationExporterConfiguration.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

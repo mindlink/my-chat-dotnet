@@ -1,0 +1,11 @@
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\bin\Debug\chat.txt
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\obj\Debug\MyChat.Tests.csprojResolveAssemblyReference.cache
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb

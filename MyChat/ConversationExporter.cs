@@ -65,7 +65,7 @@
         /// <summary>
         /// Helper method to read the conversation from <paramref name="inputFilePath"/>.
         /// </summary>
-        public Conversation ReadConversation(string inputFilePath)
+        private Conversation ReadConversation(string inputFilePath)
         {
             var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
             Encoding.ASCII);
@@ -109,7 +109,7 @@
         /// <summary>
         /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
         /// </summary>
-        public void WriteConversation(Conversation conversation, string outputFilePath)
+        private void WriteConversation(Conversation conversation, string outputFilePath)
         {
             var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
 
@@ -125,7 +125,7 @@
         /// <summary>
         /// Checks if keyword present in split string array. Case insensitive.
         /// </summary>
-        public bool IsKeywordPresent(string[] split, string keyword)
+        private bool IsKeywordPresent(string[] split, string keyword)
         {
             var allowMessages = false;
             if (keyword == null)

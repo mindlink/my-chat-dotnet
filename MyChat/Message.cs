@@ -8,14 +8,14 @@ namespace MindLink.Recruitment.MyChat
     public sealed class Message
     {
         public string content;
-        public string senderId;
+        public string userId;
         public DateTimeOffset timestamp;
 
-        public Message(DateTimeOffset timestamp, string senderId, string content)
+        public Message(DateTimeOffset timestamp, string userId, string content)
         {
             this.content = content;
             this.timestamp = timestamp;
-            this.senderId = senderId;
+            this.userId = userId;
         }
     }
 }

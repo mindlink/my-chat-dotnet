@@ -53,8 +53,11 @@
     <Compile Include="CommandLineArgumentParser.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="ConversationExporter.cs" />
+    <Compile Include="ConversationReader.cs" />
+    <Compile Include="ConversationWriter.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsernameFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

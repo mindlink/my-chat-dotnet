@@ -9,13 +9,11 @@ namespace MindLink.Recruitment.MyChat
     {
         public string name;
         public IEnumerable<Message> messages;
-        public string[] activityReport;
 
-        public Conversation(string name, IEnumerable<Message> messages, string[] activityReport)
+        public Conversation(string name, IEnumerable<Message> messages)
         {
             this.name = name;
             this.messages = messages;
-            this.activityReport = activityReport;
         }
     }
 }

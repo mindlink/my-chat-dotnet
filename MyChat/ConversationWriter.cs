@@ -12,7 +12,7 @@ namespace MindLink.Recruitment.MyChat
     {
         public static void ConversationToJson(Conversation conversation, string outputFilePath)
         {
-            var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
+            var writer = new StreamWriter(new FileStream(@"..\..\" + outputFilePath, FileMode.Create, FileAccess.ReadWrite));
 
             var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
 

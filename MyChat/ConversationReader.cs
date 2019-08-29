@@ -14,7 +14,7 @@ namespace MindLink.Recruitment.MyChat
         {
             try
             {
-                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
+                var reader = new StreamReader(new FileStream(@"..\..\" + inputFilePath, FileMode.Open, FileAccess.Read),
                     Encoding.ASCII);
 
                 var messages = new List<Message>();
@@ -26,9 +26,9 @@ namespace MindLink.Recruitment.MyChat
                 {
                     var split = line.Split(' ');
                     var timestamp = split[0];
-                    var senderId = split[1];
+                    var userId = split[1];
                     var message = string.Join(" ", split.Skip(2));
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(timestamp)), senderId, message));
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(timestamp)), userId, message));
                 }
 
                 return new Conversation(conversationName, messages);

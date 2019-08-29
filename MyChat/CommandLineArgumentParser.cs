@@ -78,8 +78,16 @@ namespace MindLink.Recruitment.MyChat
         {
             if (Array.IndexOf(arguments, "-U") > -1)
             {
-                var userIdFilter = arguments[Array.IndexOf(arguments, "-U") + 1];
-                return userIdFilter;
+                try
+                {
+                    var userIdFilter = arguments[Array.IndexOf(arguments, "-U") + 1];
+                    return userIdFilter;
+                }
+                catch (IndexOutOfRangeException exception)
+                {
+                    throw new ArgumentNullException("No username specified after -U", exception);
+                }
+
             }
             else
             {
@@ -87,6 +95,47 @@ namespace MindLink.Recruitment.MyChat
             }
         }
 
+        public static string GetKeywordFilter(string[] arguments)
+        {
+            if (Array.IndexOf(arguments, "-K") > -1)
+            {
+                try
+                {
+                    var userIdFilter = arguments[Array.IndexOf(arguments, "-K") + 1];
+                    return userIdFilter;
+                }
+                catch (IndexOutOfRangeException exception)
+                {
+                    throw new ArgumentNullException("No keyword specified after -K", exception);
+                }
+
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static string GetBlacklistFilePath(string[] arguments)
+        {
+            if (Array.IndexOf(arguments, "-B") > -1)
+            {
+                try
+                {
+                    var blacklistFilePath = arguments[Array.IndexOf(arguments, "-B") + 1];
+                    return blacklistFilePath;
+                }
+                catch (IndexOutOfRangeException exception)
+                {
+                    throw new ArgumentNullException("No keyword specified after -B", exception);
+                }
+
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         //private void ParseCommandLineArguments(string[] arguments)
         //{

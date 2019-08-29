@@ -47,10 +47,14 @@
         {
             string inputFilePath = CommandLineArgumentParser.GetInputFilePath(args);
             string outputFilePath = CommandLineArgumentParser.GetOutputFilePath(args);
+            string blacklistFilePath = CommandLineArgumentParser.GetBlacklistFilePath(args);
 
+            Blacklist blacklist = BlacklistReader.TextToBlacklist(blacklistFilePath);
             Conversation conversation = ConversationReader.TextToConversation(inputFilePath);
 
-            conversation = UsernameFilter.FilterMessageByUsername(conversation, CommandLineArgumentParser.GetUsernameFilter(args));
+            conversation = MessageFilter.FilterMessageByUsername(conversation, CommandLineArgumentParser.GetUsernameFilter(args));
+            conversation = MessageFilter.FilterMessageByKeyword(conversation, CommandLineArgumentParser.GetKeywordFilter(args));
+            conversation = MessageFilter.FilterMessageByBlacklist(conversation, blacklist);
 
             ConversationWriter.ConversationToJson(conversation, outputFilePath);
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);

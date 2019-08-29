@@ -9,3 +9,6 @@ C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat
 C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\obj\Debug\MyChat.Tests.csprojResolveAssemblyReference.cache
 C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
 C:\Users\wuand\Documents\Temp\my-chat-dotnet-master\my-chat-dotnet-master\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+C:\Users\wuand\Documents\mcml\MyChat.Tests\obj\Debug\MyChat.Tests.csprojResolveAssemblyReference.cache
+C:\Users\wuand\Documents\mcml\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\wuand\Documents\mcml\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb

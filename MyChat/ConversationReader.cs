@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Linq;
-using MindLink.Recruitment.MyChat;
-using Newtonsoft.Json;
-
-namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+    using System.Linq;
+    using MindLink.Recruitment.MyChat;
+    using Newtonsoft.Json;
+
+    /// <summary>
+    /// Represents a conversation reader that can read a conversation text file and return a conversation.
+    /// </summary>
     public static class ConversationReader
     {
         public static Conversation TextToConversation(string inputFilePath)

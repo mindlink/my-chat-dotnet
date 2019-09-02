@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityReporter.cs" />
     <Compile Include="Blacklist.cs" />
     <Compile Include="BlacklistReader.cs" />
     <Compile Include="CommandLineArgumentParser.cs" />

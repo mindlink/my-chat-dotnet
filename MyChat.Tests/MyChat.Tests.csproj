@@ -69,6 +69,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="chat_BasicExportTest.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

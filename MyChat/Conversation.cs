@@ -9,6 +9,7 @@ namespace MindLink.Recruitment.MyChat
     {
         public string name;
         public IEnumerable<Message> messages;
+        public string[] activityReport;
 
         public Conversation(string name, IEnumerable<Message> messages)
         {

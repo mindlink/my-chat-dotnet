@@ -47,7 +47,7 @@
                 {
                     filteredMessageList.Add(message);
                 }
-                else if (message.content.Contains(keywordFilter) == true)
+                else if (message.content.ToLower().Contains(keywordFilter.ToLower()) == true)
                 {
                     filteredMessageList.Add(message);
                 }

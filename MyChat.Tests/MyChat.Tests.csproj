@@ -69,7 +69,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="chat_ActivityReportTest.json" />
     <None Include="chat_BasicExportTest.json" />
+    <None Include="chat_BlacklistTest.json" />
+    <None Include="chat_KeywordFilterTest.json" />
+    <None Include="chat_ObfuscationTest.json" />
+    <None Include="chat_UserIdFilterTest.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

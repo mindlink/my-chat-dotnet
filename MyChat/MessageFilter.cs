@@ -10,7 +10,7 @@
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Represents a message filter than can perform redactions and obfuscations on converstaion content.
+    /// Represents a message filter than can perform redactions and obfuscations on conversation content.
     /// </summary>
     public static class MessageFilter
     {

@@ -77,7 +77,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         }
 
         /// <summary>
-        /// Tests that blacklisted words 'pie' and 'Angus' are redacted, and that the blacklist does not affect sendedId by design.
+        /// Tests that blacklisted words 'pie' and 'Angus' are redacted, and that the blacklist does not affect userId by design.
         /// </summary>
         [TestMethod]
         public void BlacklistFilterTest()

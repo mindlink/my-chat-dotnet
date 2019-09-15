@@ -34,6 +34,14 @@ namespace MindLink.Recruitment.MyChat
         /// </exception>
         public ConversationExporterConfiguration(string inputFilePath, string outputFilePath)
         {
+            if (inputFilePath == null || outputFilePath == null)
+            {
+                throw new ArgumentNullException("Argument cannot be null");
+            }
+            else if (inputFilePath == "" || outputFilePath == "")
+            {
+                throw new ArgumentException("Argument cannot be empty");
+            }
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
         }

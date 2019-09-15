@@ -31,5 +31,61 @@ namespace MindLink.Recruitment.MyChat
             this.name = name;
             this.messages = messages;
         }
+
+        public Conversation FilterByUser(string senderId)
+        {
+            IEnumerable<Message> filteredMessages = new List<Message>();
+            foreach (Message message in messages)
+            {
+                if (message.senderId == senderId)
+                {
+                    ((List<Message>)filteredMessages).Add(message);
+                }
+            }
+
+            return new Conversation(name + "-senderId:" + senderId, filteredMessages);
+        }
+
+        public Conversation FilterByKeyword(string keyword)
+        {
+            IEnumerable<Message> filteredMessages = new List<Message>();
+            foreach (Message message in messages)
+            {
+                if (message.content.Contains(keyword))
+                {
+                    ((List<Message>)filteredMessages).Add(message);
+                }
+            }
+
+            return new Conversation(name + "-keyword:" + keyword, filteredMessages);
+        }
+
+        public void BlacklistWord(string word)
+        {
+            foreach (Message message in messages)
+            {
+                string newContent = "";
+
+                string[] split = message.content.Split(' ');
+
+                for (int i = 0; i < split.Length; i++)
+                {
+                    if (split[i] != word)
+                    {
+                        newContent += split[i];
+                    }
+                    else
+                    {
+                        newContent += "*redacted*";
+                    }
+                    if (i < split.Length - 1)
+                    {
+                        newContent += " ";
+                    }
+                }
+
+                message.content = newContent;
+            }
+        }
     }
 }

@@ -1,0 +1,14 @@
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\bin\Debug\chat.txt
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.dll
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.dll
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.pdb
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe.config
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.xml
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\obj\Debug\MyChat.Tests.csprojAssemblyReference.cache
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\obj\Debug\MyChat.Tests.csproj.CoreCompileInputs.cache
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\obj\Debug\MyChat.Tests.csproj.CopyComplete
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
+G:\OneDrive\Documents\MindLinkTest\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb

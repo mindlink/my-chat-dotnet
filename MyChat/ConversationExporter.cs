@@ -82,7 +82,15 @@
                 {
                     var split = line.Split(' ');
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    var content = "";
+
+                    for (int i = 2; i < split.Length; i++)
+                    {
+                        content += split[i];
+                        if (i != split.Length - 1) content += " ";
+                    }
+
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], content));
                 }
 
                 return new Conversation(conversationName, messages);
@@ -123,7 +131,7 @@
                 writer.Write(serialized);
 
                 writer.Flush();
-
+                
                 writer.Close();
             }
             catch (SecurityException)

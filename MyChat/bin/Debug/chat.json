@@ -1,0 +1,15 @@
+{
+  "name": "My Conversation-senderId:bob-keyword:pie",
+  "messages": [
+    {
+      "content": "I'm good thanks, do you like *redacted*?",
+      "timestamp": "2015-11-25T17:01:46+00:00",
+      "senderId": "0"
+    },
+    {
+      "content": "No, just want to know if there's anybody else in the *redacted* society...",
+      "timestamp": "2015-11-25T17:01:54+00:00",
+      "senderId": "0"
+    }
+  ]
+}

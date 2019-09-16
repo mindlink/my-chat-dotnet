@@ -66,7 +66,7 @@ namespace MindLink.Recruitment.MyChat
             IEnumerable<Message> filteredMessages = new List<Message>();
             foreach (Message message in messages)
             {
-                if (message.content.Contains(keyword))
+                if (message.content.ToLower().Contains(keyword.ToLower()))
                 {
                     ((List<Message>)filteredMessages).Add(message);
                 }
@@ -97,7 +97,7 @@ namespace MindLink.Recruitment.MyChat
                     string trimmedWord = split[i].TrimEnd("!?,.:;".ToCharArray());
                     string punctuation = split[i].Substring(trimmedWord.Length);
 
-                    if (trimmedWord != word)
+                    if (trimmedWord.ToLower() != word.ToLower())
                     {
                         newContent += split[i];
                     }

@@ -5,7 +5,7 @@ namespace MindLink.Recruitment.MyChat
     /// <summary>
     /// Represents a helper to parse command line arguments.
     /// </summary>
-    public sealed class CommandLineArgumentParser
+    public static class CommandLineArgumentParser
     {
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace MindLink.Recruitment.MyChat
         /// <returns>
         /// A <see cref="ConversationExporterConfiguration"/> representing the command line arguments.
         /// </returns>
-        public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
+        public static ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
             if (arguments.Length < 1)
             {

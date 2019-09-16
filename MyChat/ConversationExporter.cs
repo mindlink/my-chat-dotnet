@@ -22,7 +22,7 @@
         static void Main(string[] args)
         {
             var conversationExporter = new ConversationExporter();
-            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+            ConversationExporterConfiguration configuration = CommandLineArgumentParser.ParseCommandLineArguments(args);
 
             conversationExporter.ExportConversation(configuration);
         }

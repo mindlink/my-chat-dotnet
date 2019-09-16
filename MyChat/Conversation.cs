@@ -136,5 +136,25 @@ namespace MindLink.Recruitment.MyChat
 
             return new Conversation(name, newMessages);
         }
+
+        public Conversation ObfuscateUserIds()
+        {
+            Dictionary<string, int> obfuscations = new Dictionary<string, int>();
+            IEnumerable<Message> newMessages = new List<Message>();
+            int count = 0;
+
+            foreach (Message message in messages)
+            {
+                if (!obfuscations.ContainsKey(message.senderId))
+                {
+                    obfuscations.Add(message.senderId, count);
+                    count++;
+                }
+                Message newMessage = new Message(message.timestamp, obfuscations[message.senderId].ToString(), message.content);
+                ((List<Message>)newMessages).Add(newMessage);
+            }
+
+            return new Conversation(name, newMessages);
+        }
     }
 }

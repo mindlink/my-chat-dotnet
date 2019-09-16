@@ -70,13 +70,17 @@ namespace MindLink.Recruitment.MyChat
 
                 for (int i = 0; i < split.Length; i++)
                 {
-                    if (split[i] != word)
+                    //Remove symbols from the end of words
+                    string trimmedWord = split[i].TrimEnd("!?,.:;".ToCharArray());
+                    string punctuation = split[i].Substring(trimmedWord.Length);
+
+                    if (trimmedWord != word)
                     {
                         newContent += split[i];
                     }
                     else
                     {
-                        newContent += "*redacted*";
+                        newContent += "*redacted*" + punctuation;
                     }
                     if (i < split.Length - 1)
                     {

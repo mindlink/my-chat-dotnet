@@ -18,6 +18,8 @@ namespace MindLink.Recruitment.MyChat
         /// </summary>
         public IEnumerable<Message> messages;
 
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Conversation"/> class.
         /// </summary>
@@ -115,6 +117,10 @@ namespace MindLink.Recruitment.MyChat
             return new Conversation(name, newMessages);
         }
 
+        /// <summary>
+        /// Blacklists phone numbers and credit card numbers
+        /// </summary>
+        /// <returns></returns>
         public Conversation BlacklistPhoneAndCC()
         {
             IEnumerable<Message> newMessages = new List<Message>();
@@ -137,6 +143,10 @@ namespace MindLink.Recruitment.MyChat
             return new Conversation(name, newMessages);
         }
 
+        /// <summary>
+        /// Obfuscates user IDs to provide anonymity
+        /// </summary>
+        /// <returns></returns>
         public Conversation ObfuscateUserIds()
         {
             Dictionary<string, int> obfuscations = new Dictionary<string, int>();

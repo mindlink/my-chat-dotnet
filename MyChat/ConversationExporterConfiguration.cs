@@ -17,6 +17,12 @@ namespace MindLink.Recruitment.MyChat
         /// </summary>
         public string outputFilePath;
 
+        public string userToFilter = null;
+        public string keywordToFilter = null;
+        public string wordToBlacklist = null;
+        public bool blacklistNumbers = false;
+        public bool obfuscate = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
         /// </summary>

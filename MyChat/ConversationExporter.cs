@@ -24,7 +24,7 @@
             var conversationExporter = new ConversationExporter();
             ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            conversationExporter.ExportConversation(configuration);
         }
 
         /// <summary>
@@ -42,13 +42,35 @@
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public void ExportConversation(ConversationExporterConfiguration config)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            Conversation conversation = this.ReadConversation(config.inputFilePath);
 
-            this.WriteConversation(conversation, outputFilePath);
+            //Perform specified filterings and obfuscations.
+            if (config.userToFilter != null)
+            {
+                conversation = conversation.FilterByUser(config.userToFilter);
+            }
+            if (config.keywordToFilter != null)
+            {
+                conversation = conversation.FilterByKeyword(config.keywordToFilter);
+            }
+            if (config.wordToBlacklist != null)
+            {
+                conversation = conversation.BlacklistWord(config.wordToBlacklist);
+            }
+            if (config.blacklistNumbers)
+            {
+                conversation = conversation.BlacklistPhoneAndCC();
+            }
+            if (config.obfuscate)
+            {
+                conversation = conversation.ObfuscateUserIds();
+            }
 
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+            this.WriteConversation(conversation, config.outputFilePath);
+
+            Console.WriteLine("Conversation exported from '{0}' to '{1}'", config.inputFilePath, config.outputFilePath);
         }
 
         /// <summary>

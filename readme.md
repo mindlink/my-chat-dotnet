@@ -3,6 +3,7 @@ Program Execution
 In command line, navigate to MyChat/bin/Debug
 
 use command 'MindLink.Recruitment.MyChat inFile outFile [-fu user] [-fk keyword] [-bw word] [-bn] [-o]' to export conversation from inFile to outFile.
+
 Options:
 * -fu    filter by user ID.
 * -fk    filter by keyword.

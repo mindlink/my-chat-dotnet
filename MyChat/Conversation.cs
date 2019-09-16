@@ -1,9 +1,10 @@
 namespace MindLink.Recruitment.MyChat
 {
     using System.Collections.Generic;
+    using System.Text.RegularExpressions;
 
     /// <summary>
-    /// Represents the model of a conversation.
+    /// Represents the model of a conversation and contains filtering methods.
     /// </summary>
     public sealed class Conversation
     {
@@ -32,6 +33,12 @@ namespace MindLink.Recruitment.MyChat
             this.messages = messages;
         }
 
+        /// <summary>
+        /// Filters conversation to only show messages from user specified by senderId.
+        /// </summary>
+        /// <param name="senderId">
+        /// The id of the user.
+        /// </param>
         public Conversation FilterByUser(string senderId)
         {
             IEnumerable<Message> filteredMessages = new List<Message>();
@@ -42,10 +49,16 @@ namespace MindLink.Recruitment.MyChat
                     ((List<Message>)filteredMessages).Add(message);
                 }
             }
-
             return new Conversation(name + "-senderId:" + senderId, filteredMessages);
         }
 
+        /// <summary>
+        /// Filters conversation to only show messages that contain a specific keyword.
+        /// </summary>
+        /// <param name="keyword">
+        /// The keyword to be searched for.
+        /// </param>
+        /// <returns></returns>
         public Conversation FilterByKeyword(string keyword)
         {
             IEnumerable<Message> filteredMessages = new List<Message>();
@@ -56,12 +69,20 @@ namespace MindLink.Recruitment.MyChat
                     ((List<Message>)filteredMessages).Add(message);
                 }
             }
-
             return new Conversation(name + "-keyword:" + keyword, filteredMessages);
         }
 
-        public void BlacklistWord(string word)
+        /// <summary>
+        /// Returns a conversation in which all ocurrences of a word are changed to *redacted*
+        /// </summary>
+        /// <param name="word">
+        /// The word to be blacklisted.
+        /// </param>
+        /// <returns></returns>
+        public Conversation BlacklistWord(string word)
         {
+            IEnumerable<Message> newMessages = new List<Message>();
+
             foreach (Message message in messages)
             {
                 string newContent = "";
@@ -88,8 +109,32 @@ namespace MindLink.Recruitment.MyChat
                     }
                 }
 
-                message.content = newContent;
+                Message newMessage = new Message(message.timestamp, message.senderId, newContent);
+                ((List<Message>)newMessages).Add(newMessage);
             }
+            return new Conversation(name, newMessages);
+        }
+
+        public Conversation BlacklistPhoneAndCC()
+        {
+            IEnumerable<Message> newMessages = new List<Message>();
+
+            foreach (Message message in messages)
+            {
+                string newMessage = "";
+
+                //Regex assumes no spaces in phone number
+                string pattern = @"(\+44|0)\d{10}";
+                newMessage = Regex.Replace(message.content, pattern, "*redacted*");
+
+                //Regex assumes no spaces in credit card number
+                pattern = @"\d{16}";
+                newMessage = Regex.Replace(newMessage, pattern, "*redacted*");
+
+                ((List<Message>)newMessages).Add(new Message(message.timestamp, message.senderId, newMessage));
+            }
+
+            return new Conversation(name, newMessages);
         }
     }
 }

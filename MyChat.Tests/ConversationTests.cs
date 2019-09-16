@@ -45,6 +45,9 @@ namespace MindLink.Recruitment.MyChat.Tests
         public void TestMessageFilterByKeyword()
         {
             Conversation conversation = readConversation();
+            //change pie to Pie to test case ignoring
+            ((List<Message>)conversation.messages)[2].content = "I'm good thanks, do you like Pie?";
+
             Conversation filteredConv = conversation.FilterByKeyword("pie");
 
             //Test conversation name is correct
@@ -58,7 +61,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             //Test messages are correct
             Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470906), messages[0].timestamp);
             Assert.AreEqual("bob", messages[0].senderId);
-            Assert.AreEqual("I'm good thanks, do you like pie?", messages[0].content);
+            Assert.AreEqual("I'm good thanks, do you like Pie?", messages[0].content);
 
             Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470912), messages[1].timestamp);
             Assert.AreEqual("angus", messages[1].senderId);
@@ -77,6 +80,9 @@ namespace MindLink.Recruitment.MyChat.Tests
         public void TestBlacklistWord()
         {
             Conversation conversation = readConversation();
+            //change pie to Pie to test case ignoring
+            ((List<Message>)conversation.messages)[2].content = "I'm good thanks, do you like Pie?";
+
             Conversation blacklisted = conversation.BlacklistWord("pie");
 
             //Test conversation name is correct

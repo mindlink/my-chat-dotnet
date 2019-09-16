@@ -69,7 +69,8 @@ namespace MindLink.Recruitment.MyChat.Tests
             ConversationExporter exporter = new ConversationExporter();
 
             ConversationExporterConfiguration config = new ConversationExporterConfiguration("chat.txt", "chat.json");
-            
+            config.keywordToFilter = "pie";
+            config.obfuscate = true;
 
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 

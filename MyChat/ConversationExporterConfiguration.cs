@@ -1,5 +1,6 @@
 namespace MindLink.Recruitment.MyChat
 {
+    using global::MyChat;
     using System;
     using System.Collections.Generic;
 
@@ -23,7 +24,7 @@ namespace MindLink.Recruitment.MyChat
 
         public string keyword;
 
-        public List<String> blacklist;
+        public List<string> blacklist;
 
         //                    inputPath = o.Input;
         //    outputPath = o.Output;
@@ -54,7 +55,21 @@ namespace MindLink.Recruitment.MyChat
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
 
-
         }
+
+        public List<FilterType> GetFilterList()
+        {
+            List<FilterType> list = new List<FilterType>();
+
+            if (user != null ) { list.Add(FilterType.SENDER_ID); }
+            if (keyword != null) { list.Add(FilterType.KEYWORD); }
+            if (blacklist != null) { list.Add(FilterType.BLACKLIST); }
+
+            return list;
+        }
+
+
+
+
     }
 }

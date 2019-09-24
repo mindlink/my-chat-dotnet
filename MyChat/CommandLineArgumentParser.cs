@@ -50,29 +50,23 @@ namespace MindLink.Recruitment.MyChat
 
         }
 
-        public object ParseCommandLineArguments(string[] arguments)
+        public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
             Parser.Default.ParseArguments<Options>(arguments)
                 .WithParsed<Options>(o =>
                 {
                     inputPath = o.Input;
                     outputPath = o.Output;
-                    user = o.User;
-                    keyword = o.Keyword;
-                    blacklist = o.Blacklist;
-
-/*                  Console.WriteLine("Input " + inputPath);
-                    Console.WriteLine("Output " + outputPath);
-                    Console.WriteLine("Key " + keyword);
-                    Console.WriteLine("User " + user);
-                    blacklist.ToList().ForEach(x => Console.WriteLine(x));*/
+                    user = o.User != null ? o.User : null;
+                    keyword = o.Keyword != null ? o.Keyword : null;
+                    blacklist = o.Blacklist != null ? o.Blacklist : null;
             });
 
             ConversationExporterConfiguration configuration = new ConversationExporterConfiguration(inputPath, outputPath);
-            
-            configuration.user = user != null ? user : null;
-            configuration.keyword = keyword != null ? keyword : null;
-            configuration.blacklist = blacklist != null ? blacklist.ToList() : null;
+
+            configuration.user = user;
+            configuration.keyword = keyword;
+            configuration.blacklist = blacklist.ToList();
 
             Console.WriteLine(configuration.inputFilePath);
             Console.WriteLine(configuration.outputFilePath);

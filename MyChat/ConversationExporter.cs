@@ -11,7 +11,7 @@
 
     public enum FilterType
     {
-        KEYWORD, SENDER_ID
+        KEYWORD, SENDER_ID, BLACKLIST
     }
 
     /// <summary>
@@ -37,19 +37,19 @@
 
             var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            //conversation = conversationExporter.ReadConversation(configuration.inputFilePath);
+            var action_list = configuration.GetFilterList();
+            
+            conversation = conversationExporter.ReadConversation(configuration.inputFilePath);
 
-            //var modifier = new ConversationModifier(conversation);
+            var modifier = new ConversationModifier(conversation);
+            
+            
 
-            //List<string> blacklist = new List<string> {"pie" , "Hello"};
 
-            //conversation = modifier.ModifyByBlacklist(blacklist, conversation.messages);
-
-            //conversation = modifier.ModifyByKey("matas", FilterType.SENDER_ID,conversation.messages);
-            //conversation = modifier.ModifyByKey("pie", FilterType.KEYWORD, conversation.messages);
+ 
           
-            //conversationExporter.WriteConversation(conversation, configuration.outputFilePath);
-            //Console.ReadLine();
+            conversationExporter.WriteConversation(conversation, configuration.outputFilePath);
+            Console.ReadLine();
 
         }
 

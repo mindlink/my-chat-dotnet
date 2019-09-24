@@ -46,7 +46,13 @@
         /// </exception>
         public void ExportConversation(string inputFilePath, string outputFilePath)
         {
+            Console.WriteLine("Input: " + inputFilePath);
+            Console.WriteLine("Output: " + outputFilePath);
+
             Conversation conversation = this.ReadConversation(inputFilePath);
+
+            Console.WriteLine("Conversation name" + conversation.name);
+            Console.ReadLine();
 
             this.WriteConversation(conversation, outputFilePath);
 
@@ -70,12 +76,15 @@
         /// </exception>
         public Conversation ReadConversation(string inputFilePath)
         {
+
+
             try
             {
                 var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
                     Encoding.ASCII);
 
                 string conversationName = reader.ReadLine();
+
                 var messages = new List<Message>();
 
                 string line;
@@ -84,8 +93,19 @@
                 {
                     var split = line.Split(' ');
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    var sb = new StringBuilder();
+
+                    var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0]));
+
+                    var senderID = split[1];
+
+                    split.Skip(2).Take(split.Length - 2).ToList<string>().ForEach(x => sb.Append(x + " "));
+
+
+                    messages.Add(new Message(timestamp, senderID, sb.ToString()));
                 }
+
+                messages.ForEach(m => Console.WriteLine(m.timestamp + " " + m.senderId + " " + m.content));
 
                 return new Conversation(conversationName, messages);
             }

@@ -1,6 +1,7 @@
 namespace MindLink.Recruitment.MyChat
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Represents the configuration for the exporter.
@@ -16,6 +17,22 @@ namespace MindLink.Recruitment.MyChat
         /// The output file path.
         /// </summary>
         public string outputFilePath;
+
+
+        public string user;
+
+        public string keyword;
+
+        public List<String> blacklist;
+
+        //                    inputPath = o.Input;
+        //    outputPath = o.Output;
+        //  user = o.User;
+        //keyword = o.Keyword;
+        //blacklist = o.Blacklist;
+
+
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
@@ -36,6 +53,8 @@ namespace MindLink.Recruitment.MyChat
         {
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
+
+
         }
     }
 }

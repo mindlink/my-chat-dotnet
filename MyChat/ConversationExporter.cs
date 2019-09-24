@@ -9,6 +9,11 @@
     using Newtonsoft.Json;
     using System.Linq;
 
+    public enum FilterType
+    {
+        KEYWORD, SENDER_ID
+    }
+
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
     /// </summary>
@@ -33,9 +38,10 @@
             conversation = conversationExporter.ReadConversation(configuration.inputFilePath);
 
             var modifier = new ConversationModifier(conversation);
-            conversation  = modifier.ModifyByUser("matas");
 
-
+            conversation = modifier.ModifyByKey("matas", FilterType.SENDER_ID,conversation.messages);
+            conversation = modifier.ModifyByKey("pie", FilterType.KEYWORD, conversation.messages);
+          
             conversationExporter.WriteConversation(conversation, configuration.outputFilePath);
 
 

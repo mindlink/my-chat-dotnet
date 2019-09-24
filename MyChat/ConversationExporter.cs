@@ -39,8 +39,12 @@
 
             var modifier = new ConversationModifier(conversation);
 
-            conversation = modifier.ModifyByKey("matas", FilterType.SENDER_ID,conversation.messages);
-            conversation = modifier.ModifyByKey("pie", FilterType.KEYWORD, conversation.messages);
+            List<string> blacklist = new List<string> {"pie" };
+
+            conversation = modifier.ModifyByBlacklist(blacklist, conversation.messages);
+
+            //conversation = modifier.ModifyByKey("matas", FilterType.SENDER_ID,conversation.messages);
+            //conversation = modifier.ModifyByKey("pie", FilterType.KEYWORD, conversation.messages);
           
             conversationExporter.WriteConversation(conversation, configuration.outputFilePath);
 

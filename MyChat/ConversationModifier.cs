@@ -12,6 +12,8 @@ namespace MindLink.Recruitment.MyChat
 
         public Conversation conversation;
 
+        String redacted = @"\*redacted*\";
+
         public ConversationModifier(Conversation conversation)
         {
             this.conversation = conversation;
@@ -47,6 +49,37 @@ namespace MindLink.Recruitment.MyChat
             return new Conversation(conversation.name, filteredMessages);
 
         }
+
+        public Conversation ModifyByBlacklist(List<string> blacklist, List<Message> messages)
+        {
+            List<Message> filteredMessages = new List<Message>();
+
+
+            foreach(var x in messages)
+            {
+
+                var content = x.content;
+
+               foreach(var badword in blacklist)
+                {
+
+                    if(content.Contains(badword))
+                    {
+                        x.content = content.Replace(badword, redacted);
+                    }
+                        
+                }
+
+
+
+
+            }
+
+
+            return new Conversation(conversation.name, messages);
+        }
+
+
 
         public Conversation ModifyByKeyWord(string key)
         {

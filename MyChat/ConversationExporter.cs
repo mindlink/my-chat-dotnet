@@ -29,25 +29,27 @@
 
         public static Conversation conversation;
 
+
         static void Main(string[] args)
         {
 
             var conversationExporter = new ConversationExporter();
+
             var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            conversation = conversationExporter.ReadConversation(configuration.inputFilePath);
+            //conversation = conversationExporter.ReadConversation(configuration.inputFilePath);
 
-            var modifier = new ConversationModifier(conversation);
+            //var modifier = new ConversationModifier(conversation);
 
-            List<string> blacklist = new List<string> {"pie" , "Hello"};
+            //List<string> blacklist = new List<string> {"pie" , "Hello"};
 
-            conversation = modifier.ModifyByBlacklist(blacklist, conversation.messages);
+            //conversation = modifier.ModifyByBlacklist(blacklist, conversation.messages);
 
             //conversation = modifier.ModifyByKey("matas", FilterType.SENDER_ID,conversation.messages);
             //conversation = modifier.ModifyByKey("pie", FilterType.KEYWORD, conversation.messages);
           
-            conversationExporter.WriteConversation(conversation, configuration.outputFilePath);
-
+            //conversationExporter.WriteConversation(conversation, configuration.outputFilePath);
+            //Console.ReadLine();
 
         }
 
@@ -84,6 +86,9 @@
         /// </exception>
         public Conversation ReadConversation(string inputFilePath)
         {
+            Console.WriteLine(inputFilePath);
+            Console.ReadLine();
+
 
             try
             {

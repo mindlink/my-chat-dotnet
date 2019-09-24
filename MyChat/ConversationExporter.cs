@@ -32,6 +32,7 @@
 
             conversation = conversationExporter.ReadConversation(configuration.inputFilePath);
 
+
             conversationExporter.WriteConversation(conversation, configuration.outputFilePath);
 
 

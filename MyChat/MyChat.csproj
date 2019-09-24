@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConversationModifier.cs" />
     <Compile Include="CommandLineArgumentParser.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="ConversationExporter.cs" />

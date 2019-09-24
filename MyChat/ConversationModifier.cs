@@ -21,9 +21,7 @@ namespace MindLink.Recruitment.MyChat
 
         public Conversation ModifyByKey(string key, FilterType filterType, List<Message> messages)
         {
-
             List<Message> filteredMessages = new List<Message>();
-
 
             foreach(Message m in messages)
             {
@@ -44,63 +42,22 @@ namespace MindLink.Recruitment.MyChat
                 }
 
             }
-
-
             return new Conversation(conversation.name, filteredMessages);
 
         }
 
         public Conversation ModifyByBlacklist(List<string> blacklist, List<Message> messages)
         {
-            List<Message> filteredMessages = new List<Message>();
-
-
             foreach(var x in messages)
             {
-
-                var content = x.content;
-
                foreach(var badword in blacklist)
                 {
-
-                    if(content.Contains(badword))
-                    {
-                        x.content = content.Replace(badword, redacted);
-                    }
-                        
+                    if(x.content.Contains(badword)) { x.content = x.content.Replace(badword, redacted);}                                 
                 }
-
-
-
-
-            }
-
-
-            return new Conversation(conversation.name, messages);
-        }
-
-
-
-        public Conversation ModifyByKeyWord(string key)
-        {
-            List<Message> messages = new List<Message>();
-
-            foreach(Message m in conversation.messages)
-            {
-                if (m.content.Contains(key))
-                {
-                    messages.Add(m);
-                }
-
             }
 
             return new Conversation(conversation.name, messages);
-
-
         }
-
-
-
 
 
     }

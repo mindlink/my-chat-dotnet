@@ -39,7 +39,7 @@
 
             var modifier = new ConversationModifier(conversation);
 
-            List<string> blacklist = new List<string> {"pie" };
+            List<string> blacklist = new List<string> {"pie" , "Hello"};
 
             conversation = modifier.ModifyByBlacklist(blacklist, conversation.messages);
 

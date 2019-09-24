@@ -2,7 +2,7 @@
   "name": "My Conversation",
   "messages": [
     {
-      "content": "Hello there! ",
+      "content": "\\*redacted*\\ there! ",
       "timestamp": "2015-11-25T17:01:41+00:00",
       "senderId": "bob"
     },
@@ -37,7 +37,7 @@
       "senderId": "angus"
     },
     {
-      "content": "Hello am I late? ",
+      "content": "\\*redacted*\\ am I late? ",
       "timestamp": "2015-11-25T17:01:57+00:00",
       "senderId": "matas"
     },

@@ -7,6 +7,7 @@
     using System.Text;
     using MindLink.Recruitment.MyChat;
     using Newtonsoft.Json;
+    using System.Linq;
 
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
@@ -21,6 +22,7 @@
         /// </param>
         static void Main(string[] args)
         {
+
             var conversationExporter = new ConversationExporter();
             ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 

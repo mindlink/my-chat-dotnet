@@ -32,6 +32,9 @@
 
             conversation = conversationExporter.ReadConversation(configuration.inputFilePath);
 
+            var modifier = new ConversationModifier(conversation);
+            conversation  = modifier.ModifyByUser("matas");
+
 
             conversationExporter.WriteConversation(conversation, configuration.outputFilePath);
 

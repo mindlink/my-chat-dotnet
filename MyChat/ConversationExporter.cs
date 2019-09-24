@@ -20,13 +20,21 @@
         /// <param name="args">
         /// The command line arguments.
         /// </param>
+        /// 
+
+        public static Conversation conversation;
+
         static void Main(string[] args)
         {
 
             var conversationExporter = new ConversationExporter();
-            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+            var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            conversation = conversationExporter.ReadConversation(configuration.inputFilePath);
+
+            conversationExporter.WriteConversation(conversation, configuration.outputFilePath);
+
+
         }
 
         /// <summary>
@@ -44,20 +52,6 @@
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
-        {
-            Console.WriteLine("Input: " + inputFilePath);
-            Console.WriteLine("Output: " + outputFilePath);
-
-            Conversation conversation = this.ReadConversation(inputFilePath);
-
-            Console.WriteLine("Conversation name" + conversation.name);
-            Console.ReadLine();
-
-            this.WriteConversation(conversation, outputFilePath);
-
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
-        }
 
         /// <summary>
         /// Helper method to read the conversation from <paramref name="inputFilePath"/>.
@@ -76,7 +70,6 @@
         /// </exception>
         public Conversation ReadConversation(string inputFilePath)
         {
-
 
             try
             {
@@ -100,7 +93,6 @@
                     var senderID = split[1];
 
                     split.Skip(2).Take(split.Length - 2).ToList<string>().ForEach(x => sb.Append(x + " "));
-
 
                     messages.Add(new Message(timestamp, senderID, sb.ToString()));
                 }

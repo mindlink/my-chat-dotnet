@@ -52,9 +52,6 @@
 
             WriteConversation(configuration.outputFilePath);
 
-
-            Console.ReadLine();
-
         }
 
 
@@ -93,7 +90,6 @@
         public Conversation ReadConversation(string inputFilePath)
         {
             Console.WriteLine(inputFilePath);
-            Console.ReadLine();
 
 
             try

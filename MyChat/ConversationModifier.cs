@@ -59,6 +59,25 @@ namespace MindLink.Recruitment.MyChat
             return new Conversation(conversation.name, messages);
         }
 
+        public Conversation PerformActions(List<FilterType> actionList,ConversationExporterConfiguration configuration)
+        {
+            foreach(FilterType action in actionList)
+            {
+
+                if(action == FilterType.KEYWORD) { conversation = ModifyByKey(configuration.keyword, action, conversation.messages); }
+                if (action == FilterType.SENDER_ID) { conversation = ModifyByKey(configuration.user, action, conversation.messages); }
+                if (action == FilterType.BLACKLIST) { conversation = ModifyByBlacklist(configuration.blacklist,conversation.messages); }
+
+
+            }
+
+            return conversation;
+
+
+
+        }
+             
+
 
     }
 }

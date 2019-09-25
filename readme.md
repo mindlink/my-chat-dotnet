@@ -10,7 +10,8 @@ Instructions
 * There are several deliberate design, code quality and test issues that should be identified and resolved.
 * We are looking for good code quality, pretty much everything in this skeleton represents code that we would not be happy with.
 * Below is a list of the current features supported by the application; as well as additional features that have been requested by the business owner.
-* In order to work on this take a fork into your own GitHub area; make whatever changes you feel are necessary and when you are satisfied submit back via a pull request. See details on GitHub's [Fork & Pull](https://help.github.com/articles/using-pull-requests) model
+* In order to work on this take a fork into your own GitHub area; make whatever changes you feel are necessary and when you are satisfied submit back via a pull request. 
+	See details on GitHub's [Fork & Pull](https://help.github.com/articles/using-pull-requests) model
 * Be sure to put your name in the pull request comment so your work can be easily identified.
 * The project is written using .net 4.6.1, we encourage using the latest version of .net and C#, but this is your project now, so you are free to choose a different version.
 * The project uses nuget to resolve dependencies however if you want to avoid nuget configuration the only external package is json.net.

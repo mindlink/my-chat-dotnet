@@ -29,7 +29,7 @@ namespace MindLink.Recruitment.MyChat
         public String outputPath;
         public String user;
         public String keyword;
-        public IEnumerable<String> blacklist;
+        public List<string> blacklist;
 
         public class Options
         {
@@ -59,20 +59,20 @@ namespace MindLink.Recruitment.MyChat
                     outputPath = o.Output;
                     user = o.User != null ? o.User : null;
                     keyword = o.Keyword != null ? o.Keyword : null;
-                    blacklist = o.Blacklist != null ? o.Blacklist : null;
+                    blacklist = o.Blacklist != null ? o.Blacklist.ToList() : null;
             });
 
             ConversationExporterConfiguration configuration = new ConversationExporterConfiguration(inputPath, outputPath);
 
             configuration.user = user;
             configuration.keyword = keyword;
-            configuration.blacklist = blacklist.ToList();
+            configuration.blacklist = blacklist;
 
             Console.WriteLine(configuration.inputFilePath);
             Console.WriteLine(configuration.outputFilePath);
             Console.WriteLine(configuration.user);
             Console.WriteLine(configuration.keyword);
-            blacklist.ToList().ForEach(x => Console.Write(x));
+            configuration.blacklist.ForEach(x => Console.Write(x));
 
             Console.ReadLine();
 

@@ -27,31 +27,37 @@
         /// </param>
         /// 
 
+
         public static Conversation conversation;
 
 
         static void Main(string[] args)
         {
 
-            var conversationExporter = new ConversationExporter();
-
             var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
+            var conversationExporter = new ConversationExporter();
+
+            conversationExporter.ExportConversation(configuration);
+
+        }
+
+        public void ExportConversation(ConversationExporterConfiguration configuration)
+        {
+            conversation = ReadConversation(configuration.inputFilePath);
+
             var action_list = configuration.GetFilterList();
-            
-            conversation = conversationExporter.ReadConversation(configuration.inputFilePath);
-
             var modifier = new ConversationModifier(conversation);
-            
-            
+            conversation = modifier.PerformActions(action_list, configuration);
+
+            WriteConversation(configuration.outputFilePath);
 
 
- 
-          
-            conversationExporter.WriteConversation(conversation, configuration.outputFilePath);
             Console.ReadLine();
 
         }
+
+
 
         /// <summary>
         /// Exports the conversation at <paramref name="inputFilePath"/> as JSON to <paramref name="outputFilePath"/>.
@@ -145,7 +151,7 @@
         /// <exception cref="Exception">
         /// Thrown when something else bad happens.
         /// </exception>
-        public void WriteConversation(Conversation conversation, string outputFilePath)
+        public void WriteConversation(string outputFilePath)
         {
             try
             {

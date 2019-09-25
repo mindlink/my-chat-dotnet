@@ -26,14 +26,6 @@ namespace MindLink.Recruitment.MyChat
 
         public List<string> blacklist;
 
-        //                    inputPath = o.Input;
-        //    outputPath = o.Output;
-        //  user = o.User;
-        //keyword = o.Keyword;
-        //blacklist = o.Blacklist;
-
-
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.

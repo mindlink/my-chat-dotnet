@@ -2,9 +2,24 @@
   "name": "My Conversation",
   "messages": [
     {
-      "content": "I'm good thanks, do you \\*redacted*\\ pie?",
+      "content": "Hello there!",
+      "timestamp": "2015-11-25T17:01:41+00:00",
+      "senderId": "bob"
+    },
+    {
+      "content": "how are you?",
+      "timestamp": "2015-11-25T17:01:45+00:00",
+      "senderId": "mike"
+    },
+    {
+      "content": "I'm good thanks, do you like pie?",
       "timestamp": "2015-11-25T17:01:46+00:00",
       "senderId": "bob"
+    },
+    {
+      "content": "no, let me ask Angus...",
+      "timestamp": "2015-11-25T17:01:50+00:00",
+      "senderId": "mike"
     },
     {
       "content": "Hell yes! Are we buying some pie?",
@@ -22,7 +37,12 @@
       "senderId": "angus"
     },
     {
-      "content": "I \\*redacted*\\ pie",
+      "content": "Hello am I late?",
+      "timestamp": "2015-11-25T17:01:57+00:00",
+      "senderId": "matas"
+    },
+    {
+      "content": "I like pie",
       "timestamp": "2015-11-25T17:01:57+00:00",
       "senderId": "matas"
     }

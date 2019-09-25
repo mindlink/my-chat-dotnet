@@ -91,7 +91,6 @@
         {
             Console.WriteLine(inputFilePath);
 
-
             try
             {
                 var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
@@ -106,8 +105,6 @@
                 while ((line = reader.ReadLine()) != null)
                 {
                     var split = line.Split(' ');
-
-
 
                     if (LineValidator(split))
                     {
@@ -137,26 +134,20 @@
             }
             catch (IOException)
             {
+
                 throw new Exception("Something went wrong in the IO.");
             }
         }
 
-        public bool LineValidator(string[] splitArr)
+        public bool LineValidator(string[] split)
         {
-            // 1448470901 bob Hello there!
-
-            List<string> split = splitArr.ToList();
-
             long number;
 
-            bool checkFirstArg = long.TryParse(split[0], out number);
+            bool checkDateTime = long.TryParse(split[0], out number);
 
-            if(!checkFirstArg) { Console.WriteLine("Incorrect date format") ; return false; }
+            if(split.Length < 3 || !checkDateTime) { return false; }
 
-
-
-            return false;
-
+            return true;
         }
 
 

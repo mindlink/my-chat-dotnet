@@ -107,15 +107,24 @@
                 {
                     var split = line.Split(' ');
 
-                    var sb = new StringBuilder();
 
-                    var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0]));
 
-                    var senderID = split[1];
+                    if (LineValidator(split))
+                    {
+                        var sb = new StringBuilder();
 
-                    split.Skip(2).Take(split.Length - 2).ToList<string>().ForEach(x => sb.Append(x + " "));
+                        var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0]));
 
-                    messages.Add(new Message(timestamp, senderID, sb.ToString()));
+                        var senderID = split[1];
+
+                        split.Skip(2).Take(split.Length - 2).ToList<string>().ForEach(x => sb.Append(x + " "));
+
+                        var content = sb.ToString().Trim();
+
+
+                        messages.Add(new Message(timestamp, senderID, content));
+                    }
+
                 }
 
                 messages.ForEach(m => Console.WriteLine(m.timestamp + " " + m.senderId + " " + m.content));
@@ -131,6 +140,27 @@
                 throw new Exception("Something went wrong in the IO.");
             }
         }
+
+        public bool LineValidator(string[] splitArr)
+        {
+            // 1448470901 bob Hello there!
+
+            List<string> split = splitArr.ToList();
+
+            long number;
+
+            bool checkFirstArg = long.TryParse(split[0], out number);
+
+            if(!checkFirstArg) { Console.WriteLine("Incorrect date format") ; return false; }
+
+
+
+            return false;
+
+        }
+
+
+
 
         /// <summary>
         /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
@@ -154,7 +184,7 @@
                 var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
 
                 var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
-
+                
                 writer.Write(serialized);
 
                 writer.Flush();

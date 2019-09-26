@@ -108,9 +108,32 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.Equal("Hello am I late ?", messages[0].content);
             Assert.Equal("I like pie", messages[1].content);
             
-
-
         }
+
+        [Fact]
+        public void Test_Modifier_ModifyByKeyword()
+        {
+            configuration = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            configuration.keyword = "pie";
+
+            exporter.ExportConversation(configuration);
+
+            serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+            savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+
+            Assert.Equal("I'm good thanks, do you like pie?", messages[0].content);
+            Assert.Equal("Hell yes! Are we buying some pie?", messages[1].content);
+            Assert.Equal("No, just want to know if there's anybody else in the pie society...", messages[2].content);
+            Assert.Equal("YES! I'm the head pie eater there...", messages[3].content);
+            Assert.Equal("I like pie", messages[4].content);
+               
+        }
+
+
+
+
 
 
 

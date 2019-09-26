@@ -26,13 +26,13 @@ namespace MindLink.Recruitment.MyChat.Tests
 
         public ConversationExporterTests()
         {
-            exporter = new ConversationExporter();
+           /* exporter = new ConversationExporter();
             configuration = new ConversationExporterConfiguration("chat.txt", "chat.json");
 
             exporter.ExportConversation(configuration);
 
             serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
-            savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+            savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);*/
 
         }
 
@@ -96,17 +96,21 @@ namespace MindLink.Recruitment.MyChat.Tests
 
         public void Test_Modifier_ModifyByName()
         {
-            configuration = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            var output = "chat1.json";
+
+
+            var exporter = new ConversationExporter();
+            var configuration = new ConversationExporterConfiguration("chat.txt", output);
             configuration.user = "matas";
             
             exporter.ExportConversation(configuration);
 
-            serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
-            savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+            var serializedConversation = new StreamReader(new FileStream(output, FileMode.Open)).ReadToEnd();
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
             var messages = savedConversation.messages.ToList();
 
-            Assert.Equal("Hello am I late ?", messages[0].content);
+            Assert.Equal("Hello am I late?", messages[0].content);
             Assert.Equal("I like pie", messages[1].content);
             
         }
@@ -114,13 +118,17 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Fact]
         public void Test_Modifier_ModifyByKeyword()
         {
-            configuration = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            var output = "chat2.json";
+
+
+            var exporter = new ConversationExporter();
+            var configuration = new ConversationExporterConfiguration("chat.txt", output);
             configuration.keyword = "pie";
 
             exporter.ExportConversation(configuration);
 
-            serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
-            savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+            var serializedConversation = new StreamReader(new FileStream(output, FileMode.Open)).ReadToEnd();
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
             var messages = savedConversation.messages.ToList();
 
@@ -135,18 +143,29 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Fact]
         public void Test_Modifier_ModifyByBlacklist()
         {
-            configuration = new ConversationExporterConfiguration("chat.txt", "chat.json");
-            configuration.blacklist = new List<string> { "pie", "like" };
+            var output = "chat3.json";
+
+            var exporter = new ConversationExporter();
+            var configuration = new ConversationExporterConfiguration("chat.txt", output);
+            configuration.blacklist = new List<string>();
+
+            configuration.blacklist.Add("like");
+            configuration.blacklist.Add("pie");
 
             exporter.ExportConversation(configuration);
 
-            serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
-            savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
-
+            var serializedConversation = new StreamReader(new FileStream(output, FileMode.Open)).ReadToEnd();
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+            
             var messages = savedConversation.messages.ToList();
 
-            Assert.Equal("I'm good thanks, do you like pie?", messages[0].content);
-            Assert.Equal("I like pie", messages[1].content);
+            Assert.Equal("Hello there!", messages[0].content);
+            Assert.Equal("I'm good thanks, do you \\*redacted*\\ \\*redacted*\\?", messages[2].content);          
+            Assert.Equal("Hell yes! Are we buying some \\*redacted*\\?", messages[4].content);
+            Assert.Equal("No, just want to know if there's anybody else in the \\*redacted*\\ society...", messages[5].content);
+            Assert.Equal("YES! I'm the head \\*redacted*\\ eater there...", messages[6].content);
+            Assert.Equal("I \\*redacted*\\ \\*redacted*\\", messages[8].content);
+            Assert.Equal("I mean what;s not to \\*redacted*\\ about \\*redacted*\\", messages[9].content);
 
         }
 

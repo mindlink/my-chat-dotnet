@@ -72,8 +72,9 @@ namespace MindLink.Recruitment.MyChat
             Console.WriteLine(configuration.outputFilePath);
             Console.WriteLine(configuration.user);
             Console.WriteLine(configuration.keyword);
-            //configuration.blacklist.ForEach(x => Console.Write(x));
-            
+
+            configuration.blacklist.ForEach(x => Console.Write(x));
+            Console.ReadLine();
 
             return configuration;
         }

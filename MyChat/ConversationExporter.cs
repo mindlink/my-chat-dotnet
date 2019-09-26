@@ -34,17 +34,6 @@
         static void Main(string[] args)
         {
 
-            var s = "5555 hi ".Split(' ');
-
-            int index = 1;
-            foreach(string c in s)
-            {
-                Console.WriteLine(index + c);
-                index++;
-            }
-            Console.ReadLine();
-
-
             var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
             var conversationExporter = new ConversationExporter();
@@ -156,9 +145,11 @@
 
             bool checkDateTime = long.TryParse(split[0], out number);
 
-            if(split.Length < 3 || !checkDateTime) { return false; }
+            if(split.Length < Globals.MINIMUM_MESSAGE_LENGTH || !checkDateTime) { return false; }
 
-            if (split.Length <= 4)
+            // If the message format is: "date user "  With the empty string at the end
+
+            if (split.Length <= Globals.MINIMUM_MESSAGE_LENGTH+1)
             {
                 foreach (string s in split)
                 {

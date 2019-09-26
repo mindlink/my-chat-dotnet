@@ -11,7 +11,7 @@
 
     public enum FilterType
     {
-        KEYWORD, SENDER_ID, BLACKLIST, HIDE_SENSITIVE_DATA
+        KEYWORD, SENDER_ID, BLACKLIST, HIDE_SENSITIVE_DATA, OBFUSCATE_IDS
     }
 
     /// <summary>

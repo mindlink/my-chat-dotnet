@@ -4,62 +4,62 @@
     {
       "content": "Hello there!",
       "timestamp": "2015-11-25T17:01:41+00:00",
-      "senderId": "bob"
+      "senderId": "user1"
     },
     {
       "content": "how are you?",
       "timestamp": "2015-11-25T17:01:45+00:00",
-      "senderId": "mike"
+      "senderId": "user2"
     },
     {
       "content": "I'm good thanks, do you \\*redacted*\\ \\*redacted*\\?",
       "timestamp": "2015-11-25T17:01:46+00:00",
-      "senderId": "bob"
+      "senderId": "user1"
     },
     {
       "content": "no, let me ask Angus...",
       "timestamp": "2015-11-25T17:01:50+00:00",
-      "senderId": "mike"
+      "senderId": "user2"
     },
     {
       "content": "Hell yes! Are we buying some \\*redacted*\\?",
       "timestamp": "2015-11-25T17:01:52+00:00",
-      "senderId": "angus"
+      "senderId": "user3"
     },
     {
       "content": "No, just want to know if there's anybody else in the \\*redacted*\\ society...",
       "timestamp": "2015-11-25T17:01:54+00:00",
-      "senderId": "bob"
+      "senderId": "user1"
     },
     {
       "content": "YES! I'm the head \\*redacted*\\ eater there...",
       "timestamp": "2015-11-25T17:01:55+00:00",
-      "senderId": "angus"
+      "senderId": "user3"
     },
     {
       "content": "Hello am I late?",
       "timestamp": "2015-11-25T17:01:57+00:00",
-      "senderId": "matas"
+      "senderId": "user4"
     },
     {
       "content": "I \\*redacted*\\ \\*redacted*\\",
       "timestamp": "2015-11-25T17:01:57+00:00",
-      "senderId": "matas"
+      "senderId": "user4"
     },
     {
       "content": "I mean what;s not to \\*redacted*\\ about \\*redacted*\\",
       "timestamp": "2015-11-25T17:02:00+00:00",
-      "senderId": "matas"
+      "senderId": "user4"
     },
     {
       "content": "hello my credit card number is \\*redacted*\\",
       "timestamp": "2015-11-25T17:02:05+00:00",
-      "senderId": "matas"
+      "senderId": "user4"
     },
     {
       "content": "Hello my phone number is \\*redacted*\\",
       "timestamp": "2015-11-25T17:02:05+00:00",
-      "senderId": "matas"
+      "senderId": "user4"
     }
   ]
 }

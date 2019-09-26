@@ -31,6 +31,7 @@ namespace MindLink.Recruitment.MyChat
         public String keyword;
         public List<string> blacklist;
         public bool hideSensitiveData;
+        public bool obfustaceUserIDs;
 
         public class Options
         {
@@ -49,8 +50,11 @@ namespace MindLink.Recruitment.MyChat
             [Option('b', "blacklist", Required = false, HelpText = "Set keyword")]
             public IEnumerable<String> Blacklist { get; set; }
 
-            [Option('h', "hide", Required = false, HelpText = "Option to hide phone and credit card numbers")]           
+            [Option('h', "hide", Required = false, HelpText = "Option to hide phone and credit card numbers")]
             public bool HideSensitiveData { get; set; }
+
+            [Option('f', "obfuscate", Required = false, HelpText = "Option to obfuscate user IDs")]
+            public bool ObfuscateUserIDs { get; set; }
 
 
         }
@@ -66,6 +70,8 @@ namespace MindLink.Recruitment.MyChat
                     keyword = o.Keyword != null ? o.Keyword : null;
                     blacklist = o.Blacklist != null ? o.Blacklist.ToList() : null;
                     hideSensitiveData = o.HideSensitiveData;
+                    obfustaceUserIDs = o.ObfuscateUserIDs;
+                    
             });
 
             ConversationExporterConfiguration configuration = new ConversationExporterConfiguration(inputPath, outputPath);
@@ -74,12 +80,15 @@ namespace MindLink.Recruitment.MyChat
             configuration.keyword = keyword;
             configuration.blacklist = blacklist;
             configuration.hideSensitiveData = hideSensitiveData;
+            configuration.obfuscateUserIDs = obfustaceUserIDs;
 
             Console.WriteLine(configuration.inputFilePath);
             Console.WriteLine(configuration.outputFilePath);
             Console.WriteLine(configuration.user);
             Console.WriteLine(configuration.keyword);
             Console.WriteLine(configuration.hideSensitiveData);
+            Console.WriteLine(configuration.obfuscateUserIDs);
+
 
             //configuration.blacklist.ForEach(x => Console.Write(x));
             Console.ReadLine();

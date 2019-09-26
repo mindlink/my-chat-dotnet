@@ -70,6 +70,31 @@ namespace MindLink.Recruitment.MyChat
             return new Conversation(conversation.name, messages);
         }
 
+        public Conversation ModifyByObfiscatingIDs(List<Message> messages)
+        {
+            Dictionary<string,string> uniqueUsers = new Dictionary<string, string>();
+
+            int uniqueIDs = 0;
+
+            foreach(var message in messages)
+            {
+                if(!uniqueUsers.ContainsKey(message.senderId))
+                {
+                    uniqueIDs++;
+                    uniqueUsers.Add(message.senderId, "user" + uniqueIDs);
+                    Console.WriteLine("New user: " + message.senderId + " " + uniqueUsers[message.senderId]);
+
+
+                }
+
+                message.senderId = uniqueUsers[message.senderId];
+
+            }
+         
+            return new Conversation(conversation.name, messages);
+        }
+
+
 
 
         public Conversation PerformActions(List<FilterType> actionList,ConversationExporterConfiguration configuration)
@@ -81,6 +106,7 @@ namespace MindLink.Recruitment.MyChat
                 if (action == FilterType.SENDER_ID) { conversation = ModifyByKey(configuration.user, action, conversation.messages); }
                 if (action == FilterType.BLACKLIST) { conversation = ModifyByBlacklist(configuration.blacklist,conversation.messages); }
                 if (action == FilterType.HIDE_SENSITIVE_DATA) { conversation = ModifyBySensitiveData(conversation.messages); }
+                if (action == FilterType.OBFUSCATE_IDS) { conversation = ModifyByObfiscatingIDs(conversation.messages);  }
             }
 
             return conversation;

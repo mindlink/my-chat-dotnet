@@ -28,6 +28,8 @@ namespace MindLink.Recruitment.MyChat
 
         public bool hideSensitiveData;
 
+        public bool obfuscateUserIDs;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
@@ -59,6 +61,7 @@ namespace MindLink.Recruitment.MyChat
             if (keyword != null) { list.Add(FilterType.KEYWORD); }
             if (blacklist != null) { list.Add(FilterType.BLACKLIST); }
             if (hideSensitiveData) { list.Add(FilterType.HIDE_SENSITIVE_DATA); }
+            if (obfuscateUserIDs) { list.Add(FilterType.OBFUSCATE_IDS); }
 
             return list;
         }

@@ -84,7 +84,6 @@ namespace MindLink.Recruitment.MyChat
                     uniqueUsers.Add(message.senderId, "user" + uniqueIDs);
                     Console.WriteLine("New user: " + message.senderId + " " + uniqueUsers[message.senderId]);
 
-
                 }
 
                 message.senderId = uniqueUsers[message.senderId];
@@ -112,6 +111,7 @@ namespace MindLink.Recruitment.MyChat
             return conversation;
 
         }
+
              
 
 

@@ -73,7 +73,8 @@ Implementing any of these features well will make your submission stand-out. Fea
     * The same original user ID in any single export is replaced with the same obfuscated user ID i.e. messages retain their relationship with the sender, only the ID that represents the sender is changed.
 * A report is added to the conversation that details the most active users
     * The most active user in a conversation is the user who sent the most messages.
-    * Most active users are added to the JSON output as an array ordered by activity.
+    * Most active users are added to the 
+	output as an array ordered by activity.
     * The number of messages sent by each user is included.
 * A web-service is exposed in addition to a console application
     * The web-service allows the same options to be specified in form fields,

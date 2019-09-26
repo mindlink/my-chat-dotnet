@@ -27,7 +27,6 @@
         /// </param>
         /// 
 
-
         public static Conversation conversation;
 
 
@@ -50,9 +49,54 @@
             var modifier = new ConversationModifier(conversation);
             conversation = modifier.PerformActions(action_list, configuration);
 
+            CalculateActivity(conversation);
+
             WriteConversation(configuration.outputFilePath);
 
+            var activityDict = CalculateActivity(conversation);
+            WriteUserActivity(configuration.outputFilePath,activityDict);
+
         }
+
+        public Dictionary<string,int> CalculateActivity(Conversation conversation)
+        {
+            Dictionary<string, int> activityDict = new Dictionary<string, int>();
+
+            var uniqueNames = conversation.messages.Select(c => c.senderId).Distinct().ToList();
+
+            uniqueNames.ForEach(x => activityDict.Add(x, 0));
+
+            foreach(Message m in conversation.messages)
+            {
+                if (activityDict.ContainsKey(m.
+                    senderId)) { activityDict[m.senderId]++; } 
+            }
+
+            activityDict = activityDict.OrderByDescending(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+
+            return activityDict;
+
+        }
+
+        public void WriteUserActivity(string outputFilePath, Dictionary<string,int> activityDict)
+        {
+            using (StreamWriter sw = File.AppendText(outputFilePath))
+            {
+
+                sw.WriteLine("\nActivity:");
+
+                foreach (KeyValuePair<string,int> kvp in activityDict)
+                {
+                    sw.WriteLine("User: " + kvp.Key + " Message count: " + kvp.Value);
+
+                }
+            }
+
+
+        }
+
+
 
 
         /// <summary>

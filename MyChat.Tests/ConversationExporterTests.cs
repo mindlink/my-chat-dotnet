@@ -185,6 +185,30 @@ namespace MindLink.Recruitment.MyChat.Tests
 
         }
 
+        [Fact]
+        public void Test_Modifier_ModifyBySensitiveData()
+        {
+            var output = "chat5.json";
+
+            var exporter = new ConversationExporter();
+            var configuration = new ConversationExporterConfiguration("chat.txt", output);
+            configuration.hideSensitiveData = true;
+
+            exporter.ExportConversation(configuration);
+
+            var serializedConversation = new StreamReader(new FileStream(output, FileMode.Open)).ReadToEnd();
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+
+            Assert.Equal("Hello there!", messages[0].content); 
+            Assert.Equal("hello my credit card number is \\*redacted*\\", messages[7].content);
+            Assert.Equal("Hello my phone number is \\*redacted*\\", messages[8].content);
+
+            
+        }
+
+
 
     }
 }

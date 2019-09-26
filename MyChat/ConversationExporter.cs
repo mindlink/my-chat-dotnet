@@ -11,7 +11,7 @@
 
     public enum FilterType
     {
-        KEYWORD, SENDER_ID, BLACKLIST
+        KEYWORD, SENDER_ID, BLACKLIST, HIDE_SENSITIVE_DATA
     }
 
     /// <summary>
@@ -140,6 +140,7 @@
 
 
         public bool LineValidator(string[] split)
+        
         {
             long number;
 

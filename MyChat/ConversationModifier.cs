@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace MindLink.Recruitment.MyChat
 {
@@ -57,6 +58,20 @@ namespace MindLink.Recruitment.MyChat
             return new Conversation(conversation.name, messages);
         }
 
+        public Conversation ModifyBySensitiveData(List<Message> messages)
+        {
+          
+            foreach(var x in messages)
+            {
+                x.content = Regex.Replace(x.content, Globals.REGEX_CREDIT_CARD, Globals.REDACTED_WORD);
+                x.content = Regex.Replace(x.content, Globals.REGEX_UK_PHONE_NUMBER, Globals.REDACTED_WORD);
+            }
+
+            return new Conversation(conversation.name, messages);
+        }
+
+
+
         public Conversation PerformActions(List<FilterType> actionList,ConversationExporterConfiguration configuration)
         {
             foreach(FilterType action in actionList)
@@ -65,7 +80,7 @@ namespace MindLink.Recruitment.MyChat
                 if(action == FilterType.KEYWORD) { conversation = ModifyByKey(configuration.keyword, action, conversation.messages); }
                 if (action == FilterType.SENDER_ID) { conversation = ModifyByKey(configuration.user, action, conversation.messages); }
                 if (action == FilterType.BLACKLIST) { conversation = ModifyByBlacklist(configuration.blacklist,conversation.messages); }
-
+                if (action == FilterType.HIDE_SENSITIVE_DATA) { conversation = ModifyBySensitiveData(conversation.messages); }
             }
 
             return conversation;

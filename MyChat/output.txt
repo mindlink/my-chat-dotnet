@@ -50,6 +50,16 @@
       "content": "I mean what;s not to \\*redacted*\\ about \\*redacted*\\",
       "timestamp": "2015-11-25T17:02:00+00:00",
       "senderId": "matas"
+    },
+    {
+      "content": "hello my credit card number is \\*redacted*\\",
+      "timestamp": "2015-11-25T17:02:05+00:00",
+      "senderId": "matas"
+    },
+    {
+      "content": "Hello my phone number is \\*redacted*\\",
+      "timestamp": "2015-11-25T17:02:05+00:00",
+      "senderId": "matas"
     }
   ]
 }

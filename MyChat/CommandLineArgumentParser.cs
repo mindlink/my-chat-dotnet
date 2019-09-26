@@ -30,6 +30,7 @@ namespace MindLink.Recruitment.MyChat
         public String user;
         public String keyword;
         public List<string> blacklist;
+        public bool hideSensitiveData;
 
         public class Options
         {
@@ -48,6 +49,10 @@ namespace MindLink.Recruitment.MyChat
             [Option('b', "blacklist", Required = false, HelpText = "Set keyword")]
             public IEnumerable<String> Blacklist { get; set; }
 
+            [Option('h', "hide", Required = false, HelpText = "Option to hide phone and credit card numbers")]           
+            public bool HideSensitiveData { get; set; }
+
+
         }
 
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
@@ -60,6 +65,7 @@ namespace MindLink.Recruitment.MyChat
                     user = o.User != null ? o.User : null;
                     keyword = o.Keyword != null ? o.Keyword : null;
                     blacklist = o.Blacklist != null ? o.Blacklist.ToList() : null;
+                    hideSensitiveData = o.HideSensitiveData;
             });
 
             ConversationExporterConfiguration configuration = new ConversationExporterConfiguration(inputPath, outputPath);
@@ -67,13 +73,15 @@ namespace MindLink.Recruitment.MyChat
             configuration.user = user;
             configuration.keyword = keyword;
             configuration.blacklist = blacklist;
+            configuration.hideSensitiveData = hideSensitiveData;
 
             Console.WriteLine(configuration.inputFilePath);
             Console.WriteLine(configuration.outputFilePath);
             Console.WriteLine(configuration.user);
             Console.WriteLine(configuration.keyword);
+            Console.WriteLine(configuration.hideSensitiveData);
 
-            configuration.blacklist.ForEach(x => Console.Write(x));
+            //configuration.blacklist.ForEach(x => Console.Write(x));
             Console.ReadLine();
 
             return configuration;

@@ -188,7 +188,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Fact]
         public void Test_Modifier_ModifyBySensitiveData()
         {
-            var output = "chat5.json";
+            var output = "chat6.json";
 
             var exporter = new ConversationExporter();
             var configuration = new ConversationExporterConfiguration("chat.txt", output);
@@ -202,11 +202,39 @@ namespace MindLink.Recruitment.MyChat.Tests
             var messages = savedConversation.messages.ToList();
 
             Assert.Equal("Hello there!", messages[0].content); 
-            Assert.Equal("hello my credit card number is \\*redacted*\\", messages[7].content);
-            Assert.Equal("Hello my phone number is \\*redacted*\\", messages[8].content);
-
-            
+            Assert.Equal("hello my credit card number is \\*redacted*\\", messages[10].content);
+            Assert.Equal("Hello my phone number is \\*redacted*\\", messages[11].content);            
         }
+
+        [Fact]
+
+        public void Test_Modifier_Obfisticate_IDS()
+        {
+            var output = "chat7.json";
+
+            var exporter = new ConversationExporter();
+            var configuration = new ConversationExporterConfiguration("chat.txt", output);
+            configuration.obfuscateUserIDs = true;
+
+            exporter.ExportConversation(configuration);
+
+            var serializedConversation = new StreamReader(new FileStream(output, FileMode.Open)).ReadToEnd();
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+
+
+            //bob mike angus matas
+            Assert.Equal("user1", messages[0].senderId);
+            Assert.Equal("user2", messages[1].senderId);
+            Assert.Equal("user3", messages[4].senderId);
+            Assert.Equal("user4", messages[7].senderId);
+
+        }
+
+
+
+
 
 
 

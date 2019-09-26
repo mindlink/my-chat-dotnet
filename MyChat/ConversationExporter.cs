@@ -184,6 +184,8 @@
         {
             try
             {
+                File.WriteAllText(outputFilePath, string.Empty);
+
                 var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
 
                 var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);

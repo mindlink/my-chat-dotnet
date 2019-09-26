@@ -111,7 +111,6 @@ namespace MindLink.Recruitment.MyChat
 
             return conversation;
 
-
         }
              
 

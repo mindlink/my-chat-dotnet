@@ -26,13 +26,6 @@ namespace MindLink.Recruitment.MyChat.Tests
 
         public ConversationExporterTests()
         {
-           /* exporter = new ConversationExporter();
-            configuration = new ConversationExporterConfiguration("chat.txt", "chat.json");
-
-            exporter.ExportConversation(configuration);
-
-            serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
-            savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);*/
 
         }
 
@@ -43,13 +36,33 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Fact]
         public void Test_CheckConversationName()
         {
-            Assert.Equal("My Conversation", savedConversation.name);
+            var output = "chat5.json";
 
+            var exporter = new ConversationExporter();
+            var configuration = new ConversationExporterConfiguration("chat.txt", output);
+
+            exporter.ExportConversation(configuration);
+
+            var serializedConversation = new StreamReader(new FileStream(output, FileMode.Open)).ReadToEnd();
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            Assert.Equal("My Conversation", savedConversation.name);
         }
 
         [Fact]
         public void Test_CheckMessages()
         {
+
+            var output = "chat0.json";
+
+            var exporter = new ConversationExporter();
+            var configuration = new ConversationExporterConfiguration("chat.txt", output);
+
+            exporter.ExportConversation(configuration);
+
+            var serializedConversation = new StreamReader(new FileStream(output, FileMode.Open)).ReadToEnd();
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
             var messages = savedConversation.messages.ToList();
 
             Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(1448470901), messages[0].timestamp);
@@ -84,6 +97,8 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Fact]
         public void Test_CheckLineValidator()
         {
+
+            var exporter = new ConversationExporter();
 
             Assert.False(exporter.LineValidator("48464655 matas hello pie ".Split(' ')));
             Assert.False(exporter.LineValidator("5555 hi".Split(' ')));
@@ -168,16 +183,6 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.Equal("I mean what;s not to \\*redacted*\\ about \\*redacted*\\", messages[9].content);
 
         }
-
-
-
-
-
-
-
-
-
-
 
     }
 }

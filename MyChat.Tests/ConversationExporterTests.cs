@@ -2,6 +2,7 @@
 using System.Linq;
 using MyChat;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace MindLink.Recruitment.MyChat.Tests
 {
@@ -129,6 +130,24 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.Equal("YES! I'm the head pie eater there...", messages[3].content);
             Assert.Equal("I like pie", messages[4].content);
                
+        }
+
+        [Fact]
+        public void Test_Modifier_ModifyByBlacklist()
+        {
+            configuration = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            configuration.blacklist = new List<string> { "pie", "like" };
+
+            exporter.ExportConversation(configuration);
+
+            serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+            savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+
+            Assert.Equal("I'm good thanks, do you like pie?", messages[0].content);
+            Assert.Equal("I like pie", messages[1].content);
+
         }
 
 

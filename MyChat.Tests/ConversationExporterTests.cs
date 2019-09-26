@@ -100,8 +100,9 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var exporter = new ConversationExporter();
 
-            Assert.False(exporter.LineValidator("48464655 matas hello pie ".Split(' ')));
+            Assert.True(exporter.LineValidator("48464655 matas hello pie ".Split(' ')));
             Assert.False(exporter.LineValidator("5555 hi".Split(' ')));
+            Assert.False(exporter.LineValidator("5555 hi ".Split(' ')));
             Assert.False(exporter.LineValidator(" ".Split(' ')));
             Assert.False(exporter.LineValidator("9999 matas".Split(' ')));
 
@@ -183,6 +184,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.Equal("I mean what;s not to \\*redacted*\\ about \\*redacted*\\", messages[9].content);
 
         }
+
 
     }
 }

@@ -68,11 +68,9 @@ namespace MindLink.Recruitment.MyChat
                 if (action == FilterType.SENDER_ID) { conversation = ModifyByKey(configuration.user, action, conversation.messages); }
                 if (action == FilterType.BLACKLIST) { conversation = ModifyByBlacklist(configuration.blacklist,conversation.messages); }
 
-
             }
 
             return conversation;
-
 
 
         }

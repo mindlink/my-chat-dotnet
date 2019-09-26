@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MindLink.Recruitment.MyChat
 {
-    class ConversationModifier
+    public class ConversationModifier
     {
 
         public Conversation conversation;

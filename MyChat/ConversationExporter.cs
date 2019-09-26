@@ -33,7 +33,6 @@
 
         static void Main(string[] args)
         {
-
             var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
             var conversationExporter = new ConversationExporter();
@@ -53,7 +52,6 @@
             WriteConversation(configuration.outputFilePath);
 
         }
-
 
 
         /// <summary>
@@ -104,6 +102,7 @@
 
                 while ((line = reader.ReadLine()) != null)
                 {
+
                     var split = line.Split(' ');
 
                     if (LineValidator(split))
@@ -117,7 +116,6 @@
                         split.Skip(2).Take(split.Length - 2).ToList<string>().ForEach(x => sb.Append(x + " "));
 
                         var content = sb.ToString().Trim();
-
 
                         messages.Add(new Message(timestamp, senderID, content));
                     }
@@ -139,13 +137,14 @@
             }
         }
 
+
         public bool LineValidator(string[] split)
         {
             long number;
 
             bool checkDateTime = long.TryParse(split[0], out number);
 
-            if(split.Length < 3 || !checkDateTime) { return false; }
+            if(split.Length < 3 || !checkDateTime) { return false; }                 
 
             return true;
         }

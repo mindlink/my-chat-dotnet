@@ -19,6 +19,8 @@ namespace MindLink.Recruitment.MyChat.Tests
         ConversationExporter exporter;
         Conversation savedConversation;
 
+        ConversationModifier modifier;
+
         string serializedConversation;
 
         public ConversationExporterTests()
@@ -77,6 +79,41 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.Equal("angus", messages[6].senderId);
             Assert.Equal("YES! I'm the head pie eater there...", messages[6].content); 
         }
+
+        [Fact]
+        public void Test_CheckLineValidator()
+        {
+
+            Assert.False(exporter.LineValidator("48464655 matas hello pie ".Split(' ')));
+            Assert.False(exporter.LineValidator("5555 hi".Split(' ')));
+            Assert.False(exporter.LineValidator(" ".Split(' ')));
+            Assert.False(exporter.LineValidator("9999 matas".Split(' ')));
+
+        }
+
+        [Fact]
+
+        public void Test_Modifier_ModifyByName()
+        {
+            configuration = new ConversationExporterConfiguration("chat.txt", "chat.json");
+            configuration.user = "matas";
+            
+            exporter.ExportConversation(configuration);
+
+            serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+            savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+
+            Assert.Equal("Hello am I late ?", messages[0].content);
+            Assert.Equal("I like pie", messages[1].content);
+            
+
+
+        }
+
+
+
 
 
 

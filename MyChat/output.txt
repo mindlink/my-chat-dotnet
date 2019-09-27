@@ -63,8 +63,17 @@
     }
   ]
 }
-Activity:
-User: matas Message count: 5
-User: bob Message count: 3
-User: mike Message count: 2
-User: angus Message count: 2
+Most active users: 
+
+User ID: matas
+Messages: 5
+----------
+User ID: bob
+Messages: 3
+----------
+User ID: mike
+Messages: 2
+----------
+User ID: angus
+Messages: 2
+----------

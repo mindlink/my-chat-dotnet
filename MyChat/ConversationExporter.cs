@@ -53,42 +53,51 @@
 
             WriteConversation(configuration.outputFilePath);
 
-            var activityDict = CalculateActivity(conversation);
-            WriteUserActivity(configuration.outputFilePath,activityDict);
+            var activityList = CalculateActivity(conversation);
+            WriteUserActivity(configuration.outputFilePath, activityList);
 
         }
 
-        public Dictionary<string,int> CalculateActivity(Conversation conversation)
+        public List<UserInformation> CalculateActivity(Conversation conversation)
         {
-            Dictionary<string, int> activityDict = new Dictionary<string, int>();
+
+            var activityList = new List<UserInformation>();
 
             var uniqueNames = conversation.messages.Select(c => c.senderId).Distinct().ToList();
 
-            uniqueNames.ForEach(x => activityDict.Add(x, 0));
+            uniqueNames.ForEach(x => activityList.Add(new UserInformation(x)));
 
-            foreach(Message m in conversation.messages)
+            foreach (Message m in conversation.messages)
             {
-                if (activityDict.ContainsKey(m.
-                    senderId)) { activityDict[m.senderId]++; } 
+                for (int i = 0; i < activityList.Count; i++)
+                {
+                    if (activityList[i].userID.Equals(m.senderId)) { activityList[i].messageCount++; }
+
+                }                
+
             }
 
-            activityDict = activityDict.OrderByDescending(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+            activityList = activityList.OrderByDescending(x => x.messageCount).ToList();
 
 
-            return activityDict;
+            return activityList;
 
         }
 
-        public void WriteUserActivity(string outputFilePath, Dictionary<string,int> activityDict)
+        public void WriteUserActivity(string outputFilePath, List<UserInformation> activityLict)
         {
             using (StreamWriter sw = File.AppendText(outputFilePath))
             {
 
-                sw.WriteLine("\nActivity:");
+                sw.WriteLine("\nMost active users: \n");
 
-                foreach (KeyValuePair<string,int> kvp in activityDict)
+                foreach (UserInformation info in activityLict)
                 {
-                    sw.WriteLine("User: " + kvp.Key + " Message count: " + kvp.Value);
+                    sw.WriteLine("User ID: " + info.userID);
+
+                    sw.WriteLine("Messages: " + info.messageCount);
+
+                    sw.WriteLine("----------");
 
                 }
             }

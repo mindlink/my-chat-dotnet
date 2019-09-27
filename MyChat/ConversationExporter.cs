@@ -34,18 +34,12 @@
         {
 
             var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
-
+            
             if(configuration != null)
             {
                 var exporter = new ConversationExporter();
                 exporter.ExportConversation(configuration);
             }
-            else
-            {
-                throw new ArgumentNullException("Configuration is null, input and/or output path was entered incorrectly.");
-            }
-
-
 
         }
 
@@ -216,11 +210,8 @@
                 }
             }
 
-
             return true;
         }
-
-
 
 
         /// <summary>
@@ -266,6 +257,8 @@
             {
                 throw new Exception("Something went wrong in the IO.");
             }
+
+            Console.ReadLine();
         }
     }
 }

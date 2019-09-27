@@ -15,5 +15,23 @@ namespace MindLink.Recruitment.MyChat
         public static readonly string REGEX_CREDIT_CARD = @"[\d]+((-|\s)?[\d]+)+";
 
         public static readonly string REGEX_UK_PHONE_NUMBER = @"^(?:0|\+?44)(?:\d\s?){9,10}$";
+
+        public static readonly string EXCEPTION_ARGUMENT_BLACKLIST = "Blacklist cannot empty. If -b flag is included, at least one element has to be in it.";
+
+        public static readonly string EXCEPTION_FILE_NOT_FOUND = "File not found. Make sure your input path is correct";
+
+        public static readonly string EXCEPTION_DIRECTORY_NOT_FOUND = "File or directory not found. Make sure your output path is correct";
+
+        public static readonly string EXCEPTION_ARGUMENT_NOT_FOUND = "No arguments were entered.";
+
+        public static readonly string EXCEPTION_ARGUMENT_NULL_NOT_FOUND = "Configuration is null, input and/or output path was entered incorrectly.";
+
+
+
+        public static readonly string OBFUSCATION_KEY = "user";
+
+
+
+
     }
 }

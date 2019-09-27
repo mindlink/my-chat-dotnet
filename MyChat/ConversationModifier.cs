@@ -61,8 +61,7 @@ namespace MindLink.Recruitment.MyChat
             catch(ArgumentException e)
             {
                 Console.WriteLine(e);
-                Console.WriteLine("Blacklist cannot empty. If -b flag is included, at least one element has to be in it.");
-                Console.ReadLine();
+                Console.WriteLine(Globals.EXCEPTION_ARGUMENT_BLACKLIST);
             }
 
             return new Conversation(conversation.name, messages);
@@ -91,9 +90,7 @@ namespace MindLink.Recruitment.MyChat
                 if(!uniqueUsers.ContainsKey(message.senderId))
                 {
                     uniqueIDs++;
-                    uniqueUsers.Add(message.senderId, "user" + uniqueIDs);
-                    Console.WriteLine("New user: " + message.senderId + " " + uniqueUsers[message.senderId]);
-
+                    uniqueUsers.Add(message.senderId, Globals.OBFUSCATION_KEY + uniqueIDs);
                 }
 
                 message.senderId = uniqueUsers[message.senderId];
@@ -102,9 +99,6 @@ namespace MindLink.Recruitment.MyChat
          
             return new Conversation(conversation.name, messages);
         }
-
-
-
 
         public Conversation PerformActions(List<FilterType> actionList,ConversationExporterConfiguration configuration)
         {
@@ -121,10 +115,7 @@ namespace MindLink.Recruitment.MyChat
 
             return conversation;
 
-        }
-
-             
-
+        }         
 
     }
 }

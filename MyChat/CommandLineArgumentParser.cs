@@ -38,25 +38,25 @@ namespace MindLink.Recruitment.MyChat
 
         public class Options
         {
-            [Option('i', "input", Required = true, HelpText = "Set input path")]
+            [Option('i', "input", Required = true, HelpText = "Required for the program to work. Set path for the input file")]
             public String Input { get; set; }
 
-            [Option('o', "output", Required = true, HelpText = "Set output path")]
+            [Option('o', "output", Required = true, HelpText = "Required for the program to work. If the file does not exist, it will be created at that directory.")]
             public String Output { get; set; }
 
-            [Option('u', "user", Required = false, HelpText = "Set user")]
+            [Option('u', "user", Required = false, HelpText = "Filter messages by specifying a sender ID. Only messages sent by that user are added to the output file.")]
             public String  User { get; set; }
 
-            [Option('k', "keyword", Required = false, HelpText = "Set keyword")]
+            [Option('k', "keyword", Required = false, HelpText = "Filter messages by specifying a keyword. Only messages containing that keyword are added to the output file.")]
             public String Keyword { get; set; }
 
-            [Option('b', "blacklist", Required = false, HelpText = "Set keyword")]
+            [Option('b', "blacklist", Required = false, HelpText = @"Enter one or more words, separated by space. They will be replaced by \*redacted *\ in the messages that contain those words.")]
             public IEnumerable<String> Blacklist { get; set; }
 
-            [Option('h', "hide", Required = false, HelpText = "Option to hide phone and credit card numbers")]
+            [Option('h', "hide", Required = false, HelpText = "Hide phone and credit card numbers.")]
             public bool HideSensitiveData { get; set; }
 
-            [Option('f', "obfuscate", Required = false, HelpText = "Option to obfuscate user IDs")]
+            [Option('f', "obfuscate", Required = false, HelpText = "Obfuscate user IDs. In the report, they will be listed as user1, user2, user3 etc.")]
             public bool ObfuscateUserIDs { get; set; }
 
 
@@ -73,20 +73,10 @@ namespace MindLink.Recruitment.MyChat
                     {
                         inputPath = o.Input;
                         outputPath = o.Output;
-
-                        try
-                        {
-                            if (!File.Exists(inputPath)) { throw new FileNotFoundException("File not found. Make sure your input path is correct"); }
-                            if (!Directory.Exists(Path.GetDirectoryName(outputPath))) { throw new DirectoryNotFoundException("File or directory not found. Make sure your output path is correct"); }
-
-                        }
-
-                        catch (FileNotFoundException e)
-                        {
-                            Console.WriteLine(e);
-                        }
-
-
+                   
+                        if (!File.Exists(inputPath)) { throw new FileNotFoundException(Globals.EXCEPTION_FILE_NOT_FOUND); }
+                        if (!Directory.Exists(Path.GetDirectoryName(outputPath))) { throw new DirectoryNotFoundException(Globals.EXCEPTION_DIRECTORY_NOT_FOUND); }
+                     
                         configuration = new ConversationExporterConfiguration(inputPath, outputPath);
 
                         configuration.user = o.User != null ? o.User : null;
@@ -100,7 +90,7 @@ namespace MindLink.Recruitment.MyChat
             }
             else
             {
-                throw new ArgumentException("No arguments were entered.");
+                throw new ArgumentException(Globals.EXCEPTION_ARGUMENT_NOT_FOUND);
             }
             
 

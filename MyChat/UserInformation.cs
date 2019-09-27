@@ -17,6 +17,5 @@ namespace MindLink.Recruitment.MyChat
             messageCount = 0;
         }
 
-
     }
 }

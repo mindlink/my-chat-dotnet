@@ -35,9 +35,17 @@
 
             var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            var conversationExporter = new ConversationExporter();
+            if(configuration != null)
+            {
+                var exporter = new ConversationExporter();
+                exporter.ExportConversation(configuration);
+            }
+            else
+            {
+                throw new ArgumentNullException("Configuration is null, input and/or output path was entered incorrectly.");
+            }
 
-            conversationExporter.ExportConversation(configuration);
+
 
         }
 
@@ -141,9 +149,6 @@
         /// </exception>
         public Conversation ReadConversation(string inputFilePath)
         {
-            Console.WriteLine(inputFilePath);
-
-
 
             try
             {
@@ -177,8 +182,6 @@
                     }
 
                 }
-
-                messages.ForEach(m => Console.WriteLine(m.timestamp + " " + m.senderId + " " + m.content));
 
                 return new Conversation(conversationName, messages);
             }

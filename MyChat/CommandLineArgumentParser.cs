@@ -65,45 +65,44 @@ namespace MindLink.Recruitment.MyChat
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
 
-            Parser.Default.ParseArguments<Options>(arguments)
-                .WithParsed<Options>(o =>
-                {
-                    inputPath = o.Input;
-                    outputPath = o.Output;
+            if (arguments.Length != 0)
+            {
 
-                    try
+                Parser.Default.ParseArguments<Options>(arguments)
+                    .WithParsed<Options>(o =>
                     {
-                        if (!File.Exists(inputPath)) { throw new FileNotFoundException("File not found. Make sure your input path is correct"); }
-                        if (!Directory.Exists(Path.GetDirectoryName(outputPath))) { throw new DirectoryNotFoundException("File or directory not found. Make sure your output path is correct"); }
+                        inputPath = o.Input;
+                        outputPath = o.Output;
 
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Console.WriteLine(e);
-                    }
+                        try
+                        {
+                            if (!File.Exists(inputPath)) { throw new FileNotFoundException("File not found. Make sure your input path is correct"); }
+                            if (!Directory.Exists(Path.GetDirectoryName(outputPath))) { throw new DirectoryNotFoundException("File or directory not found. Make sure your output path is correct"); }
 
+                        }
 
-
-                    configuration = new ConversationExporterConfiguration(inputPath, outputPath);
-
-                    configuration.user = o.User != null ? o.User : null;
-                    configuration.keyword = o.Keyword != null ? o.Keyword : null;
-                    configuration.blacklist = o.Blacklist != null ? o.Blacklist.ToList() : null;
-                    configuration.hideSensitiveData = o.HideSensitiveData;
-                    configuration.obfuscateUserIDs = o.ObfuscateUserIDs;
-                    
-            });
-
-            Console.WriteLine(configuration.inputFilePath);
-            Console.WriteLine(configuration.outputFilePath);
-            Console.WriteLine(configuration.user);
-            Console.WriteLine(configuration.keyword);
-            Console.WriteLine(configuration.hideSensitiveData);
-            Console.WriteLine(configuration.obfuscateUserIDs);
+                        catch (FileNotFoundException e)
+                        {
+                            Console.WriteLine(e);
+                        }
 
 
-            //configuration.blacklist.ForEach(x => Console.Write(x));
-            Console.ReadLine();
+                        configuration = new ConversationExporterConfiguration(inputPath, outputPath);
+
+                        configuration.user = o.User != null ? o.User : null;
+                        configuration.keyword = o.Keyword != null ? o.Keyword : null;
+                        configuration.blacklist = o.Blacklist != null ? o.Blacklist.ToList() : null;
+                        configuration.hideSensitiveData = o.HideSensitiveData;
+                        configuration.obfuscateUserIDs = o.ObfuscateUserIDs;
+
+                    });
+
+            }
+            else
+            {
+                throw new ArgumentException("No arguments were entered.");
+            }
+            
 
             return configuration;
         }

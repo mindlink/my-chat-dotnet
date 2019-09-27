@@ -26,7 +26,13 @@ namespace MindLink.Recruitment.MyChat
 
         public static readonly string EXCEPTION_ARGUMENT_NULL_NOT_FOUND = "Configuration is null, input and/or output path was entered incorrectly.";
 
+        public static readonly string EXCEPTION_IO = "Something went wrong in the IO.";
+        
+        public static readonly string EXCEPTION_FILE_NOT_FOUND_GENERAL = "The file was not found.";
 
+        public static readonly string EXCEPTION_DIRECTORY_NOT_FOUND_GENERAL = "Path invalid.";
+
+        public static readonly string EXCEPTION_SECURITY = "No permission to file.";
 
         public static readonly string OBFUSCATION_KEY = "user";
 

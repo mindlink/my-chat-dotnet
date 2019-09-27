@@ -19,7 +19,6 @@ namespace MindLink.Recruitment.MyChat
         /// </summary>
         public string outputFilePath;
 
-
         public string user;
 
         public string keyword;
@@ -31,7 +30,6 @@ namespace MindLink.Recruitment.MyChat
         public bool obfuscateUserIDs;
 
         public bool writeUserActivity;
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
@@ -68,9 +66,6 @@ namespace MindLink.Recruitment.MyChat
 
             return list;
         }
-
-
-
 
     }
 }

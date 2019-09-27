@@ -29,10 +29,8 @@
 
         public static Conversation conversation;
 
-
         static void Main(string[] args)
         {
-
             var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
             
             if(configuration != null)
@@ -61,7 +59,6 @@
                 WriteUserActivity(configuration.outputFilePath, activityList);
             }
 
-
         }
 
         public List<UserInformation> CalculateActivity(Conversation conversation)
@@ -85,9 +82,7 @@
 
             activityList = activityList.OrderByDescending(x => x.messageCount).ToList();
 
-
             return activityList;
-
         }
 
         public void WriteUserActivity(string outputFilePath, List<UserInformation> activityLict)
@@ -104,10 +99,8 @@
                     sw.WriteLine("Messages: " + info.messageCount);
 
                     sw.WriteLine("----------");
-
                 }
             }
-
         }
 
         /// <summary>
@@ -181,18 +174,16 @@
             }
             catch (FileNotFoundException)
             {
-                throw new ArgumentException("The file was not found.");
+                throw new FileNotFoundException(Globals.EXCEPTION_FILE_NOT_FOUND_GENERAL);
             }
             catch (IOException)
             {
-
-                throw new Exception("Something went wrong in the IO.");
+                throw new IOException(Globals.EXCEPTION_IO);
             }
         }
 
 
         public bool LineValidator(string[] split)
-        
         {
             long number;
 
@@ -247,18 +238,17 @@
             }
             catch (SecurityException)
             {
-                throw new ArgumentException("No permission to file.");
+                throw new SecurityException(Globals.EXCEPTION_SECURITY);
             }
             catch (DirectoryNotFoundException)
             {
-                throw new ArgumentException("Path invalid.");
+                throw new DirectoryNotFoundException(Globals.EXCEPTION_FILE_NOT_FOUND_GENERAL);
             }
             catch (IOException)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new IOException(Globals.EXCEPTION_IO);
             }
 
-            Console.ReadLine();
         }
     }
 }

@@ -14,7 +14,6 @@ namespace MindLink.Recruitment.MyChat
     /// </summary>
     public sealed class CommandLineArgumentParser
     {
-
         /// <summary>
         /// Parses the given <paramref name="arguments"/> into the exporter configuration.
         /// </summary>
@@ -59,7 +58,6 @@ namespace MindLink.Recruitment.MyChat
             [Option('f', "obfuscate", Required = false, HelpText = "Obfuscate user IDs. In the report, they will be listed as user1, user2, user3 etc.")]
             public bool ObfuscateUserIDs { get; set; }
 
-
         }
 
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
@@ -88,12 +86,12 @@ namespace MindLink.Recruitment.MyChat
                     });
 
             }
+
             else
             {
                 throw new ArgumentException(Globals.EXCEPTION_ARGUMENT_NOT_FOUND);
             }
             
-
             return configuration;
         }
     }

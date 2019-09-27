@@ -10,7 +10,6 @@ namespace MindLink.Recruitment.MyChat
 {
     public class ConversationModifier
     {
-
         public Conversation conversation;
 
         public ConversationModifier(Conversation conversation)
@@ -69,7 +68,6 @@ namespace MindLink.Recruitment.MyChat
 
         public Conversation ModifyBySensitiveData(List<Message> messages)
         {
-          
             foreach(var x in messages)
             {
                 x.content = Regex.Replace(x.content, Globals.REGEX_CREDIT_CARD, Globals.REDACTED_WORD);
@@ -102,10 +100,8 @@ namespace MindLink.Recruitment.MyChat
 
         public Conversation PerformActions(List<FilterType> actionList,ConversationExporterConfiguration configuration)
         {
-
             foreach(FilterType action in actionList)
             {
-
                 if(action == FilterType.KEYWORD) { conversation = ModifyByKey(configuration.keyword, action, conversation.messages); }
                 if (action == FilterType.SENDER_ID) { conversation = ModifyByKey(configuration.user, action, conversation.messages); }
                 if (action == FilterType.BLACKLIST) { conversation = ModifyByBlacklist(configuration.blacklist,conversation.messages); }
@@ -114,7 +110,6 @@ namespace MindLink.Recruitment.MyChat
             }
 
             return conversation;
-
         }         
 
     }

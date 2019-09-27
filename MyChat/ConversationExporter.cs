@@ -9,6 +9,10 @@
     using Newtonsoft.Json;
     using System.Linq;
 
+
+    // Used to specify, which actions will have to be performed in the ConversationModifier class.
+    // Each enum is assigned to a method which modifies the conversation.
+
     public enum FilterType
     {
         KEYWORD, SENDER_ID, BLACKLIST, HIDE_SENSITIVE_DATA, OBFUSCATE_IDS
@@ -39,7 +43,15 @@
                 exporter.ExportConversation(configuration);
             }
 
+            else
+            {
+                throw new ArgumentNullException(Globals.EXCEPTION_ARGUMENT_NULL_NOT_FOUND);
+            }
+
         }
+
+
+        //Main method in the program, which reads from the path and writes to the output path.
 
         public void ExportConversation(ConversationExporterConfiguration configuration)
         {
@@ -61,9 +73,9 @@
 
         }
 
+        // Returns a list with activity information for each user.
         public List<UserInformation> CalculateActivity(Conversation conversation)
         {
-
             var activityList = new List<UserInformation>();
 
             var uniqueNames = conversation.messages.Select(c => c.senderId).Distinct().ToList();
@@ -90,15 +102,15 @@
             using (StreamWriter sw = File.AppendText(outputFilePath))
             {
 
-                sw.WriteLine("\nMost active users: \n");
+                sw.WriteLine(Globals.WRITER_MOST_ACTIVE_USERS);
 
                 foreach (UserInformation info in activityLict)
                 {
-                    sw.WriteLine("User ID: " + info.userID);
+                    sw.WriteLine(Globals.WRITER_MOST_ACTIVE_USERS + info.userID);
 
-                    sw.WriteLine("Messages: " + info.messageCount);
+                    sw.WriteLine(Globals.WRITER_FIELD_MESSAGES + info.messageCount);
 
-                    sw.WriteLine("----------");
+                    sw.WriteLine(Globals.WRITER_SEPARATOR);
                 }
             }
         }

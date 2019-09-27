@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace MindLink.Recruitment.MyChat
 {
@@ -36,8 +32,13 @@ namespace MindLink.Recruitment.MyChat
 
         public static readonly string OBFUSCATION_KEY = "user";
 
+        public static readonly string WRITER_MOST_ACTIVE_USERS = "\nMost active users: \n";
 
+        public static readonly string WRITER_FIELD_USER_ID = "User ID: ";
 
+        public static readonly string WRITER_FIELD_MESSAGES = "Messages: ";
+
+        public static readonly string WRITER_SEPARATOR = "----------";
 
     }
 }

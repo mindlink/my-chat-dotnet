@@ -1,9 +1,7 @@
 ﻿using MyChat;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Text.RegularExpressions;
 
 namespace MindLink.Recruitment.MyChat
@@ -17,6 +15,7 @@ namespace MindLink.Recruitment.MyChat
             this.conversation = conversation;
         }
 
+        //Flag -k or -u
         public Conversation ModifyByKey(string key, FilterType filterType, List<Message> messages)
         {
             List<Message> filteredMessages = new List<Message>();
@@ -36,7 +35,6 @@ namespace MindLink.Recruitment.MyChat
                         if (m.content.Contains(key)) { filteredMessages.Add(m); }
 
                         break;
-
                 }
 
             }
@@ -44,9 +42,10 @@ namespace MindLink.Recruitment.MyChat
 
         }
 
+        //Flag -b
+
         public Conversation ModifyByBlacklist(List<string> blacklist, List<Message> messages)
         {
-
             try
             {
                 foreach (var x in messages)
@@ -66,6 +65,7 @@ namespace MindLink.Recruitment.MyChat
             return new Conversation(conversation.name, messages);
         }
 
+        // flag -h
         public Conversation ModifyBySensitiveData(List<Message> messages)
         {
             foreach(var x in messages)
@@ -77,6 +77,7 @@ namespace MindLink.Recruitment.MyChat
             return new Conversation(conversation.name, messages);
         }
 
+        //flag -f
         public Conversation ModifyByObfiscatingIDs(List<Message> messages)
         {
             Dictionary<string,string> uniqueUsers = new Dictionary<string, string>();

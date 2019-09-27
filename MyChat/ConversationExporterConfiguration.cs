@@ -51,7 +51,6 @@ namespace MindLink.Recruitment.MyChat
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
             writeUserActivity = true;
-
         }
 
         public List<FilterType> GetFilterList()

@@ -117,7 +117,6 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             var output = "chat1.json";
 
-
             var exporter = new ConversationExporter();
             var configuration = new ConversationExporterConfiguration("chat.txt", output);
             configuration.user = "matas";

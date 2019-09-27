@@ -3,6 +3,7 @@ using CommandLine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 
@@ -69,6 +70,19 @@ namespace MindLink.Recruitment.MyChat
                 {
                     inputPath = o.Input;
                     outputPath = o.Output;
+
+                    try
+                    {
+                        if (!File.Exists(inputPath)) { throw new FileNotFoundException("File not found. Make sure your input path is correct"); }
+                        if (!Directory.Exists(Path.GetDirectoryName(outputPath))) { throw new DirectoryNotFoundException("File or directory not found. Make sure your output path is correct"); }
+
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        Console.WriteLine(e);
+                    }
+
+
 
                     configuration = new ConversationExporterConfiguration(inputPath, outputPath);
 

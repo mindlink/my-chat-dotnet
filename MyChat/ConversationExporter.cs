@@ -143,6 +143,8 @@
         {
             Console.WriteLine(inputFilePath);
 
+
+
             try
             {
                 var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),

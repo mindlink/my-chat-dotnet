@@ -139,7 +139,6 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             var output = "chat2.json";
 
-
             var exporter = new ConversationExporter();
             var configuration = new ConversationExporterConfiguration("chat.txt", output);
             configuration.keyword = "pie";

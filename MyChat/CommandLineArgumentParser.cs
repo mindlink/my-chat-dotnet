@@ -33,6 +33,8 @@ namespace MindLink.Recruitment.MyChat
         public bool hideSensitiveData;
         public bool obfustaceUserIDs;
 
+        public ConversationExporterConfiguration configuration;
+
         public class Options
         {
             [Option('i', "input", Required = true, HelpText = "Set input path")]
@@ -61,26 +63,22 @@ namespace MindLink.Recruitment.MyChat
 
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
+
             Parser.Default.ParseArguments<Options>(arguments)
                 .WithParsed<Options>(o =>
                 {
                     inputPath = o.Input;
                     outputPath = o.Output;
-                    user = o.User != null ? o.User : null;
-                    keyword = o.Keyword != null ? o.Keyword : null;
-                    blacklist = o.Blacklist != null ? o.Blacklist.ToList() : null;
-                    hideSensitiveData = o.HideSensitiveData;
-                    obfustaceUserIDs = o.ObfuscateUserIDs;
+
+                    configuration = new ConversationExporterConfiguration(inputPath, outputPath);
+
+                    configuration.user = o.User != null ? o.User : null;
+                    configuration.keyword = o.Keyword != null ? o.Keyword : null;
+                    configuration.blacklist = o.Blacklist != null ? o.Blacklist.ToList() : null;
+                    configuration.hideSensitiveData = o.HideSensitiveData;
+                    configuration.obfuscateUserIDs = o.ObfuscateUserIDs;
                     
             });
-
-            ConversationExporterConfiguration configuration = new ConversationExporterConfiguration(inputPath, outputPath);
-
-            configuration.user = user;
-            configuration.keyword = keyword;
-            configuration.blacklist = blacklist;
-            configuration.hideSensitiveData = hideSensitiveData;
-            configuration.obfuscateUserIDs = obfustaceUserIDs;
 
             Console.WriteLine(configuration.inputFilePath);
             Console.WriteLine(configuration.outputFilePath);

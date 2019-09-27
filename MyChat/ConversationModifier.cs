@@ -47,12 +47,22 @@ namespace MindLink.Recruitment.MyChat
 
         public Conversation ModifyByBlacklist(List<string> blacklist, List<Message> messages)
         {
-            foreach(var x in messages)
+
+            try
             {
-               foreach(var badword in blacklist)
+                foreach (var x in messages)
                 {
-                    if(x.content.Contains(badword)) { x.content = x.content.Replace(badword,Globals.REDACTED_WORD);}                                 
+                    foreach (var badword in blacklist)
+                    {
+                        if (x.content.Contains(badword)) { x.content = x.content.Replace(badword, Globals.REDACTED_WORD); }
+                    }
                 }
+            }
+            catch(ArgumentException e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine("Blacklist cannot empty. If -b flag is included, at least one element has to be in it.");
+                Console.ReadLine();
             }
 
             return new Conversation(conversation.name, messages);
@@ -98,6 +108,7 @@ namespace MindLink.Recruitment.MyChat
 
         public Conversation PerformActions(List<FilterType> actionList,ConversationExporterConfiguration configuration)
         {
+
             foreach(FilterType action in actionList)
             {
 

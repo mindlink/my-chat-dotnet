@@ -30,6 +30,8 @@ namespace MindLink.Recruitment.MyChat
 
         public bool obfuscateUserIDs;
 
+        public bool writeUserActivity;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
@@ -50,6 +52,7 @@ namespace MindLink.Recruitment.MyChat
         {
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
+            writeUserActivity = true;
 
         }
 

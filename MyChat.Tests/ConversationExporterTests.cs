@@ -40,6 +40,7 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var exporter = new ConversationExporter();
             var configuration = new ConversationExporterConfiguration("chat.txt", output);
+            configuration.writeUserActivity = false;
 
             exporter.ExportConversation(configuration);
 
@@ -57,6 +58,8 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var exporter = new ConversationExporter();
             var configuration = new ConversationExporterConfiguration("chat.txt", output);
+            configuration.writeUserActivity = false;
+
 
             exporter.ExportConversation(configuration);
 
@@ -118,7 +121,8 @@ namespace MindLink.Recruitment.MyChat.Tests
             var exporter = new ConversationExporter();
             var configuration = new ConversationExporterConfiguration("chat.txt", output);
             configuration.user = "matas";
-            
+            configuration.writeUserActivity = false;
+
             exporter.ExportConversation(configuration);
 
             var serializedConversation = new StreamReader(new FileStream(output, FileMode.Open)).ReadToEnd();
@@ -140,6 +144,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var exporter = new ConversationExporter();
             var configuration = new ConversationExporterConfiguration("chat.txt", output);
             configuration.keyword = "pie";
+            configuration.writeUserActivity = false;
 
             exporter.ExportConversation(configuration);
 
@@ -168,6 +173,8 @@ namespace MindLink.Recruitment.MyChat.Tests
             configuration.blacklist.Add("like");
             configuration.blacklist.Add("pie");
 
+            configuration.writeUserActivity = false;
+
             exporter.ExportConversation(configuration);
 
             var serializedConversation = new StreamReader(new FileStream(output, FileMode.Open)).ReadToEnd();
@@ -193,6 +200,8 @@ namespace MindLink.Recruitment.MyChat.Tests
             var exporter = new ConversationExporter();
             var configuration = new ConversationExporterConfiguration("chat.txt", output);
             configuration.hideSensitiveData = true;
+            configuration.writeUserActivity = false;
+
 
             exporter.ExportConversation(configuration);
 
@@ -215,6 +224,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var exporter = new ConversationExporter();
             var configuration = new ConversationExporterConfiguration("chat.txt", output);
             configuration.obfuscateUserIDs = true;
+            configuration.writeUserActivity = false;
 
             exporter.ExportConversation(configuration);
 
@@ -229,6 +239,34 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.Equal("user2", messages[1].senderId);
             Assert.Equal("user3", messages[4].senderId);
             Assert.Equal("user4", messages[7].senderId);
+
+        }
+
+        [Fact]
+        public void Test_Exporter_CalculateActivity()
+        {
+            var output = "chat8.json";
+
+            var exporter = new ConversationExporter();
+            var configuration = new ConversationExporterConfiguration("chat.txt", output);
+            configuration.obfuscateUserIDs = false;
+            configuration.writeUserActivity = false;
+
+            exporter.ExportConversation(configuration);
+
+            var serializedConversation = new StreamReader(new FileStream(output, FileMode.Open)).ReadToEnd();
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+
+            var userActivityList = exporter.CalculateActivity(savedConversation);
+
+            Assert.Equal(5, userActivityList.First(x => x.userID == "matas").messageCount);
+            Assert.Equal(1, userActivityList.First(x => x.userID == "chris").messageCount);
+            Assert.Equal(1, userActivityList.First(x => x.userID == "thomas").messageCount);
+            Assert.Equal(2, userActivityList.First(x => x.userID == "angus").messageCount);
+            Assert.Equal(2, userActivityList.First(x => x.userID == "mike").messageCount);
+            Assert.Equal(3, userActivityList.First(x => x.userID == "bob").messageCount);
 
         }
 

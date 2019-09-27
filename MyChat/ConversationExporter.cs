@@ -53,8 +53,12 @@
 
             WriteConversation(configuration.outputFilePath);
 
-            var activityList = CalculateActivity(conversation);
-            WriteUserActivity(configuration.outputFilePath, activityList);
+            if (configuration.writeUserActivity)
+            {
+                var activityList = CalculateActivity(conversation);
+                WriteUserActivity(configuration.outputFilePath, activityList);
+            }
+
 
         }
 
@@ -102,11 +106,7 @@
                 }
             }
 
-
         }
-
-
-
 
         /// <summary>
         /// Exports the conversation at <paramref name="inputFilePath"/> as JSON to <paramref name="outputFilePath"/>.

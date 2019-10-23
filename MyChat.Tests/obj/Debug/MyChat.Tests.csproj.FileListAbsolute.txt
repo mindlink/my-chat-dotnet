@@ -1,0 +1,13 @@
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\bin\Debug\chat.txt
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.Tests.pdb
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\bin\Debug\MindLink.Recruitment.MyChat.exe.config
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\obj\Debug\MyChat.Tests.csprojAssemblyReference.cache
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\obj\Debug\MyChat.Tests.csproj.CopyComplete
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.dll
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat.Tests\obj\Debug\MindLink.Recruitment.MyChat.Tests.pdb

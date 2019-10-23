@@ -18,6 +18,27 @@ namespace MindLink.Recruitment.MyChat
         public string outputFilePath;
 
         /// <summary>
+        /// The user to filter the conversation by
+        /// </summary>
+        public string userToFilter;
+
+        /// <summary>
+        /// The keyword to filter the conversation by
+        /// </summary>
+        public string keywordToFilter;
+
+        /// <summary>
+        /// Array of words that should be redacted from the 
+        /// conversation.
+        /// </summary>
+        public string blacklistedWords;
+
+        /// <summary>
+        /// Should phone and credit card numbers be hidden?
+        /// </summary>
+        public bool hideNumbers;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
         /// </summary>
         /// <param name="inputFilePath">
@@ -26,16 +47,34 @@ namespace MindLink.Recruitment.MyChat
         /// <param name="outputFilePath">
         /// The output file path.
         /// </param>
+        /// <param name="userToFilter">
+        /// The user to filter by
+        /// </param>
+        /// <param name="keywordToFilter">
+        /// The keyowrd to filter by
+        /// </param>
+        /// <param name="blacklistedWords">
+        /// List of words separated by commas to redact from the conversation.
+        /// </param>
+        /// <param name="hideNumbers">
+        /// Should credit card and phone numbers be hidden? Defaults to false.
+        /// </param>
         /// <exception cref="ArgumentNullException">
+        /// PROBLEM THIS EXCEPTION IS NEVER THROWN
         /// Thrown when any of the given arguments is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
+        /// PROBLEM THIS EXCEPTION IS NEVER THROWN
         /// Thrown when any of the given arguments is empty.
         /// </exception>
-        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath)
+        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath, string userToFilter = null, string keywordToFilter = null, string blacklistedWords = null, bool hideNumbers = false)
         {
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
+            this.userToFilter = userToFilter;
+            this.keywordToFilter = keywordToFilter;
+            this.blacklistedWords = blacklistedWords;
+            this.hideNumbers = hideNumbers;
         }
     }
 }

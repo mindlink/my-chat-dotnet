@@ -24,7 +24,7 @@
             var conversationExporter = new ConversationExporter();
             ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            conversationExporter.ExportConversation(configuration);
         }
 
         /// <summary>
@@ -39,16 +39,43 @@
         /// <exception cref="ArgumentException">
         /// Thrown when a path is invalid.
         /// </exception>
+        /// PROBLEM HERE
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public void ExportConversation(ConversationExporterConfiguration configuration)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            Conversation conversation = this.ReadConversation(configuration.inputFilePath);
 
-            this.WriteConversation(conversation, outputFilePath);
+            this.ProcessConversation(conversation, configuration);
 
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+
+            this.WriteConversation(conversation, configuration.outputFilePath);
+
+            Console.WriteLine("Conversation exported from '{0}' to '{1}'", configuration.inputFilePath, configuration.outputFilePath);
+        }
+
+        public void ProcessConversation(Conversation conversation, ConversationExporterConfiguration configuration)
+        {
+            if (!String.IsNullOrEmpty(configuration.userToFilter))
+            {
+                conversation.FilterByUser(configuration.userToFilter);
+            }
+
+            if (!String.IsNullOrEmpty(configuration.keywordToFilter))
+            {
+                conversation.FilterByKeyword(configuration.keywordToFilter);
+            }
+
+            if (!String.IsNullOrEmpty(configuration.blacklistedWords))
+            {
+                conversation.FilterBlacklist(configuration.blacklistedWords.Split(','));
+            }
+
+            if (configuration.hideNumbers)
+            {
+                conversation.HideCreditCardAndPhoneNumbers();
+            }
         }
 
         /// <summary>
@@ -61,8 +88,10 @@
         /// A <see cref="Conversation"/> model representing the conversation.
         /// </returns>
         /// <exception cref="ArgumentException">
+        /// POTENTIAL PROBLEM: DIFFERENT DESCRIPTION THAN ABOVE
         /// Thrown when the input file could not be found.
         /// </exception>
+        /// PROBLEM NOT DESCRIPTIVE
         /// <exception cref="Exception">
         /// Thrown when something else went wrong.
         /// </exception>
@@ -80,7 +109,9 @@
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    var split = line.Split(' ');
+                    // PROBLEM - Splitting by space splits up the chat message and results 
+                    // in only one word being placed in the JSON file.
+                    var split = line.Split('\t');
 
                     messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
                 }
@@ -109,6 +140,7 @@
         /// <exception cref="ArgumentException">
         /// Thrown when there is a problem with the <paramref name="outputFilePath"/>.
         /// </exception>
+        /// PROBLEM
         /// <exception cref="Exception">
         /// Thrown when something else bad happens.
         /// </exception>

@@ -1,0 +1,10 @@
+C:\Users\cianc\Source\Repos\my-chat-dotnet\MyChat\obj\Debug\MyChat.csprojAssemblyReference.cache
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat\bin\Debug\chat.txt
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe.config
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat\bin\Debug\MindLink.Recruitment.MyChat.pdb
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat\bin\Debug\Newtonsoft.Json.dll
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat\bin\Debug\Newtonsoft.Json.xml
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat\obj\Debug\MyChat.csproj.CopyComplete
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat\obj\Debug\MindLink.Recruitment.MyChat.exe
+C:\Users\cianc\source\repos\my-chat-dotnet\MyChat\obj\Debug\MindLink.Recruitment.MyChat.pdb

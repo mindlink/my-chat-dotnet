@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\MyChat",
+    "\\MyChat.Tests",
+    "\\MyChat\\bin"
+  ],
+  "SelectedNode": "\\MyChat\\CommandLineArgumentParser.cs",
+  "PreviewInSolutionExplorer": false
+}

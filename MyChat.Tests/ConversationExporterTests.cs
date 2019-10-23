@@ -20,18 +20,21 @@ namespace MindLink.Recruitment.MyChat.Tests
         [TestMethod]
         public void ExportingConversationExportsConversation()
         {
+            // Create new ConversationExporter and export conversation in chat.txt to 
+            // chat.json
             ConversationExporter exporter = new ConversationExporter();
-
-            exporter.ExportConversation("chat.txt", "chat.json");
-
+            exporter.ExportConversation(new ConversationExporterConfiguration("chat.txt", "chat.json"));
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
-
             Conversation savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
+            // Test 1: Check that the name in chat.json is 'My Conversation' as expected
             Assert.AreEqual("My Conversation", savedConversation.name);
 
             var messages = savedConversation.messages.ToList();
 
+            // Test 2: Check that the timestamps, username and content of each message
+            // are as expected.
+            // PROBLEM - Would be better using a loop
             Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470901), messages[0].timestamp);
             Assert.AreEqual("bob", messages[0].senderId);
             Assert.AreEqual("Hello there!", messages[0].content);

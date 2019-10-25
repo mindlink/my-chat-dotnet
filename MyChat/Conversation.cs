@@ -109,7 +109,7 @@ namespace MindLink.Recruitment.MyChat
                 }
             }
         }
-
+          
         public void generateMostActiveUsersReport ()
         {
             UserList users = new UserList();

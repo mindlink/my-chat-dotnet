@@ -26,19 +26,17 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.AreEqual(null, configuration.userToFilter);
             Assert.AreEqual(null, configuration.keywordToFilter);
 
-            configuration = argumentparser.ParseCommandLineArguments("chat.txt chat.json -u cian -k hello -mau".Split(' '));
+            configuration = argumentparser.ParseCommandLineArguments("chat.txt chat.json -u cian -k hello".Split(' '));
             Assert.AreEqual("hello", configuration.keywordToFilter);
             Assert.AreEqual("cian", configuration.userToFilter);
             Assert.IsFalse(configuration.hideNumbers);
             Assert.IsFalse(configuration.obfuscateUserID);
-            Assert.IsTrue(configuration.mostActiveUsersReport);
 
             configuration = argumentparser.ParseCommandLineArguments("chat.txt chat.json -k goodbye -hn -ouid".Split(' '));
             Assert.AreEqual("goodbye", configuration.keywordToFilter);
             Assert.AreEqual(null, configuration.userToFilter);
             Assert.IsTrue(configuration.hideNumbers);
             Assert.IsTrue(configuration.obfuscateUserID);
-            Assert.IsFalse(configuration.mostActiveUsersReport);
         }
     }
 }

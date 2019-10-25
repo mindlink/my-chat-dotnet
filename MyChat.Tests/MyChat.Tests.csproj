@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommandLineArgumentParserTests.cs" />
+    <Compile Include="ConversationExporterConfigurationTests.cs" />
     <Compile Include="ConversationExporterTests.cs" />
     <Compile Include="ConversationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

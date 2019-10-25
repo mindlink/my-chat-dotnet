@@ -1,6 +1,8 @@
 namespace MindLink.Recruitment.MyChat
 {
     using System;
+    using System.IO;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Represents the configuration for the exporter.
@@ -64,16 +66,19 @@ namespace MindLink.Recruitment.MyChat
         /// <param name="hideNumbers">
         /// Should credit card and phone numbers be hidden? Defaults to false.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// PROBLEM THIS EXCEPTION IS NEVER THROWN
-        /// Thrown when any of the given arguments is <c>null</c>.
-        /// </exception>
+        /// <param name="obfuscateUserID">
+        /// Should user IDs be obfuscated? Default is false.
+        /// </param>
         /// <exception cref="ArgumentException">
-        /// PROBLEM THIS EXCEPTION IS NEVER THROWN
-        /// Thrown when any of the given arguments is empty.
+        /// Thrown when input or output file path are invalid.
         /// </exception>
         public ConversationExporterConfiguration(string inputFilePath, string outputFilePath, string userToFilter = null, string keywordToFilter = null, string blacklistedWords = null, bool hideNumbers = false, bool obfuscateUserID = false)
         {
+            if (!this.checkFilePathValid(inputFilePath) || !this.checkFilePathValid(outputFilePath))
+            {
+                throw new ArgumentException("The input or output file path is invalid.");
+            }
+
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
             this.userToFilter = userToFilter;
@@ -81,6 +86,20 @@ namespace MindLink.Recruitment.MyChat
             this.blacklistedWords = blacklistedWords;
             this.hideNumbers = hideNumbers;
             this.obfuscateUserID = obfuscateUserID;
+        }
+
+        /// <summary>
+        /// Checks if a given file path is valid.
+        /// </summary>
+        /// <param name="path">The file path to check</param>
+        /// <returns>True if valid, false if invalid</returns>
+        private bool checkFilePathValid (string path)
+        {
+            char[] invalid_path_chars = Path.GetInvalidPathChars();
+
+            string regex_expression = @"[" + Regex.Escape(String.Join("", invalid_path_chars)) + "]";
+
+            return !Regex.IsMatch(path, regex_expression);
         }
     }
 }

@@ -21,10 +21,20 @@
         /// </param>
         static void Main(string[] args)
         {
-            var conversationExporter = new ConversationExporter();
-            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
-
-            conversationExporter.ExportConversation(configuration);
+            try
+            {
+                var conversationExporter = new ConversationExporter();
+                ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+                conversationExporter.ExportConversation(configuration);
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         /// <summary>
@@ -37,24 +47,37 @@
         /// The output file path.
         /// </param>
         /// <exception cref="ArgumentException">
-        /// Thrown when a path is invalid.
+        /// Thrown when file IO fails due to an invalid argument.
         /// </exception>
-        /// PROBLEM HERE
         /// <exception cref="Exception">
-        /// Thrown when something bad happens.
+        /// Throw when file IO fails for a reason unrelated to the specified 
+        /// arguments.
         /// </exception>
         public void ExportConversation(ConversationExporterConfiguration configuration)
         {
-            Conversation conversation = this.ReadConversation(configuration.inputFilePath);
-
-            this.ProcessConversation(conversation, configuration);
-
-
-            this.WriteConversation(conversation, configuration.outputFilePath);
-
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", configuration.inputFilePath, configuration.outputFilePath);
+            try
+            {
+                Conversation conversation = this.ReadConversation(configuration.inputFilePath);
+                this.ProcessConversation(conversation, configuration);
+                this.WriteConversation(conversation, configuration.outputFilePath);
+                Console.WriteLine("Conversation exported from '{0}' to '{1}'", configuration.inputFilePath, configuration.outputFilePath);
+            }
+            catch (ArgumentException e)
+            {
+                throw new ArgumentException(e.Message);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
+        /// <summary>
+        /// Apply the necessary transormations to the specified <see cref="Conversation">Conversation</see> object 
+        /// based on the specified <see cref="ConversationExporterConfiguration">ConversationExporterConfiguration</see> object. 
+        /// </summary>
+        /// <param name="conversation">The <see cref="Conversation">Conversation</see> to be transformed</param>
+        /// <param name="configuration">The <see cref="ConversationExporterConfiguration"/>ConversationExporterConfiguration</see> to use</param>
         public void ProcessConversation(Conversation conversation, ConversationExporterConfiguration configuration)
         {
             if (!String.IsNullOrEmpty(configuration.userToFilter))
@@ -95,12 +118,10 @@
         /// A <see cref="Conversation"/> model representing the conversation.
         /// </returns>
         /// <exception cref="ArgumentException">
-        /// POTENTIAL PROBLEM: DIFFERENT DESCRIPTION THAN ABOVE
         /// Thrown when the input file could not be found.
         /// </exception>
-        /// PROBLEM NOT DESCRIPTIVE
         /// <exception cref="Exception">
-        /// Thrown when something else went wrong.
+        /// Thrown when reading file fails for another reason.
         /// </exception>
         public Conversation ReadConversation(string inputFilePath)
         {
@@ -116,8 +137,6 @@
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    // PROBLEM - Splitting by space splits up the chat message and results 
-                    // in only one word being placed in the JSON file.
                     var split = line.Split('\t');
 
                     messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
@@ -131,7 +150,11 @@
             }
             catch (IOException)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new Exception("Input file could not be read.");
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Input file could not be read");
             }
         }
 
@@ -147,35 +170,36 @@
         /// <exception cref="ArgumentException">
         /// Thrown when there is a problem with the <paramref name="outputFilePath"/>.
         /// </exception>
-        /// PROBLEM
         /// <exception cref="Exception">
-        /// Thrown when something else bad happens.
+        /// Thrown when writing the output file fails for any other reason.
         /// </exception>
         public void WriteConversation(Conversation conversation, string outputFilePath)
         {
             try
             {
                 var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
-
                 var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
 
                 writer.Write(serialized);
-
                 writer.Flush();
 
                 writer.Close();
             }
             catch (SecurityException)
             {
-                throw new ArgumentException("No permission to file.");
+                throw new ArgumentException("Insufficient permissions to write to this path");
             }
             catch (DirectoryNotFoundException)
             {
-                throw new ArgumentException("Path invalid.");
+                throw new ArgumentException("The output path provided does not exist");
             }
             catch (IOException)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new Exception("The output file could not be written.");
+            }
+            catch (Exception)
+            {
+                throw new Exception("The output file could not be written");
             }
         }
     }

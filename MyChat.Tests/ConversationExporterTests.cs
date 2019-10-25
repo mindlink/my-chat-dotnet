@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 namespace MindLink.Recruitment.MyChat.Tests
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
@@ -27,41 +28,78 @@ namespace MindLink.Recruitment.MyChat.Tests
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
             Conversation savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
-            // Test 1: Check that the name in chat.json is 'My Conversation' as expected
+            // Check that the name in chat.json is 'My Conversation' as expected
             Assert.AreEqual("My Conversation", savedConversation.name);
 
             var messages = savedConversation.messages.ToList();
 
-            // Test 2: Check that the timestamps, username and content of each message
-            // are as expected.
-            // PROBLEM - Would be better using a loop
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470901), messages[0].timestamp);
-            Assert.AreEqual("bob", messages[0].senderId);
-            Assert.AreEqual("Hello there!", messages[0].content);
+            List<Message> expected_messages = new List<Message>
+            {
+                new Message(
+                    DateTimeOffset.FromUnixTimeSeconds(1448470901),
+                    "bob",
+                    "Hello there!"
+                    ),
+                new Message(
+                    DateTimeOffset.FromUnixTimeSeconds(1448470905),
+                    "mike",
+                    "how are you?"
+                    ),
+                new Message(
+                    DateTimeOffset.FromUnixTimeSeconds(1448470906),
+                    "bob",
+                    "I'm good thanks, do you like pie?"
+                    ),
+                new Message(
+                    DateTimeOffset.FromUnixTimeSeconds(1448470910),
+                    "mike",
+                    "no, let me ask Angus..."
+                    ),
+                new Message(
+                    DateTimeOffset.FromUnixTimeSeconds(1448470912),
+                    "angus",
+                    "Hell yes! Are we buying some pie?"
+                    ),
+                new Message(
+                    DateTimeOffset.FromUnixTimeSeconds(1448470914),
+                    "bob",
+                    "No, just want to know if there's anybody else in the pie society..."
+                    ),
+                new Message(
+                    DateTimeOffset.FromUnixTimeSeconds(1448470915),
+                    "angus",
+                    "YES! I'm the head pie eater there..."
+                    )
+            };
 
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470905), messages[1].timestamp);
-            Assert.AreEqual("mike", messages[1].senderId);
-            Assert.AreEqual("how are you?", messages[1].content);
+            for (int i = 0; i < expected_messages.ToArray().Length; i++)
+            {
+                Assert.AreEqual(expected_messages[i].timestamp, messages[i].timestamp);
+                Assert.AreEqual(expected_messages[i].senderId, messages[i].senderId);
+                Assert.AreEqual(expected_messages[i].content, messages[i].content);
+            }
+        }
 
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470906), messages[2].timestamp);
-            Assert.AreEqual("bob", messages[2].senderId);
-            Assert.AreEqual("I'm good thanks, do you like pie?", messages[2].content);
+        /// <summary>
+        /// Tests that an <see cref="ArgumentException">ArgumentException</see> is thrown if the input file path doesn't exist
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Allowed Invalid Input/Output File Argument")]
+        public void InvalidInputPathArgumentsTest ()
+        {
+            ConversationExporter exporter = new ConversationExporter();
+            exporter.ExportConversation(new ConversationExporterConfiguration("chatdoesntexist.txt", "chat.json"));
+        }
 
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470910), messages[3].timestamp);
-            Assert.AreEqual("mike", messages[3].senderId);
-            Assert.AreEqual("no, let me ask Angus...", messages[3].content);
-
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470912), messages[4].timestamp);
-            Assert.AreEqual("angus", messages[4].senderId);
-            Assert.AreEqual("Hell yes! Are we buying some pie?", messages[4].content);
-
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470914), messages[5].timestamp);
-            Assert.AreEqual("bob", messages[5].senderId);
-            Assert.AreEqual("No, just want to know if there's anybody else in the pie society...", messages[5].content);
-
-            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470915), messages[6].timestamp);
-            Assert.AreEqual("angus", messages[6].senderId);
-            Assert.AreEqual("YES! I'm the head pie eater there...", messages[6].content);
+        /// <summary>
+        /// Tests whether an <see cref="ArgumentException">ArgumentException</see> is thrown when an invalid output path is provided.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Allowed Invalid Output File Path Argument")]
+        public void InvalidOutputPathArgumentTest ()
+        {
+            ConversationExporter exporter = new ConversationExporter();
+            exporter.ExportConversation(new ConversationExporterConfiguration("chat.txt", "<><><><>.json"));
         }
     }
 }

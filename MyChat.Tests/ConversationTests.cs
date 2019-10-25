@@ -93,5 +93,37 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.AreEqual("great mine is *redacted*, is the correct credit card number *redacted*", conversation_messages[6].content);
             Assert.AreEqual("no the correct credit card number is *redacted*", conversation_messages[7].content);
         }
+
+        [TestMethod]
+        public void ObfuscateUserIDTests ()
+        {
+            Conversation conversation = new Conversation(this.test_name, this.test_messages);
+            conversation.ObfuscateUserID();
+
+            List<Message> conversation_messages = conversation.messages.ToList();
+
+            Assert.AreEqual("Hidden User 1", conversation_messages[0].senderId);
+            Assert.AreEqual("Hidden User 2", conversation_messages[1].senderId);
+            Assert.AreEqual("Hi Hidden User 1, I got your message.", conversation_messages[1].content);
+            Assert.AreEqual("Hidden User 1", conversation_messages[2].senderId);
+            Assert.AreEqual("great to hear that Hidden User 2!", conversation_messages[2].content);
+            Assert.AreEqual("Hidden User 3", conversation_messages[3].senderId);
+            Assert.AreEqual("I got your message too Hidden User 1", conversation_messages[3].content);
+        }
+
+        [TestMethod]
+        public void GenerateMostActiveUsersReportTests ()
+        {
+            Conversation conversation = new Conversation(this.test_name, this.test_messages);
+
+            conversation.generateMostActiveUsersReport();
+
+            Assert.AreEqual("bob", conversation.mostActiveUsers[0].userID);
+            Assert.AreEqual(4, conversation.mostActiveUsers[0].numberOfMessages);
+            Assert.AreEqual("phil", conversation.mostActiveUsers[1].userID);
+            Assert.AreEqual(2, conversation.mostActiveUsers[1].numberOfMessages);
+            Assert.AreEqual("jane", conversation.mostActiveUsers[2].userID);
+            Assert.AreEqual(2, conversation.mostActiveUsers[2].numberOfMessages);
+        }
     }
 }

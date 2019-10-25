@@ -34,9 +34,14 @@ namespace MindLink.Recruitment.MyChat
         public string blacklistedWords;
 
         /// <summary>
-        /// Should phone and credit card numbers be hidden?
+        /// Should phone and credit card numbers be hidden? Default is false
         /// </summary>
         public bool hideNumbers;
+
+        /// <summary>
+        /// Should user IDs be obfuscated in the output? Default is false.
+        /// </summary>
+        public bool obfuscateUserID;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
@@ -67,7 +72,7 @@ namespace MindLink.Recruitment.MyChat
         /// PROBLEM THIS EXCEPTION IS NEVER THROWN
         /// Thrown when any of the given arguments is empty.
         /// </exception>
-        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath, string userToFilter = null, string keywordToFilter = null, string blacklistedWords = null, bool hideNumbers = false)
+        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath, string userToFilter = null, string keywordToFilter = null, string blacklistedWords = null, bool hideNumbers = false, bool obfuscateUserID = false)
         {
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
@@ -75,6 +80,7 @@ namespace MindLink.Recruitment.MyChat
             this.keywordToFilter = keywordToFilter;
             this.blacklistedWords = blacklistedWords;
             this.hideNumbers = hideNumbers;
+            this.obfuscateUserID = obfuscateUserID;
         }
     }
 }

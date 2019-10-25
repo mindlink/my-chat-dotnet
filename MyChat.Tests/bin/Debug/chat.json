@@ -36,5 +36,19 @@
       "timestamp": "2015-11-25T17:01:55+00:00",
       "senderId": "angus"
     }
+  ],
+  "mostActiveUsers": [
+    {
+      "userID": "bob",
+      "numberOfMessages": 3
+    },
+    {
+      "userID": "mike",
+      "numberOfMessages": 2
+    },
+    {
+      "userID": "angus",
+      "numberOfMessages": 2
+    }
   ]
 }

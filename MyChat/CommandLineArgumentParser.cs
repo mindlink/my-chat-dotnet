@@ -19,7 +19,7 @@ namespace MindLink.Recruitment.MyChat
         /// </returns>
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
-            return new ConversationExporterConfiguration(arguments[0], arguments[1], this.ParseArgumentValue(arguments, "u"), this.ParseArgumentValue(arguments, "k"), this.ParseArgumentValue(arguments, "b"), this.ParseArgumentFlag(arguments, "hn"));
+            return new ConversationExporterConfiguration(arguments[0], arguments[1], this.ParseArgumentValue(arguments, "u"), this.ParseArgumentValue(arguments, "k"), this.ParseArgumentValue(arguments, "b"), this.ParseArgumentFlag(arguments, "hn"), this.ParseArgumentFlag(arguments, "ouid"));
         }
 
         private string ParseArgumentValue (string[] arguments, string argument)

@@ -21,6 +21,12 @@ namespace MindLink.Recruitment.MyChat
         public IEnumerable<Message> messages;
 
         /// <summary>
+        /// List of the most activated users. Generated in response 
+        /// to -mau flag.
+        /// </summary>
+        public List<User> mostActiveUsers;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Conversation"/> class.
         /// </summary>
         /// <param name="name">
@@ -76,6 +82,52 @@ namespace MindLink.Recruitment.MyChat
             {
                 m.content = Regex.Replace(m.content, @"(((\d\s*){15}\d)|((\d\s*){10})\d)", "*redacted*");
             }
+        }
+
+        public void ObfuscateUserID ()
+        {
+            Dictionary<string, string> userIDs = new Dictionary<string, string>();
+
+            int user_number = 1;
+
+            foreach (var m in this.messages)
+            {
+                if (!userIDs.ContainsKey(m.senderId))
+                {
+                    userIDs.Add(m.senderId, "Hidden User " + user_number.ToString());
+                    user_number++;
+                }
+
+                m.senderId = userIDs[m.senderId];
+            }
+
+            foreach (var user in userIDs)
+            {
+                foreach (var m in this.messages)
+                {
+                    m.content = Regex.Replace(m.content, @"\b(" + user.Key + @")\b", user.Value, RegexOptions.IgnoreCase);
+                }
+            }
+        }
+
+        public void generateMostActiveUsersReport ()
+        {
+            UserList users = new UserList();
+
+            foreach (var m in this.messages)
+            {
+                if (!users.Contains(m.senderId))
+                {
+                    users.Add(new User(m.senderId, 1));
+                } else
+                {
+                    users[m.senderId].IncrementMessageCount();
+                }
+            }
+
+            users.SortByActivity();
+
+            this.mostActiveUsers = users.ToList();
         }
     }
 }

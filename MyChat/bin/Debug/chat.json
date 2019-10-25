@@ -37,14 +37,28 @@
       "senderId": "angus"
     },
     {
-      "content": "cool, my phone number is *redacted* if you ever want to talk about it.",
+      "content": "cool, my phone number is 08765 123 456 if you ever want to talk about it.",
       "timestamp": "2015-11-25T17:01:55+00:00",
       "senderId": "bob"
     },
     {
-      "content": "My credit card number is *redacted*.",
+      "content": "My credit card number is 1234567898765432.",
       "timestamp": "2015-11-25T17:01:55+00:00",
       "senderId": "mike"
+    }
+  ],
+  "mostActiveUsers": [
+    {
+      "userID": "bob",
+      "numberOfMessages": 4
+    },
+    {
+      "userID": "mike",
+      "numberOfMessages": 3
+    },
+    {
+      "userID": "angus",
+      "numberOfMessages": 2
     }
   ]
 }

@@ -76,6 +76,13 @@
             {
                 conversation.HideCreditCardAndPhoneNumbers();
             }
+
+            if (configuration.obfuscateUserID)
+            {
+                conversation.ObfuscateUserID();
+            }
+
+            conversation.generateMostActiveUsersReport();
         }
 
         /// <summary>

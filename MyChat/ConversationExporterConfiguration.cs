@@ -95,6 +95,12 @@ namespace MindLink.Recruitment.MyChat
         /// <returns>True if valid, false if invalid</returns>
         private bool checkFilePathValid (string path)
         {
+            // If the path is not specified
+            if (String.IsNullOrEmpty(path) || String.IsNullOrWhiteSpace(path))
+            {
+                return false;
+            }
+
             char[] invalid_path_chars = Path.GetInvalidPathChars();
 
             string regex_expression = @"[" + Regex.Escape(String.Join("", invalid_path_chars)) + "]";

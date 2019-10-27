@@ -19,11 +19,23 @@ namespace MindLink.Recruitment.MyChat
         /// </returns>
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
-            Dictionary<string, string> argument_values = this.ParseArgumentValues(arguments, new string[] { "u", "k", "b" });
+            try
+            {
+                Dictionary<string, string> argument_values = this.ParseArgumentValues(arguments, new string[] { "u", "k", "b" });
 
-            return new ConversationExporterConfiguration(arguments[0], arguments[1], argument_values["u"], argument_values["k"], argument_values["b"], this.ParseArgumentFlag(arguments, "hn"), this.ParseArgumentFlag(arguments, "ouid"));
+                return new ConversationExporterConfiguration(arguments[0], arguments[1], argument_values["u"], argument_values["k"], argument_values["b"], this.ParseArgumentFlag(arguments, "hn"), this.ParseArgumentFlag(arguments, "ouid"));
+            }
+            catch (IndexOutOfRangeException e) {
+                throw new ArgumentException("Arguments are not specified in the correct format. Please consult the README for more information.");
+            }
         }
 
+        /// <summary>
+        /// Retrieves values for a list of given arguments
+        /// </summary>
+        /// <param name="arguments">The arguments as passed at the command line</param>
+        /// <param name="argument_list">The flags for each argument one wishes to retrieve a value for.</param>
+        /// <returns>A dictionary where the keys are the flags for each argument and the values are the argument values.</returns>
         private Dictionary<string, string> ParseArgumentValues (string[] arguments, string[] argument_list)
         {
             Dictionary<string, string> argument_dict = new Dictionary<string, string>();
@@ -48,6 +60,12 @@ namespace MindLink.Recruitment.MyChat
             return argument_dict;
         }
 
+        /// <summary>
+        /// Determines whether a given flag is passed at the command line
+        /// </summary>
+        /// <param name="arguments">The arguments passed at the command line</param>
+        /// <param name="flag">The flag to test for the presence of</param>
+        /// <returns>True if the flag is present, false if it is not</returns>
         private bool ParseArgumentFlag (string[] arguments, string flag) 
         {
             return Array.IndexOf(arguments, "-" + flag) != -1;

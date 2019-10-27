@@ -38,5 +38,21 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.IsTrue(configuration.hideNumbers);
             Assert.IsTrue(configuration.obfuscateUserID);
         }
+
+        [TestMethod]
+        [ExpectedException (typeof(ArgumentException), "The program did not throw an ArgumentException when no input or output file is specified.")]
+        public void ArgumentExceptionWhenNoInputOrOutputFilesSpecified ()
+        {
+            CommandLineArgumentParser argumentParser = new CommandLineArgumentParser();
+            ConversationExporterConfiguration configuration = argumentParser.ParseCommandLineArguments(new string[0]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "The program did not throw an ArgumentException when an input file but no output file is specified.")]
+        public void ArgumentExceptionWhenOnlyInputFilesSpecified()
+        {
+            CommandLineArgumentParser argumentParser = new CommandLineArgumentParser();
+            ConversationExporterConfiguration configuration = argumentParser.ParseCommandLineArguments(new string[1] { "input.txt" });
+        }
     }
 }

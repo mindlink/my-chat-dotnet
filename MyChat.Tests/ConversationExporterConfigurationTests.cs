@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MindLink.Recruitment.MyChat.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ConversationExporterConfigurationTests
     {
         [TestMethod]

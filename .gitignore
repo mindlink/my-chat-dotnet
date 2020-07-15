@@ -1,0 +1,17 @@
+### DotnetCore ###
+# .NET Core build folders
+bin/
+obj/
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+### VisualStudio ###
+.vs/
+
+packages/

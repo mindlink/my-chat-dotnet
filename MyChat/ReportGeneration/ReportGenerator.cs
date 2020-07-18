@@ -31,6 +31,9 @@
         /// <returns></returns>
         public IDictionary<string, int> Generate(Conversation conversation)
         {
+            IList<string> topUsers = new List<string>();
+            string tiedTopUser = "Tied: ";
+
             foreach (Message message in conversation.Messages)
             {
                 if (userActivity.ContainsKey(message.SenderId))
@@ -49,15 +52,35 @@
             }
 
             report.UserActivityRanking = userActivityRanking.ToArray();
-            report.MostActiveUser = userActivity.First().Key;
+            report.MostActiveUser = userActivity.First().Key;        
 
-            /*for (int i = 0; i < report.UserActivityRanking.Count(); i++)
+            for (int i = 0; i < report.UserActivityRanking.Count(); i++)
             {
-                if (report.UserActivityRanking[i] == report.UserActivityRanking[i+1])
+                if (report.UserActivityRanking[i].MessageCount == report.UserActivityRanking[i+1].MessageCount)
                 {
-
+                    topUsers.Add(report.UserActivityRanking[i].User);
+                    topUsers.Add(report.UserActivityRanking[i + 1].User);
                 }
-            }*/
+                else
+                {
+                    break;
+                }
+            }
+
+            if (topUsers.Count == 0)
+            {
+                report.MostActiveUser = userActivity.First().Key;
+            }
+            else
+            {
+                foreach (string user in topUsers)
+                {
+                    if (topUsers.Last() == user)
+                        tiedTopUser += user;
+                    else tiedTopUser += user + ", ";
+                }
+            }
+            report.MostActiveUser = tiedTopUser;
 
             conversation.Report = report;
 

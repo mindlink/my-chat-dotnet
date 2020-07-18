@@ -12,7 +12,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>MyChat.ConversationExporter</StartupObject>
+    <StartupObject>MindLink.Recruitment.MyChat.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <Company>MindLink Software Limited</Company>

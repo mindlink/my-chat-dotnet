@@ -15,12 +15,12 @@
         {
             IReportGenerator reportGenerator = new ReportGenerator();
 
-            IConversationReader reader = new ConversationReader(reportGenerator);
+            IConversationReader reader = new ConversationReader();
             IConversationWriter writer = new ConversationWriter();
             IConversationFilter filter = new ConversationFilter();
             ICommandLineParser cmdParser = new CommandLineParser();
 
-            ExportController controller = new ExportController(reader, writer, filter, cmdParser);
+            ExportController controller = new ExportController(reader, writer, filter, cmdParser, reportGenerator);
 
             if (args.Length == 0)
             {

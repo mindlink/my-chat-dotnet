@@ -9,6 +9,7 @@
         private IConversationWriter writer;
         private IConversationFilter filter;
         private ICommandLineParser cmdParser;
+        private IReportGenerator reportGenerator;
         private ConversationConfig config;
 
         /// <summary>
@@ -22,12 +23,13 @@
         /// Reference to the conversation filter.
         /// <param name="cmdParser"></param>
         /// Reference to the command line argument parser.
-        public ExportController(IConversationReader reader, IConversationWriter writer, IConversationFilter filter, ICommandLineParser cmdParser)
+        public ExportController(IConversationReader reader, IConversationWriter writer, IConversationFilter filter, ICommandLineParser cmdParser, IReportGenerator reportGenerator)
         {
             this.reader = reader;
             this.writer = writer;
             this.filter = filter;
             this.cmdParser = cmdParser;
+            this.reportGenerator = reportGenerator;
         }
 
         /// <summary>
@@ -39,6 +41,7 @@
             config = cmdParser.ParseCommandLineArguments(args);
             Conversation conversation = reader.ReadConversation(config);
             conversation = filter.FilterConversation(config, conversation);
+            reportGenerator.Generate(conversation);
             writer.WriteConversation(conversation, config.OutputFilePath);            
         }
     }

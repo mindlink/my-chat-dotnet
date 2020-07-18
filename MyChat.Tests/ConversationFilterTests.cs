@@ -160,8 +160,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         /// </summary>
         private void Reset()
         {
-            IReportGenerator reportGenerator = new ReportGenerator();
-            reader = new ConversationReader(reportGenerator);
+            reader = new ConversationReader();
             filter = new ConversationFilter();
             cmdParser = new CommandLineParser();
         }

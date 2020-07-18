@@ -21,7 +21,16 @@
         /// </param>
         public Conversation FilterConversation(ConversationConfig configuration, Conversation conversation)
         {
-            IList<Message> messages = conversation.Messages.ToList();
+            IList<Message> messages = new List<Message>();
+            try
+            {
+                messages = conversation.Messages.ToList();
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentException("Conversation contains zero messages.");
+            }
+            
             IList<Message> filteredMessages = new List<Message>();
             IDictionary<string, int> obfuscatedUsers = new Dictionary<string, int>();
             int obfuscatedIDCount = 1;

@@ -10,16 +10,11 @@
     /// </summary>
     public class ConversationReader : IConversationReader
     {
-        private IReportGenerator reportGenerator;
-
         /// <summary>
         /// Initialises a new instance of the <see cref="ConversationReader"/> class.
         /// </summary>
-        /// <param name="reportGenerator"></param>
-        /// Reference to the report generator
-        public ConversationReader(IReportGenerator reportGenerator)
+        public ConversationReader()
         {
-            this.reportGenerator = reportGenerator;
         }
 
         /// <summary>
@@ -83,6 +78,10 @@
             catch (PathTooLongException)
             {
                 throw new ArgumentException("{0} Path to long", configuration.InputFilePath);
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentException("Configuration input file path must not be null");
             }
         }
     }

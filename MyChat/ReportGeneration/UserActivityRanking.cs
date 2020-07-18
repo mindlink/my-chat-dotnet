@@ -1,10 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat
 {
-    class UserActivityRanking
+    /// <summary>
+    /// Stores user activity data.
+    /// </summary>
+    public class UserActivityRanking
     {
+        /// <summary>
+        /// User username.
+        /// </summary>
+        public string User { get; set; }
+
+        /// <summary>
+        /// User conversation message count.
+        /// </summary>
+        public int MessageCount { get; set; }
     }
 }

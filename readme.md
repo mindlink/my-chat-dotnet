@@ -1,7 +1,7 @@
 My-Chat Programming Exercise
 ====================
 
-My-Chat enables you to import, filter and write to JSON a conversaton stored in the following file format:
+My-Chat enables you to import, filter and write to JSON a conversation stored in the following file format:
 ```
 <conversation_name><new_line>
 (<unix_timestamp><space><username><space><message><new_line>)*
@@ -20,7 +20,7 @@ Multiple filters may be applied to a single operation.
 #### Filter conversation by user
 ```<executable-path> input.txt output.json -uf bob```
 
-Only messages send by the filtered user will be displayed.
+Only messages sent by the filtered user will be displayed.
 
 #### Filter conversation by keyword
 ```<executable-path> input.txt output.json -kf pie```

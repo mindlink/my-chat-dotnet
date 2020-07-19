@@ -22,10 +22,6 @@
 
             ExportController controller = new ExportController(reader, writer, filter, cmdParser, reportGenerator);
 
-            if (args.Length == 0)
-            {
-                args = new string[] { "chat.txt", "chat.json", "-hcc" };
-            }
             controller.Export(args);
         }
     }

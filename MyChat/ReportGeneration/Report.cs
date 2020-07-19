@@ -3,7 +3,7 @@
     /// <summary>
     /// Stores report data.
     /// </summary>
-    public class Report
+    public sealed class Report
     {
         /// <summary>
         /// The most active user in a conversation.

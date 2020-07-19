@@ -1,11 +1,8 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using MindLink.Recruitment.MyChat;
-
-namespace MindLink.Recruitment.MyChat.Tests
+﻿namespace MindLink.Recruitment.MyChat.Tests
 {
+    using NUnit.Framework;
+    using System;
+
     /// <summary>
     /// Tests for the <see cref="CommandLineParser"/>
     /// </summary>

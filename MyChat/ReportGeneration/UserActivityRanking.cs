@@ -3,7 +3,7 @@
     /// <summary>
     /// Stores user activity data.
     /// </summary>
-    public class UserActivityRanking
+    public sealed class UserActivityRanking
     {
         /// <summary>
         /// User username.

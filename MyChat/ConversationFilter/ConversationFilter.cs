@@ -8,7 +8,7 @@
     /// <summary>
     /// Responsible for filtering <see cref="Conversation"/> objects.
     /// </summary>
-    public class ConversationFilter : IConversationFilter
+    public sealed class ConversationFilter : IConversationFilter
     {
         /// <summary>
         /// Filters a <see cref="Conversation"/> object according to a <see cref="ConversationConfig"/> object.
@@ -19,6 +19,9 @@
         /// <param name="conversation">
         /// The conversation object.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the conversation argument has zero messages.
+        /// </exception>
         public Conversation FilterConversation(ConversationConfig configuration, Conversation conversation)
         {
             IList<Message> messages = new List<Message>();
@@ -28,7 +31,7 @@
             }
             catch (ArgumentNullException)
             {
-                throw new ArgumentException("Conversation contains zero messages.");
+                throw new ArgumentNullException("Conversation contains zero messages.");
             }
             
             IList<Message> filteredMessages = new List<Message>();

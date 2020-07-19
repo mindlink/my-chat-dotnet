@@ -6,7 +6,7 @@
     /// <summary>
     /// Represents a helper to parse command line arguments.
     /// </summary>
-    public class CommandLineParser : ICommandLineParser
+    public sealed class CommandLineParser : ICommandLineParser
     {
         private ConversationConfig config;
 

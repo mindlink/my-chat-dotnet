@@ -5,7 +5,7 @@
     /// <summary>
     /// Stores messsage data.
     /// </summary>
-    public class Message
+    public sealed class Message
     {
         /// <summary>
         /// The message content.

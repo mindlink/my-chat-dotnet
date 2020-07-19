@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MindLink.Recruitment.MyChat.Tests
+﻿namespace MindLink.Recruitment.MyChat.Tests
 {
+    using NUnit.Framework;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+
     /// <summary>
     /// Tests for the <see cref="ConversationReader"/>
     /// </summary>
@@ -78,7 +78,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             // Act / Assert
             Assert.That(() => reader.ReadConversation(config),
             Throws.Exception
-              .TypeOf<ArgumentException>(), "Argument exception thrown on valid file");
+              .TypeOf<FileNotFoundException>(), "Argument exception thrown on valid file");
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             // Act / Assert
             Assert.That(() => reader.ReadConversation(config),
             Throws.Exception
-              .TypeOf<ArgumentException>(), "Argument exception thrown on valid directory");
+              .TypeOf<DirectoryNotFoundException>(), "Argument exception thrown on valid directory");
         }
 
         /// <summary>

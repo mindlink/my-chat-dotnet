@@ -5,7 +5,7 @@
     /// <summary>
     /// Stores conversation data.
     /// </summary>
-    public class Conversation
+    public sealed class Conversation
     {
         /// <summary>
         /// The name of the conversation.

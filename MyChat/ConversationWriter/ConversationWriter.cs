@@ -8,7 +8,7 @@
     /// <summary>
     /// Responsible for writing conversation data to the configuration output path
     /// </summary>
-    public class ConversationWriter : IConversationWriter
+    public sealed class ConversationWriter : IConversationWriter
     {
         /// <summary>
         /// Writes the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
@@ -41,15 +41,15 @@
             }
             catch (SecurityException)
             {
-                throw new ArgumentException("No permission to output file {0}", outputFilePath);
+                throw new SecurityException("No permission to output file");
             }
             catch (DirectoryNotFoundException)
             {
-                throw new ArgumentException("Path {0} was not found", outputFilePath);
+                throw new DirectoryNotFoundException("Output file path is invalid");
             }
             catch (PathTooLongException)
             {
-                throw new ArgumentException("{0} Path to long", outputFilePath);
+                throw new PathTooLongException("Output file path is too long");
             }
         }
     }

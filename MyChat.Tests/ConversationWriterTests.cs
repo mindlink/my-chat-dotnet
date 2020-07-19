@@ -1,10 +1,8 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MindLink.Recruitment.MyChat.Tests
+﻿namespace MindLink.Recruitment.MyChat.Tests
 {
+    using NUnit.Framework;
+    using System.IO;
+
     /// <summary>
     /// Tests for the <see cref="ConversationWriter"/>
     /// </summary>
@@ -31,7 +29,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             // Act / Assert
             Assert.That(() => writer.WriteConversation(conversation, @"test\chat.json"),
             Throws.Exception
-              .TypeOf<ArgumentException>(), "Argument exception thrown on valid directory");
+              .TypeOf<DirectoryNotFoundException>(), "Argument exception thrown on valid directory");
         }
 
         /// <summary>

@@ -1,16 +1,19 @@
 ﻿namespace MindLink.Recruitment.MyChat
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Responsible for producing user activity reports for <see cref="Conversation"/> objects.
     /// </summary>
-    public class ReportGenerator : IReportGenerator
+    public sealed class ReportGenerator : IReportGenerator
     {
         private IDictionary<string, int> userActivity;
         private IList<UserActivityRanking> userActivityRanking;
         private Report report;
+        private IList<string> topUsers;
+        private string tiedTopUser;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="Report"/> class.
@@ -20,6 +23,8 @@
             userActivity = new Dictionary<string, int>();
             userActivityRanking = new List<UserActivityRanking>();
             report = new Report();
+            topUsers = new List<string>();
+            tiedTopUser = "Tied: ";
         }
 
         /// <summary>
@@ -28,18 +33,24 @@
         /// <param name="conversation">
         /// The conversation object that the report will be written to.
         /// </param>
-        /// <returns></returns>
+        /// <exception cref="NullReferenceException">
+        /// Thrown when the conversation argument hass Messages are null.
+        /// </exception>
         public IDictionary<string, int> Generate(Conversation conversation)
         {
-            IList<string> topUsers = new List<string>();
-            string tiedTopUser = "Tied: ";
-
-            foreach (Message message in conversation.Messages)
+            try
             {
-                if (userActivity.ContainsKey(message.SenderId))
-                    userActivity[message.SenderId] += 1;
-                else userActivity.Add(message.SenderId, 1);
+                foreach (Message message in conversation.Messages)
+                {
+                    if (userActivity.ContainsKey(message.SenderId))
+                        userActivity[message.SenderId] += 1;
+                    else userActivity.Add(message.SenderId, 1);
+                }
             }
+            catch (NullReferenceException)
+            {
+                throw new NullReferenceException("Conversation has no messages. Messages is null.");
+            }           
 
             userActivity = userActivity.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
 
@@ -51,19 +62,37 @@
                 userActivityRanking.Add(userRank);
             }
 
-            report.UserActivityRanking = userActivityRanking.ToArray();
-            report.MostActiveUser = userActivity.First().Key;        
+            if (conversation.Messages.Count() > 0)
+                CalculateTopUser();
 
-            for (int i = 0; i < report.UserActivityRanking.Count(); i++)
+            conversation.Report = report;
+
+            return userActivity;
+        }
+
+        /// <summary>
+        /// Helper method for calculating the top user based on message activity.
+        /// </summary>
+        private void CalculateTopUser()
+        {
+            report.UserActivityRanking = userActivityRanking.ToArray();
+
+            if (report.UserActivityRanking.Count() > 1)
             {
-                if (report.UserActivityRanking[i].MessageCount == report.UserActivityRanking[i+1].MessageCount)
+                for (int i = 0; i < report.UserActivityRanking.Count(); i++)
                 {
-                    topUsers.Add(report.UserActivityRanking[i].User);
-                    topUsers.Add(report.UserActivityRanking[i + 1].User);
-                }
-                else
-                {
-                    break;
+                    if (i < report.UserActivityRanking.Count() - 1)
+                    {
+                        if (report.UserActivityRanking[i].MessageCount == report.UserActivityRanking[i + 1].MessageCount)
+                        {
+                            topUsers.Add(report.UserActivityRanking[i].User);
+                            topUsers.Add(report.UserActivityRanking[i + 1].User);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -79,12 +108,9 @@
                         tiedTopUser += user;
                     else tiedTopUser += user + ", ";
                 }
+
+                report.MostActiveUser = tiedTopUser;
             }
-            report.MostActiveUser = tiedTopUser;
-
-            conversation.Report = report;
-
-            return userActivity;
         }
     }
 }

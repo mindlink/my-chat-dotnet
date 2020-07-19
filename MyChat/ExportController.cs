@@ -3,7 +3,7 @@
     /// <summary>
     /// Controller for conversation export operations.
     /// </summary>
-    class ExportController
+    public sealed class ExportController
     {
         private IConversationReader reader;
         private IConversationWriter writer;

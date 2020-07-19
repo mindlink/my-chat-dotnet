@@ -8,7 +8,7 @@
     /// <summary>
     /// Responsible for reading conversation data from drive according to <see cref="ConversationConfig"/>
     /// </summary>
-    public class ConversationReader : IConversationReader
+    public sealed class ConversationReader : IConversationReader
     {
         /// <summary>
         /// Initialises a new instance of the <see cref="ConversationReader"/> class.
@@ -20,9 +20,24 @@
         /// <summary>
         /// Reads a conversation from 'configuration.InputFilePath' into a <see cref="Conversation"/> object.
         /// </summary>
-        /// <param name="configuration"></param>
+        /// <param name="configuration">
         /// The conversation configuration object
-        /// <returns></returns>
+        /// </param>
+        /// <exception cref="FileNotFoundException">
+        /// Thrown when the configuration input file can not be found.
+        /// </exception>
+        /// <exception cref="DirectoryNotFoundException">
+        /// Thrown when the configuration input file path is invalid.
+        /// </exception>
+        /// <exception cref="EndOfStreamException">
+        /// Thrown when attempting to read the input file past the end of stream.
+        /// </exception>
+        /// <exception cref="PathTooLongException">
+        /// Thrown when the configuration input file path is to long.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if the configuration input file path is not set.
+        /// </exception>
         public Conversation ReadConversation(ConversationConfig configuration)
         {
             try
@@ -65,11 +80,11 @@
             }
             catch (FileNotFoundException)
             {
-                throw new ArgumentException("The file {0} was not found.", configuration.InputFilePath);
+                throw new FileNotFoundException("The file {0} was not found.", configuration.InputFilePath);
             }
             catch (DirectoryNotFoundException)
             {
-                throw new ArgumentException("Path {0} was not found", configuration.InputFilePath);
+                throw new DirectoryNotFoundException("Input file path is invalid");
             }
             catch (EndOfStreamException)
             {
@@ -77,11 +92,11 @@
             }
             catch (PathTooLongException)
             {
-                throw new ArgumentException("{0} Path to long", configuration.InputFilePath);
+                throw new PathTooLongException("The input file path is too long");
             }
             catch (ArgumentNullException)
             {
-                throw new ArgumentException("Configuration input file path must not be null");
+                throw new ArgumentNullException("Configuration input file path must not be null");
             }
         }
     }

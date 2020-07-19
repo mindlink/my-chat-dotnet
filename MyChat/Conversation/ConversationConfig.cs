@@ -3,7 +3,7 @@
     /// <summary>
     /// Stores conversation configuration data.
     /// </summary>
-    public class ConversationConfig
+    public sealed class ConversationConfig
     {
         /// <summary>
         /// The input file path.

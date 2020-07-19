@@ -1,11 +1,9 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MindLink.Recruitment.MyChat.Tests
+﻿namespace MindLink.Recruitment.MyChat.Tests
 {
+    using NUnit.Framework;
+    using System;
+    using System.Linq;
+
     /// <summary>
     /// Tests for the <see cref="ConversationFilter"/>
     /// </summary>
@@ -153,6 +151,23 @@ namespace MindLink.Recruitment.MyChat.Tests
             {
                 Assert.That(message.SenderId.All(char.IsDigit), Is.EqualTo(true), "Failed to redact credit card number");
             }
+        }
+
+        /// <summary>
+        /// Tests that argument null exception is thrown if conversation messages are null.
+        /// </summary>
+        [Test]
+        public void MessagesNull()
+        {
+            // Arrange
+            Reset();
+            string[] args = new string[] { "chat.txt", "chat.json", "-ou" };
+            config = cmdParser.ParseCommandLineArguments(args);
+
+            // Act / Assert
+            Assert.That(() => filter.FilterConversation(config, new Conversation()),
+            Throws.Exception
+              .TypeOf<ArgumentNullException>(), "Argument null exception not thrown on invalid conversation.");
         }
 
         /// <summary>

@@ -71,7 +71,7 @@
         }
 
         /// <summary>
-        /// Helper method for calculating the top user based on message activity.
+        /// Calculates the top user based on message activity.
         /// </summary>
         private void CalculateTopUser()
         {

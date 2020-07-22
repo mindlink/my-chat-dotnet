@@ -38,6 +38,8 @@
             string[] args = new string[] { "chat.txt", "chat.json", "-uf", "bob", "-kf", "pie", "-kb", "pie,yes", "-hcc", "-hpn", "-ou" };
             ICommandLineParser parser = new CommandLineParser();
             ConversationConfig config;
+            bool ccFilter = false;
+            bool pnFilter = false;
 
             // Act
             config = parser.ParseCommandLineArguments(args);
@@ -45,12 +47,32 @@
             // Assert
             Assert.That(config.InputFilePath, Is.EqualTo(args[0]), "Input file path incorrectly parsed");
             Assert.That(config.OutputFilePath, Is.EqualTo(args[1]), "Output file path incorrectly parsed");
-            Assert.That(config.UserFilter, Is.EqualTo(args[3]), "User filter incorrectly parsed");
-            Assert.That(config.KeywordFilter, Is.EqualTo(args[5]), "Keyword filter incorrectly parsed");
-            Assert.That(config.KeywordBlacklist, Is.EqualTo(new string[] { "pie", "yes" }), "Keyword blacklist incorrectly parsed");
-            Assert.That(config.HideCreditCards, Is.EqualTo(true), "Credit card filter incorrectly parsed");
-            Assert.That(config.HidePhoneNumbers, Is.EqualTo(true), "Phone number filter incorrectly parsed");
             Assert.That(config.ObfuscateUserID, Is.EqualTo(true), "Obfuscate user ID filter incorrectly parsed");
+
+            foreach (IMessageFilter filter in config.Filters)
+            {
+                switch (filter)
+                {
+                    case UserFilter uf:
+                        Assert.That((filter as UserFilter).User, Is.EqualTo(args[3]), "User filter incorrectly parsed");
+                        break;
+                    case KeywordFilter kf:
+                        Assert.That((filter as KeywordFilter).Keyword, Is.EqualTo(args[5]), "Keyword filter incorrectly parsed");
+                        break;
+                    case BlacklistFilter kb:
+                        Assert.That((filter as BlacklistFilter).KeywordBlacklist, Is.EqualTo(new string[] { "pie", "yes" }), "Keyword blacklist incorrectly parsed");
+                        break;
+                    case CreditCardFilter hcc:
+                        ccFilter = true;
+                        break;
+                    case PhoneNumberFilter hpn:
+                        pnFilter = true;
+                        break;
+                }
+            }
+
+            Assert.That(ccFilter, Is.EqualTo(true), "Credit card filter incorrectly parsed");
+            Assert.That(pnFilter, Is.EqualTo(true), "Phone number filter incorrectly parsed");
         }
 
         /// <summary>

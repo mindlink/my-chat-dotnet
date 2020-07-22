@@ -3,13 +3,24 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Responsible for filtering <see cref="Conversation"/> objects.
     /// </summary>
     public sealed class ConversationFilter : IConversationFilter
     {
+        private IList<Message> messages;
+        private IDictionary<string, int> obfuscatedUsers;
+        private int obfuscatedIDCount;
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="ConversationFilter"/>
+        /// </summary>
+        public ConversationFilter()
+        {
+            obfuscatedIDCount = 1;
+        }
+
         /// <summary>
         /// Filters a <see cref="Conversation"/> object according to a <see cref="ConversationConfig"/> object.
         /// </summary>
@@ -24,7 +35,9 @@
         /// </exception>
         public Conversation FilterConversation(ConversationConfig configuration, Conversation conversation)
         {
-            IList<Message> messages = new List<Message>();
+            messages = new List<Message>();
+            obfuscatedUsers = new Dictionary<string, int>();
+
             try
             {
                 messages = conversation.Messages.ToList();
@@ -32,71 +45,47 @@
             catch (ArgumentNullException)
             {
                 throw new ArgumentNullException("Conversation contains zero messages.");
-            }
-            
-            IList<Message> filteredMessages = new List<Message>();
-            IDictionary<string, int> obfuscatedUsers = new Dictionary<string, int>();
-            int obfuscatedIDCount = 1;
-            string redacted = "**redacted**";
+            }                    
 
             foreach (Message message in messages.ToList())
             {
-                if (configuration.UserFilter != null && !message.SenderId.Equals(configuration.UserFilter))
-                {
-                    messages.Remove(message);
-                }
-                if (configuration.KeywordFilter != null && message.Content.IndexOf(configuration.KeywordFilter, StringComparison.OrdinalIgnoreCase) == -1)
-                {
-                    messages.Remove(message);
-                }
-                if (configuration.KeywordBlacklist != null)
-                {
-                    string[] split = message.Content.Split(' ');
+                Message filteredMessage;
 
-                    for (int i = 0; i < split.Length; i++)
+                if (configuration.Filters != null)
+                {
+                    foreach (IMessageFilter messageFilter in configuration.Filters)
                     {
-                        string word = split[i];
-                        string strippedWord = new string(word.Where(c => !char.IsPunctuation(c)).ToArray());
-
-                        foreach (string blockedWord in configuration.KeywordBlacklist)
-                        {
-                            if (strippedWord.Equals(blockedWord, StringComparison.OrdinalIgnoreCase))
-                            {
-                                split[i] = redacted;
-                            }
-                        }
-
+                        filteredMessage = messageFilter.FilterMessage(message);
+                        if (filteredMessage == null)
+                            messages.Remove(message);
                     }
-                    message.Content = string.Join(' ', split);
                 }
 
-                if (configuration.HidePhoneNumbers)
-                {
-                    Regex rx = new Regex(@"[\d\s-\(\)]{10,}");
-                    message.Content = rx.Replace(message.Content, redacted);
-                }
-
-                if (configuration.HideCreditCards)
-                {
-                    Regex rx = new Regex(@"\b(?:\d[ -]*?){13,16}\b");
-                    message.Content = rx.Replace(message.Content, redacted);
-                }
                 if (configuration.ObfuscateUserID)
-                {
-                    if (obfuscatedUsers.ContainsKey(message.SenderId))
-                    {
-                        message.SenderId = obfuscatedUsers[message.SenderId].ToString();
-                    }
-                    else
-                    {
-                        obfuscatedUsers.Add(message.SenderId, obfuscatedIDCount);
-                        message.SenderId = obfuscatedUsers[message.SenderId].ToString();
-                        obfuscatedIDCount += 1;
-                    }
-                }
+                    ObfuscateUsers(message);
             }
             Conversation filteredConversation = new Conversation { Name = conversation.Name, Messages = messages };
             return filteredConversation;
+        }
+
+        /// <summary>
+        /// Obfuscates user id of <see cref="Message"/> objects, retaining relationship between message and sender throughout a <see cref="Conversation"/>
+        /// </summary>
+        /// <param name="message">
+        /// Message obect requiring user id obfuscation.
+        /// </param>
+        private void ObfuscateUsers(Message message)
+        {
+            if (obfuscatedUsers.ContainsKey(message.SenderId))
+            {
+                message.SenderId = obfuscatedUsers[message.SenderId].ToString();
+            }
+            else
+            {
+                obfuscatedUsers.Add(message.SenderId, obfuscatedIDCount);
+                message.SenderId = obfuscatedUsers[message.SenderId].ToString();
+                obfuscatedIDCount += 1;
+            }
         }
     }
 }

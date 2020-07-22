@@ -41,10 +41,12 @@
                 switch (arguments[i])
                 {
                     case "-uf":
-                        config.UserFilter = arguments[i + 1];
+                        IMessageFilter userFilter = new UserFilter(arguments[i + 1]);
+                        config.Filters.Add(userFilter);
                         break;
                     case "-kf":
-                        config.KeywordFilter = arguments[i + 1];
+                        IMessageFilter keywordFilter = new KeywordFilter(arguments[i + 1]);
+                        config.Filters.Add(keywordFilter);
                         break;
                     case "-kb":
                         string[] split = arguments[i + 1].Split(',');
@@ -53,13 +55,16 @@
                         {
                             blockedWordList.Add(blockedWord);
                         }
-                        config.KeywordBlacklist = blockedWordList.ToArray();
+                        IMessageFilter blacklistFilter = new BlacklistFilter(blockedWordList.ToArray());
+                        config.Filters.Add(blacklistFilter);
                         break;
                     case "-hcc":
-                        config.HideCreditCards = true;
+                        IMessageFilter ccFilter = new CreditCardFilter();
+                        config.Filters.Add(ccFilter);
                         break;
                     case "-hpn":
-                        config.HidePhoneNumbers = true;
+                        IMessageFilter pnFilter = new PhoneNumberFilter();
+                        config.Filters.Add(pnFilter);
                         break;
                     case "-ou":
                         config.ObfuscateUserID = true;

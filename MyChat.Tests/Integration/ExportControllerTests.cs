@@ -1,5 +1,6 @@
 ﻿namespace MindLink.Recruitment.MyChat.Tests
 {
+    using Newtonsoft.Json;
     using NUnit.Framework;
     using System;
     using System.Collections.Generic;
@@ -7,34 +8,46 @@
     using System.Linq;
 
     /// <summary>
-    /// Tests for the <see cref="ConversationReader"/>
+    /// Integration tests using the <see cref="ex"/>
     /// </summary>
     [TestFixture]
-    class ConversationReaderTests
+    class ExportControllerTests
     {
+        private ExportController controller;
         private IConversationReader reader;
+        private IConversationWriter writer;
+        private IConversationFilter filter;
         private ICommandLineParser cmdParser;
-        private ConversationConfig config;
+        private IReportGenerator reportGenerator;
+        private string serializedConversation;
 
         /// <summary>
-        /// Tests that imported conversations match the source data.
+        /// Tests the export function with minimum arguments passed.
         /// </summary>
         [Test]
-        public void ReadConversationTest()
+        public void MinimumArgsExport()
         {
             // Arrange
             Reset();
+            controller = new ExportController(reader, writer, filter, cmdParser, reportGenerator);
             string[] args = new string[] { "chat.txt", "chat.json" };
             IList<Message> messages;
-            config = cmdParser.ParseCommandLineArguments(args);
             Conversation conversation;
 
             // Act
-            conversation = reader.ReadConversation(config);
+            controller.Export(args);
+
+            using (StreamReader stream = new StreamReader(new FileStream(args[1], FileMode.Open)))
+            {
+                serializedConversation = stream.ReadToEnd();
+            }
+
+            conversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
             messages = conversation.Messages.ToList();
 
             // Assert
-            Assert.That(conversation.Name, Is.EqualTo("My Conversation"), "Conversation name incorrect");
+            Assert.That(conversation.Name, Is.EqualTo("My Conversation"));
+
             Assert.That(messages[0].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
             Assert.That(messages[0].SenderId, Is.EqualTo("bob"));
             Assert.That(messages[0].Content, Is.EqualTo("Hello there!"));
@@ -65,37 +78,39 @@
         }
 
         /// <summary>
-        /// Tests that an exception is correctly thrown when an invalid file name is specified.
+        /// Tests the export function with maximum arguments passed.
         /// </summary>
         [Test]
-        public void FileNotFound()
+        public void MaximumArgsExport()
         {
             // Arrange
             Reset();
-            string[] args = new string[] { "chatt.txt", "chat.json" };
-            config = cmdParser.ParseCommandLineArguments(args);
+            controller = new ExportController(reader, writer, filter, cmdParser, reportGenerator);
+            string[] args = new string[] { "chat.txt", "chat.json", "-uf", "bob", "-kf", "pie", "-kb", "pie,yes", "-hcc", "-hpn", "-ou" };
+            IList<Message> messages;
+            Conversation conversation;
 
-            // Act / Assert
-            Assert.That(() => reader.ReadConversation(config),
-            Throws.Exception
-              .TypeOf<FileNotFoundException>(), "Argument exception thrown on valid file");
-        }
+            // Act
+            controller.Export(args);
 
-        /// <summary>
-        /// Tests that an exception is correctly thrown when an invalid file path is specified.
-        /// </summary>
-        [Test]
-        public void DirectoryNotFound()
-        {
-            // Arrange
-            Reset();
-            string[] args = new string[] { @"test\chat.txt", "chat.json" };
-            config = cmdParser.ParseCommandLineArguments(args);
+            using (StreamReader stream = new StreamReader(new FileStream(args[1], FileMode.Open)))
+            {
+                serializedConversation = stream.ReadToEnd();
+            }
 
-            // Act / Assert
-            Assert.That(() => reader.ReadConversation(config),
-            Throws.Exception
-              .TypeOf<DirectoryNotFoundException>(), "Argument exception thrown on valid directory");
+            conversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+            messages = conversation.Messages.ToList();
+
+            // Assert
+            Assert.That(conversation.Name, Is.EqualTo("My Conversation"));
+
+            Assert.That(messages[0].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));
+            Assert.That(messages[0].SenderId, Is.EqualTo("1"));
+            Assert.That(messages[0].Content, Is.EqualTo("I'm good thanks, do you like *redacted*"));
+
+            Assert.That(messages[1].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470914)));
+            Assert.That(messages[1].SenderId, Is.EqualTo("1"));
+            Assert.That(messages[1].Content, Is.EqualTo("No, just want to know if there's anybody else in the *redacted* society..."));
         }
 
         /// <summary>
@@ -104,7 +119,10 @@
         private void Reset()
         {
             reader = new ConversationReader();
+            writer = new ConversationWriter();
+            filter = new ConversationFilter();
             cmdParser = new CommandLineParser();
+            reportGenerator = new ReportGenerator();
         }
     }
 }

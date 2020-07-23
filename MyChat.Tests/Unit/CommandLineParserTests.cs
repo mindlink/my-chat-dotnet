@@ -4,7 +4,7 @@
     using System;
 
     /// <summary>
-    /// Tests for the <see cref="CommandLineParser"/>
+    /// Unit tests for the <see cref="CommandLineParser"/>
     /// </summary>
     [TestFixture]
     class CommandLineParserTests

@@ -2,16 +2,16 @@
 {
     using NUnit.Framework;
     using System;
+    using System.Collections.Generic;
     using System.IO;
 
     /// <summary>
-    /// Tests for the <see cref="ConversationWriter"/>
+    /// Unit tests for the <see cref="ConversationWriter"/>
     /// </summary>
     [TestFixture]
     class ConversationWriterTests
     {
         private IConversationWriter writer;
-        private ICommandLineParser cmdParser;
         private ConversationConfig config;
         private Conversation conversation;
 
@@ -24,7 +24,7 @@
             // Arrange
             Reset();
             string[] args = new string[] { "chat.txt", "chat.json" };
-            config = cmdParser.ParseCommandLineArguments(args);
+            config = ParseCommandLineArguments(args);
 
             // Act / Assert
             Assert.That(() => writer.WriteConversation(conversation, @"test\chat.json"),
@@ -33,12 +33,62 @@
         }
 
         /// <summary>
+        /// Generates a <see cref="ConversationConfig"/> object without depending on a <see cref="ICommandLineParser"/> implementation.
+        /// </summary>
+        /// <param name="arguments">
+        /// The command line arguments to be parsed.
+        /// </param>
+        /// <returns></returns>
+        private ConversationConfig ParseCommandLineArguments(string[] arguments)
+        {
+            config.InputFilePath = arguments[0];
+            config.OutputFilePath = arguments[1];
+
+            for (int i = 2; i < arguments.Length; i++)
+            {
+                switch (arguments[i])
+                {
+                    case "-uf":
+                        IMessageFilter userFilter = new UserFilter(arguments[i + 1]);
+                        config.Filters.Add(userFilter);
+                        break;
+                    case "-kf":
+                        IMessageFilter keywordFilter = new KeywordFilter(arguments[i + 1]);
+                        config.Filters.Add(keywordFilter);
+                        break;
+                    case "-kb":
+                        string[] split = arguments[i + 1].Split(',');
+                        List<string> blockedWordList = new List<string>();
+                        foreach (string blockedWord in split)
+                        {
+                            blockedWordList.Add(blockedWord);
+                        }
+                        IMessageFilter blacklistFilter = new BlacklistFilter(blockedWordList.ToArray());
+                        config.Filters.Add(blacklistFilter);
+                        break;
+                    case "-hcc":
+                        IMessageFilter ccFilter = new CreditCardFilter();
+                        config.Filters.Add(ccFilter);
+                        break;
+                    case "-hpn":
+                        IMessageFilter pnFilter = new PhoneNumberFilter();
+                        config.Filters.Add(pnFilter);
+                        break;
+                    case "-ou":
+                        config.ObfuscateUserID = true;
+                        break;
+                }
+            }
+            return config;
+        }
+
+        /// <summary>
         /// Helper method for preparing core components for use.
         /// </summary>
         private void Reset()
         {
             writer = new ConversationWriter();
-            cmdParser = new CommandLineParser();
+            config = new ConversationConfig();
 
             Message[] messages = new Message[8] 
             {

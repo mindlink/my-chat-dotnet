@@ -4,6 +4,11 @@
     using System;
     using System.Collections.Generic;
 
+    using MindLink.Recruitment.MyChat.CommandLineParsing;
+    using MindLink.Recruitment.MyChat.ConversationFilters;
+    using MindLink.Recruitment.MyChat.ReportGeneration;
+    using MindLink.Recruitment.MyChat.ConversationData;
+
     /// <summary>
     /// Unit tests for the <see cref="ReportGenerator"/>
     /// </summary>

@@ -7,6 +7,13 @@
     using System.IO;
     using System.Linq;
 
+    using MindLink.Recruitment.MyChat.CommandLineParsing;
+    using MindLink.Recruitment.MyChat.ConversationReaders;
+    using MindLink.Recruitment.MyChat.ConversationWriters;
+    using MindLink.Recruitment.MyChat.ConversationFilters;
+    using MindLink.Recruitment.MyChat.ReportGeneration;
+    using MindLink.Recruitment.MyChat.ConversationData;
+
     /// <summary>
     /// Integration tests using the <see cref="ex"/>
     /// </summary>

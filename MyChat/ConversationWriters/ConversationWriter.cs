@@ -1,9 +1,10 @@
-﻿namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.ConversationWriters
 {
     using Newtonsoft.Json;
     using System;
     using System.IO;
     using System.Security;
+    using MindLink.Recruitment.MyChat.ConversationData;
 
     /// <summary>
     /// Responsible for writing conversation data to the configuration output path

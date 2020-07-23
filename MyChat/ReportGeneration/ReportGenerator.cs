@@ -1,8 +1,9 @@
-﻿namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.ReportGeneration
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using MindLink.Recruitment.MyChat.ConversationData;
 
     /// <summary>
     /// Responsible for producing user activity reports for <see cref="Conversation"/> objects.

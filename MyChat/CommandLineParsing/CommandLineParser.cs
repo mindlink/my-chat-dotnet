@@ -1,7 +1,8 @@
-﻿namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.CommandLineParsing
 {
     using System;
     using System.Collections.Generic;
+    using MindLink.Recruitment.MyChat.ConversationFilters;
 
     /// <summary>
     /// Represents a helper to parse command line arguments.

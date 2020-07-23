@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.ConversationFilters
 {
+    using MindLink.Recruitment.MyChat.ConversationData;
+    using MindLink.Recruitment.MyChat.CommandLineParsing;
+
     /// <summary>
     /// Responsible for filtering <see cref="Conversation"/> objects.
     /// </summary>

@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.CommandLineParsing
 {
+    using System.Collections.Generic;
+    using MindLink.Recruitment.MyChat.ConversationFilters;
+
     /// <summary>
     /// Stores conversation configuration data.
     /// </summary>

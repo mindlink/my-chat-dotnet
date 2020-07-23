@@ -1,5 +1,11 @@
 ﻿namespace MindLink.Recruitment.MyChat
 {
+    using MindLink.Recruitment.MyChat.CommandLineParsing;
+    using MindLink.Recruitment.MyChat.ConversationReaders;
+    using MindLink.Recruitment.MyChat.ConversationWriters;
+    using MindLink.Recruitment.MyChat.ConversationFilters;
+    using MindLink.Recruitment.MyChat.ReportGeneration;
+
     /// <summary>
     /// Startup objects, defines project dependencies.
     /// </summary>

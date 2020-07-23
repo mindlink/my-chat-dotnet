@@ -1,6 +1,7 @@
-﻿namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.ConversationFilters
 {
     using System.Text.RegularExpressions;
+    using MindLink.Recruitment.MyChat.ConversationData;
 
     /// <summary>
     /// Redacts phone numbers from <see cref="Message"/> objects.

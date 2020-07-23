@@ -1,5 +1,7 @@
-﻿namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.ConversationFilters
 {
+    using MindLink.Recruitment.MyChat.ConversationData;
+
     /// <summary>
     /// Used to filter <see cref="Message"/> objects.
     /// </summary>

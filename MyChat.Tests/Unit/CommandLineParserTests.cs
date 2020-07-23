@@ -3,6 +3,9 @@
     using NUnit.Framework;
     using System;
 
+    using MindLink.Recruitment.MyChat.CommandLineParsing;
+    using MindLink.Recruitment.MyChat.ConversationFilters;
+
     /// <summary>
     /// Unit tests for the <see cref="CommandLineParser"/>
     /// </summary>

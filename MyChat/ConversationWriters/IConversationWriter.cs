@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.ConversationWriters
 {
+    using MindLink.Recruitment.MyChat.ConversationData;
+
     public interface IConversationWriter
     {
         /// <summary>

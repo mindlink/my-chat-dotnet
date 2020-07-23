@@ -5,6 +5,11 @@
     using System.Collections.Generic;
     using System.IO;
 
+    using MindLink.Recruitment.MyChat.CommandLineParsing;
+    using MindLink.Recruitment.MyChat.ConversationWriters;
+    using MindLink.Recruitment.MyChat.ConversationFilters;
+    using MindLink.Recruitment.MyChat.ConversationData;
+
     /// <summary>
     /// Unit tests for the <see cref="ConversationWriter"/>
     /// </summary>

@@ -1,9 +1,11 @@
-﻿namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.ConversationReaders
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
+    using MindLink.Recruitment.MyChat.ConversationData;
+    using MindLink.Recruitment.MyChat.CommandLineParsing;
 
     /// <summary>
     /// Responsible for reading conversation data from drive according to <see cref="ConversationConfig"/>

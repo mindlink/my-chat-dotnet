@@ -1,4 +1,4 @@
-﻿namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.ReportGeneration
 {
     /// <summary>
     /// Stores report data.

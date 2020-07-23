@@ -6,6 +6,10 @@
     using System.IO;
     using System.Linq;
 
+    using MindLink.Recruitment.MyChat.CommandLineParsing;
+    using MindLink.Recruitment.MyChat.ConversationReaders;
+    using MindLink.Recruitment.MyChat.ConversationData;
+
     /// <summary>
     /// Unit tests for the <see cref="ConversationReader"/>
     /// </summary>

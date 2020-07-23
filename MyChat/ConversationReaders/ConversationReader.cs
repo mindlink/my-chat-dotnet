@@ -80,25 +80,21 @@
                 Conversation conversation = new Conversation { Name = conversationName, Messages = messages };
                 return conversation;
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException e)
             {
-                throw new FileNotFoundException("The file {0} was not found.", configuration.InputFilePath);
+                throw new ArgumentException("The input file was not found.", configuration.InputFilePath, e);
             }
-            catch (DirectoryNotFoundException)
+            catch (DirectoryNotFoundException e)
             {
-                throw new DirectoryNotFoundException("Input file path is invalid");
+                throw new ArgumentException("The input file path is invalid", configuration.InputFilePath, e);
             }
-            catch (EndOfStreamException)
+            catch (PathTooLongException e)
             {
-                throw new EndOfStreamException("Attempted to read past end of stream");
+                throw new ArgumentException("The input file path is too long", configuration.InputFilePath, e);
             }
-            catch (PathTooLongException)
+            catch (ArgumentNullException e)
             {
-                throw new PathTooLongException("The input file path is too long");
-            }
-            catch (ArgumentNullException)
-            {
-                throw new ArgumentNullException("Configuration input file path must not be null");
+                throw new ArgumentException("Configuration input file path must not be null", e);
             }
         }
     }

@@ -40,17 +40,17 @@
 
                 writer.Close();
             }
-            catch (SecurityException)
+            catch (SecurityException e)
             {
-                throw new SecurityException("No permission to output file");
+                throw new ArgumentException("No permission to output file", outputFilePath, e);
             }
-            catch (DirectoryNotFoundException)
+            catch (DirectoryNotFoundException e)
             {
-                throw new DirectoryNotFoundException("Output file path is invalid");
+                throw new ArgumentException("The output file path is invalid", outputFilePath, e);
             }
-            catch (PathTooLongException)
+            catch (PathTooLongException e)
             {
-                throw new PathTooLongException("Output file path is too long");
+                throw new ArgumentException("The iutput file path is too long", outputFilePath, e);
             }
         }
     }

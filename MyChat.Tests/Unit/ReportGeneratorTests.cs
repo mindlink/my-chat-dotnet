@@ -32,7 +32,8 @@
             // Act / Assert
             Assert.That(() => reportGenerator.Generate(new Conversation()),
             Throws.Exception
-              .TypeOf<NullReferenceException>(), "Null reference exception not thrown on invalid conversation.");
+              .TypeOf<ArgumentException>()
+              .With.InnerException.TypeOf<NullReferenceException>(), "Null reference exception not thrown on invalid conversation.");
         }
 
         /// <summary>

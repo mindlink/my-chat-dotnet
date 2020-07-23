@@ -48,9 +48,9 @@
                     else userActivity.Add(message.SenderId, 1);
                 }
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException e)
             {
-                throw new NullReferenceException("Conversation has no messages. Messages is null.");
+                throw new ArgumentException("Conversation has no messages. Messages is null.", e);
             }           
 
             userActivity = userActivity.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);

@@ -91,7 +91,8 @@
             // Act & Assert
             Assert.That(() => parser.ParseCommandLineArguments(args),
             Throws.Exception
-              .TypeOf<ArgumentException>(), "Argument exception not throw when too few arguments are passed to conversation parser");
+              .TypeOf<ArgumentException>()
+              .With.InnerException.TypeOf<IndexOutOfRangeException>(), "Argument exception not throw when too few arguments are passed to conversation parser");
         }
     }
 }

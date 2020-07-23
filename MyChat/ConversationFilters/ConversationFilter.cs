@@ -44,9 +44,9 @@
             {
                 messages = conversation.Messages.ToList();
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException e)
             {
-                throw new ArgumentNullException("Conversation contains zero messages.");
+                throw new ArgumentException("Conversation contains zero messages.", e);
             }                    
 
             foreach (Message message in messages.ToList())

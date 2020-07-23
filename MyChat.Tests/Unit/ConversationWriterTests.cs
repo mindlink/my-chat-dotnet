@@ -34,7 +34,8 @@
             // Act / Assert
             Assert.That(() => writer.WriteConversation(conversation, @"test\chat.json"),
             Throws.Exception
-              .TypeOf<DirectoryNotFoundException>(), "Argument exception thrown on valid directory");
+              .TypeOf<ArgumentException>()
+              .With.InnerException.TypeOf<DirectoryNotFoundException>(), "Argument exception thrown on valid directory");
         }
 
         /// <summary>

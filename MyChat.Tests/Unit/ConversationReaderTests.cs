@@ -81,7 +81,8 @@
             // Act / Assert
             Assert.That(() => reader.ReadConversation(config),
             Throws.Exception
-              .TypeOf<FileNotFoundException>(), "Argument exception thrown on valid file");
+              .TypeOf<ArgumentException>()
+              .With.InnerException.TypeOf<FileNotFoundException>(), "Argument exception thrown on valid file");
         }
 
         /// <summary>
@@ -98,7 +99,8 @@
             // Act / Assert
             Assert.That(() => reader.ReadConversation(config),
             Throws.Exception
-              .TypeOf<DirectoryNotFoundException>(), "Argument exception thrown on valid directory");
+              .TypeOf<ArgumentException>()
+              .With.InnerException.TypeOf<DirectoryNotFoundException>(), "Argument exception thrown on valid directory");
         }
 
         /// <summary>

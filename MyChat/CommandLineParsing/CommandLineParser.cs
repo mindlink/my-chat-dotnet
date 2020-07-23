@@ -22,9 +22,9 @@
         /// <summary>
         /// Returns a custom <see cref="ConversationConfig"/> object defined by command line arguments
         /// </summary>
-        /// <param name="arguments"></param>
-        /// The command line arguments
-        /// <returns></returns>
+        /// <param name="arguments">
+        /// The command line arguments.
+        /// </param>
         public ConversationConfig ParseCommandLineArguments(string[] arguments)
         {
             try
@@ -32,9 +32,9 @@
                 config.InputFilePath = arguments[0];
                 config.OutputFilePath = arguments[1];
             }
-            catch (IndexOutOfRangeException)
+            catch (IndexOutOfRangeException e)
             {
-                throw new ArgumentException("Input and output file must be specified");
+                throw new ArgumentException("Input and output file must be specified", e);
             }
 
             for (int i = 2; i < arguments.Length; i++)

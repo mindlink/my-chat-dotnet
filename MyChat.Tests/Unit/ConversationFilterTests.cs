@@ -159,7 +159,8 @@
             // Act / Assert
             Assert.That(() => filter.FilterConversation(config, new Conversation()),
             Throws.Exception
-              .TypeOf<ArgumentNullException>(), "Argument null exception not thrown on invalid conversation.");
+              .TypeOf<ArgumentException>()
+              .With.InnerException.TypeOf<ArgumentNullException>(), "Argument null exception not thrown on invalid conversation.");
         }
 
         /// <summary>

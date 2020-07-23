@@ -1,6 +1,7 @@
 ﻿namespace MindLink.Recruitment.MyChat.ConversationFilters
 {
     using System;
+
     using MindLink.Recruitment.MyChat.ConversationData;
 
     /// <summary>

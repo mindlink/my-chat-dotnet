@@ -1,6 +1,7 @@
 ﻿namespace MindLink.Recruitment.MyChat.CommandLineParsing
 {
     using System.Collections.Generic;
+
     using MindLink.Recruitment.MyChat.ConversationFilters;
 
     /// <summary>

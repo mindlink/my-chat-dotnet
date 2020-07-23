@@ -1,4 +1,4 @@
-﻿namespace MindLink.Recruitment.MyChat.Tests
+﻿namespace MindLink.Recruitment.MyChat.Tests.Unit
 {
     using NUnit.Framework;
     using System;

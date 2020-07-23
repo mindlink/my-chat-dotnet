@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
+
     using MindLink.Recruitment.MyChat.ConversationData;
     using MindLink.Recruitment.MyChat.CommandLineParsing;
 
@@ -12,6 +13,10 @@
     /// </summary>
     public sealed class ConversationReader : IConversationReader
     {
+        private IList<Message> messages;
+        private string line;
+        private string username;
+
         /// <summary>
         /// Initialises a new instance of the <see cref="ConversationReader"/> class.
         /// </summary>
@@ -25,20 +30,8 @@
         /// <param name="configuration">
         /// The conversation configuration object
         /// </param>
-        /// <exception cref="FileNotFoundException">
-        /// Thrown when the configuration input file can not be found.
-        /// </exception>
-        /// <exception cref="DirectoryNotFoundException">
+        /// <exception cref="ArgumentException">
         /// Thrown when the configuration input file path is invalid.
-        /// </exception>
-        /// <exception cref="EndOfStreamException">
-        /// Thrown when attempting to read the input file past the end of stream.
-        /// </exception>
-        /// <exception cref="PathTooLongException">
-        /// Thrown when the configuration input file path is to long.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if the configuration input file path is not set.
         /// </exception>
         public Conversation ReadConversation(ConversationConfig configuration)
         {
@@ -48,33 +41,11 @@
                     Encoding.ASCII);
 
                 string conversationName = reader.ReadLine();
-                IList<Message> messages = new List<Message>();
-                IList<Message> filteredMessages = new List<Message>();
-                string username = string.Empty;
-
-                string line;
+                messages = new List<Message>();
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    string[] split = line.Split(' ');
-                    string timestamp = split[0];
-                    username = split[1];
-
-                    string content = string.Empty;
-
-                    // Populate content with message body
-                    for (int i = 0; i < split.Length - 2; i++)
-                    {
-                        if (i != 0)
-                            content += " ";
-
-                        string word = split[i + 2];
-
-                        content += word;
-                    }
-
-                    Message message = new Message { Timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(timestamp)), SenderId = username, Content = content };
-                    messages.Add(message);
+                    ReadMessage();
                 }
 
                 Conversation conversation = new Conversation { Name = conversationName, Messages = messages };
@@ -96,6 +67,30 @@
             {
                 throw new ArgumentException("Configuration input file path must not be null", e);
             }
+        }
+
+        /// <summary>
+        /// Helper method to read a single line from input path into a <see cref="Message"/> object.
+        /// </summary>
+        private void ReadMessage()
+        {
+            string[] split = line.Split(' ');
+            string timestamp = split[0];
+            username = split[1];
+            string content = string.Empty;
+
+            for (int i = 0; i < split.Length - 2; i++)
+            {
+                if (i != 0)
+                    content += " ";
+
+                string word = split[i + 2];
+
+                content += word;
+            }
+
+            Message message = new Message { Timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(timestamp)), SenderId = username, Content = content };
+            messages.Add(message);
         }
     }
 }

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
     using MindLink.Recruitment.MyChat.ConversationData;
 
     /// <summary>
@@ -34,8 +35,8 @@
         /// <param name="conversation">
         /// The conversation object that the report will be written to.
         /// </param>
-        /// <exception cref="NullReferenceException">
-        /// Thrown when the conversation argument hass Messages are null.
+        /// <exception cref="ArgumentException">
+        /// Thrown when the conversation argument Messages is null.
         /// </exception>
         public IDictionary<string, int> Generate(Conversation conversation)
         {
@@ -54,7 +55,22 @@
             }           
 
             userActivity = userActivity.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+         
+            if (conversation.Messages.Count() > 0)
+            {
+                CalculateUserRankings();
+                CalculateTopUser();
+            }          
+            conversation.Report = report;
 
+            return userActivity;
+        }
+
+        /// <summary>
+        /// Helper method for generating user rankings
+        /// </summary>
+        private void CalculateUserRankings()
+        {
             foreach (string user in userActivity.Keys)
             {
                 UserActivityRanking userRank = new UserActivityRanking();
@@ -62,17 +78,10 @@
                 userRank.MessageCount = userActivity[user];
                 userActivityRanking.Add(userRank);
             }
-
-            if (conversation.Messages.Count() > 0)
-                CalculateTopUser();
-
-            conversation.Report = report;
-
-            return userActivity;
         }
 
         /// <summary>
-        /// Calculates the top user based on message activity.
+        /// Helper method for populating the <see cref="Report"/> with the top user.
         /// </summary>
         private void CalculateTopUser()
         {

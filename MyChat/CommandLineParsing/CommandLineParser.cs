@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+
     using MindLink.Recruitment.MyChat.ConversationFilters;
 
     /// <summary>
@@ -10,6 +11,7 @@
     public sealed class CommandLineParser : ICommandLineParser
     {
         private ConversationConfig config;
+        private IMessageFilter filter;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="CommandLineParser"/> class.
@@ -25,6 +27,9 @@
         /// <param name="arguments">
         /// The command line arguments.
         /// </param>
+        /// /// <exception cref="ArgumentException">
+        /// Thrown if input and/or output files paths are not found.
+        /// </exception>
         public ConversationConfig ParseCommandLineArguments(string[] arguments)
         {
             try
@@ -37,17 +42,29 @@
                 throw new ArgumentException("Input and output file must be specified", e);
             }
 
+            if (arguments.Length > 2)
+                BuildFilters(arguments);
+
+            return config;
+        }
+
+        /// <summary>
+        /// Helper method for building and applying filters to the <see cref="ConversationConfig"/> object
+        /// </summary>
+        /// <param name="arguments"></param>
+        private void BuildFilters(string[] arguments)
+        {
             for (int i = 2; i < arguments.Length; i++)
             {
                 switch (arguments[i])
                 {
                     case "-uf":
-                        IMessageFilter userFilter = new UserFilter(arguments[i + 1]);
-                        config.Filters.Add(userFilter);
+                        filter = new UserFilter(arguments[i + 1]);
+                        config.Filters.Add(filter);
                         break;
                     case "-kf":
-                        IMessageFilter keywordFilter = new KeywordFilter(arguments[i + 1]);
-                        config.Filters.Add(keywordFilter);
+                        filter = new KeywordFilter(arguments[i + 1]);
+                        config.Filters.Add(filter);
                         break;
                     case "-kb":
                         string[] split = arguments[i + 1].Split(',');
@@ -56,23 +73,22 @@
                         {
                             blockedWordList.Add(blockedWord);
                         }
-                        IMessageFilter blacklistFilter = new BlacklistFilter(blockedWordList.ToArray());
-                        config.Filters.Add(blacklistFilter);
+                        filter = new BlacklistFilter(blockedWordList.ToArray());
+                        config.Filters.Add(filter);
                         break;
                     case "-hcc":
-                        IMessageFilter ccFilter = new CreditCardFilter();
-                        config.Filters.Add(ccFilter);
+                        filter = new CreditCardFilter();
+                        config.Filters.Add(filter);
                         break;
                     case "-hpn":
-                        IMessageFilter pnFilter = new PhoneNumberFilter();
-                        config.Filters.Add(pnFilter);
+                        filter = new PhoneNumberFilter();
+                        config.Filters.Add(filter);
                         break;
                     case "-ou":
                         config.ObfuscateUserID = true;
                         break;
                 }
             }
-            return config;
         }
     }
 }

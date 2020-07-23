@@ -4,6 +4,7 @@
     using System;
     using System.IO;
     using System.Security;
+
     using MindLink.Recruitment.MyChat.ConversationData;
 
     /// <summary>
@@ -21,10 +22,7 @@
         /// The output file path.
         /// </param>
         /// <exception cref="ArgumentException">
-        /// Thrown when there is a problem with the <paramref name="outputFilePath"/>.
-        /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something else bad happens.
+        /// Thrown when <paramref name="outputFilePath"/> is invalid.
         /// </exception>
         public void WriteConversation(Conversation conversation, string outputFilePath)
         {

@@ -1,4 +1,4 @@
-﻿namespace MindLink.Recruitment.MyChat.Tests
+﻿namespace MindLink.Recruitment.MyChat.Tests.Integration
 {
     using Newtonsoft.Json;
     using NUnit.Framework;

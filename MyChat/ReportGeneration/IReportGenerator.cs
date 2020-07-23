@@ -1,6 +1,7 @@
 ﻿namespace MindLink.Recruitment.MyChat.ReportGeneration
 {
     using System.Collections.Generic;
+
     using MindLink.Recruitment.MyChat.ConversationData;
 
     /// <summary>

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
     using MindLink.Recruitment.MyChat.ConversationData;
     using MindLink.Recruitment.MyChat.CommandLineParsing;
 

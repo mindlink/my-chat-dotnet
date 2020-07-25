@@ -19,12 +19,43 @@
         /// <param name="args">
         /// The command line arguments.
         /// </param>
+      
+      
         static void Main(string[] args)
         {
+            
             var conversationExporter = new ConversationExporter();
             ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
+            /// <summary>
+            /// The conversation is read, input file is specified as chat.txt
+            /// </summary>
+            /// <param name="c">
+            /// the returned object from ReadConversation c is used in WriteConversation
+            /// </param>
+            ///  /// <summary>
+            /// The conversation is exported as json
+            /// </summary>
+            conversationExporter.ReadConversation(configuration.inputFilePath);
+           Conversation c = conversationExporter.ReadConversation(configuration.inputFilePath);
+            conversationExporter.WriteConversation(c, configuration.outputFilePath);
             conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+
+            /// <summary>
+            /// My tries to understand the code and how to use WriteConversation method as well as input conversation, to be deleted in next commit
+            /// </summary>
+
+            // DateTimeOffset dateOffset1;
+            //   dateOffset1 = DateTimeOffset.Now;
+            // Message m = new Message(dateOffset1, "x","y");
+            // List<Message> list = new List<Message>();
+            // list.Add(m);
+            // IEnumerable<Message> en = list;
+            // Conversation c = new Conversation("name",en);
+            //conversationExporter.WriteConversation(new Conversation(ReadConversation(configuration.inputFilePath), configuration.outputFilePath);
+            //conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            // configuration.inputFilePath = @"C:\Users\UseR\source\repos\Chat\searchuser.txt";
+            //Directory.GetCurrentDirectory() + "netcoreapp3.1"+ "chat.txt";
         }
 
         /// <summary>
@@ -44,8 +75,9 @@
         /// </exception>
         public void ExportConversation(string inputFilePath, string outputFilePath)
         {
+           
             Conversation conversation = this.ReadConversation(inputFilePath);
-
+            
             this.WriteConversation(conversation, outputFilePath);
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
@@ -70,6 +102,7 @@
         {
             try
             {
+                
                 var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
                     Encoding.ASCII);
 
@@ -84,8 +117,13 @@
 
                     messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
                 }
-
-                return new Conversation(conversationName, messages);
+                
+                
+                //Conversation x = new Conversation(conversationName, messages);
+                //Console.WriteLine(x.messages);
+                //Console.ReadLine();
+                //return x;
+                 return  new Conversation(conversationName, messages);
             }
             catch (FileNotFoundException)
             {

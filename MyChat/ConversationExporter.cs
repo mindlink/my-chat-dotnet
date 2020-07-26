@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Security;
     using System.Text;
+    using System.Text.RegularExpressions;
     using MindLink.Recruitment.MyChat;
     using Newtonsoft.Json;
 
@@ -102,27 +104,65 @@
         {
             try
             {
+               
+              var messages = new List<Message>();
+                string[] linez = File.ReadAllLines(inputFilePath, Encoding.UTF8);
+                int c = linez.Count();
+              
+                int xa = 1;
+                string conversationName = linez[0];
+              
+                    int j = xa++;
+                    for(int k=1; k<linez.Length; k++)
+                    {
+                        string splitLines = linez[k];
+                        string[] splitoL = splitLines.Split(' ');
+                        int countSpaces = splitLines.Count(Char.IsWhiteSpace);
+                   
+                    for (int i = 4; i <= countSpaces; i++)
+                    {
+                            string x = string.Concat(splitoL[countSpaces - 2]," ",splitoL[countSpaces - 1]," ",splitoL[countSpaces]);
+                             
+                            messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(splitoL[0])), splitoL[1], x));
+                    }
+                  
                 
-                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
-                    Encoding.ASCII);
+             //tried string builder
 
-                string conversationName = reader.ReadLine();
-                var messages = new List<Message>();
+                //while ((line = reader.ReadLine()) != null)
+                //{
+                //    string[] splito = line.Split(' ');
+                //    StringBuilder sb = new StringBuilder();
+                //  //  string x = sb.Append(splito[2], splito[3]);
+                        
 
-                string line;
+                //        Console.WriteLine(splito[0]);
 
-                while ((line = reader.ReadLine()) != null)
-                {
-                    var split = line.Split(' ');
+                //    }
+                   
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
-                }
-                
-                
-                //Conversation x = new Conversation(conversationName, messages);
-                //Console.WriteLine(x.messages);
-                //Console.ReadLine();
-                //return x;
+                    //try regex for space and end lines
+                    //string[] split = Regex.Split(line, @"(?<=[\.!\?])\s+");
+                   
+                       //string[] split = line.Split(' ');
+                    // StringSplitOptions.RemoveEmptyEntries);
+                 //   Console.WriteLine("***");
+                 //   Console.WriteLine(split[2] + split[3]);
+                  //  Console.WriteLine(split[2].Concat(split[3]);
+                 
+
+                        // }
+                        //string x = split[i];
+                        //Console.WriteLine();
+
+                        // Console.WriteLine(messages);
+
+                      
+
+                    }
+
+                   
+               
                  return  new Conversation(conversationName, messages);
             }
             catch (FileNotFoundException)

@@ -32,9 +32,9 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var messages = savedConversation.messages.ToList();
 
-            // Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
-            //  Assert.That(messages[0].senderId, Is.EqualTo("bob"));
-            // Assert.That(messages[0].content, Is.EqualTo("Hello there!"));
+            //    // Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
+            //    //  Assert.That(messages[0].senderId, Is.EqualTo("bob"));
+            //    // Assert.That(messages[0].content, Is.EqualTo("Hello there!"));
 
             Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470905)));
             Assert.That(messages[0].senderId, Is.EqualTo("mike"));
@@ -59,11 +59,11 @@ namespace MindLink.Recruitment.MyChat.Tests
             //   Assert.That(messages[6].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470915)));
             //   Assert.That(messages[6].senderId, Is.EqualTo("angus"));
             // //  Assert.That(messages[6].content, Is.EqualTo("YES! I'm the head pie eater there..."));
-        }
-        /// <summary>
-        /// Tests that finding the user works.
-        /// </summary>
-         [Test]
+            //  }
+            /// <summary>
+            /// Tests that finding the user works.
+            /// </summary>
+             [Test]
         public void FindUser()
         {
             var serializedConversation = new StreamReader(new FileStream("export.txt", FileMode.Open)).ReadToEnd();
@@ -93,6 +93,37 @@ namespace MindLink.Recruitment.MyChat.Tests
                 //assert exceptions -add tests
 
             }
+        }
+        /// <summary>
+        /// Tests that the command-line word s in the conversation.
+        /// </summary>
+
+        [Test]
+       public void SearchWord()
+        {
+            var serializedConversation = new StreamReader(new FileStream("export.txt", FileMode.Open)).ReadToEnd();
+
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+            string randomWord = "pie";
+            string wordNotThere = "lol";
+            var messageList = from x in savedConversation.messages
+                              where x.content.Contains(randomWord)
+                              select x;
+            // StringBuilder sb = new StringBuilder();
+            foreach (Message x in messageList)
+            {
+                if (x.content.Contains(randomWord))
+                {
+                    Assert.That(x.content, Is.EqualTo("you like pie?"));
+                    Assert.That(x.content, Is.EqualTo("buying some pie?"));
+                }
+                if (x.content.Contains(wordNotThere))
+                {
+                    Assert.AreNotEqual(x.content, "how are you");
+                }
+            }
+          
+           
         }
     }
 }

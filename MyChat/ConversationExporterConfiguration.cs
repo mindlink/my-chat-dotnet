@@ -17,6 +17,7 @@ namespace MindLink.Recruitment.MyChat
         /// </summary>
         public string outputFilePath;
         public string user;
+        public string word;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
@@ -33,11 +34,12 @@ namespace MindLink.Recruitment.MyChat
         /// <exception cref="ArgumentException">
         /// Thrown when any of the given arguments is empty.
         /// </exception>
-        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath,string user)
+        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath,string user, string word)
         {
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
             this.user = user;
+            this.word = word;
         }
     }
 }

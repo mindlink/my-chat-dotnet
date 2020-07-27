@@ -44,7 +44,8 @@
             conversationExporter.WriteConversation(c, configuration.outputFilePath);
             conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
             conversationExporter.FindUser(c, configuration.outputFilePath, configuration.user);
-           
+            conversationExporter.SearchWord(c,configuration.user);
+
         }
 
         /// <summary>
@@ -130,6 +131,10 @@
             {
                 throw new Exception("Something went wrong in the IO.");
             }
+            catch(System.IndexOutOfRangeException)
+            {
+                throw new ArgumentException("Outside the bounds of the array");
+            }
         }
 
         /// <summary>
@@ -179,25 +184,25 @@
             {
                 throw new Exception("Something went wrong in the IO.");
             }
-        
-       
-            }
+
+
+        }
         /// <summary>
         /// Helper method to write the <paramref name="userFind "/> as JSON to <paramref name="path"/>.
         /// </summary>
         /// <param name="Userfind method">
-        /// The conversation.
+        /// The  find conversation that has been written by  the user method.
         /// </param>
         /// <param name="path">
         /// The output file path - new folder called Userconversation.txt.
         /// </param>
         /// <exception cref="ArgumentException">
-        /// Thrown when there is a problem with the <paramref name="outputFilePath"/>.
+        /// Thrown when there is a problem with the <paramref name="path"/>.
         /// </exception>
         /// <exception cref="Exception">
         /// Thrown when something else bad happens.
         /// </exception>
-        public void FindUser(Conversation conversation, string outputFilePath,string user)
+        public void FindUser(Conversation conversation, string outputFilePath, string user)
         {
             try
             {
@@ -223,8 +228,6 @@
                         string path = Environment.CurrentDirectory + "\\" + "userConversation.txt";
                         //write to file
                         System.IO.File.AppendAllText(path, convertToJson.ToString());
-
-
                     }
                     else
                     {
@@ -236,7 +239,7 @@
             {
                 throw new ArgumentException("Path invalid.");
             }
-            catch (FormatException )
+            catch (FormatException)
 
             {
 
@@ -244,6 +247,68 @@
 
             }
 
+        }
+        /// <summary>
+        /// Helper method to write the <paramref name="SearchWord "/> as JSON to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="SearchWord method">
+        /// Find a conversation that has the word specified as a command -line argument
+        /// </param>
+        /// <param name="path">
+        /// The output file path - new folder called Userconversation.txt.
+        /// </param>
+        /// <exception cref="ArgumentException">
+        /// Thrown when there is a problem with the <paramref name="path"/>.
+        /// </exception>
+        /// <exception cref="Exception">
+        /// Thrown when something else bad happens.
+        /// </exception>
+        public void SearchWord(Conversation conversation, string word)
+        {
+            try
+            {
+                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
+            //deserialise object
+            Conversation deserialisedChat = JsonConvert.DeserializeObject<Conversation>(serialized);
+                
+            var messageList = from x in deserialisedChat.messages
+                              where x.content.Contains(word)
+                              select x;
+            StringBuilder sb = new StringBuilder();
+                foreach (Message x in messageList)
+                {
+                    if (x.content.Contains(word))
+                        {
+                        sb.Append("UserName: " + x.senderId + "Message: " + x.content);
+                        //Console.WriteLine(sb2.ToString());
+                        JObject convertWordToJson =
+                      new JObject(
+                          new JProperty("Result",
+                          new JObject(
+                               new JProperty("User", x.senderId),
+                                  new JProperty("Message", x.content))));
+                        string path = Environment.CurrentDirectory + "\\" + "userConversation.txt";
+                        System.IO.File.AppendAllText(path, convertWordToJson.ToString());
+                    }
+                    else
+                    {
+                        Console.WriteLine(" The word  is not found in any conversation");
+                    }
+                }
+                
+            }
+            catch (DirectoryNotFoundException)
+            {
+                throw new ArgumentException("Path invalid.");
+            }
+           catch( ArgumentException)
+            {
+                Console.WriteLine("Wrong arguments are provided,Please check your order of argumnets");
+            }
+           catch(NullReferenceException)
+            {
+                Console.WriteLine(" A null object is being referenced");
+            }
         }
     }
 }

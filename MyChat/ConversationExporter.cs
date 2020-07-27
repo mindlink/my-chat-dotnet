@@ -95,35 +95,35 @@
             //try
             //{
 
-                var messages = new List<Message>();
-                string[] linez = File.ReadAllLines(inputFilePath, Encoding.UTF8);
-                int c = linez.Count();
+            var messages = new List<Message>();
+            string[] linez = File.ReadAllLines(inputFilePath, Encoding.UTF8);
+            int c = linez.Count();
 
-                int xa = 1;
-                string conversationName = linez[0];
+            int xa = 1;
+            string conversationName = linez[0];
 
-                int j = xa++;
-                for (int k = 1; k < linez.Length; k++)
+            int j = xa++;
+            for (int k = 1; k < linez.Length; k++)
+            {
+                string splitLines = linez[k];
+                string[] splitoL = splitLines.Split(' ');
+                int countSpaces = splitLines.Count(Char.IsWhiteSpace);
+
+                for (int i = 4; i <= countSpaces; i++)
                 {
-                    string splitLines = linez[k];
-                    string[] splitoL = splitLines.Split(' ');
-                    int countSpaces = splitLines.Count(Char.IsWhiteSpace);
+                    string x = string.Concat(splitoL[countSpaces - 2], " ", splitoL[countSpaces - 1], " ", splitoL[countSpaces]);
 
-                    for (int i = 4; i <= countSpaces; i++)
-                    {
-                        string x = string.Concat(splitoL[countSpaces - 2], " ", splitoL[countSpaces - 1], " ", splitoL[countSpaces]);
-
-                        messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(splitoL[0])), splitoL[1], x));
-                    }
-
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(splitoL[0])), splitoL[1], x));
                 }
 
-
-                return new Conversation(conversationName, messages); //not recognised by the method if try/catch is on 
-            //}
+            }
 
 
-            
+            return new Conversation(conversationName, messages); //not recognised by the method if try/catch is on 
+                                                                 //}
+
+
+
 
             //catch (FileNotFoundException)
             //{
@@ -152,7 +152,7 @@
             //}
             //return new Conversation(conversationName, messages);
         }
-        
+
 
         /// <summary>
         /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
@@ -360,7 +360,7 @@
             {
                 Console.WriteLine("Trying to access a private or protected field");
             }
-            catch(EndOfStreamException)
+            catch (EndOfStreamException)
             {
                 Console.WriteLine("Trying to read past the ecnd of the file");
             }
@@ -445,11 +445,11 @@
             {
                 Console.WriteLine("File is not found");
             }
-           catch(FieldAccessException)
+            catch (FieldAccessException)
             {
                 Console.WriteLine("Trying to access a private or protected field");
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
                 Console.WriteLine("Trying to reference a null object");
             }
@@ -457,12 +457,70 @@
             {
                 Console.WriteLine("Trying to read past the ecnd of the file");
             }
-            catch(FileLoadException)
+            catch (FileLoadException)
             {
                 Console.WriteLine("File cannot load");
             }
 
         }
+
+        /// <summary> needs more work
+        /// Helper method to write the <paramref name=RedactCard "/>  to <paramref name="RedactConversationPath"/>.
+        /// </summary>
+        /// <param name="RedactCard method">
+        /// Find a card/phone number in teh conversationt and redact it
+        /// </param>
+        /// <param name="path">
+        /// The output file path - new file called redactConversation.txt.
+        /// </param>
+        /// <exception cref="ArgumentException">
+        /// Thrown when there is a problem with the <paramref name="path"/>.
+        /// </exception>
+        /// <exception cref="Exception">
+        /// Thrown when something else bad happens.
+        /// </exception>
+
+        //public void RedactCard(Conversation conversation, string blacklistPath, string redactedConversationPath) - not fully working
+        //{
+        //    try
+        //    {
+        //        //bool flag = true;
+
+        //        ////source for phone number https://stackoverflow.com/questions/25155970/validating-uk-phone-number-regex-c
+        //        //var patterns = new string[] { @"\d{4} \d{4} \d{4} \d{4}", @"\d{16}", @"\d{4}-\d{4}-\d{4}-\d{4}", @"^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$" };
+        //        //var rgPattern = new Regex(string.Join("|", patterns), RegexOptions.IgnoreCase);
+
+        //        var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
+        //        //deserialise object
+        //        Conversation deserialisedChat = JsonConvert.DeserializeObject<Conversation>(serialized);
+        //        //    MatchCollection creditCard = rgPattern.Matches(args[6]);
+        //        //    for (int count = 0; count < creditCard.Count; count++)
+        //        //    {
+
+        //        //        foreach (var file in deserialisedChat)
+        //        //        {
+        //        //            var list4 = from y in seserialisedChat
+
+        //        //                        select y.messages;
+        //        //            if (rgPattern.IsMatch(list4.ToString()))
+        //        //            {
+
+        //        //                Console.WriteLine("loooo");
+        //        //            }
+        //        //            //var listRedacted = from k in RedactCardList
+        //        //            //                   where k.content
+        //        //            //                   select k;
+
+        //        //            //                                   select y;
+        //        //            // Console.WriteLine(creditCard[count].Value);
+        //        //        }
+        //    }
+        //    catch (DirectoryNotFoundException)
+        //    {
+        //        throw new ArgumentException("Path invalid.");
+        //    }
+
+        //}
     }
 }
     

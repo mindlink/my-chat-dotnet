@@ -94,35 +94,106 @@
         {
             //try
             //{
+                var messages = new List<Message>();
+                string[] linez = File.ReadAllLines(inputFilePath, Encoding.UTF8);
+                int c = linez.Count();
 
-            var messages = new List<Message>();
-            string[] linez = File.ReadAllLines(inputFilePath, Encoding.UTF8);
-            int c = linez.Count();
-
-            int xa = 1;
-            string conversationName = linez[0];
-
-            int j = xa++;
-            for (int k = 1; k < linez.Length; k++)
-            {
-                string splitLines = linez[k];
-                string[] splitoL = splitLines.Split(' ');
-                int countSpaces = splitLines.Count(Char.IsWhiteSpace);
-
-                for (int i = 4; i <= countSpaces; i++)
+                int xa = 1;
+                string conversationName = linez[0];
+                foreach (var line in linez)
                 {
-                    string x = string.Concat(splitoL[countSpaces - 2], " ", splitoL[countSpaces - 1], " ", splitoL[countSpaces]);
+                    var split = line.Split(' ');
+                    string rx = @"\d{10} \w{2,10}\s(.*)";
+                    MatchCollection matches = Regex.Matches(line, rx);
+                    foreach (Match match in matches)
+                    {
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(splitoL[0])), splitoL[1], x));
+                        Console.WriteLine(match.Groups[1].Value);
+                        messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], match.Groups[1].Value));
+                    }
+
                 }
+                //not working try - to be deleted next commit
 
-            }
+                //int j = xa++;
+                //for (int y = 1; y < linez.Length; y++)
+                //{
+                //    string splitLines = linez[y];
+                //    string[] splitoL = splitLines.Split(' ');
+                //    int countSpaces = splitLines.Count(Char.IsWhiteSpace);
+
+                //    for (int i = 4; i <= countSpaces; i++)
+                //    {
+                //        string xz = string.Concat(splitoL[countSpaces - 2], " ", splitoL[countSpaces - 1], " ", splitoL[countSpaces]);
+
+                //        messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(splitoL[0])), splitoL[1], xz));
+                //    }
+
+                //}
 
 
-            return new Conversation(conversationName, messages); //not recognised by the method if try/catch is on 
-                                                                 //}
+                //try
+                //{
 
 
+
+
+
+                //create array -each item is a message for each new line 
+                //string[] messagesArray = new string[7];
+
+                //  //for line 1, split by space,count number of items in the array, join the items taht are message in a string.Add teh string to the array
+                //  string[] split = linez[1].Split(' ');
+                //  int x = split.Count();
+
+
+                //for (int k = 3; k <= x; k++)
+                //{
+
+
+                //    string h = String.Join(split[k - 1], split[k]);
+                //    messagesArray[0] = h;
+
+
+                //}
+
+                //string[] splitTwo = linez[2].Split(' ');
+                //int x2 = splitTwo.Count();
+                //for (int k1 = 3; k1 <= x2; k1++)
+                //{
+                //    string h1 = String.Join(" ", splitTwo[k1 - 1]);
+                //    messagesArray[1] = h1;
+                //}
+                //string[] splitThree = linez[3].Split(' ');
+                //int x3 = splitThree.Count();
+                //for (int k2 = 3; k2 <= x3; k2++)
+                //{
+                //    string h2 = String.Join(" ", splitThree[k2 - 1]);
+
+                //    messagesArray[2] = h2;
+                //}
+
+                //string[] splitFive = linez[5].Split(' ');
+                //int x4 = splitFive.Count();
+                //for (int k3 = 3; k3 <= x4; k3++)
+                //{
+                //    string h3 = String.Join(" ", splitFive[k3 - 1]);
+
+                //    messagesArray[3] = h3;
+                //}
+                //string[] splitSix = linez[6].Split(' ');
+                //int x5 = splitSix.Count();
+                //for (int k4 = 3; k4 <= x5; k4++)
+                //{
+                //    string h4 = String.Join(" ", splitSix[k4 - 1]);
+
+
+                return new Conversation(conversationName, messages); //not recognised by the method if try/catch is on 
+
+           // }
+
+
+           
 
 
             //catch (FileNotFoundException)
@@ -150,141 +221,142 @@
             //{
             //    Console.WriteLine("File cannot load");
             //}
-            //return new Conversation(conversationName, messages);
+
+        }
+
+
+/// <summary>
+/// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
+/// </summary>
+/// <param name="conversation">
+/// The conversation.
+/// </param>
+/// <param name="outputFilePath">
+/// The output file path.
+/// </param>
+/// <exception cref="ArgumentException">
+/// Thrown when there is a problem with the <paramref name="outputFilePath"/>.
+/// </exception>
+/// <exception cref="Exception">
+/// Thrown when something else bad happens.
+/// </exception>
+public void WriteConversation(Conversation conversation, string outputFilePath)
+    {
+        try
+        {
+            var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
+
+            var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
+            //Conversation deserialisedChat = JsonConvert.DeserializeObject<Conversation>(serialized);
+
+            //Console.WriteLine(deserialisedChat.messages);
+            //foreach (var value in deserialisedChat.messages)
+            //{
+            //    Console.WriteLine(value.senderId);
+            //}
+            writer.Write(serialized);
+
+            writer.Flush();
+
+            writer.Close();
+        }
+        catch (SecurityException)
+        {
+            throw new ArgumentException("No permission to file.");
+        }
+        catch (DirectoryNotFoundException)
+        {
+            throw new ArgumentException("Path invalid.");
+        }
+        catch (IOException)
+        {
+            throw new Exception("Something went wrong in the IO.");
         }
 
 
-        /// <summary>
-        /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
-        /// </summary>
-        /// <param name="conversation">
-        /// The conversation.
-        /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// Thrown when there is a problem with the <paramref name="outputFilePath"/>.
-        /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something else bad happens.
-        /// </exception>
-        public void WriteConversation(Conversation conversation, string outputFilePath)
+    }
+    /// <summary>
+    /// Helper method to write the <paramref name="userFind "/> as JSON to <paramref name="path"/>.
+    /// </summary>
+    /// <param name="Userfind method">
+    /// The  find conversation that has been written by  the user method.
+    /// </param>
+    /// <param name="path">
+    /// The output file path - new folder called Userconversation.txt.
+    /// </param>
+    /// <exception cref="ArgumentException">
+    /// Thrown when there is a problem with the <paramref name="path"/>.
+    /// </exception>
+    /// <exception cref="Exception">
+    /// Thrown when something else bad happens.
+    /// </exception>
+    public void FindUser(Conversation conversation, string outputFilePath, string user)
+    {
+        try
         {
-            try
+            var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
+            //deserialise object
+            Conversation deserialisedChat = JsonConvert.DeserializeObject<Conversation>(serialized);
+            //loop through messages
+            foreach (var value in deserialisedChat.messages)
             {
-                var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
-
-                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
-                //Conversation deserialisedChat = JsonConvert.DeserializeObject<Conversation>(serialized);
-
-                //Console.WriteLine(deserialisedChat.messages);
-                //foreach (var value in deserialisedChat.messages)
-                //{
-                //    Console.WriteLine(value.senderId);
-                //}
-                writer.Write(serialized);
-
-                writer.Flush();
-
-                writer.Close();
-            }
-            catch (SecurityException)
-            {
-                throw new ArgumentException("No permission to file.");
-            }
-            catch (DirectoryNotFoundException)
-            {
-                throw new ArgumentException("Path invalid.");
-            }
-            catch (IOException)
-            {
-                throw new Exception("Something went wrong in the IO.");
-            }
-
-
-        }
-        /// <summary>
-        /// Helper method to write the <paramref name="userFind "/> as JSON to <paramref name="path"/>.
-        /// </summary>
-        /// <param name="Userfind method">
-        /// The  find conversation that has been written by  the user method.
-        /// </param>
-        /// <param name="path">
-        /// The output file path - new folder called Userconversation.txt.
-        /// </param>
-        /// <exception cref="ArgumentException">
-        /// Thrown when there is a problem with the <paramref name="path"/>.
-        /// </exception>
-        /// <exception cref="Exception">
-        /// Thrown when something else bad happens.
-        /// </exception>
-        public void FindUser(Conversation conversation, string outputFilePath, string user)
-        {
-            try
-            {
-                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
-                //deserialise object
-                Conversation deserialisedChat = JsonConvert.DeserializeObject<Conversation>(serialized);
-                //loop through messages
-                foreach (var value in deserialisedChat.messages)
+                //if the sender is the same as teh command line argument,convert to json,write the result to file - values are multiplied because the previous method Read is not  showing everything(to be redacted)
+                if (value.senderId == user)
                 {
-                    //if the sender is the same as teh command line argument,convert to json,write the result to file - values are multiplied because the previous method Read is not  showing everything(to be redacted)
-                    if (value.senderId == user)
-                    {
-                        var result = value.content;
+                    var result = value.content;
 
-                        //convert to json
-                        JObject convertToJson =
+                    //convert to json
+                    JObject convertToJson =
+                                                 new JObject(
+                                                     new JProperty("Result",
                                                      new JObject(
-                                                         new JProperty("Result",
-                                                         new JObject(
-                                                              new JProperty("User", value.senderId),
-                                                                 new JProperty("Message", value.content))));
+                                                          new JProperty("User", value.senderId),
+                                                             new JProperty("Message", value.content))));
 
-                        string path = Environment.CurrentDirectory + "\\" + "userConversation.txt";
-                        //write to file
-                        System.IO.File.AppendAllText(path, convertToJson.ToString());
-                    }
-                    else
-                    {
-                        Console.WriteLine("a user has not been found");
-                    }
+                    string path = Environment.CurrentDirectory + "\\" + "userConversation.txt";
+                    //write to file
+                    System.IO.File.AppendAllText(path, convertToJson.ToString());
+                }
+                else
+                {
+                    Console.WriteLine("a user has not been found");
                 }
             }
-            catch (DirectoryNotFoundException)
-            {
-                throw new ArgumentException("Path invalid.");
-            }
-            catch (FormatException)
+        }
+        catch (DirectoryNotFoundException)
+        {
+            throw new ArgumentException("Path invalid.");
+        }
+        catch (FormatException)
 
-            {
+        {
 
-                throw new ArgumentException("String for user was not in the correct format");
-
-            }
-            catch (SecurityException)
-            {
-                throw new ArgumentException("No permission to file.");
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("File is not found");
-            }
-            catch (FieldAccessException)
-            {
-                Console.WriteLine("Trying to access a private or protected field");
-            }
-            catch (EndOfStreamException)
-            {
-                Console.WriteLine("Trying to read past the ecnd of the file");
-            }
-            catch (FileLoadException)
-            {
-                Console.WriteLine("File cannot load");
-            }
+            throw new ArgumentException("String for user was not in the correct format");
 
         }
+        catch (SecurityException)
+        {
+            throw new ArgumentException("No permission to file.");
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine("File is not found");
+        }
+        catch (FieldAccessException)
+        {
+            Console.WriteLine("Trying to access a private or protected field");
+        }
+        catch (EndOfStreamException)
+        {
+            Console.WriteLine("Trying to read past the ecnd of the file");
+        }
+        catch (FileLoadException)
+        {
+            Console.WriteLine("File cannot load");
+        }
+
+    }
+
         /// <summary>
         /// Helper method to write the <paramref name="SearchWord "/> as JSON to <paramref name="path"/>.
         /// </summary>

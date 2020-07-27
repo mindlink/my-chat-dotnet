@@ -16,8 +16,22 @@ namespace MindLink.Recruitment.MyChat
         /// The output file path.
         /// </summary>
         public string outputFilePath;
+
+        /// <summary>
+        /// The user that needs to be found file path.
+        /// </summary>
         public string user;
+
+        /// <summary>
+        /// The word that needs to be found file path.
+        /// </summary>
         public string word;
+
+        /// <summary>
+        /// The blacklist file path.
+        /// </summary>
+        public string blacklistPath;
+        public string redactedConversationPath;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
@@ -34,12 +48,14 @@ namespace MindLink.Recruitment.MyChat
         /// <exception cref="ArgumentException">
         /// Thrown when any of the given arguments is empty.
         /// </exception>
-        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath,string user, string word)
+        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath,string user, string word, string blacklistPath,string redactedConversationPath)
         {
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
             this.user = user;
             this.word = word;
+            this.blacklistPath = blacklistPath;
+            this.redactedConversationPath = redactedConversationPath;
         }
     }
 }

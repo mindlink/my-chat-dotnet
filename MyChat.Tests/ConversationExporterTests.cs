@@ -30,37 +30,37 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
-            Assert.That(savedConversation.name, Is.EqualTo("My Conversation"));
+            Assert.That(savedConversation.Name, Is.EqualTo("My Conversation"));
 
-            var messages = savedConversation.messages.ToList();
+            var messages = savedConversation.Messagez.ToList();
 
-            //    // Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
-            //    //  Assert.That(messages[0].senderId, Is.EqualTo("bob"));
-            //    // Assert.That(messages[0].content, Is.EqualTo("Hello there!"));
+            Assert.That(messages[0].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
+            Assert.That(messages[0].SenderId, Is.EqualTo("bob"));
+            Assert.That(messages[0].Content, Is.EqualTo("Hello there!"));
 
-            Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470905)));
-            Assert.That(messages[0].senderId, Is.EqualTo("mike"));
-            Assert.That(messages[0].content, Is.EqualTo("how are you?"));
+            Assert.That(messages[0].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470905)));
+            Assert.That(messages[0].SenderId, Is.EqualTo("mike"));
+            Assert.That(messages[0].Content, Is.EqualTo("how are you?"));
 
-            //   Assert.That(messages[2].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));
-            //   Assert.That(messages[2].senderId, Is.EqualTo("bob"));
-            //  // Assert.That(messages[2].content, Is.EqualTo("I'm good thanks, do you like pie?"));
+            Assert.That(messages[2].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));
+            Assert.That(messages[2].SenderId, Is.EqualTo("bob"));
+            Assert.That(messages[2].Content, Is.EqualTo("I'm good thanks, do you like pie?"));
 
-            //   Assert.That(messages[3].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470910)));
-            //   Assert.That(messages[3].senderId, Is.EqualTo("mike"));
-            ////   Assert.That(messages[3].content, Is.EqualTo("no, let me ask Angus..."));
+            Assert.That(messages[3].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470910)));
+            Assert.That(messages[3].SenderId, Is.EqualTo("mike"));
+            Assert.That(messages[3].Content, Is.EqualTo("no, let me ask Angus..."));
 
-            //   Assert.That(messages[4].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470912)));
-            //   Assert.That(messages[4].senderId, Is.EqualTo("angus"));
-            //  // Assert.That(messages[4].content, Is.EqualTo("Hell yes! Are we buying some pie?"));
+            Assert.That(messages[4].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470912)));
+            Assert.That(messages[4].SenderId, Is.EqualTo("angus"));
+            Assert.That(messages[4].Content, Is.EqualTo("Hell yes! Are we buying some pie?"));
 
-            //   Assert.That(messages[5].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470914)));
-            //   Assert.That(messages[5].senderId, Is.EqualTo("bob"));
-            ////   Assert.That(messages[5].content, Is.EqualTo("No, just want to know if there's anybody else in the pie society..."));
+            Assert.That(messages[5].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470914)));
+            Assert.That(messages[5].SenderId, Is.EqualTo("bob"));
+            Assert.That(messages[5].Content, Is.EqualTo("No, just want to know if there's anybody else in the pie society..."));
 
-            //   Assert.That(messages[6].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470915)));
-            //   Assert.That(messages[6].senderId, Is.EqualTo("angus"));
-            // //  Assert.That(messages[6].content, Is.EqualTo("YES! I'm the head pie eater there..."));
+            Assert.That(messages[6].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470915)));
+            Assert.That(messages[6].SenderId, Is.EqualTo("angus"));
+            Assert.That(messages[6].Content, Is.EqualTo("YES! I'm the head pie eater there..."));
         }
 
         /// <summary>
@@ -73,25 +73,19 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
             var user = "mike";
-            var random = "bob";
-            foreach (var value in savedConversation.messages)
+           
+            foreach (var value in savedConversation.Messagez)
             {
                 //if the sender is the same as teh command line argument,convert to json,write the result to file - values are multiplied because the previous method Read is not  showing everything(to be redacted)
-                if (value.senderId == user)
+                if (value.SenderId == user)
                 {
-                    var result = value.content;
-
-
-
+                    var result = value.Content;
 
                 }
-                else
-                {
-                    Console.WriteLine("a user has not been found");
-                }
-                Assert.That(value.content, Is.EqualTo("how are you?"));
+                
+                Assert.That(value.Content, Is.EqualTo("how are you?"));
 
-                Assert.AreNotEqual(value.content, "how ");
+                Assert.AreNotEqual(value.Content, "how ");
 
                 //assert exceptions -add tests
 
@@ -109,20 +103,20 @@ namespace MindLink.Recruitment.MyChat.Tests
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
             string randomWord = "pie";
             string wordNotThere = "lol";
-            var messageList = from x in savedConversation.messages
-                              where x.content.Contains(randomWord)
+            var messageList = from x in savedConversation.Messagez
+                              where x.Content.Contains(randomWord)
                               select x;
             // StringBuilder sb = new StringBuilder();
             foreach (Message x in messageList)
             {
-                if (x.content.Contains(randomWord))
+                if (x.Content.Contains(randomWord))
                 {
-                    Assert.That(x.content, Is.EqualTo("you like pie?"));
-                    Assert.That(x.content, Is.EqualTo("buying some pie?"));
+                    Assert.That(x.Content, Is.EqualTo("you like pie?"));
+                    Assert.That(x.Content, Is.EqualTo("buying some pie?"));
                 }
-                if (x.content.Contains(wordNotThere))
+                if (x.Content.Contains(wordNotThere))
                 {
-                    Assert.AreNotEqual(x.content, "how are you");
+                    Assert.AreNotEqual(x.Content, "how are you");
                 }
             }
         }
@@ -158,15 +152,15 @@ namespace MindLink.Recruitment.MyChat.Tests
             foreach (string blacklistWord in blacklist)
             {
 
-                var listRedacted = from j in savedConversation.messages
-                                   where j.content.Contains(blacklistWord)
+                var listRedacted = from j in savedConversation.Messagez
+                                   where j.Content.Contains(blacklistWord)
                                    select j;
-                Assert.That(listRedacted, Is.EqualTo("p"));
+                Assert.That(listRedacted, Is.EqualTo("pie"));
 
                 StringBuilder sb2 = new StringBuilder();
                 foreach (Message toBeRedacted in listRedacted)
                 {
-                    sb2.Append("UserName: " + toBeRedacted.senderId + "Message: " + toBeRedacted.content);
+                    sb2.Append("UserName: " + toBeRedacted.SenderId + "Message: " + toBeRedacted.Content);
 
 
                 }

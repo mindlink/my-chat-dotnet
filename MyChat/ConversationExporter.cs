@@ -22,9 +22,14 @@
         static void Main(string[] args)
         {
             var conversationExporter = new ConversationExporter();
-            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+            //ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args); //UNDO
 
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            //conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath); //UNDO
+
+            // TEST METHOD
+            conversationExporter.ExportConversation("chat.txt", "chat.json");
+
+            
         }
 
         /// <summary>
@@ -70,19 +75,20 @@
         {
             try
             {
-                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
-                    Encoding.ASCII);
+                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read), Encoding.ASCII);
 
-                string conversationName = reader.ReadLine();
                 var messages = new List<Message>();
 
-                string line;
+                string line, conversationName = reader.ReadLine();
 
                 while ((line = reader.ReadLine()) != null)
                 {
                     var split = line.Split(' ');
+                    string message = "";
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    for (int i = 2; i < split.Length; i++) message += split[i] + " ";
+
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], message.TrimEnd()));
                 }
 
                 return new Conversation(conversationName, messages);

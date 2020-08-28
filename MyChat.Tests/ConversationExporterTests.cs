@@ -1,12 +1,20 @@
-﻿using System.IO;
-using System.Linq;
-using MyChat;
-using Newtonsoft.Json;
-using NUnit.Framework;
-
-namespace MindLink.Recruitment.MyChat.Tests
+﻿namespace MindLink.Recruitment.MyChat.Tests
 {
+    using System.IO;
+    using System.Linq;
+    using Newtonsoft.Json;
+    using NUnit.Framework;
     using System;
+    using MindLink.Recruitment.MyChat;
+
+    /*
+     * TESTS
+     * Uppercase search
+     * Lowercase search
+     * None existing ID
+     * Special characters
+     * Trim End and Beginning
+     */
 
     /// <summary>
     /// Tests for the <see cref="ConversationExporter"/>.

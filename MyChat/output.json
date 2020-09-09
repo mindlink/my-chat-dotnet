@@ -2,7 +2,7 @@
   "Name": "My Conversation",
   "Messages": [
     {
-      "Content": "Hello there!",
+      "Content": "*redacted* there!",
       "Timestamp": "2015-11-25T17:01:41+00:00",
       "SenderId": "bob"
     },
@@ -12,7 +12,7 @@
       "SenderId": "mike"
     },
     {
-      "Content": "I'm good thanks, do you like pie?",
+      "Content": "I'm good thanks, do you like *redacted*",
       "Timestamp": "2015-11-25T17:01:46+00:00",
       "SenderId": "bob"
     },
@@ -22,32 +22,32 @@
       "SenderId": "mike"
     },
     {
-      "Content": "Hell yes! Are we buying some pie?",
+      "Content": "Hell yes! Are we buying some *redacted*",
       "Timestamp": "2015-11-25T17:01:52+00:00",
       "SenderId": "angus"
     },
     {
-      "Content": "No, just want to know if there's anybody else in the pie society...",
+      "Content": "No, just want to know if there's anybody else in the *redacted* society...",
       "Timestamp": "2015-11-25T17:01:54+00:00",
       "SenderId": "bob"
     },
     {
-      "Content": "YES! I'm the head pie eater there...",
+      "Content": "YES! I'm the head *redacted* eater there...",
       "Timestamp": "2015-11-25T17:01:55+00:00",
       "SenderId": "angus"
     },
     {
-      "Content": "this is a number *redacted* and so is this *redacted*",
+      "Content": "this is a number (281)356-2530 and so is this 281-342-2452",
       "Timestamp": "2015-11-25T17:01:57+00:00",
       "SenderId": "angus"
     },
     {
-      "Content": "my amex: *redacted*",
+      "Content": "my amex: 378282246310005",
       "Timestamp": "2015-11-25T17:01:57+00:00",
       "SenderId": "bob"
     },
     {
-      "Content": "my visa: *redacted* and discover: *redacted*",
+      "Content": "my visa: 4012-8888-8888-1881 and discover: 6011111111111117",
       "Timestamp": "2015-11-25T17:01:57+00:00",
       "SenderId": "angus"
     }

@@ -30,7 +30,7 @@ namespace MindLink.Recruitment.MyChat
         {
             if (arguments.Length < 2)
             {
-                throw new ArgumentException("2 or more parameters required.");
+                throw new IndexOutOfRangeException("2 or more parameters required.");
             }
             else if (arguments.Length >= 2 && arguments.Length <= 4)
             {

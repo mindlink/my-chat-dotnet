@@ -1,41 +1,55 @@
 namespace MindLink.Recruitment.MyChat
 {
     using System;
+    using System.Collections.Generic;
+    using System.IO;
 
     /// <summary>
     /// Represents the configuration for the exporter.
     /// </summary>
-    public sealed class ConversationExporterConfiguration
+    public class ConversationExporterConfiguration
     {
         /// <summary>
         /// The input file path.
         /// </summary>
-        public string inputFilePath;
+        public string InputFilePath { get; set; }
 
         /// <summary>
         /// The output file path.
         /// </summary>
-        public string outputFilePath;
+        public string OutputFilePath { get; set; }
+
+        /// <summary>
+        /// The filter word.
+        /// </summary>
+        public string Filter { get; set; }
+
+        /// <summary>
+        /// Filter by name switch.
+        /// </summary>
+        public bool FilterID { get; set; }
+
+        /// <summary>
+        /// Filter by blacklist switch.
+        /// </summary>
+        public bool Blacklist { get; set; }
+
+        /// <summary>
+        /// Check personal information.
+        /// </summary>
+        public bool PersonalNumbers { get; set; }
+
+        /// <summary>
+        /// A list of blacklisted words.
+        /// </summary>
+        public List<String> BlacklistWords;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.
         /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown when any of the given arguments is <c>null</c>.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// Thrown when any of the given arguments is empty.
-        /// </exception>
-        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath)
+        public ConversationExporterConfiguration()
         {
-            this.inputFilePath = inputFilePath;
-            this.outputFilePath = outputFilePath;
+            BlacklistWords = new List<String>();
         }
     }
 }

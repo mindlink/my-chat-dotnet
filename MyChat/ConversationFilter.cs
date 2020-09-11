@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Text.RegularExpressions;
-
 namespace MindLink.Recruitment.MyChat
 {
     /// </summary>
@@ -47,7 +46,7 @@ namespace MindLink.Recruitment.MyChat
                             messages.Remove(message);
                         }
                     }
-                    // Blacklist filter
+                    // Redact words from blacklist
                     else if (configuration.Blacklist == true)
                     {
                         var messageToList = message.Content.Split(" ");
@@ -74,6 +73,7 @@ namespace MindLink.Recruitment.MyChat
                     }
                     else if (configuration.PersonalNumbers == true)
                     {
+                        // Redact Personal information
                         var messageToList = message.Content.Split(" ");
                         for (int i = 0; i < messageToList.Length; i++)
                         {
@@ -96,6 +96,7 @@ namespace MindLink.Recruitment.MyChat
         public bool ValidateNumber(string number)
         {
             number = Regex.Replace(number, @"[^\d]", "");
+            // Each line represents a different kind of credit card
             Regex creditExpression = new Regex(@"^(?:
                                                     4[0-9]{12}(?:[0-9]{3})?|
                                                     5[1-5][0-9]{14}|6(?:011| 

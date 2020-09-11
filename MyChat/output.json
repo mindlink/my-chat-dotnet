@@ -2,7 +2,7 @@
   "Name": "My Conversation",
   "Messages": [
     {
-      "Content": "*redacted* there!",
+      "Content": "Hello there!",
       "Timestamp": "2015-11-25T17:01:41+00:00",
       "SenderId": "bob"
     },
@@ -12,7 +12,7 @@
       "SenderId": "mike"
     },
     {
-      "Content": "I'm good thanks, do you like *redacted*",
+      "Content": "I'm good thanks, do you like pie?",
       "Timestamp": "2015-11-25T17:01:46+00:00",
       "SenderId": "bob"
     },
@@ -22,17 +22,17 @@
       "SenderId": "mike"
     },
     {
-      "Content": "Hell yes! Are we buying some *redacted*",
+      "Content": "Hell yes! Are we buying some pie?",
       "Timestamp": "2015-11-25T17:01:52+00:00",
       "SenderId": "angus"
     },
     {
-      "Content": "No, just want to know if there's anybody else in the *redacted* society...",
+      "Content": "No, just want to know if there's anybody else in the pie society...",
       "Timestamp": "2015-11-25T17:01:54+00:00",
       "SenderId": "bob"
     },
     {
-      "Content": "YES! I'm the head *redacted* eater there...",
+      "Content": "YES! I'm the head pie eater there...",
       "Timestamp": "2015-11-25T17:01:55+00:00",
       "SenderId": "angus"
     },

@@ -18,7 +18,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             // Arrange
             var parser = new CLAParser();
             // Act & Assert
-            var ex = Assert.Throws<ArgumentException>(() => new CLAParser().ParseCommandLineArguments(
+            var ex = Assert.Throws<IndexOutOfRangeException>(() => new CLAParser().ParseCommandLineArguments(
                 new string[] { "a" }));
             Assert.Equal("2 or more parameters required.", ex.Message);
         }

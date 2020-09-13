@@ -14,7 +14,7 @@ namespace MindLink.Recruitment.MyChat.Tests
 
         ConversationReader reader = new ConversationReader();
         ConversationWriter writer = new ConversationWriter();
-        ConversationFilter filter = new ConversationFilter();
+        
 
         /// <summary>
         /// Check if the correct number of messages is returned.
@@ -24,18 +24,20 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             // Arrange
             var args = new string[] { "chat.txt", "out.json", "name", "bob" };
-
+            
             var configuration = new CLAParser().ParseCommandLineArguments(args);
             var conversation = reader.ReadConversation(configuration);
-            conversation = filter.FilterParser(configuration, conversation);
+            ConversationFilter filter = new ConversationFilter(configuration, conversation);
+            conversation = filter.newConversation;
+            
             writer.WriteConversation(conversation, configuration.OutputFilePath);
             // Act
             var serializedConversation = new StreamReader(new FileStream("out.json", FileMode.Open)).ReadToEnd();
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
-            var mesasges = savedConversation.Messages.ToList();
+            var messages = savedConversation.Messages.ToList();
 
             // Assert
-            Assert.Equal(3, mesasges.Count);
+            Assert.Equal(4, messages.Count);
         }
         /// <summary>
         /// Checks if the correct number of messages is returned when filtered by a keyword.
@@ -48,15 +50,16 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var configuration = new CLAParser().ParseCommandLineArguments(args);
             var conversation = reader.ReadConversation(configuration);
-            conversation = filter.FilterParser(configuration, conversation);
-            writer.WriteConversation(conversation, configuration.OutputFilePath);
+            ConversationFilter filter = new ConversationFilter(configuration, conversation);
+            //conversation = filter.newConversation;
+            writer.WriteConversation(filter.newConversation, configuration.OutputFilePath);
             // Act
             var serializedConversation = new StreamReader(new FileStream("out2.json", FileMode.Open)).ReadToEnd();
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
-            var mesasges = savedConversation.Messages.ToList();
+            var messages = savedConversation.Messages.ToList();
 
             // Assert
-            Assert.Equal(3, mesasges.Count);
+            Assert.Equal(3, messages.Count);
         }
         /// <summary>
         /// Checks if the correct words are *redacted* using a blacklist
@@ -69,8 +72,8 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var configuration = new CLAParser().ParseCommandLineArguments(args);
             var conversation = reader.ReadConversation(configuration);
-            conversation = filter.FilterParser(configuration, conversation);
-            writer.WriteConversation(conversation, configuration.OutputFilePath);
+            ConversationFilter filter = new ConversationFilter(configuration, conversation);
+            writer.WriteConversation(filter.newConversation, configuration.OutputFilePath);
             // Act
             var serializedConversation = new StreamReader(new FileStream("out3.json", FileMode.Open)).ReadToEnd();
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);

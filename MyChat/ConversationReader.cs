@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
+    
 namespace MindLink.Recruitment.MyChat
 {
     /// <summary>

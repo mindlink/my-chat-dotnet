@@ -19,7 +19,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var conversation = reader.ReadConversation(configuration);
 
             // Assert
-            Assert.Equal(7, conversation.Messages.ToList().Count);
+            Assert.Equal(10, conversation.Messages.ToList().Count);
         }
         [Fact]
         public void ReadConversationLine()

@@ -45,16 +45,17 @@ namespace MindLink.Recruitment.MyChat.Tests
             var parser = new CLAParser();
             var reader = new ConversationReader();
             var writer = new ConversationWriter();
-            var filter = new ConversationFilter();
             var configuration = new CLAParser().ParseCommandLineArguments(args);
             var conversation = reader.ReadConversation(configuration);
 
             // Act
-            conversation = filter.FilterParser(configuration, conversation);
+            var filter = new ConversationFilter(configuration, conversation);
+            conversation = filter.newConversation;
             writer.WriteConversation(conversation, configuration.OutputFilePath);
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
             var messages = savedConversation.Messages.ToList();
+            System.Console.WriteLine(messages);
 
             // Assert
             Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(1448470901), messages[0].Timestamp);

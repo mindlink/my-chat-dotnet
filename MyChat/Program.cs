@@ -13,13 +13,10 @@ namespace MindLink.Recruitment.MyChat
             var parser = new CLAParser();
             var reader = new ConversationReader();
             var writer = new ConversationWriter();
-            var filter = new ConversationFilter();
-
             var configuration = new CLAParser().ParseCommandLineArguments(args);
             var conversation = reader.ReadConversation(configuration);
-
-            conversation = filter.FilterParser(configuration, conversation);
-            writer.WriteConversation(conversation, configuration.OutputFilePath);
+            var filter = new ConversationFilter(configuration, conversation);
+            writer.WriteConversation(filter.newConversation, configuration.OutputFilePath);
         }
     }
 }

@@ -49,7 +49,5 @@ namespace MindLink.Recruitment.MyChat.Filters
             Conversation filtered = new Conversation { Name = conversation.Name, Messages = messages };
             return filtered;
         }
-
     }
-
 }

@@ -4,8 +4,8 @@ namespace MindLink.Recruitment.MyChat
     
     public sealed class Conversation
     {
-        private string Name { get; set; }
-        private IEnumerable<Message> Messages;
+        public string Name { get;}
+        public IEnumerable<Message> Messages { get; }
 
         public Conversation(string name, IEnumerable<Message> messages)
         {

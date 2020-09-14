@@ -12,89 +12,94 @@
     {
         static void Main(string[] args)
         {
+            // Get the conversation exporter and parse the file arguments. 
             var conversationExporter = new ConversationExporter();
-            var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+            var config = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            var reader = GetStreamReader(configuration.inputFilePath, FileMode.Open, FileAccess.Read, Encoding.ASCII);
-            
+            // Get a reader and do some reading.  
+            var reader = GetStreamReader(config.inputFilePath, FileMode.Open, FileAccess.Read, Encoding.ASCII);
             var conversation = conversationExporter.ReadConversation(reader);
             
-            conversationExporter.ExportConversation(conversation, configuration.inputFilePath, configuration.outputFilePath);
+            // Get a writer and do some writing.
+            var writer = GetStreamWriter(config.outputFilePath, FileMode.Create, FileAccess.ReadWrite);
+            conversationExporter.WriteConversation(writer, conversation, config.outputFilePath);
+
+            // And we're done. 
+            Console.WriteLine($"Conversation exported from '{config.inputFilePath}' to '{config.outputFilePath}'");
         }
 
-        public void ExportConversation(Conversation c, string inputFilePath, string outputFilePath)
-        {
-            //Takes in a conversation and writes it to an output file path.
-            WriteConversation(c, outputFilePath);
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
-        }
-        
         public Conversation ReadConversation(TextReader reader)
         {
             var messages = new List<Message>();
+            string conversationName = reader.ReadLine();
             string line;
-            
+            while ((line = reader.ReadLine()) != null)
+            {
+                var split = line.Split(' ');
+
+                var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0]));
+                var senderID = split[1];
+                var content = string.Join(" ", split[2..]);
+
+                //TODO: You've split the line out, now perform some validation.
+                messages.Add(new Message(timestamp, senderID, content));
+            }
+
+            return new Conversation(conversationName, messages);
+        }
+
+        public void WriteConversation(TextWriter writer, Conversation conversation, string outputFilePath)
+        {
+            var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
+
+            writer.Write(serialized);
+            writer.Flush();
+            writer.Close();
+        }
+
+        public static TextReader GetStreamReader(string inputFilePath, FileMode mode, FileAccess access, Encoding encoding)
+        {
+            // GetStreamReader takes in a file path, file mode, access permission and encoding style and returns a
+            // StreamReader configured for that.
+            // TODO: error handling with the attempt to create reader
             try
             {
-                string conversationName = reader.ReadLine();
-                while ((line = reader.ReadLine()) != null)
-                {    
-                    var split = line.Split(' ');
-                    
-                    var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0]));
-                    var senderID = split[1];
-                    var content = string.Join(" ",split[2..]);
-
-                    //TODO: Now, check the item. If it's ok, do the appropriate validation.
-                    
-                    messages.Add(new Message(timestamp, senderID, content));
-                }
-
-                return new Conversation(conversationName, messages);
+                return new StreamReader(new FileStream(inputFilePath, mode, access), encoding);
             }
             catch (FileNotFoundException)
             {
-                throw new ArgumentException("The file was not found.");
+                throw new ArgumentException($"The file {inputFilePath} was not found.");
             }
             catch (IOException)
             {
-                throw new Exception("Something went wrong in the IO.");
-            }
-        }
-        
-        public void WriteConversation(Conversation conversation, string outputFilePath)
-        {
-            try
-            {
-                var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
-
-                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
-
-                writer.Write(serialized);
-
-                writer.Flush();
-
-                writer.Close();
+                throw new IOException("Something went wrong in the IO.");
             }
             catch (SecurityException)
             {
-                throw new ArgumentException("No permission to file.");
+                throw new SecurityException($"Couldn't open the file {inputFilePath} because of a permissions issue");
+            }
+        }
+
+        public static TextWriter GetStreamWriter(string outputFilePath, FileMode mode, FileAccess access)
+        {
+            // GetStreamWriter takes in an output file path, file mode and access permission and returns a
+            // StreamReader configured based on those options.
+            try
+            {
+                return new StreamWriter(new FileStream(outputFilePath, mode, access));
+            }
+            catch (SecurityException)
+            {
+                throw new SecurityException($"No permission to access {outputFilePath}.");
             }
             catch (DirectoryNotFoundException)
             {
-                throw new ArgumentException("Path invalid.");
+                throw new DirectoryNotFoundException($"The path to {outputFilePath} is invalid and wasn't found.");
             }
             catch (IOException)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new IOException("Something went wrong in the IO.");
             }
-        }
-        
-        public static TextReader GetStreamReader(string FilePath, FileMode mode, FileAccess access, Encoding encoding)
-        {   //GetStreamReader takes in a file path, file mode, access permission and encoding style and returns a
-            //StreamReader configured for that.
-            //TODO: error handling with the attempt to create a reader
-            return new StreamReader(new FileStream(FilePath, mode, access), encoding);
         }
     }
 }

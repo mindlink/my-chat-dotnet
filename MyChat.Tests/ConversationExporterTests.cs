@@ -19,13 +19,15 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var reader = ConversationExporter.GetStreamReader("chat.txt", FileMode.Open,
                 FileAccess.Read, Encoding.ASCII);
-            
-            exporter.ExportConversation(exporter.ReadConversation(reader), "chat.txt", "output.json");
 
+            var writer = ConversationExporter.GetStreamWriter("output.json", FileMode.Create, FileAccess.ReadWrite);
+
+            exporter.WriteConversation(writer, exporter.ReadConversation(reader), "chat.json");
+            
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
-            Console.WriteLine(savedConversation.Name);
+
             Assert.That(savedConversation.Name, Is.EqualTo("My Conversation"));
             
             var messages = savedConversation.Messages.ToList();

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Text;
 using MyChat;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -16,7 +17,10 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             var exporter = new ConversationExporter();
 
-            exporter.ExportConversation("chat.txt", "chat.json");
+            var reader = ConversationExporter.GetStreamReader("chat.txt", FileMode.Open,
+                FileAccess.Read, Encoding.ASCII);
+            
+            exporter.ExportConversation(exporter.ReadConversation(reader), "chat.txt", "output.json");
 
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 

@@ -13,13 +13,15 @@
         static void Main(string[] args)
         {
             var conversationExporter = new ConversationExporter();
-            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+            var configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
-            Conversation conversation = conversationExporter.ReadConversation(configuration.inputFilePath);
+            var reader = GetStreamReader(configuration.inputFilePath, FileMode.Open, FileAccess.Read, Encoding.ASCII);
+            
+            var conversation = conversationExporter.ReadConversation(reader);
             
             conversationExporter.ExportConversation(conversation, configuration.inputFilePath, configuration.outputFilePath);
         }
-        
+
         public void ExportConversation(Conversation c, string inputFilePath, string outputFilePath)
         {
             //Takes in a conversation and writes it to an output file path.
@@ -27,22 +29,25 @@
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
         }
         
-        public Conversation ReadConversation(string inputFilePath)
+        public Conversation ReadConversation(TextReader reader)
         {
+            var messages = new List<Message>();
+            string line;
+            
             try
             {
-                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
-                    Encoding.ASCII);
-
                 string conversationName = reader.ReadLine();
-                var messages = new List<Message>();
-
-                string line;
-
                 while ((line = reader.ReadLine()) != null)
-                {
+                {    
                     var split = line.Split(' ');
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], string.Join(" ",split[2..])));
+                    
+                    var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0]));
+                    var senderID = split[1];
+                    var content = string.Join(" ",split[2..]);
+
+                    //TODO: Now, check the item. If it's ok, do the appropriate validation.
+                    
+                    messages.Add(new Message(timestamp, senderID, content));
                 }
 
                 return new Conversation(conversationName, messages);
@@ -83,6 +88,13 @@
             {
                 throw new Exception("Something went wrong in the IO.");
             }
+        }
+        
+        public static TextReader GetStreamReader(string FilePath, FileMode mode, FileAccess access, Encoding encoding)
+        {   //GetStreamReader takes in a file path, file mode, access permission and encoding style and returns a
+            //StreamReader configured for that.
+            //TODO: error handling with the attempt to create a reader
+            return new StreamReader(new FileStream(FilePath, mode, access), encoding);
         }
     }
 }

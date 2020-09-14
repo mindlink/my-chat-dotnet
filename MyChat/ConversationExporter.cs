@@ -81,8 +81,7 @@
                 while ((line = reader.ReadLine()) != null)
                 {
                     var split = line.Split(' ');
-
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], string.Join(" ",split[2..])));
                 }
 
                 return new Conversation(conversationName, messages);

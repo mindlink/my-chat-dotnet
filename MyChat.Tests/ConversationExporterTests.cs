@@ -60,5 +60,31 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.That(messages[6].senderId, Is.EqualTo("angus"));
             Assert.That(messages[6].content, Is.EqualTo("YES! I'm the head pie eater there..."));
         }
+        
+        [Test]
+        public void CorrectArgsReturnsCorrectStreamReader(){}
+        
+        [Test]
+        public void CorrectArgsReturnsCorrectStreamWriter(){}
+        
+        [Test]
+        public void NonExistentFileToStreamReaderThrowsError(){}
+
+        [Test]
+        public void NonExistentDirectoryToStreamReaderThrowsError(){}
+
+        [Test]
+        public void ArrayToMessageTakesArrayAndReturnsMessage(){}
+        
+        [Test]
+        public void SenderIDCorrectAfterConversionIntoMessage(){}
+
+        [Test]
+        public void StringToUnixTimeStampCorrrectlyFormatsTimeStamp(){}
+        
+        [Test]
+        public void MessageContentCorrectAfterConversion(){}
     }
+    
+    
 }

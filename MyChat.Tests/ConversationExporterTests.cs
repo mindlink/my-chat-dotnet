@@ -13,14 +13,14 @@ namespace MindLink.Recruitment.MyChat.Tests
     public class ConversationExporterTests
     {
         [Test]
-        public void ExportingConversationExportsConversation()
+        public void TitleOfExportedConversationIsCorrect()
         {
             var exporter = new ConversationExporter();
 
-            var reader = ConversationExporter.GetStreamReader("chat.txt", FileMode.Open,
+            var reader = exporter.GetStreamReader("chat.txt", FileMode.Open,
                 FileAccess.Read, Encoding.ASCII);
 
-            var writer = ConversationExporter.GetStreamWriter("output.json", FileMode.Create, FileAccess.ReadWrite);
+            var writer = exporter.GetStreamWriter("output.json", FileMode.Create, FileAccess.ReadWrite);
 
             exporter.WriteConversation(writer, exporter.ExtractConversation(reader), "chat.json");
             
@@ -29,61 +29,79 @@ namespace MindLink.Recruitment.MyChat.Tests
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
             Assert.That(savedConversation.Name, Is.EqualTo("My Conversation"));
-            
-            var messages = savedConversation.Messages.ToList();
-            
-            Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
-            Assert.That(messages[0].senderId, Is.EqualTo("bob"));
-            Assert.That(messages[0].content, Is.EqualTo("Hello there!"));
-            
-            Assert.That(messages[1].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470905)));
-            Assert.That(messages[1].senderId, Is.EqualTo("mike"));
-            Assert.That(messages[1].content, Is.EqualTo("how are you?"));
-            
-            Assert.That(messages[2].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));
-            Assert.That(messages[2].senderId, Is.EqualTo("bob"));
-            Assert.That(messages[2].content, Is.EqualTo("I'm good thanks, do you like pie?"));
-            
-            Assert.That(messages[3].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470910)));
-            Assert.That(messages[3].senderId, Is.EqualTo("mike"));
-            Assert.That(messages[3].content, Is.EqualTo("no, let me ask Angus..."));
-            
-            Assert.That(messages[4].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470912)));
-            Assert.That(messages[4].senderId, Is.EqualTo("angus"));
-            Assert.That(messages[4].content, Is.EqualTo("Hell yes! Are we buying some pie?"));
-            
-            Assert.That(messages[5].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470914)));
-            Assert.That(messages[5].senderId, Is.EqualTo("bob"));
-            Assert.That(messages[5].content, Is.EqualTo("No, just want to know if there's anybody else in the pie society..."));
-            
-            Assert.That(messages[6].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470915)));
-            Assert.That(messages[6].senderId, Is.EqualTo("angus"));
-            Assert.That(messages[6].content, Is.EqualTo("YES! I'm the head pie eater there..."));
+        }
+
+        [Test]
+        public void CorrectArgsReturnsCorrectStreamReader()
+        {
+            var cp = new ConversationExporter();
+            var got = cp.GetStreamReader("chat.txt", FileMode.Create, FileAccess.ReadWrite, Encoding.ASCII);
+            Assert.That(got, Is.TypeOf<StreamReader>());
+        }
+
+        // [Test]
+        // public void NonExistentDirectoryToStreamReaderThrowsError()
+        // {
+        //TODO: fill test.
+        // }
+        
+        [Test]
+        public void CorrectArgsReturnsCorrectStreamWriter()
+        {
+            var cp = new ConversationExporter();
+            var got = cp.GetStreamWriter("output.something", FileMode.Create, FileAccess.ReadWrite);
+            Assert.That(got, Is.TypeOf<StreamWriter>());
+        }
+
+        [Test]
+        public void ArrayToMessageTakesArrayAndReturnsMessageObject()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "a message"};
+            var got = cp.ArrayToMessage(line);
+            Assert.That(got, Is.TypeOf<Message>());
+
+        }
+
+        [Test]
+        public void SenderIDCorrectAfterConversionIntoMessage()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "a message"};
+            var got = cp.ArrayToMessage(line).senderId;
+            var want = "david";
+            Assert.That(got, Is.EqualTo(want));
         }
         
         [Test]
-        public void CorrectArgsReturnsCorrectStreamReader(){}
+        public void MessageContentCorrectAfterConversion()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "a message"};
+            var got = cp.ArrayToMessage(line).content;
+            var want = "a message";
+            Assert.That(got, Is.EqualTo(want));
+        }
         
         [Test]
-        public void CorrectArgsReturnsCorrectStreamWriter(){}
+        public void TimestampCorrectWhenCreatingNewMessage()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1448470901", "david", "a message"};
+            var got = cp.ArrayToMessage(line).timestamp;
+            DateTimeOffset want = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901"));
+            Assert.That(got, Is.EqualTo(want));
+        }
         
         [Test]
-        public void NonExistentFileToStreamReaderThrowsError(){}
+        public void StringToUnixTimeStampCorrrectlyFormatsTimeStamp()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            DateTimeOffset got = cp.StringToUnixTimeStamp("1448470901");
+            DateTimeOffset want = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901"));
+            Assert.That(got, Is.EqualTo(want));
+        }
 
-        [Test]
-        public void NonExistentDirectoryToStreamReaderThrowsError(){}
-
-        [Test]
-        public void ArrayToMessageTakesArrayAndReturnsMessage(){}
-        
-        [Test]
-        public void SenderIDCorrectAfterConversionIntoMessage(){}
-
-        [Test]
-        public void StringToUnixTimeStampCorrrectlyFormatsTimeStamp(){}
-        
-        [Test]
-        public void MessageContentCorrectAfterConversion(){}
     }
     
     

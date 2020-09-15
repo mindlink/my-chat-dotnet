@@ -7,7 +7,7 @@ namespace MindLink.Recruitment.MyChat.Tests
     public class CommandLineArgumentParserTests
     {
         [Test]
-        public void NoCommandLineArgumentsThrowError()
+        public void NoCommandLineArgumentsThrowsError()
         {    
             string[] noItems = {};
 

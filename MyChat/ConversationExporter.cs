@@ -18,7 +18,7 @@
 
             // Get a reader and do some reading.  
             var reader = GetStreamReader(config.inputFilePath, FileMode.Open, FileAccess.Read, Encoding.ASCII);
-            var conversation = conversationExporter.ReadConversation(reader);
+            var conversation = conversationExporter.ExtractConversation(reader);
             
             // Get a writer and do some writing.
             var writer = GetStreamWriter(config.outputFilePath, FileMode.Create, FileAccess.ReadWrite);
@@ -28,21 +28,19 @@
             Console.WriteLine($"Conversation exported from '{config.inputFilePath}' to '{config.outputFilePath}'");
         }
 
-        public Conversation ReadConversation(TextReader reader)
+        public Conversation ExtractConversation(TextReader reader)
         {
             var messages = new List<Message>();
+            
+            // We assume that the first line will always be the conversation title.
             string conversationName = reader.ReadLine();
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                var split = line.Split(' ');
-
-                var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0]));
-                var senderID = split[1];
-                var content = string.Join(" ", split[2..]);
-
+                var array = line.Split(' ');
+                
                 //TODO: You've split the line out, now perform some validation.
-                messages.Add(new Message(timestamp, senderID, content));
+                messages.Add(ArrayToMessage(array));
             }
 
             return new Conversation(conversationName, messages);
@@ -100,6 +98,14 @@
             {
                 throw new IOException("Something went wrong in the IO.");
             }
+        }
+
+        public Message ArrayToMessage(string[] line)
+        {
+            var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(line[0]));
+            var senderID = line[1];
+            var content = string.Join(" ", line[2..]);
+            return new Message(timestamp, senderID, content);
         }
     }
 }

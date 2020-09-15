@@ -59,7 +59,6 @@
         {
             // GetStreamReader takes in a file path, file mode, access permission and encoding style and returns a
             // StreamReader configured for that.
-            // TODO: error handling with the attempt to create reader
             try
             {
                 return new StreamReader(new FileStream(inputFilePath, mode, access), encoding);
@@ -81,7 +80,7 @@
         public static TextWriter GetStreamWriter(string outputFilePath, FileMode mode, FileAccess access)
         {
             // GetStreamWriter takes in an output file path, file mode and access permission and returns a
-            // StreamReader configured based on those options.
+            // Writer configured based on those options.
             try
             {
                 return new StreamWriter(new FileStream(outputFilePath, mode, access));
@@ -102,10 +101,17 @@
 
         public Message ArrayToMessage(string[] line)
         {
-            var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(line[0]));
+            var timestamp = StringToUnixTimeStamp(line[0]);
             var senderID = line[1];
             var content = string.Join(" ", line[2..]);
             return new Message(timestamp, senderID, content);
+        }
+
+        public DateTimeOffset StringToUnixTimeStamp(string s)
+        {    // StringToUnixTimeStamp does as its name suggests: it takes in a string
+            // and parses it into a unix timestamp. 
+            //TODO: some error checks. Maybe a try parse and if that fails return. 
+            return DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(s));
         }
     }
 }

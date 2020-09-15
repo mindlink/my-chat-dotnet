@@ -9,8 +9,8 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void NoCommandLineArgumentsThrowError()
         {    
-            string[] noItems = {" "};
-            
+            string[] noItems = {};
+
             CommandLineArgumentParser cp = new CommandLineArgumentParser();
 
             Assert.That(() => cp.ParseCommandLineArguments(noItems),
@@ -42,7 +42,5 @@ namespace MindLink.Recruitment.MyChat.Tests
                     .TypeOf<ArgumentException>());
         }
         
-        
-
     }
 }

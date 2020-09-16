@@ -117,6 +117,6 @@
             return DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(s));
         }
         
-        public Func<string, string, bool> StringPresent = (query, user) => query == user;
+        public Func<string, string, bool> StringEqual = (item, query) => item == query;
     }
 }

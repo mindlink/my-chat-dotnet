@@ -110,18 +110,43 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var message = cp.ArrayToMessage(line);
 
-            Assert.That(cp.StringPresent("david", message.senderId), Is.EqualTo(true));
+            Assert.That(cp.StringEqual(message.senderId, "david"), Is.EqualTo(true));
         }
 
         [Test]
-        public void NameInSenderReturnsFalse()
+        public void ShorterQueryContainedWithinLongerNameIsFalse()
+        {
+            // Assumption: a shorter query contained within a longer
+            // name will fail. 
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "davide", "a message"};
+
+            var message = cp.ArrayToMessage(line);
+
+            Assert.That(cp.StringEqual(message.senderId, "david"), Is.EqualTo(false));
+        }
+
+        [Test]
+        public void SimilarNameNotCaught()
+        {    // If someone searches for "davide" and we find the name is "david"
+            // that should fail.
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "a message"};
+
+            var message = cp.ArrayToMessage(line);
+
+            Assert.That(cp.StringEqual(message.senderId, "davide"), Is.EqualTo(false));
+        }
+        
+        [Test]
+        public void NameNotInSenderReturnsFalse()
         {
             ConversationExporter cp = new ConversationExporter();
             string[] line = {"1234", "david", "a message"};
 
             var message = cp.ArrayToMessage(line);
 
-            Assert.That(cp.StringPresent("notInSender", message.senderId), Is.EqualTo(false));
+            Assert.That(cp.StringEqual("notInSender", message.senderId), Is.EqualTo(false));
         }
     }
 

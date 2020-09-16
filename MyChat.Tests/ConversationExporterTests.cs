@@ -23,7 +23,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var writer = exporter.GetStreamWriter("output.json", FileMode.Create, FileAccess.ReadWrite);
 
             exporter.WriteConversation(writer, exporter.ExtractConversation(reader), "chat.json");
-            
+
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
@@ -44,7 +44,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         // {
         //TODO: fill test.
         // }
-        
+
         [Test]
         public void CorrectArgsReturnsCorrectStreamWriter()
         {
@@ -72,7 +72,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var want = "david";
             Assert.That(got, Is.EqualTo(want));
         }
-        
+
         [Test]
         public void MessageContentCorrectAfterConversion()
         {
@@ -82,7 +82,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var want = "a message";
             Assert.That(got, Is.EqualTo(want));
         }
-        
+
         [Test]
         public void TimestampCorrectWhenCreatingNewMessage()
         {
@@ -92,7 +92,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             DateTimeOffset want = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901"));
             Assert.That(got, Is.EqualTo(want));
         }
-        
+
         [Test]
         public void StringToUnixTimeStampCorrrectlyFormatsTimeStamp()
         {
@@ -102,7 +102,27 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.That(got, Is.EqualTo(want));
         }
 
+        [Test]
+        public void NameInSenderReturnsTrue()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "a message"};
+
+            var message = cp.ArrayToMessage(line);
+
+            Assert.That(cp.StringPresent("david", message.senderId), Is.EqualTo(true));
+        }
+
+        [Test]
+        public void NameInSenderReturnsFalse()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "a message"};
+
+            var message = cp.ArrayToMessage(line);
+
+            Assert.That(cp.StringPresent("notInSender", message.senderId), Is.EqualTo(false));
+        }
     }
-    
-    
+
 }

@@ -11,21 +11,24 @@
     public sealed class ConversationExporter
     {
         static void Main(string[] args)
-        {
-            // Get the conversation exporter and parse the file arguments. 
-            var conversationExporter = new ConversationExporter();
-            var config = new CommandLineArgumentParser().ParseCommandLineArguments(args);
-
-            // Get a reader and do some reading.  
-            var reader = GetStreamReader(config.inputFilePath, FileMode.Open, FileAccess.Read, Encoding.ASCII);
-            var conversation = conversationExporter.ExtractConversation(reader);
+        {    
             
-            // Get a writer and do some writing.
-            var writer = GetStreamWriter(config.outputFilePath, FileMode.Create, FileAccess.ReadWrite);
-            conversationExporter.WriteConversation(writer, conversation, config.outputFilePath);
-
-            // And we're done. 
-            Console.WriteLine($"Conversation exported from '{config.inputFilePath}' to '{config.outputFilePath}'");
+            // Get the conversation exporter and parse the file arguments. 
+            // var conversationExporter = new ConversationExporter();
+            // var config = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+            //
+            // // Get a reader and do some reading.  
+            // var reader = conversationExporter.GetStreamReader(config.inputFilePath, FileMode.Open, FileAccess.Read, Encoding.ASCII);
+            // var conversation = conversationExporter.ExtractConversation(reader);
+            //
+            // Console.WriteLine(conversation.Name);
+            //
+            // // Get a writer and do some writing.
+            // var writer = conversationExporter.GetStreamWriter(config.outputFilePath, FileMode.Create, FileAccess.ReadWrite);
+            // conversationExporter.WriteConversation(writer, conversation, config.outputFilePath);
+            //
+            // // And we're done. 
+            // Console.WriteLine($"Conversation exported from '{config.inputFilePath}' to '{config.outputFilePath}'");
         }
 
         public Conversation ExtractConversation(TextReader reader)
@@ -55,7 +58,7 @@
             writer.Close();
         }
 
-        public static TextReader GetStreamReader(string inputFilePath, FileMode mode, FileAccess access, Encoding encoding)
+        public TextReader GetStreamReader(string inputFilePath, FileMode mode, FileAccess access, Encoding encoding)
         {
             // GetStreamReader takes in a file path, file mode, access permission and encoding style and returns a
             // StreamReader configured for that.
@@ -65,7 +68,7 @@
             }
             catch (FileNotFoundException)
             {
-                throw new ArgumentException($"The file {inputFilePath} was not found.");
+                throw new FileNotFoundException($"The file {inputFilePath} was not found.");
             }
             catch (IOException)
             {
@@ -77,7 +80,7 @@
             }
         }
 
-        public static TextWriter GetStreamWriter(string outputFilePath, FileMode mode, FileAccess access)
+        public TextWriter GetStreamWriter(string outputFilePath, FileMode mode, FileAccess access)
         {
             // GetStreamWriter takes in an output file path, file mode and access permission and returns a
             // Writer configured based on those options.
@@ -113,5 +116,7 @@
             //TODO: some error checks. Maybe a try parse and if that fails return. 
             return DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(s));
         }
+        
+        public Func<string, string, bool> StringPresent = (query, user) => query == user;
     }
 }

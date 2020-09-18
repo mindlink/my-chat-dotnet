@@ -72,7 +72,7 @@
                         break;
                     case "-filter-blacklist-word":
                         FiltersToApply = true;
-                        //this.filters.Add(new FilterBlacklist(filters[i + 1]));
+                        this.filters.Add(new FilterByBlacklist(filtersToCheck[i + 1]));
                         break;
                     case "-filter-card-details":
                         FiltersToApply = true;

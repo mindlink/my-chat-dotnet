@@ -42,23 +42,31 @@
                 // IF the messag content contains the word
                 if (msg.Content.Contains(word)) 
                 {
+                    // SET the validInput bool to true
+                    validInput = true;
                     // ADD the message to the list of filteredMessages
                     filteredMessages.Add(msg);
                 }
             }
-
+            // SET the filterConversation to a new Conversation, passing in the conversation name
+            // and the filteredMessages
             filteredConversation = new Conversation(conversation.Name, filteredMessages);
 
+            // IF there is no valid input
             if (!validInput) 
             {
+                // IF the word passed in is empty
                 if (word == "" || word == " ")
                 {
-                    throw new ArgumentNullException("No word was supplied for the filter to use");
+                    // THROW an ArgumentNullException, to notify the user they have specifed the filter but
+                    // not supplied any arguments
+                    throw new ArgumentNullException("No word was supplied for the word filter to use");
                 }
                 else
                 {
+                    // ELSE the word was not found in the conversation, and we would like to tell the user this
                     string conversationMessage = "The word " + word + " was not found in the conversation";
-
+                    // CALL to the conversations AddFilterMessage and pass in the message
                     filteredConversation.AddFilterMessage(conversationMessage);
                 }
             }

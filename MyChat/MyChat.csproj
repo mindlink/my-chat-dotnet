@@ -28,4 +28,11 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Features\Essential\" />
+    <Folder Include="Features\Additional\" />
+    <Folder Include="Interfaces\ControllerInterfaces\" />
+    <Folder Include="Interfaces\FeatureInterfaces\" />
+  </ItemGroup>
 </Project>

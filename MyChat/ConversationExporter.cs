@@ -1,4 +1,7 @@
-﻿namespace MyChat
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
+namespace MyChat
 {
     using System;
     using System.Collections.Generic;
@@ -11,11 +14,16 @@
     public sealed class ConversationExporter
     {
         static void Main(string[] args)
-        {    
+        {   
+            // Get the path to the JSON config file
+            // string jsonConfig = new CommandLineArgumentParser().ParseCommandLineArguments(args);
             
-            // Get the conversation exporter and parse the file arguments. 
+            // Now setup the config based on what was in the JSON file. 
+            // var config = JsonConvert.DeserializeObject<ConversationExporterConfiguration>(File.ReadAllText(jsonConfig));
+            
+
             // var conversationExporter = new ConversationExporter();
-            // var config = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+
             //
             // // Get a reader and do some reading.  
             // var reader = conversationExporter.GetStreamReader(config.inputFilePath, FileMode.Open, FileAccess.Read, Encoding.ASCII);
@@ -42,7 +50,7 @@
             {
                 var array = line.Split(' ');
                 
-                //TODO: You've split the line out, now perform some validation.
+                
                 messages.Add(ArrayToMessage(array));
             }
 
@@ -118,5 +126,29 @@
         }
         
         public Func<string, string, bool> StringEqual = (item, query) => item == query;
+        
+        public Func<string, string, bool> KeywordInMessage = (message, kw) => message.Split(" ").Any(word => word == kw);
+
+        public string AdjustBlacklistedWord(string message, string blacklist)
+        {
+            if(!KeywordInMessage(message, blacklist))
+            {
+                return message;
+            }
+
+            List<string> final = new List<string>();
+            
+            foreach (var word in message.Split())
+            {
+                if(word == blacklist)
+                {
+                    final.Add("*redacted*");    
+                    continue;
+                }
+                final.Add(word);
+            }
+
+            return string.Join(" ", final);
+        }
     }
 }

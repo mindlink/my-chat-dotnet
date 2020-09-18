@@ -12,7 +12,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>MyChat.ConversationExporter</StartupObject>
+    <StartupObject>MindLink.Recruitment.MyChat.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <Company>MindLink Software Limited</Company>
@@ -29,10 +29,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Features\Essential\" />
     <Folder Include="Features\Additional\" />
-    <Folder Include="Interfaces\ControllerInterfaces\" />
     <Folder Include="Interfaces\FeatureInterfaces\" />
   </ItemGroup>
 </Project>

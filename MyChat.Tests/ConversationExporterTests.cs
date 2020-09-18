@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Text;
 using MyChat;
 using Newtonsoft.Json;
@@ -146,7 +145,92 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var message = cp.ArrayToMessage(line);
 
-            Assert.That(cp.StringEqual("notInSender", message.senderId), Is.EqualTo(false));
+            Assert.That(cp.StringEqual(message.senderId, "notInSender"), Is.EqualTo(false));
+        }
+        
+        [Test]
+        public void KeywordInMessageReturnsTrue()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "this is a message"};
+
+            var message = cp.ArrayToMessage(line);
+
+            Assert.That(cp.KeywordInMessage(message.content, "message"), Is.EqualTo(true));
+        }
+        
+        [Test]
+        public void KeywordNotInMessageReturnsFalse()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "this is a message"};
+
+            var message = cp.ArrayToMessage(line);
+
+            Assert.That(cp.KeywordInMessage(message.content, "nonexistent"), Is.EqualTo(false));
+        }
+        
+        [Test]
+        public void ShortKeywordNotFoundInLongerWordReturns()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "shorter word is found within"};
+
+            var message = cp.ArrayToMessage(line);
+
+            Assert.That(cp.KeywordInMessage(message.content, "with"), Is.EqualTo(false));
+        }
+        
+        [Test]
+        public void LongKeywordThatMakesUpPartOfWordNotFound()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "hereisalongword found within"};
+
+            var message = cp.ArrayToMessage(line);
+
+            Assert.That(cp.KeywordInMessage(message.content, "hereisalongwordplusextra"), Is.EqualTo(false));
+        }
+        
+        [Test]
+        public void OneStringContainingKeywordFalse()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "thisisalongstring"};
+
+            var message = cp.ArrayToMessage(line);
+
+            Assert.That(cp.KeywordInMessage(message.content, "string"), Is.EqualTo(false));
+        }
+
+        [Test]
+        public void BlacklistedWordRemovedFromMessage()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "blacklist word is found"};
+            var message = cp.ArrayToMessage(line);
+            var bl = "word";
+            Assert.That(cp.AdjustBlacklistedWord(message.content, "word"), Is.EqualTo("blacklist *redacted* is found"));
+        }
+        
+        [Test]
+        public void BlacklistedWordNotFoundNotRemovedFromMessage()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "blacklisted word is not found"};
+            var message = cp.ArrayToMessage(line);
+            var bl = "word";
+            Assert.That(cp.AdjustBlacklistedWord(message.content, "other"), Is.EqualTo("blacklisted word is not found"));
+        }
+        
+        [Test]
+        public void BlacklistedWordContainedWithinALongerWordIsNotRedacted()
+        {    
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "blacklisted word contained within is not changed"};
+            var message = cp.ArrayToMessage(line);
+            var bl = "with";
+            Assert.That(cp.AdjustBlacklistedWord(message.content, "with"), Is.EqualTo("blacklisted word contained within is not changed"));
         }
     }
 

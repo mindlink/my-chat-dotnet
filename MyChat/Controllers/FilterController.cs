@@ -68,7 +68,7 @@
                         break;
                     case "-filter-search-word":
                         FiltersToApply = true;
-                        //this.filters.Add(new FilterByWord(filters[i + 1]));
+                        this.filters.Add(new FilterByWord(filtersToCheck[i + 1]));
                         break;
                     case "-filter-blacklist-word":
                         FiltersToApply = true;

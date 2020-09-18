@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MindLink.Recruitment.MyChat.Interfaces.ControllerInterfaces
+﻿namespace MindLink.Recruitment.MyChat.Interfaces.ControllerInterfaces
 {
+    using MyChatModel.ModelData;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
     public interface IReadController
     {
 

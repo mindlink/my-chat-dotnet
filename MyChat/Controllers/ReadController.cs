@@ -1,12 +1,8 @@
-﻿using MindLink.Recruitment.MyChat.Interfaces.ControllerInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MindLink.Recruitment.MyChat.Controllers
+﻿namespace MindLink.Recruitment.MyChat.Controllers
 {
 
     using MindLink.Recruitment.MyChat.Interfaces.ControllerInterfaces;
+    using MyChatModel.ModelData;
     using System;
     using System.Collections.Generic;
     using System.IO;

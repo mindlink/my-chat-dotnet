@@ -16,14 +16,15 @@
         /// </param>
         static void Main(string[] args)
         {
-            // INITIALISE an IReadController and IWriteController as their respective
-            // concrete implementations, ReadController and WriteController
+            // INITIALISE an IReadController, IWriteController and IFilterController as their respective
+            // concrete implementations, ReadController, WriteController and IFilterController
             IReadController readController = new ReadController();
             IWriteController writeController = new WriteController();
+            IFilterController filterController = new FilterController();
             // INITIALISE an IExportController as ExportController, passing in the readController and WriteController
-            IExportController conversationExporter = new ExportController(readController, writeController);
+            IExportController conversationExporter = new ExportController(readController, writeController, filterController);
 
-            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args, filterController);
 
             conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
         }

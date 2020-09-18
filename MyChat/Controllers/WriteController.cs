@@ -1,13 +1,13 @@
-﻿using MindLink.Recruitment.MyChat.Interfaces.ControllerInterfaces;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Security;
-using System.Text;
-
-namespace MindLink.Recruitment.MyChat.Controllers
+﻿namespace MindLink.Recruitment.MyChat.Controllers
 {
+    using MindLink.Recruitment.MyChat.Interfaces.ControllerInterfaces;
+    using MyChatModel.ModelData;
+    using Newtonsoft.Json;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Security;
+    using System.Text;
 
     /// <summary>
     /// Class, separated out the WriteConversation functionality of the ConversationExporter class

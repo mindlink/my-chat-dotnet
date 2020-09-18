@@ -4,14 +4,19 @@ namespace MindLink.Recruitment.MyChat
 
     public sealed class ConversationExporterConfiguration
     {
-        public string inputFilePath;
+        public string inputFilePath { get; set; }
 
-        public string outputFilePath;
+        public string outputFilePath { get; set; }
+        
+        public string UserToFilter { get; set; }
+        
+        public string KeywordToFilter { get; set; }
+        
+        public string BlacklistedTerm { get; set; }
 
-        public ConversationExporterConfiguration(string inputFilePath, string outputFilePath)
+
+        public ConversationExporterConfiguration()
         {
-            this.inputFilePath = inputFilePath;
-            this.outputFilePath = outputFilePath;
         }
     }
 }

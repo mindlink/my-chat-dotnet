@@ -5,12 +5,12 @@ namespace MindLink.Recruitment.MyChat
     
     public sealed class CommandLineArgumentParser
     {
-        public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
+        public string ParseCommandLineArguments(string[] arguments)
         {
-            if(arguments.Length != 2){
-                throw new ArgumentException($"You provided {arguments.Length} arguments when this tool needs 2");
+            if(arguments.Length != 1){
+                throw new ArgumentException($"You provided {arguments.Length} arguments when this tool needs 1 argument, a json config file");
             }
-            return new ConversationExporterConfiguration(arguments[0], arguments[1]);
+            return arguments[0];
         }
     }
 }

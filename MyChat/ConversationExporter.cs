@@ -80,7 +80,7 @@
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    var split = line.Split(' ');
+                    var split = line.Split(' ', 3);
 
                     messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
                 }

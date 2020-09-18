@@ -1,16 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChat", "MyChat\MyChat.csproj", "{246D2511-9B28-44F3-8D05-7EBFAB79C95F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyChat", "MyChat\MyChat.csproj", "{246D2511-9B28-44F3-8D05-7EBFAB79C95F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChat.Tests", "MyChat.Tests\MyChat.Tests.csproj", "{35295892-C40D-484F-967C-44328F8C0BCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyChat.Tests", "MyChat.Tests\MyChat.Tests.csproj", "{35295892-C40D-484F-967C-44328F8C0BCC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8B27D2A5-E7E6-46C3-BEE2-5930B7C0F831}"
 	ProjectSection(SolutionItems) = preProject
 		readme.md = readme.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChatModel", "MyChatModel\MyChatModel.csproj", "{D1F45A23-BF0C-4EB5-965B-11D6B37DC33C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChatView", "MyChatView\MyChatView.csproj", "{7C2ABC3B-F59C-465C-86AF-21626B17AA0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,8 +30,19 @@ Global
 		{35295892-C40D-484F-967C-44328F8C0BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35295892-C40D-484F-967C-44328F8C0BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35295892-C40D-484F-967C-44328F8C0BCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1F45A23-BF0C-4EB5-965B-11D6B37DC33C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1F45A23-BF0C-4EB5-965B-11D6B37DC33C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1F45A23-BF0C-4EB5-965B-11D6B37DC33C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1F45A23-BF0C-4EB5-965B-11D6B37DC33C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C2ABC3B-F59C-465C-86AF-21626B17AA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C2ABC3B-F59C-465C-86AF-21626B17AA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C2ABC3B-F59C-465C-86AF-21626B17AA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C2ABC3B-F59C-465C-86AF-21626B17AA0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D316B75-98F0-4226-8738-919AB7EDF79D}
 	EndGlobalSection
 EndGlobal

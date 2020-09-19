@@ -28,6 +28,5 @@
   <ItemGroup>
     <Folder Include="UnitTests\Controllers\" />
     <Folder Include="UnitTests\Features\Additional\" />
-    <Folder Include="UnitTests\Features\Essential\" />
   </ItemGroup>
 </Project>

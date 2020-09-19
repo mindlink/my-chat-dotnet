@@ -25,6 +25,10 @@
         {
             // SET
             this.user = user;
+            if (user == "" || String.IsNullOrWhiteSpace(user))
+            {
+                throw new ArgumentNullException("No username was supplied for the filter to use");
+            }
         }
 
         public Conversation ApplyFilter(Conversation conversation) 
@@ -52,17 +56,11 @@
             // IF the username is not valid
             if (!validUser)
             {
-                if (user == "" || user == " ")
-                {
-                    throw new ArgumentNullException("No username was supplied for the filter to use");
-                }
-                else 
-                {
-                    string conversationMessage = "No user by the name " + user + " was found";
+                // THEN the user was not found in the conversation, and we would like to tell the user this
+                string conversationMessage = "No user by the name " + user + " was found";
+                // AddFilterMessage conversationMessage to the conversation
+                filteredConversation.AddFilterMessage(conversationMessage);
 
-                    filteredConversation.AddFilterMessage(conversationMessage);
-                }
-                
             }
 
             // RETURN a new conversation, passing the conversation name to the constructor and the filtered

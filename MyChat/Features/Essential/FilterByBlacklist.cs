@@ -23,6 +23,14 @@
         {
             this.word = word;
 
+            // IF the word passed in is empty
+            if (word == "" || String.IsNullOrWhiteSpace(word))
+            {
+                // THROW an ArgumentNullException, to notify the user they have specifed the filter but
+                // not supplied any arguments
+                throw new ArgumentNullException("No word was supplied for the blacklist filter to use");
+            }
+
             regexWords = new List<Regex>();
             regexWords.Add(new Regex(@"\b" + word + @"\b"));
         }
@@ -34,12 +42,15 @@
             // FOREACH through the message in conversation messages list
             foreach (Message msg in conversation.Messages) 
             {
-                foreach (Regex rgx in regexWords) 
+                if (msg.Content.Contains(word))
                 {
-                    if (rgx.IsMatch(msg.Content))
+                    validInput = true;
+                    foreach (Regex rgx in regexWords)
                     {
-                        validInput = true;
-                        msg.Content = rgx.Replace(msg.Content, "\\*redacted\\*");
+                        if (rgx.IsMatch(msg.Content))
+                        {
+                            msg.Content = rgx.Replace(msg.Content, "\\*redacted\\*");
+                        }
                     }
                 }
             }
@@ -47,20 +58,10 @@
             // IF there is no valid input
             if (!validInput)
             {
-                // IF the word passed in is empty
-                if (word == "" || word == " ")
-                {
-                    // THROW an ArgumentNullException, to notify the user they have specifed the filter but
-                    // not supplied any arguments
-                    throw new ArgumentNullException("No word was supplied for the blacklist to use");
-                }
-                else
-                {
-                    // ELSE the word was not found in the conversation, and we would like to tell the user this
-                    string conversationMessage = "The word " + word + " to blacklist was not found in the conversation";
-                    // CALL to the conversations AddFilterMessage and pass in the message
-                    conversation.AddFilterMessage(conversationMessage);
-                }
+                // THEN the word was not found in the conversation, and we would like to tell the user this
+                string conversationMessage = "The word " + word + " to blacklist was not found in the conversation";
+                // CALL to the conversations AddFilterMessage and pass in the message
+                conversation.AddFilterMessage(conversationMessage);
             }
 
             return conversation;        

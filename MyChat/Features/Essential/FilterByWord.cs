@@ -29,7 +29,7 @@
             this.word = word;
 
             // IF the word passed in is empty
-            if (word == "" || word == " ")
+            if (word == "" || String.IsNullOrWhiteSpace(word))
             {
                 // THROW an ArgumentNullException, to notify the user they have specifed the filter but
                 // not supplied any arguments

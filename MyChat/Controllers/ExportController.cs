@@ -52,11 +52,6 @@
                 conversation = filterController.FilterConversation(conversation);
             }
 
-            if (conversation.FilterMessage == null) 
-            {
-                conversation.AddFilterMessage("No filter errors");
-            }
-
             writeController.WriteConversation(conversation, outputFilePath);
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);

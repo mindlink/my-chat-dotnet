@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Security.Cryptography.X509Certificates;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Class to filter a conversation and show only the messages which contain the word
@@ -17,6 +18,9 @@
         /// string to store the word to find in the conversation
         /// </summary>
         private string word;
+
+        // List for regex words, to check if a string contains key words
+        private IList<Regex> regexWords;
         
         /// <summary>
         /// Constructor for FilterByWord, takes 1 param, which will be the word to
@@ -26,6 +30,9 @@
         public FilterByWord(string word) 
         {
             this.word = word;
+
+            regexWords = new List<Regex>();
+            regexWords.Add(new Regex(@"\b" + word + @"\b"));
         }
 
         public Conversation ApplyFilter(Conversation conversation) 
@@ -39,13 +46,10 @@
             // FOREACH through the messages in the conversation
             foreach (Message msg in conversation.Messages) 
             {
-                // IF the messag content contains the word
-                if (msg.Content.Contains(word)) 
+                foreach (Regex rgx in regexWords) 
                 {
-                    // SET the validInput bool to true
-                    validInput = true;
-                    // ADD the message to the list of filteredMessages
-                    filteredMessages.Add(msg);
+                    if (rgx.IsMatch(msg.Content))
+                        filteredMessages.Add(msg);
                 }
             }
             // SET the filterConversation to a new Conversation, passing in the conversation name

@@ -1,5 +1,6 @@
 ﻿namespace MindLink.Recruitment.MyChat.Controllers
 {
+    using MindLink.Recruitment.MyChat.CustomExceptions;
     using MindLink.Recruitment.MyChat.Features.Additional;
     using MindLink.Recruitment.MyChat.Features.Essential;
     using MindLink.Recruitment.MyChat.Interfaces.ControllerInterfaces;
@@ -8,6 +9,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Reflection;
     using System.Text;
 
     /// <summary>
@@ -60,31 +62,73 @@
         {
             for (int i = 0; i < filtersToCheck.Length; i++) 
             {
-                // SWITCH case to check for the different filters
-                switch (filtersToCheck[i])
+                try
                 {
-                    case "-filter-user":
-                        FiltersToApply = true;
-                        this.filters.Add(new FilterByUser(filtersToCheck[i + 1]));
-                        break;
-                    case "-filter-search-word":
-                        FiltersToApply = true;
-                        this.filters.Add(new FilterByWord(filtersToCheck[i + 1]));
-                        break;
-                    case "-filter-blacklist-word":
-                        FiltersToApply = true;
-                        this.filters.Add(new FilterByBlacklist(filtersToCheck[i + 1]));
-                        break;
-                    case "-filter-card-details":
-                        FiltersToApply = true;
-                        this.filters.Add(new FilterCardDetails());
-                        break;
-                    case "-filter-phone-number":
-                        FiltersToApply = true;
-                        this.filters.Add(new FilterPhoneNumbers());
-                        break;
+
+                    // SWITCH case to check for the different filters
+                    switch (filtersToCheck[i])
+                    {
+                        case "-filter-user":
+                            FiltersToApply = true;
+                            CheckFilterArgument(filtersToCheck[i + 1]);
+                            this.filters.Add(new FilterByUser(filtersToCheck[i + 1]));
+                            break;
+                        case "-filter-search-word":
+                            FiltersToApply = true;
+                            CheckFilterArgument(filtersToCheck[i + 1]);
+                            this.filters.Add(new FilterByWord(filtersToCheck[i + 1]));
+                            break;
+                        case "-filter-blacklist-word":
+                            FiltersToApply = true;
+                            CheckFilterArgument(filtersToCheck[i + 1]);
+                            this.filters.Add(new FilterByBlacklist(filtersToCheck[i + 1]));
+                            break;
+                        case "-filter-card-details":
+                            FiltersToApply = true;
+                            this.filters.Add(new FilterCardDetails());
+                            break;
+                        case "-filter-phone-number":
+                            FiltersToApply = true;
+                            this.filters.Add(new FilterPhoneNumbers());
+                            break;
+                    }
+                }
+                catch (IndexOutOfRangeException inner)
+                {
+                    throw new ArgumentNullException("No argument was supplied for the filter to use", inner);
+                }
+                catch (UnacceptableFilterArgs inner) 
+                {
+                    throw new ArgumentException("You supplied a filter as an argument to a filter", inner);
                 }
             }
+        }
+
+        private void CheckFilterArgument(string filterArg) 
+        {
+            switch (filterArg) 
+            {
+                case "-filter-user":
+                    ThrowUnacceptableFilterException(filterArg);
+                    break;
+                case "-filter-search-word":
+                    ThrowUnacceptableFilterException(filterArg);
+                    break;
+                case "-filter-blacklist-word":
+                    ThrowUnacceptableFilterException(filterArg);
+                    break;
+                case "-filter-card-details":
+                    ThrowUnacceptableFilterException(filterArg);
+                    break;
+                case "-filter-phone-number":
+                    ThrowUnacceptableFilterException(filterArg);
+                    break;
+            }
+        }
+
+        private void ThrowUnacceptableFilterException(string args) 
+        {
+            throw new UnacceptableFilterArgs("You supplied " + args + " as a filter args");
         }
     }
 }

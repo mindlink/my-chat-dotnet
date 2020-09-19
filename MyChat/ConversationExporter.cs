@@ -46,43 +46,31 @@
             // We assume that the first line will always be the conversation title.
             string conversationName = reader.ReadLine();
             string line;
-            
+
             while ((line = reader.ReadLine()) != null)
             {
                 var array = line.Split(' ');
 
                 var message = ArrayToMessage(array);
 
-                List<bool> validationResults = new List<bool>();
-                
-                //You've got a line, now check it depending on the rules in the config.
-                //TODO: this absolutely needs to be refactored into its own function that returns a bool if all pass.
-                if (rules.UserToFilter != null)
-                {
-                    Console.WriteLine("Filtering by user name.");
-                    validationResults.Add(UsernameFound(message, rules.UserToFilter));
-                }
+                var validMessage = PassesValidation(message, rules);
 
-                if (rules.KeywordToFilter != null)
+                if (!validMessage)
                 {
-                    Console.WriteLine("Filtering by keyword.");
-                    validationResults.Add(KeywordInMessage(message, rules.KeywordToFilter));
-                }
-
-                if (!validationResults.All(x => x))
-                {
-                    continue;//The validation failed so you ditch this line and move to the next one.
+                    //Failed. Skip this line and move to the next one. 
+                    continue;
                 }
 
                 Console.WriteLine("Got through validation.");
                 if (rules.BlacklistedTerm != null)
-                {    
+                {
                     Console.WriteLine("Checking for and going to erase banned term.");
-                    var MessageAfterAdjustment = AdjustBlacklistedWord(message, rules.BlacklistedTerm);
-                    messages.Add(MessageAfterAdjustment);
+                    
+                    messages.Add(SanitiseMessage(message, rules.BlacklistedTerm));
                 }
-                else{
-                    Console.WriteLine($"Adding: {message.timestamp}, {message.senderId}, {message.content}"); 
+                else
+                {
+                    Console.WriteLine($"Adding: {message.timestamp}, {message.senderId}, {message.content}");
                     messages.Add(message);
                 }
             }
@@ -163,9 +151,9 @@
 
         public Func<Message, string, bool> UsernameFound = (message, query) => message.senderId == query;
 
-        public Func<Message, string, bool> KeywordInMessage = (m, kw) => m.content.Split(" ").Any(j => j == kw);
+        public Func<Message, string, bool> KeywordInMessage = (m, kw) => m.content.Split(" ").Any(j => j.ToLower() == kw.ToLower());
 
-        public Message AdjustBlacklistedWord(Message message, string bannedTerm)
+        public Message SanitiseMessage(Message message, string bannedTerm)
         {
             //TODO: need to be able to handle the case where conversation='pie?' and banned-word='pie'. 
             if (!KeywordInMessage(message, bannedTerm))
@@ -177,7 +165,7 @@
 
             foreach (var word in message.content.Split())
             {
-                if (word == bannedTerm)
+                if (word.ToLower() == bannedTerm.ToLower())
                 {
                     final.Add("*redacted*");
                     continue;
@@ -189,5 +177,32 @@
             return new Message(message.timestamp, message.senderId, string.Join(" ", final));
         }
 
+        public bool PassesValidation(Message m, ConversationExporterConfiguration rules)
+        {
+            // PassesValidation takes in a message and a set of rules.
+            // We perform validation based on what the user asked for in the config.
+            // If everything passes, then we're all good. If no validation needed, 
+            // then it'll just skip and return.
+
+            var allGood = true; //Let's assume we're fine until proven otherwise. 
+            
+            List<bool> results = new List<bool>();
+            
+            if (rules.UserToFilter != null)
+            {
+                Console.WriteLine("Filtering by user name.");
+                results.Add(UsernameFound(m, rules.UserToFilter));
+            }
+
+            if (rules.KeywordToFilter != null)
+            {
+                Console.WriteLine("Filtering by keyword.");
+                results.Add(KeywordInMessage(m, rules.KeywordToFilter));
+            }
+            
+            //Are *all* results true:
+            return results.All(r => r);
+
+        }
     }
 }

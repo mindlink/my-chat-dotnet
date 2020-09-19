@@ -15,13 +15,15 @@ namespace MindLink.Recruitment.MyChat.Tests
         public void TitleOfExportedConversationIsCorrect()
         {
             var exporter = new ConversationExporter();
+            
+            var emptyConfig = new ConversationExporterConfiguration();
 
             var reader = exporter.GetStreamReader("chat.txt", FileMode.Open,
                 FileAccess.Read, Encoding.ASCII);
 
             var writer = exporter.GetStreamWriter("output.json", FileMode.Create, FileAccess.ReadWrite);
 
-            exporter.WriteConversation(writer, exporter.ExtractConversation(reader), "chat.json");
+            exporter.WriteConversation(writer, exporter.ExtractConversation(reader, emptyConfig), "chat.json");
 
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 
@@ -29,7 +31,7 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             Assert.That(savedConversation.Name, Is.EqualTo("My Conversation"));
         }
-
+        
         [Test]
         public void CorrectArgsReturnsCorrectStreamReader()
         {
@@ -37,13 +39,13 @@ namespace MindLink.Recruitment.MyChat.Tests
             var got = cp.GetStreamReader("chat.txt", FileMode.Create, FileAccess.ReadWrite, Encoding.ASCII);
             Assert.That(got, Is.TypeOf<StreamReader>());
         }
-
-        // [Test]
-        // public void NonExistentDirectoryToStreamReaderThrowsError()
-        // {
-        //TODO: fill test.
-        // }
-
+        //
+        // // [Test]
+        // // public void NonExistentDirectoryToStreamReaderThrowsError()
+        // // {
+        // //TODO: fill test.
+        // // }
+        //
         [Test]
         public void CorrectArgsReturnsCorrectStreamWriter()
         {
@@ -51,7 +53,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var got = cp.GetStreamWriter("output.something", FileMode.Create, FileAccess.ReadWrite);
             Assert.That(got, Is.TypeOf<StreamWriter>());
         }
-
+        
         [Test]
         public void ArrayToMessageTakesArrayAndReturnsMessageObject()
         {
@@ -59,9 +61,9 @@ namespace MindLink.Recruitment.MyChat.Tests
             string[] line = {"1234", "david", "a message"};
             var got = cp.ArrayToMessage(line);
             Assert.That(got, Is.TypeOf<Message>());
-
+        
         }
-
+        
         [Test]
         public void SenderIDCorrectAfterConversionIntoMessage()
         {
@@ -71,7 +73,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var want = "david";
             Assert.That(got, Is.EqualTo(want));
         }
-
+        
         [Test]
         public void MessageContentCorrectAfterConversion()
         {
@@ -81,7 +83,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var want = "a message";
             Assert.That(got, Is.EqualTo(want));
         }
-
+        
         [Test]
         public void TimestampCorrectWhenCreatingNewMessage()
         {
@@ -91,7 +93,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             DateTimeOffset want = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901"));
             Assert.That(got, Is.EqualTo(want));
         }
-
+        
         [Test]
         public void StringToUnixTimeStampCorrrectlyFormatsTimeStamp()
         {
@@ -100,41 +102,29 @@ namespace MindLink.Recruitment.MyChat.Tests
             DateTimeOffset want = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901"));
             Assert.That(got, Is.EqualTo(want));
         }
-
+        
         [Test]
         public void NameInSenderReturnsTrue()
         {
             ConversationExporter cp = new ConversationExporter();
             string[] line = {"1234", "david", "a message"};
-
+        
             var message = cp.ArrayToMessage(line);
-
-            Assert.That(cp.StringEqual(message.senderId, "david"), Is.EqualTo(true));
+        
+            Assert.That(cp.UsernameFound(message, "david"), Is.EqualTo(true));
         }
-
+        
         [Test]
-        public void ShorterQueryContainedWithinLongerNameIsFalse()
+        public void ShorterNameContainedWithinLongerNameIsNotFound()
         {
-            // Assumption: a shorter query contained within a longer
-            // name will fail. 
+            // If someone searches for "davide" and we find the name is "david"
+            // that should fail. 
             ConversationExporter cp = new ConversationExporter();
             string[] line = {"1234", "davide", "a message"};
-
+        
             var message = cp.ArrayToMessage(line);
-
-            Assert.That(cp.StringEqual(message.senderId, "david"), Is.EqualTo(false));
-        }
-
-        [Test]
-        public void SimilarNameNotCaught()
-        {    // If someone searches for "davide" and we find the name is "david"
-            // that should fail.
-            ConversationExporter cp = new ConversationExporter();
-            string[] line = {"1234", "david", "a message"};
-
-            var message = cp.ArrayToMessage(line);
-
-            Assert.That(cp.StringEqual(message.senderId, "davide"), Is.EqualTo(false));
+        
+            Assert.That(cp.UsernameFound(message, "david"), Is.EqualTo(false));
         }
         
         [Test]
@@ -142,10 +132,10 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             ConversationExporter cp = new ConversationExporter();
             string[] line = {"1234", "david", "a message"};
-
+        
             var message = cp.ArrayToMessage(line);
-
-            Assert.That(cp.StringEqual(message.senderId, "notInSender"), Is.EqualTo(false));
+        
+            Assert.That(cp.KeywordInMessage(message, "notInSender"), Is.EqualTo(false));
         }
         
         [Test]
@@ -153,10 +143,10 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             ConversationExporter cp = new ConversationExporter();
             string[] line = {"1234", "david", "this is a message"};
-
+        
             var message = cp.ArrayToMessage(line);
-
-            Assert.That(cp.KeywordInMessage(message.content, "message"), Is.EqualTo(true));
+        
+            Assert.That(cp.KeywordInMessage(message, "message"), Is.EqualTo(true));
         }
         
         [Test]
@@ -164,10 +154,10 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             ConversationExporter cp = new ConversationExporter();
             string[] line = {"1234", "david", "this is a message"};
-
+        
             var message = cp.ArrayToMessage(line);
-
-            Assert.That(cp.KeywordInMessage(message.content, "nonexistent"), Is.EqualTo(false));
+        
+            Assert.That(cp.KeywordInMessage(message, "nonexistent"), Is.EqualTo(false));
         }
         
         [Test]
@@ -175,62 +165,83 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             ConversationExporter cp = new ConversationExporter();
             string[] line = {"1234", "david", "shorter word is found within"};
-
+        
             var message = cp.ArrayToMessage(line);
-
-            Assert.That(cp.KeywordInMessage(message.content, "with"), Is.EqualTo(false));
+        
+            Assert.That(cp.KeywordInMessage(message, "with"), Is.EqualTo(false));
         }
         
         [Test]
-        public void LongKeywordThatMakesUpPartOfWordNotFound()
+        public void CapitalKeywordFindsLowercaseKeyword()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "Shorter word is found within"};
+        
+            var message = cp.ArrayToMessage(line);
+        
+            Assert.That(cp.KeywordInMessage(message, "shorter"), Is.EqualTo(true));
+        }
+        
+        [Test]
+        public void KeywordWithinAnotherWordNotFound()
         {
             ConversationExporter cp = new ConversationExporter();
             string[] line = {"1234", "david", "hereisalongword found within"};
-
+        
             var message = cp.ArrayToMessage(line);
-
-            Assert.That(cp.KeywordInMessage(message.content, "hereisalongwordplusextra"), Is.EqualTo(false));
+        
+            Assert.That(cp.KeywordInMessage(message, "hereisalongwordplusextra"), Is.EqualTo(false));
         }
         
         [Test]
-        public void OneStringContainingKeywordFalse()
+        public void MessageContainingPartOfKeywordIsFalse()
         {
             ConversationExporter cp = new ConversationExporter();
             string[] line = {"1234", "david", "thisisalongstring"};
-
+        
             var message = cp.ArrayToMessage(line);
-
-            Assert.That(cp.KeywordInMessage(message.content, "string"), Is.EqualTo(false));
-        }
-
-        [Test]
-        public void BlacklistedWordRemovedFromMessage()
-        {
-            ConversationExporter cp = new ConversationExporter();
-            string[] line = {"1234", "david", "blacklist word is found"};
-            var message = cp.ArrayToMessage(line);
-            var bl = "word";
-            Assert.That(cp.AdjustBlacklistedWord(message.content, "word"), Is.EqualTo("blacklist *redacted* is found"));
+        
+            Assert.That(cp.KeywordInMessage(message, "string"), Is.EqualTo(false));
         }
         
         [Test]
-        public void BlacklistedWordNotFoundNotRemovedFromMessage()
+        public void BannedWordRemovedFromMessage()
         {
             ConversationExporter cp = new ConversationExporter();
-            string[] line = {"1234", "david", "blacklisted word is not found"};
+            string[] line = {"1234", "david", "banned word is found"};
             var message = cp.ArrayToMessage(line);
-            var bl = "word";
-            Assert.That(cp.AdjustBlacklistedWord(message.content, "other"), Is.EqualTo("blacklisted word is not found"));
+            var bt = "word";
+            Assert.That(cp.SanitiseMessage(message, "word").content, Is.EqualTo("banned *redacted* is found"));
         }
         
         [Test]
-        public void BlacklistedWordContainedWithinALongerWordIsNotRedacted()
+        public void NonExistentBannedTermNotRemovedFromMessage()
+        {
+            ConversationExporter cp = new ConversationExporter();
+            string[] line = {"1234", "david", "banned term is not found"};
+            var message = cp.ArrayToMessage(line);
+            var bt = "word";
+            Assert.That(cp.SanitiseMessage(message, "other").content, Is.EqualTo("banned term is not found"));
+        }
+        
+        [Test]
+        public void BannedWordContainedWithinALongerWordIsNotRedacted()
         {    
             ConversationExporter cp = new ConversationExporter();
-            string[] line = {"1234", "david", "blacklisted word contained within is not changed"};
+            string[] line = {"1234", "david", "banned word contained within is not changed"};
             var message = cp.ArrayToMessage(line);
-            var bl = "with";
-            Assert.That(cp.AdjustBlacklistedWord(message.content, "with"), Is.EqualTo("blacklisted word contained within is not changed"));
+            var bt = "with";
+            Assert.That(cp.SanitiseMessage(message, "with").content, Is.EqualTo("banned word contained within is not changed"));
+        }
+        
+        [Test]
+        public void CasingOfWordsNotImportantForBlacklistedTerms()
+        {    
+        ConversationExporter cp = new ConversationExporter();
+        string[] line = {"1234", "david", "blacklisted word contained within is not changed"};
+        var message = cp.ArrayToMessage(line);
+        var bl = "with";
+        Assert.That(cp.SanitiseMessage(message, "Word").content, Is.EqualTo("blacklisted *redacted* contained within is not changed"));
         }
     }
 

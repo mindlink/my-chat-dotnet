@@ -21,7 +21,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void TooFewCommandLineArgumentsThrowsError()
         {
-            string[] tooFewItems = {"item1"};
+            string[] tooFewItems = {};
             
             CommandLineArgumentParser cp = new CommandLineArgumentParser();
 

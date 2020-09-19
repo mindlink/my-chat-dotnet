@@ -1,5 +1,6 @@
 ﻿namespace MindLink.Recruitment.MyChat.Controllers
 {
+    using MindLink.Recruitment.MyChat.Features.Additional;
     using MindLink.Recruitment.MyChat.Features.Essential;
     using MindLink.Recruitment.MyChat.Interfaces.ControllerInterfaces;
     using MindLink.Recruitment.MyChat.Interfaces.FeatureInterfaces;
@@ -76,7 +77,11 @@
                         break;
                     case "-filter-card-details":
                         FiltersToApply = true;
-                        //this.filters.Add(new FilterOutCreditCard());
+                        this.filters.Add(new FilterCardDetails());
+                        break;
+                    case "-filter-phone-number":
+                        FiltersToApply = true;
+                        this.filters.Add(new FilterPhoneNumbers());
                         break;
                 }
             }

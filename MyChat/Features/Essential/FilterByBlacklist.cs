@@ -47,7 +47,7 @@
                     // ELSE the word was not found in the conversation, and we would like to tell the user this
                     string conversationMessage = "The word " + word + " was not found in the conversation";
                     // CALL to the conversations AddFilterMessage and pass in the message
-                    filteredConversation.AddFilterMessage(conversationMessage);
+                    conversation.AddFilterMessage(conversationMessage);
                 }
             }
 

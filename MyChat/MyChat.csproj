@@ -29,9 +29,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\Additional\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MyChatModel\MyChatModel.csproj" />
   </ItemGroup>
 </Project>

@@ -13,19 +13,23 @@
         private IWriteController writeController;
         // IFilterController variable, called filterController
         private IFilterController filterController;
+        // IReportController variable called reportController
+        private IReportController reportController;
 
         /// <summary>
         /// CONSTRUCTOR for ExportController class, takes 2 params
         /// </summary>
         /// <param name="readController"> <see cref="IReadController"> variable </param>
         /// <param name="writeController"> <see cref="IWriteController"> variable </param>
-        public ExportController(IReadController readController, IWriteController writeController, IFilterController filterController) 
+        public ExportController(IReadController readController, IWriteController writeController, 
+            IFilterController filterController, IReportController reportController) 
         {
             // SET the read, write and filter controller variables passed in 
             // to their respective local variables in this class
             this.readController = readController;
             this.writeController = writeController;
             this.filterController = filterController;
+            this.reportController = reportController;
         }
 
         /// <summary>
@@ -51,6 +55,8 @@
             {
                 conversation = filterController.FilterConversation(conversation);
             }
+
+            conversation = reportController.GenerateReport(conversation);
 
             writeController.WriteConversation(conversation, outputFilePath);
 

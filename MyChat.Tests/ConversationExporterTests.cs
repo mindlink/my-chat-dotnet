@@ -23,7 +23,7 @@
         {
            
             // INITIALISE the ExportController for testing
-            IExportController exporter = new ExportController(new ReadController(), new WriteController(), new FilterController());
+            IExportController exporter = new ExportController(new ReadController(), new WriteController(), new FilterController(), new ReportController());
 
             exporter.ExportConversation("chat.txt", "chat.json");
 

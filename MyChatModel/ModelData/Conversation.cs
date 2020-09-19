@@ -10,6 +10,10 @@
         /// </summary>
         public string Name { get; }
         /// <summary>
+        /// The conversation report
+        /// </summary>
+        public ConversationReport Report { get; set; }
+        /// <summary>
         /// A list of strings for the filters to write any messages into
         /// in case of certain scenarios
         /// </summary>

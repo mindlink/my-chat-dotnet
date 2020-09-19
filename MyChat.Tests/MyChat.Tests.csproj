@@ -26,7 +26,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="IntegrationTests\" />
     <Folder Include="UnitTests\Controllers\" />
-    <Folder Include="UnitTests\Features\Additional\" />
   </ItemGroup>
 </Project>

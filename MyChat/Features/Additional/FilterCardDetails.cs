@@ -24,6 +24,8 @@
             cardDetailsRegex = new List<Regex>();
             // ADD different regexes to find card details, source
             // https://www.regular-expressions.info/creditcard.html
+            // Just in case, 16 digit number regex
+            cardDetailsRegex.Add(new Regex(@"\b[0-9]{12,16}\b"));
             // visa cards
             cardDetailsRegex.Add(new Regex(@"\b4[0-9]{12}(?:[0-9]{3})?\b"));
             // master card
@@ -36,12 +38,18 @@
 
         public Conversation ApplyFilter(Conversation conversation)
         {
+            // ITERATE through the messages in the conversation
             foreach (Message msg in conversation.Messages) 
             {
+                // ITERATE through the regex's
                 foreach (Regex rgx in cardDetailsRegex)
                 {
+                    // IF there is a match for the regex
                     if (rgx.IsMatch(msg.Content))
+                    {
+                        // REPLACE the message content with \\*redacted\\*
                         msg.Content = rgx.Replace(msg.Content, "\\*redacted\\*");
+                    }
                 }
             }
 

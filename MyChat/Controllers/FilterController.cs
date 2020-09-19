@@ -64,7 +64,6 @@
             {
                 try
                 {
-
                     // SWITCH case to check for the different filters
                     switch (filtersToCheck[i])
                     {
@@ -90,6 +89,10 @@
                         case "-filter-phone-number":
                             FiltersToApply = true;
                             this.filters.Add(new FilterPhoneNumbers());
+                            break;
+                        case "-filter-obfuscate":
+                            FiltersToApply = true;
+                            this.filters.Add(new FilterObfuscateUsers());
                             break;
                     }
                 }

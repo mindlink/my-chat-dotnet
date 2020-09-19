@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
-
-namespace MyChat
+﻿namespace MyChat
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.IO;
     using System.Security;
@@ -14,48 +12,84 @@ namespace MyChat
     public sealed class ConversationExporter
     {
         static void Main(string[] args)
-        {   
+        {
             // Get the path to the JSON config file
-            // string jsonConfig = new CommandLineArgumentParser().ParseCommandLineArguments(args);
-            
+            string jsonConfig = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+
             // Now setup the config based on what was in the JSON file. 
-            // var config = JsonConvert.DeserializeObject<ConversationExporterConfiguration>(File.ReadAllText(jsonConfig));
-            
+            var config = JsonConvert.DeserializeObject<ConversationExporterConfiguration>(File.ReadAllText(jsonConfig));
 
-            // var conversationExporter = new ConversationExporter();
+            var conversationExporter = new ConversationExporter();
 
-            //
-            // // Get a reader and do some reading.  
-            // var reader = conversationExporter.GetStreamReader(config.inputFilePath, FileMode.Open, FileAccess.Read, Encoding.ASCII);
-            // var conversation = conversationExporter.ExtractConversation(reader);
-            //
-            // Console.WriteLine(conversation.Name);
-            //
-            // // Get a writer and do some writing.
-            // var writer = conversationExporter.GetStreamWriter(config.outputFilePath, FileMode.Create, FileAccess.ReadWrite);
-            // conversationExporter.WriteConversation(writer, conversation, config.outputFilePath);
-            //
-            // // And we're done. 
-            // Console.WriteLine($"Conversation exported from '{config.inputFilePath}' to '{config.outputFilePath}'");
+            // Get a reader and do some reading.  
+            var reader = conversationExporter.GetStreamReader(config.inputFilePath, FileMode.Open, FileAccess.Read,
+                Encoding.ASCII);
+
+            // Extract conversation according to the rules specified by the user 
+            var conversation = conversationExporter.ExtractConversation(reader, config);
+
+            // Get a writer and do some writing.
+            var writer =
+                conversationExporter.GetStreamWriter(config.outputFilePath, FileMode.Create, FileAccess.ReadWrite);
+            conversationExporter.WriteConversation(writer, conversation, config.outputFilePath);
+
+            // And we're done. 
+            Console.WriteLine($"Conversation exported from '{config.inputFilePath}' to '{config.outputFilePath}'");
         }
 
-        public Conversation ExtractConversation(TextReader reader)
+        public Conversation ExtractConversation(TextReader reader, ConversationExporterConfiguration rules)
         {
+            // ExtractConversation reads lines of text. At each line, it checks the rules from the config
+            // to see if a line should be in the final output.
             var messages = new List<Message>();
-            
+
             // We assume that the first line will always be the conversation title.
             string conversationName = reader.ReadLine();
             string line;
+            
             while ((line = reader.ReadLine()) != null)
             {
                 var array = line.Split(' ');
+
+                var message = ArrayToMessage(array);
+
+                List<bool> validationResults = new List<bool>();
                 
-                
-                messages.Add(ArrayToMessage(array));
+                //You've got a line, now check it depending on the rules in the config.
+                //TODO: this absolutely needs to be refactored into its own function that returns a bool if all pass.
+                if (rules.UserToFilter != null)
+                {
+                    Console.WriteLine("Filtering by user name.");
+                    validationResults.Add(UsernameFound(message, rules.UserToFilter));
+                }
+
+                if (rules.KeywordToFilter != null)
+                {
+                    Console.WriteLine("Filtering by keyword.");
+                    validationResults.Add(KeywordInMessage(message, rules.KeywordToFilter));
+                }
+
+                if (!validationResults.All(x => x))
+                {
+                    continue;//The validation failed so you ditch this line and move to the next one.
+                }
+
+                Console.WriteLine("Got through validation.");
+                if (rules.BlacklistedTerm != null)
+                {    
+                    Console.WriteLine("Checking for and going to erase banned term.");
+                    var MessageAfterAdjustment = AdjustBlacklistedWord(message, rules.BlacklistedTerm);
+                    messages.Add(MessageAfterAdjustment);
+                }
+                else{
+                    Console.WriteLine($"Adding: {message.timestamp}, {message.senderId}, {message.content}"); 
+                    messages.Add(message);
+                }
             }
 
             return new Conversation(conversationName, messages);
         }
+
 
         public void WriteConversation(TextWriter writer, Conversation conversation, string outputFilePath)
         {
@@ -84,7 +118,8 @@ namespace MyChat
             }
             catch (SecurityException)
             {
-                throw new SecurityException($"Couldn't open the file {inputFilePath} because of a permissions issue");
+                throw new SecurityException(
+                    $"Couldn't open the file {inputFilePath} because of a permissions issue");
             }
         }
 
@@ -119,36 +154,40 @@ namespace MyChat
         }
 
         public DateTimeOffset StringToUnixTimeStamp(string s)
-        {    // StringToUnixTimeStamp does as its name suggests: it takes in a string
-            // and parses it into a unix timestamp. 
+        {
+            // StringToUnixTimeStamp does as its name suggests: it takes in a string
+            // and parses it into a unix datetimeoffset timestamp. 
             //TODO: some error checks. Maybe a try parse and if that fails return. 
             return DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(s));
         }
-        
-        public Func<string, string, bool> StringEqual = (item, query) => item == query;
-        
-        public Func<string, string, bool> KeywordInMessage = (message, kw) => message.Split(" ").Any(word => word == kw);
 
-        public string AdjustBlacklistedWord(string message, string blacklist)
+        public Func<Message, string, bool> UsernameFound = (message, query) => message.senderId == query;
+
+        public Func<Message, string, bool> KeywordInMessage = (m, kw) => m.content.Split(" ").Any(j => j == kw);
+
+        public Message AdjustBlacklistedWord(Message message, string bannedTerm)
         {
-            if(!KeywordInMessage(message, blacklist))
+            //TODO: need to be able to handle the case where conversation='pie?' and banned-word='pie'. 
+            if (!KeywordInMessage(message, bannedTerm))
             {
                 return message;
             }
 
             List<string> final = new List<string>();
-            
-            foreach (var word in message.Split())
+
+            foreach (var word in message.content.Split())
             {
-                if(word == blacklist)
+                if (word == bannedTerm)
                 {
-                    final.Add("*redacted*");    
+                    final.Add("*redacted*");
                     continue;
                 }
+
                 final.Add(word);
             }
 
-            return string.Join(" ", final);
+            return new Message(message.timestamp, message.senderId, string.Join(" ", final));
         }
+
     }
 }

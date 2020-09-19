@@ -6,6 +6,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
+
     public sealed class FilterByBlacklist : IStrategyFilter
     {
         /// <summary>
@@ -14,9 +16,15 @@
         /// </summary>
         private string word;
 
+        // IList of type Regex, called regexWords,
+        private IList<Regex> regexWords;
+
         public FilterByBlacklist(string word) 
         {
             this.word = word;
+
+            regexWords = new List<Regex>();
+            regexWords.Add(new Regex(@"\b" + word + @"\b"));
         }
 
         public Conversation ApplyFilter(Conversation conversation) 
@@ -26,10 +34,14 @@
             // FOREACH through the message in conversation messages list
             foreach (Message msg in conversation.Messages) 
             {
-                validInput = true;
-                // SET the content of the message to the returned
-                // string from RemoveWord, passing in the current message
-                msg.Content = RemoveWord(msg);
+                foreach (Regex rgx in regexWords) 
+                {
+                    if (rgx.IsMatch(msg.Content))
+                    {
+                        validInput = true;
+                        msg.Content = rgx.Replace(msg.Content, "\\*redacted\\*");
+                    }
+                }
             }
 
             // IF there is no valid input
@@ -45,7 +57,7 @@
                 else
                 {
                     // ELSE the word was not found in the conversation, and we would like to tell the user this
-                    string conversationMessage = "The word " + word + " was not found in the conversation";
+                    string conversationMessage = "The word " + word + " to blacklist was not found in the conversation";
                     // CALL to the conversations AddFilterMessage and pass in the message
                     conversation.AddFilterMessage(conversationMessage);
                 }
@@ -56,7 +68,7 @@
 
         /// <summary>
         /// RemoveWord, removes the word and keeps characters after the word
-        /// 
+        /// swapped out for use Regex for ease of use
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>

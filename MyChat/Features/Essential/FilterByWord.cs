@@ -18,9 +18,6 @@
         /// string to store the word to find in the conversation
         /// </summary>
         private string word;
-
-        // List for regex words, to check if a string contains key words
-        private IList<Regex> regexWords;
         
         /// <summary>
         /// Constructor for FilterByWord, takes 1 param, which will be the word to
@@ -31,8 +28,13 @@
         {
             this.word = word;
 
-            regexWords = new List<Regex>();
-            regexWords.Add(new Regex(@"\b" + word + @"\b"));
+            // IF the word passed in is empty
+            if (word == "" || word == " ")
+            {
+                // THROW an ArgumentNullException, to notify the user they have specifed the filter but
+                // not supplied any arguments
+                throw new ArgumentNullException("No word was supplied for the word filter to use");
+            }
         }
 
         public Conversation ApplyFilter(Conversation conversation) 
@@ -46,10 +48,11 @@
             // FOREACH through the messages in the conversation
             foreach (Message msg in conversation.Messages) 
             {
-                foreach (Regex rgx in regexWords) 
+                if (msg.Content.Contains(word))
                 {
-                    if (rgx.IsMatch(msg.Content))
-                        filteredMessages.Add(msg);
+                    validInput = true;
+
+                    filteredMessages.Add(msg);
                 }
             }
             // SET the filterConversation to a new Conversation, passing in the conversation name
@@ -59,23 +62,13 @@
             // IF there is no valid input
             if (!validInput) 
             {
-                // IF the word passed in is empty
-                if (word == "" || word == " ")
-                {
-                    // THROW an ArgumentNullException, to notify the user they have specifed the filter but
-                    // not supplied any arguments
-                    throw new ArgumentNullException("No word was supplied for the word filter to use");
-                }
-                else
-                {
-                    // ELSE the word was not found in the conversation, and we would like to tell the user this
+                // THEN the word was not found in the conversation, and we would like to tell the user this
                     string conversationMessage = "The word " + word + " was not found in the conversation";
-                    // CALL to the conversations AddFilterMessage and pass in the message
-                    filteredConversation.AddFilterMessage(conversationMessage);
-                }
+                // CALL to the conversations AddFilterMessage and pass in the message
+                filteredConversation.AddFilterMessage(conversationMessage);
             }
 
-            return new Conversation(conversation.Name, filteredMessages);
+            return filteredConversation;
         }
     }
 }

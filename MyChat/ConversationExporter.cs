@@ -186,7 +186,8 @@ namespace MyChat
                     continue;
                 }
 
-                //Check if the bannedTerm is actually hidden inside a word that is being padded on the right by terminal punctuation marks (. ! ; ... ?) ?
+                //Check if the bannedTerm is actually hidden inside a word.
+                //If it is, is that word being padded on the right by terminal punctuation marks (. ! ; ... ?) ?
                 if (word.Contains(bannedTerm, StringComparison.CurrentCultureIgnoreCase) &&
                     WordsMatchAfterTerminalPunctuationRemoved(FindStartOfTerminalPunctuation_English(word), word, bannedTerm))
                 {
@@ -208,7 +209,7 @@ namespace MyChat
         {
             // CreateValidationFuncs create a list of filtering functions based on what the user gave us in the config.
             // The idea then is that, based on a single Message, you can call .All() on them. If all the Funcs pass,
-            // then the message is ok. Otherwise, it isn't.
+            // then the message is ok.
             List<Func<Message, bool>> Funcs = new List<Func<Message, bool>>();
 
             if (rules.UserToFilter != null)
@@ -220,7 +221,6 @@ namespace MyChat
             {
                 Funcs.Add(KeywordInMessage(rules.KeywordToFilter));
             }
-
             return Funcs;
         }
 
@@ -234,7 +234,7 @@ namespace MyChat
                     builder.Append(c);
                 }
             }
-
+        
             return builder.ToString();
         }
 
@@ -245,7 +245,7 @@ namespace MyChat
             // is followed by alphanumeric characters. 
 
             // This function exists to help with a specific case where the word you're looking for is affected by
-            // terminal punctuation. For example, if the keyword is 'pie' and you find 'pie...' then you'll have an issue.  
+            // terminal punctuation. For example, if the keyword is 'pie' and you find 'pie...'.  
 
             // The _English suffix foregrounds that this is brittle. If we start searching through a Spanish chat log
             // and messages start with ¿, then we'll struggle.
@@ -268,8 +268,8 @@ namespace MyChat
 
         public bool WordsMatchAfterTerminalPunctuationRemoved(int index, string word, string bt)
         {
-            //If there's a non-zero index, that suggests there's punctuation. 
-            //So, if you get rid of that, do the word and the bt word match?
+            //If there's a non-zero index, we can infer there's terminal punctuation that exists in the word. 
+            //If that's the case and you get rid of that chunk of punctuation, do the word and the bt word match?
             return index != -1 &&
                    String.Equals(word.Substring(0, index), bt, StringComparison.CurrentCultureIgnoreCase);
         }

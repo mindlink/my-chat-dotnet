@@ -453,5 +453,23 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             Assert.That(cp.FindStartOfTerminalPunctuation_English(message.content), Is.EqualTo(-1));
         }
+
+        [Test]
+        public void RemovingFullStopsMeansWordsMatch()
+        {
+            ConversationExporter cp = new ConversationExporter();
+
+            var got = cp.WordsMatchAfterTerminalPunctuationRemoved(2, "hi!", "hi");
+            Assert.That(got, Is.EqualTo(true));
+        }
+        
+        [Test]
+        public void WordsDontMatchEvenWithRemovalOfTerminalPuncs()
+        {
+            ConversationExporter cp = new ConversationExporter();
+
+            var got = cp.WordsMatchAfterTerminalPunctuationRemoved(5, "hello!!!", "howdy");
+            Assert.That(got, Is.EqualTo(false));
+        }
     }
 }

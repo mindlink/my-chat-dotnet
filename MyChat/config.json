@@ -1,0 +1,7 @@
+{
+  "inputFilePath": "chat.txt",
+  "outputFilePath": "output.json",
+  "UserToFilter": "bob",
+  "KeywordToFilter": "no",
+  "BannedTerm": "just"
+}

@@ -42,5 +42,17 @@ namespace MindLink.Recruitment.MyChat.Tests
                     .TypeOf<ArgumentException>());
         }
         
+        [Test]
+        public void NonJSONFileFails()
+        {
+            string[] badFile = {".xml"};
+            
+            CommandLineArgumentParser cp = new CommandLineArgumentParser();
+
+            Assert.That(() => cp.ParseCommandLineArguments(badFile),
+                Throws.Exception
+                    .TypeOf<ArgumentException>());
+        }
+        
     }
 }

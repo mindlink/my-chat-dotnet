@@ -4,17 +4,19 @@ namespace MindLink.Recruitment.MyChat
 
     public sealed class Message
     {
-        public string content;
+        public string content { get;}
 
-        public DateTimeOffset timestamp;
+        public DateTimeOffset timestamp { get; }
 
-        public string senderId;
+        public string senderId { get; }
 
-        public Message(DateTimeOffset timestamp, string senderId, string content)
+        public Message(DateTimeOffset Timestamp, string SenderId, string Content)
         {
-            this.content = content;
-            this.timestamp = timestamp;
-            this.senderId = senderId;
+            content = Content;
+            timestamp = Timestamp;
+            senderId = SenderId;
+
+            
         }
     }
 }

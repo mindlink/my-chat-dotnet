@@ -12,11 +12,7 @@ namespace MindLink.Recruitment.MyChat
         
         public string KeywordToFilter { get; set; }
         
-        public string BlacklistedTerm { get; set; }
+        public string BannedTerm { get; set; }
 
-
-        public ConversationExporterConfiguration()
-        {
-        }
     }
 }

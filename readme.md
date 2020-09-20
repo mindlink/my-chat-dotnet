@@ -41,39 +41,39 @@ my-chat
 -------
 
 ### Essential Features
+    
+### Important
+    * Multiple filters can be used at once, providing you follow the documented method/layout for the filters
+    * How to use the filters are documented below
 
-* A user can export a conversation from a given file path stored in the following file format into a JSON file at the given output path:
+### Export a conversation
+* To export enter the executable and pass some arguments next to it e.g. "YourDirectory/MyChat.exe example.txt example.json"
 ```
 <conversation_name><new_line>
 (<unix_timestamp><space><username><space><message><new_line>)*
 ```
-* Messages can be filtered by a specific user
-    * The user can be provided as a command-line argument (how the argument is specified is up to you)
-    * All messages sent by the specified user are written to the JSON output
-    * Messages sent by any other user are not written to the JSON output
-* Messages can be filtered by a specific keyword
-    * The keyword can be specified as a command-line argument
-    * All messages sent containing the keyword are written to the JSON output
-    * Messages sent that do not contain the keyword are not written to the JSON output
-* Hide specific words
-    * A blacklist can be specified as a command-line argument
-    * Any blacklisted word is replaced with "\*redacted\*" in the output.
+### Messages can be filtered by a specific user
+    * To filter by a user, do the usual to export a conversation and add the keywords "-filter-user" and then the user to filter by "bob"
+    * Roughly it will look like "YourDirectory/MyChat.exe example.txt example.json -filter-user bob"
+### Messages can be filtered by a specific keyword
+    * TTo filter/search the chat based on a specific keyword do the following "YourDirectory/MyChat.exe example.txt example.json -filter-search-word pie"
+### Hide specific words
+    * To blacklist a word, you can either do a single word or multiple at once
+    * A single word to blacklist do the following "YourDirectory/MyChat.exe example.txt example.json -filter-blacklist-word pie"
+    * Multiple words to blacklist do the following "YourDirectory/MyChat.exe example.txt example.json -filter-blacklist-word pie|society" 
+    * Adding the "|" between words instead of a space
 
 ### Additional Features
 
 Implementing any of these features well will make your submission stand-out. Features listed here are ordered from easy to hard.
 
-* Hide credit card and phone numbers
-    * A flag can be specified to hide credit card and phone numbers
-    * Any identified credit card or phone numbers are replaced with "\*redacted\*" in the output.
-* Obfuscate user IDs
-    * A flag can be specified to obfuscate user IDs
-    * All user IDs are obfuscated in the output.
-    * The same original user ID in any single export is replaced with the same obfuscated user ID i.e. messages retain their relationship with the sender, only the ID that represents the sender is changed.
-* A report is added to the conversation that details the most active users
-    * The most active user in a conversation is the user who sent the most messages.
-    * Most active users are added to the JSON output as an array ordered by activity.
-    * The number of messages sent by each user is included.
+### Hide credit card and phone numbers
+    * To hide credit cards do the following "YourDirectory/MyChat.exe example.txt example.json -filter-card-details"
+    *To hid phone numbers do the following "YourDirectory/MyChat.exe example.txt example.json -filter-phone-number"
+### Obfuscate user IDs
+    * To obfuscate user IDs do the following "YourDirectory/MyChat.exe example.txt example.json -filter-obfuscate"
+### A report is added to the conversation that details the most active users
+    * The report is automatically generated for a conversation, so no need to input anything extra
 * A web-service is exposed in addition to a console application
     * The web-service allows the same options to be specified in form fields,
     * A conversation is uploaded as a file,

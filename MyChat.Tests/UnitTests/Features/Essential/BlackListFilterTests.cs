@@ -70,6 +70,57 @@
         }
 
         /// <summary>
+        /// Test to see if the Blacklist functions as expected 
+        /// </summary>
+        [Test]
+        public void BlacklistFiltersFiltersBlacklistMultipleWords()
+        {
+            string[] words = new string[] { "pie", "society" };
+
+            // Filter to be tested 
+            blacklistFilter = new FilterByBlacklist(words);
+            // GENERATE conversation to be filtered
+            MakeConverSation();
+            // INSTANTIATE new conversation called filteredConversation,
+            // SET it to the returned conversation from the filter
+            Conversation filteredConversation = blacklistFilter.ApplyFilter(conversation);
+            // INSTANTIATE a list as the conversation msgs IEnumerable converted to list
+            IList<Message> msgs = filteredConversation.Messages.ToList<Message>();
+
+            Assert.That(filteredConversation.Name, Is.EqualTo("Test conversation"));
+
+            Assert.That(filteredConversation.FilterMessage[0], Is.EqualTo("No filter errors"));
+
+            Assert.That(msgs[0].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
+            Assert.That(msgs[0].SenderId, Is.EqualTo("bob"));
+            Assert.That(msgs[0].Content, Is.EqualTo("Hello there!"));
+
+            Assert.That(msgs[1].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470905)));
+            Assert.That(msgs[1].SenderId, Is.EqualTo("mike"));
+            Assert.That(msgs[1].Content, Is.EqualTo("how are you?"));
+
+            Assert.That(msgs[2].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));
+            Assert.That(msgs[2].SenderId, Is.EqualTo("bob"));
+            Assert.That(msgs[2].Content, Is.EqualTo("I'm good thanks, do you like \\*redacted\\*?"));
+
+            Assert.That(msgs[3].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470910)));
+            Assert.That(msgs[3].SenderId, Is.EqualTo("mike"));
+            Assert.That(msgs[3].Content, Is.EqualTo("no, let me ask Angus..."));
+
+            Assert.That(msgs[4].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470912)));
+            Assert.That(msgs[4].SenderId, Is.EqualTo("angus"));
+            Assert.That(msgs[4].Content, Is.EqualTo("Hell yes! Are we buying some \\*redacted\\*?"));
+
+            Assert.That(msgs[5].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470914)));
+            Assert.That(msgs[5].SenderId, Is.EqualTo("bob"));
+            Assert.That(msgs[5].Content, Is.EqualTo("No, just want to know if there's anybody else in the \\*redacted\\* \\*redacted\\*..."));
+
+            Assert.That(msgs[6].Timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470915)));
+            Assert.That(msgs[6].SenderId, Is.EqualTo("angus"));
+            Assert.That(msgs[6].Content, Is.EqualTo("YES! I'm the head \\*redacted\\* eater there..."));
+        }
+
+        /// <summary>
         /// Test whether the word filter works as intended and when the word is not found in the conversation
         /// it prints a message into the conversation to say as much. The list of messages should not throw any exceptions
         /// unlike the previous tests, as messages are to be kept intact except for a single word

@@ -14,9 +14,9 @@
         /// <summary>
         /// string to contain the most active user
         /// </summary>
-        public string mostActiveUser { get; }
+        public string mostActiveUser { get; set; }
 
-        public IList<string> userActivityRanking { get; }
+        public IList<string> userActivityRanking { get; set; }
 
         /// <summary>
         /// Constructor for ConversationReport

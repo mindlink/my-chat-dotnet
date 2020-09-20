@@ -27,40 +27,42 @@ namespace MyChat
             // Get the reader.  
             var reader = conversationExporter.GetStreamReader(config.inputFilePath, FileMode.Open, FileAccess.Read,
                 Encoding.ASCII);
-            
+
             // Extract lines from conversation based on filtering rules. 
             //TODO: pass in an 'adjuster' that does message modification if it needs to. 
             var conversation = conversationExporter.ExtractConversation(reader, filters, config);
-            
+
             // Write out the conversation to the file.. 
-            conversationExporter.WriteConversation(conversationExporter.GetStreamWriter(config.outputFilePath, FileMode.Create, FileAccess.ReadWrite)
+            conversationExporter.WriteConversation(
+                conversationExporter.GetStreamWriter(config.outputFilePath, FileMode.Create, FileAccess.ReadWrite)
                 , conversation, config.outputFilePath);
-            
+
             Console.WriteLine($"Conversation exported from '{config.inputFilePath}' to '{config.outputFilePath}'");
         }
 
-        public Conversation ExtractConversation(TextReader reader, List<Func<Message,bool>> ValidationRules, ConversationExporterConfiguration rules)
+        public Conversation ExtractConversation(TextReader reader, List<Func<Message, bool>> ValidationRules,
+            ConversationExporterConfiguration rules)
         {
             // ExtractConversation reads lines of text. At each line, it checks the rules from the config
             // to see if a line should be in the final output.
             var messages = new List<Message>();
-        
+
             // We assume that the first line will always be the conversation title.
             string conversationName = reader.ReadLine();
             string line;
-        
+
             while ((line = reader.ReadLine()) != null)
             {
                 var array = line.Split(' ');
-        
+
                 var message = ArrayToMessage(array);
-                
+
                 if (!ValidationRules.All(f => f(message)))
                 {
                     //Failed validation. Skip this line and move to the next one. 
                     continue;
                 }
-        
+
                 if (rules.BannedTerm != null)
                 {
                     messages.Add(SanitiseMessage(message, rules.BannedTerm));
@@ -70,20 +72,20 @@ namespace MyChat
                     messages.Add(message);
                 }
             }
-        
+
             return new Conversation(conversationName, messages);
         }
-        
-        
+
+
         public void WriteConversation(TextWriter writer, Conversation conversation, string outputFilePath)
         {
             var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
-        
+
             writer.Write(serialized);
             writer.Flush();
             writer.Close();
         }
-        
+
         public TextReader GetStreamReader(string inputFilePath, FileMode mode, FileAccess access, Encoding encoding)
         {
             // GetStreamReader takes in a file path, file mode, access permission and encoding style and returns a
@@ -106,7 +108,7 @@ namespace MyChat
                     $"Couldn't open the file {inputFilePath} because of a permissions issue");
             }
         }
-        
+
         public TextWriter GetStreamWriter(string outputFilePath, FileMode mode, FileAccess access)
         {
             // GetStreamWriter takes in an output file path, file mode and access permission and returns a Writer
@@ -128,7 +130,7 @@ namespace MyChat
                 throw new IOException("Something went wrong in the IO.");
             }
         }
-        
+
         public Message ArrayToMessage(string[] line)
         {
             var timestamp = StringToUnixTimeStamp(line[0]);
@@ -136,7 +138,7 @@ namespace MyChat
             var content = string.Join(" ", line[2..]);
             return new Message(timestamp, senderID, content);
         }
-        
+
         public DateTimeOffset StringToUnixTimeStamp(string s)
         {
             // StringToUnixTimeStamp does as its name suggests: it takes in a string and parses it to datetimeoffset.
@@ -154,64 +156,53 @@ namespace MyChat
             //Upper and lowercase orthographic differences DO NOT matter. Hello and hello are the same.
             //If the equality test for two lowercase words fails, it will also attempt to make sure we're not being foxed
             //by punctuation. Therefore, if a user wants "foxed" and the message contains "foxed!", we'll find it.
-            
+
             return (Message m) =>
             {
-                return m.content.Split(" ").Any(word => word.ToLower() == keywordToFind.ToLower()||
-                                                        StripPunctuation(word).ToLower()==keywordToFind.ToLower());
+                return m.content.Split(" ").Any(word => word.ToLower() == keywordToFind.ToLower() ||
+                                                        StripPunctuation(word).ToLower() == keywordToFind.ToLower());
             };
         }
 
         public Message SanitiseMessage(Message message, string bannedTerm)
         {
             //SanitiseMessage takes in a message and a bannedTerm and returns a new
-            //message where the banned terms have been removed.
+            //message where the banned terms have been removed. It isn't case sensitive but it
+            //is 'aware' of terminal punctuation. That means a word of "hello" and "hello!" will be "*redacted*!" in the output. 
 
-            if(!KeywordInMessage(bannedTerm)(message))
+            if (!KeywordInMessage(bannedTerm)(message))
             {
                 return message;
             }
-        
+
             List<string> final = new List<string>();
-            
+
             foreach (var word in message.content.Split(" "))
             {
-                //The word and the banned term match exactly: hello = hello
-                if (word.ToLower() == bannedTerm.ToLower()) 
+                //The word and the banned term match exactly:
+                if (String.Equals(word, bannedTerm, StringComparison.CurrentCultureIgnoreCase))
                 {
                     final.Add("*redacted*");
+                    continue;
                 }
-                
-                //The banned term might still be in the word we're looking at.
-                //Is punctuation like a comma, full stop or exclamation mark foxing us?
-                
-                else if (word.ToLower().Contains(bannedTerm.ToLower()))
+
+                //Check if the bannedTerm is actually hidden inside a word that is being padded on the right by terminal punctuation marks (. ! ; ... ?) ?
+                if (word.Contains(bannedTerm, StringComparison.CurrentCultureIgnoreCase) &&
+                    WordsMatchAfterTerminalPunctuationRemoved(FindStartOfTerminalPunctuation_English(word), word, bannedTerm))
                 {
-                    var firstTerminalIndex = FindStartOfTerminalPunctuation_English(word);
-
-                    if(firstTerminalIndex != -1 && word.Substring(0, firstTerminalIndex).ToLower() == bannedTerm.ToLower())
-                    {
-                        //Add the word and the punctuation that post-modified it.
-                        final.Add($"*redacted*{word.Substring(firstTerminalIndex)}");
-                    }
-                    else
-                    { // This is gross and I want to fix it. What's *very likely* happening is you've come across a word
-                      // like 'I'm' and the banned term is 'I'. This is a halfway house situation that's not nice.
-                        final.Add(word);
-                    }
-
+                    final.Add($"*redacted*{word.Substring(FindStartOfTerminalPunctuation_English(word))}");
                 }
-                
-                //The word doesn't match so you don't need to do any adjustments to it.
-                else 
+
+                //Word and banned term don't match.
+                else
                 {
-                    final.Add(word);    
+                    final.Add(word);
                 }
             }
-            
+
             return new Message(message.timestamp, message.senderId, string.Join(" ", final));
         }
-        
+
 
         public List<Func<Message, bool>> CreateValidationFuncs(ConversationExporterConfiguration rules)
         {
@@ -219,18 +210,17 @@ namespace MyChat
             // The idea then is that, based on a single Message, you can call .All() on them. If all the Funcs pass,
             // then the message is ok. Otherwise, it isn't.
             List<Func<Message, bool>> Funcs = new List<Func<Message, bool>>();
-        
+
             if (rules.UserToFilter != null)
             {
                 Funcs.Add(UsernameFound(rules.UserToFilter));
             }
-        
+
             if (rules.KeywordToFilter != null)
             {
-        
                 Funcs.Add(KeywordInMessage(rules.KeywordToFilter));
             }
-        
+
             return Funcs;
         }
 
@@ -244,6 +234,7 @@ namespace MyChat
                     builder.Append(c);
                 }
             }
+
             return builder.ToString();
         }
 
@@ -252,27 +243,35 @@ namespace MyChat
             // This function searches through a word and returns the point at which the first piece of terminal
             // punctuation is found. It will return -1 if no punctuation is found or if the first piece of punctuation
             // is followed by alphanumeric characters. 
-            
+
             // This function exists to help with a specific case where the word you're looking for is affected by
             // terminal punctuation. For example, if the keyword is 'pie' and you find 'pie...' then you'll have an issue.  
-            
+
             // The _English suffix foregrounds that this is brittle. If we start searching through a Spanish chat log
             // and messages start with ¿, then we'll struggle.
 
             //Find out where the first piece of punctuation exists.
             var FirstPuncIndex = word.ToList().FindIndex(char.IsPunctuation);
-            
+
             //Now check that only punctuation follows after the first occurence of punctuation in the word.
             bool OnlyPunctuationAfterFirst = word.Substring(FirstPuncIndex).All(char.IsPunctuation);
 
-            
-            if(!OnlyPunctuationAfterFirst)
+
+            if (!OnlyPunctuationAfterFirst)
             {
                 // We bail here because we've either not found punctuation OR we've found punctuation followed by letters 
                 return -1;
             }
 
             return FirstPuncIndex;
+        }
+
+        public bool WordsMatchAfterTerminalPunctuationRemoved(int index, string word, string bt)
+        {
+            //If there's a non-zero index, that suggests there's punctuation. 
+            //So, if you get rid of that, do the word and the bt word match?
+            return index != -1 &&
+                   String.Equals(word.Substring(0, index), bt, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }

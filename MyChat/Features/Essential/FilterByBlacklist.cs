@@ -16,6 +16,8 @@
         /// </summary>
         private string word;
 
+        private string[] words;
+
         // IList of type Regex, called regexWords,
         private IList<Regex> regexWords;
 
@@ -35,6 +37,26 @@
             regexWords.Add(new Regex(@"\b" + word + @"\b"));
         }
 
+        public FilterByBlacklist(string[] words) 
+        {
+            this.words = words;
+
+            // IF the word passed in is empty
+            if (this.words[0] == "" || String.IsNullOrWhiteSpace(words[0]))
+            {
+                // THROW an ArgumentNullException, to notify the user they have specifed the filter but
+                // not supplied any arguments
+                throw new ArgumentNullException("No word was supplied for the blacklist filter to use");
+            }
+
+            regexWords = new List<Regex>();
+
+            foreach (string w in words) 
+            {
+                regexWords.Add(new Regex(@"\b" + w + @"\b"));
+            }
+        }
+
         public Conversation ApplyFilter(Conversation conversation) 
         {
             // INITIALISE a bool to say whether the word was found in the conversation
@@ -42,17 +64,32 @@
             // FOREACH through the message in conversation messages list
             foreach (Message msg in conversation.Messages) 
             {
-                if (msg.Content.Contains(word))
+                if (word != null)
                 {
-                    validInput = true;
+                    if (msg.Content.Contains(word))
+                    {
+                        validInput = true;
+                        foreach (Regex rgx in regexWords)
+                        {
+                            if (rgx.IsMatch(msg.Content))
+                            {
+                                msg.Content = rgx.Replace(msg.Content, "\\*redacted\\*");
+                            }
+                        }
+                    }
+                }
+                else if (words != null) 
+                {
                     foreach (Regex rgx in regexWords)
                     {
                         if (rgx.IsMatch(msg.Content))
                         {
+                            validInput = true;
                             msg.Content = rgx.Replace(msg.Content, "\\*redacted\\*");
                         }
                     }
                 }
+                
             }
 
             // IF there is no valid input

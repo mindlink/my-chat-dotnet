@@ -80,7 +80,8 @@
                         case "-filter-blacklist-word":
                             FiltersToApply = true;
                             CheckFilterArgument(filtersToCheck[i + 1]);
-                            this.filters.Add(new FilterByBlacklist(filtersToCheck[i + 1]));
+
+                            this.filters.Add(new FilterByBlacklist(BlackListFilterArgs(filtersToCheck[i + 1])));
                             break;
                         case "-filter-card-details":
                             FiltersToApply = true;
@@ -105,6 +106,14 @@
                     throw new ArgumentException("You supplied a filter as an argument to a filter", inner);
                 }
             }
+        }
+
+        private string[] BlackListFilterArgs(string blackListFilter) 
+        {
+
+            string[] blackListWords = blackListFilter.Split("|");
+
+            return blackListWords;
         }
 
         private void CheckFilterArgument(string filterArg) 

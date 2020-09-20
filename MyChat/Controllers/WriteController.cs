@@ -52,17 +52,17 @@
 
                 writer.Close();
             }
-            catch (SecurityException)
+            catch (SecurityException inner)
             {
-                throw new ArgumentException("No permission to file.");
+                throw new ArgumentException("No permission to file.", inner);
             }
-            catch (DirectoryNotFoundException)
+            catch (DirectoryNotFoundException inner)
             {
-                throw new ArgumentException("Path invalid.");
+                throw new ArgumentException("Path " + outputFilePath + " is invalid", inner);
             }
-            catch (IOException)
+            catch (IOException inner)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new Exception("Something went wrong in the IO.", inner);
             }
         }
     }

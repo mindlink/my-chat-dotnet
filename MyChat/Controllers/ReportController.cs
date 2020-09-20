@@ -29,15 +29,36 @@
         /// <returns> the conversation with the generated report </returns>
         public Conversation GenerateReport(Conversation conversation) 
         {
-            // INSANTIATE a new ConversationReport, passing into the constructor
-            // the returns of the MostActive method and the MostActiveList method
-            ConversationReport conversationReport = new ConversationReport(
-                MostActive(conversation.Messages.ToList()),
-                MostActiveList(conversation.Messages.ToList()));
-            // SET the Conversation parameters report
-            conversation.Report = conversationReport;
+            // CHECK if theres any messages to be reported
+            if (conversation.Messages.Count() == 0)
+            {
+                // No messages, report this where the rankings would be 
 
-            return conversation;
+                // INITIALISE an IList of type string, called empty list
+                IList<string> emptyList = new List<string>();
+                emptyList.Add("No users to be ranked");
+                // INSANTIATE a new ConversationReport, passing into the constructor
+                // the returns of the MostActive method and the MostActiveList method
+                ConversationReport conversationReportEmpty = new ConversationReport(
+                    "No users to report",
+                    emptyList);
+                // SET the Conversation parameters report
+                conversation.Report = conversationReportEmpty;
+
+                return conversation;
+            }
+            else
+            {
+                // INSANTIATE a new ConversationReport, passing into the constructor
+                // the returns of the MostActive method and the MostActiveList method
+                ConversationReport conversationReport = new ConversationReport(
+                    MostActive(conversation.Messages.ToList()),
+                    MostActiveList(conversation.Messages.ToList()));
+                // SET the Conversation parameters report
+                conversation.Report = conversationReport;
+
+                return conversation;
+            }
         }
 
         /// <summary>

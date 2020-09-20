@@ -3,6 +3,7 @@ using MyChatModel.ModelData;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace MindLink.Recruitment.MyChat.Features.Additional
@@ -29,40 +30,49 @@ namespace MindLink.Recruitment.MyChat.Features.Additional
 
         public Conversation ApplyFilter(Conversation conversation) 
         {
-            // FOREACH through the messages in the chat
-            foreach (Message msg in conversation.Messages) 
+            if (conversation.Messages.Count() == 0)
             {
-                // IF the dictionary already contains the user ID
-                if (userObfuscated.ContainsKey(msg.SenderId))
-                {
-                    // SET the senderID of the message to the value contained at the user ID
-                    msg.SenderId = userObfuscated[msg.SenderId];
-                }
-                else 
-                {
-                    // ELSE
-                    // INITIALISE an int called parsed
-                    int parsed = 0;
-                    // FOREACH through the characters
-                    // in the SenderID string
-                    foreach (char c in msg.SenderId) 
-                    {
-                        // INCREMENT the parsed integer
-                        // by the amount of the character converted to int32
-                        parsed += Convert.ToInt32(c);
-                    }
-                    // ADD the SenderID string to the dictionary and add 
-                    // the string User + <parsed value> + <count of users>
-                    userObfuscated.Add(msg.SenderId, "User" + parsed.ToString() + countObfuscated.ToString());
-                    // SET the SenderID to the value found at the SenderID in the dictionary
-                    msg.SenderId = userObfuscated[msg.SenderId];
-                    // INCREMENT the count by 1 
-                    countObfuscated += 1;
-                }
+                conversation.AddFilterMessage("No users to obfuscate from chat");
+
+                return conversation;
             }
+            else
+            {
+                // FOREACH through the messages in the chat
+                foreach (Message msg in conversation.Messages)
+                {
+                    // IF the dictionary already contains the user ID
+                    if (userObfuscated.ContainsKey(msg.SenderId))
+                    {
+                        // SET the senderID of the message to the value contained at the user ID
+                        msg.SenderId = userObfuscated[msg.SenderId];
+                    }
+                    else
+                    {
+                        // ELSE
+                        // INITIALISE an int called parsed
+                        int parsed = 0;
+                        // FOREACH through the characters
+                        // in the SenderID string
+                        foreach (char c in msg.SenderId)
+                        {
+                            // INCREMENT the parsed integer
+                            // by the amount of the character converted to int32
+                            parsed += Convert.ToInt32(c);
+                        }
+                        // ADD the SenderID string to the dictionary and add 
+                        // the string User + <parsed value> + <count of users>
+                        userObfuscated.Add(msg.SenderId, "User" + parsed.ToString() + countObfuscated.ToString());
+                        // SET the SenderID to the value found at the SenderID in the dictionary
+                        msg.SenderId = userObfuscated[msg.SenderId];
+                        // INCREMENT the count by 1 
+                        countObfuscated += 1;
+                    }
+                }
 
 
-            return conversation;
+                return conversation;
+            }
         }
     }
 }

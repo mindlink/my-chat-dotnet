@@ -35,6 +35,12 @@ namespace MindLink.Recruitment.MyChat
         public Conversation blackListWords()
         {
             
+            List<string> blkLstWords = new List<string>
+                
+            for each (var message in this.messages) {
+                
+            }
+            
         }
         
         public Conversation filterByUser()
@@ -63,7 +69,7 @@ namespace MindLink.Recruitment.MyChat
                 }
                 message.senderId = obfUserIDs[message.senderId]; 
             }
-   
+                return new Conversation(conversation.name, messages); 
         }
     }
 }

@@ -47,6 +47,19 @@
             Conversation conversation = this.ReadConversation(inputFilePath);
 
             this.WriteConversation(conversation, outputFilePath);
+            
+            if (configuration.filterByUser == null){
+                
+                //add function here
+                
+            }
+            if (configuration.filterByKeyword == null){
+                
+                //add function here
+                
+            }
+           
+            
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
         }

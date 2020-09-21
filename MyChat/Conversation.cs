@@ -59,7 +59,7 @@ namespace MindLink.Recruitment.MyChat
                 if(!obfUserIDs.ContainsKey(message.senderId))
                 {
                     hiddenUsername++; 
-                    obfUserIDs.Add(message.senderId, hiddenUsername); 
+                    obfUserIDs.Add(message.senderId, hiddenUsername.ToString()); 
                 }
                 message.senderId = obfUserIDs[message.senderId]; 
             }

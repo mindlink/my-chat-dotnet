@@ -15,7 +15,7 @@ namespace MindLink.Recruitment.MyChat
         /// <summary>
         /// The messages in the conversation.
         /// </summary>
-        public IEnumerable<Message> messages;
+        public List<Message> messages;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Conversation"/> class.
@@ -26,10 +26,43 @@ namespace MindLink.Recruitment.MyChat
         /// <param name="messages">
         /// The messages in the conversation.
         /// </param>
-        public Conversation(string name, IEnumerable<Message> messages)
+        public Conversation(string name, List<Message> messages)
         {
             this.name = name;
             this.messages = messages;
+        }
+        
+        public Conversation blackListWords()
+        {
+            
+        }
+        
+        public Conversation filterByUser()
+        {
+            
+        }
+        
+        public Conversation filterByKeyword()
+        {
+            
+        }
+        
+        public Conversation obfuscateUserID()
+        {
+            
+            Dictionary<string, string> obfUserIDs = new Dictionary<string, string>();
+            
+            for each(var message in this.messages)  { 
+                
+                int obfuscatedID; 
+                     
+                if(!obfUserIDs.ContainsKey(message.senderId))
+                {
+                    obfUserIDs.Add(message.senderId, obfuscatedID.ToString()); 
+                }
+                
+            }
+   
         }
     }
 }

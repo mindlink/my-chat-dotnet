@@ -37,12 +37,19 @@ namespace MindLink.Recruitment.MyChat
         {
             
             List<string> blkLstWords = new List<string>
-                
+            
+            string replacement = "*redacted*";
             //string hiddenWord; 
                 
             for each (var message in this.messages) {
-                if (message.content.Contains(hiddenWord) == true){
+                
+                for each (var hiddenWord in blkLstWords){
+                    
+                    if (message.content.Contains(hiddenWord) == true){
                     //add replacement code here
+                        message.content = message.content.Replace(hiddenWord, replacement);
+                }
+                    
                 }
             }
             return new Conversation(conversation.name, messages); 

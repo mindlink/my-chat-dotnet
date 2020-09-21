@@ -45,7 +45,7 @@ namespace MindLink.Recruitment.MyChat
                 
                 for each (var hiddenWord in blkLstWords){
                     
-                    if (message.content.Contains(hiddenWord) == true){
+                    if (message.content.Contains(hiddenWord)){
                     //add replacement code here
                         message.content = message.content.Replace(hiddenWord, replacement);
                 }
@@ -55,14 +55,33 @@ namespace MindLink.Recruitment.MyChat
             return new Conversation(conversation.name, messages); 
         }
         
-        public Conversation filterByUser()
+        public Conversation filterByUser(string userFilter)
         {
-            
+            List<Message> filterUserMsg = new List<Message>();
+                
+            for each (var message in this.message){
+                
+                if (message.senderId == userFilter){
+                    
+                    filterUserMsg.Add(message); 
+                }
+                
+            }
+            return new Conversation(conversation.name, messages); 
         }
         
-        public Conversation filterByKeyword()
+        public Conversation filterByKeyword(string userKey)
         {
-            
+            List<Message> filterUserKey = new List<Message>();
+                
+            for each (var message in this.message){
+                
+                if(message.content.Contains(userKey){
+                    
+                    filterUserKey.Add(message);
+                    
+                }
+            }
         }
         
         public Conversation obfuscateUserID()

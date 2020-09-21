@@ -1,6 +1,7 @@
 namespace MindLink.Recruitment.MyChat
 {
     using System.Collections.Generic;
+    using System.Text.RegularExpressions; 
 
     /// <summary>
     /// Represents the model of a conversation.
@@ -37,10 +38,14 @@ namespace MindLink.Recruitment.MyChat
             
             List<string> blkLstWords = new List<string>
                 
-            for each (var message in this.messages) {
+            //string hiddenWord; 
                 
+            for each (var message in this.messages) {
+                if (message.content.Contains(hiddenWord) == true){
+                    //add replacement code here
+                }
             }
-            
+            return new Conversation(conversation.name, messages); 
         }
         
         public Conversation filterByUser()

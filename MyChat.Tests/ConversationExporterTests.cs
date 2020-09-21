@@ -27,8 +27,7 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var writer = exporter.GetStreamWriter("output.json", FileMode.Create, FileAccess.ReadWrite);
 
-            exporter.WriteConversation(writer, exporter.ExtractConversation(reader, emptyRules, emptyConfig),
-                "chat.json");
+            exporter.WriteConversation(writer, exporter.ExtractConversation(reader, emptyRules, emptyConfig));
 
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 

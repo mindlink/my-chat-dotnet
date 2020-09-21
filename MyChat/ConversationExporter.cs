@@ -29,22 +29,22 @@ namespace MyChat
                 Encoding.ASCII);
 
             // Extract lines from conversation based on filtering rules. 
-            //TODO: pass in an 'adjuster' that does message modification if it needs to. 
+            //TODO: rather than passing in a full config, pass in a list of Func 'adjusters'. Take a message, go through the Funcs and modify as required. 
             var conversation = conversationExporter.ExtractConversation(reader, filters, config);
 
-            // Write out the conversation to the file.. 
+            // Write out the conversation to the file.
             conversationExporter.WriteConversation(
                 conversationExporter.GetStreamWriter(config.outputFilePath, FileMode.Create, FileAccess.ReadWrite)
-                , conversation, config.outputFilePath);
+                , conversation);
 
             Console.WriteLine($"Conversation exported from '{config.inputFilePath}' to '{config.outputFilePath}'");
         }
 
         public Conversation ExtractConversation(TextReader reader, List<Func<Message, bool>> ValidationRules,
-            ConversationExporterConfiguration rules)
+            ConversationExporterConfiguration AdjustmentRules)
         {
-            // ExtractConversation reads lines of text. At each line, it checks the rules from the config
-            // to see if a line should be in the final output.
+            // ExtractConversation reads lines of text. At each line, it checks if a message passes validation
+            // and adjusts the message according to a set of rules (if specified). 
             var messages = new List<Message>();
 
             // We assume that the first line will always be the conversation title.
@@ -63,9 +63,9 @@ namespace MyChat
                     continue;
                 }
 
-                if (rules.BannedTerm != null)
+                if (AdjustmentRules.BannedTerm != null)
                 {
-                    messages.Add(SanitiseMessage(message, rules.BannedTerm));
+                    messages.Add(SanitiseMessage(message, AdjustmentRules.BannedTerm));
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace MyChat
         }
 
 
-        public void WriteConversation(TextWriter writer, Conversation conversation, string outputFilePath)
+        public void WriteConversation(TextWriter writer, Conversation conversation)
         {
             var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
 
@@ -240,12 +240,12 @@ namespace MyChat
 
         public int FindStartOfTerminalPunctuation_English(string word)
         {
-            // This function searches through a word and returns the point at which the first piece of terminal
-            // punctuation is found. It will return -1 if no punctuation is found or if the first piece of punctuation
-            // is followed by alphanumeric characters. 
+            // FinsStartofTerminalPunctuation_English searches through a word and returns the point at which the first
+            // piece of terminal punctuation is found. It will return -1 if no punctuation is found or if the first piece
+            // of punctuation is followed by alphanumeric characters. 
 
             // This function exists to help with a specific case where the word you're looking for is affected by
-            // terminal punctuation. For example, if the keyword is 'pie' and you find 'pie...'.  
+            // terminal punctuation. For example, if the keyword is 'pie' and you find 'pie!'.
 
             // The _English suffix foregrounds that this is brittle. If we start searching through a Spanish chat log
             // and messages start with ¿, then we'll struggle.

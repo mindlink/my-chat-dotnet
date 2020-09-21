@@ -82,6 +82,8 @@ namespace MindLink.Recruitment.MyChat
                     
                 }
             }
+                   
+              return new Conversation(conversation.name, messages); 
         }
         
         public Conversation obfuscateUserID()

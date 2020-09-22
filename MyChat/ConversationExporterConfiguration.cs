@@ -16,6 +16,20 @@ namespace MindLink.Recruitment.MyChat
         /// The output file path.
         /// </summary>
         public string outputFilePath;
+        
+        public string filterByUser;
+        
+        public string filterByKey; 
+        
+        public string blkLstWords;
+        
+        public string obfuscateID;
+        
+        
+        
+        
+        
+        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationExporterConfiguration"/> class.

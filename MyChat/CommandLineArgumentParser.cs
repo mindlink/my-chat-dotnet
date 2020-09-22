@@ -17,17 +17,42 @@ namespace MindLink.Recruitment.MyChat
         /// </returns>
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
-            string userFilter = ParseParameterSingle();
-            string userKey = ParseParameterSingle();
-            string obfuscateID = ParseParameterSingle(); 
+            string userFilter = ParseParameterArguments();
+            string userKey = ParseParameterArguments();
+            string obfuscateID = ParseParameterArguments(); 
             
             return new ConversationExporterConfiguration(arguments[0], arguments[1]);
         }
         
-        private string ParseParameterArguments (string[] arguments)
+        private string ParseParameterArguments (string flag, string[] arguments)
         {
+            int index = Array.IndexOf(arguments, flag);
+            if (index + 1 <arguments.Length && index != -1)
+            {
+                return arguments[index +1]; 
+            }
+            return arguments "";    
+        }
+        
+        private List<string> ParseParameterBlackList (string flag, string[] arguments)
+        {
+            var blackList = new List<string>();
+            int index = Array.IndexOf(arguments, flag);
+            while (index + 1 < arguments.Length && index != -1){
+                
+                if (arguments[index + 1] == "-user" || arguments[index + 1] == "-keyword" || arguments[index + 1] == "-list") {
+                    break;
+                }
+                blackList.Add(arguments[index + 1]);
+                index++;
+            }
             
+            if (blackList.Count == 0) {
+                
+                return null; 
+            }
             
+            return blackList; 
         }
     }
 }

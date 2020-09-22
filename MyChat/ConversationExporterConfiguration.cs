@@ -19,9 +19,9 @@ namespace MindLink.Recruitment.MyChat
         
         public string userFilter;
         
-        public string keyFilter; 
+        public string userKey; 
         
-        public string blackList;
+        public List<string> blackList = new List<string>;
         
         public string obfuscateID;
         
@@ -52,8 +52,8 @@ namespace MindLink.Recruitment.MyChat
             this.outputFilePath = outputFilePath;
             
             this.userFilter = userFilter;
-            this.keyFilter = keyFilter;
-            this.blackListWord = blackListWord;
+            this.keyFilter = userKey;
+            this.blackList = blackList;
             this.obfuscateID = obfuscateID; 
         }
     }

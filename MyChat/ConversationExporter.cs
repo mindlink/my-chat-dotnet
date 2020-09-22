@@ -48,10 +48,10 @@
 
             this.WriteConversation(conversation, outputFilePath);
             
-            if (configuration.filterByUser == null){
+            if (configuration.filterUser == null){
                 
                 //add function here
-                
+                conversation.FilterByUser(configuration.filterUser); 
             }
             if (configuration.filterByKeyword == null){
                 

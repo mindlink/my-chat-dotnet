@@ -86,7 +86,7 @@ namespace MindLink.Recruitment.MyChat
               return new Conversation(conversation.name, messages); 
         }
         
-        public Conversation obfuscateUserID()
+        public Conversation obfuscateUserID(string obfuscateID)
         {
             
             Dictionary<string, string> obfUserIDs = new Dictionary<string, string>();

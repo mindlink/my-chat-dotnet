@@ -17,11 +17,11 @@ namespace MindLink.Recruitment.MyChat
         /// </summary>
         public string outputFilePath;
         
-        public string filterByUser;
+        public string userFilter;
         
-        public string filterByKey; 
+        public string keyFilter; 
         
-        public string blkLstWords;
+        public string blackListWord;
         
         public string obfuscateID;
         
@@ -50,6 +50,11 @@ namespace MindLink.Recruitment.MyChat
         {
             this.inputFilePath = inputFilePath;
             this.outputFilePath = outputFilePath;
+            
+            this.userFilter = userFilter;
+            this.keyFilter = keyFilter;
+            this.blackListWord = blackListWord;
+            this.obfuscateID = obfuscateID; 
         }
     }
 }

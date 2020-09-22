@@ -21,7 +21,7 @@ namespace MindLink.Recruitment.MyChat
         
         public string keyFilter; 
         
-        public string blackListWord;
+        public string blackList;
         
         public string obfuscateID;
         

@@ -48,15 +48,25 @@
 
             this.WriteConversation(conversation, outputFilePath);
             
-            if (configuration.filterUser == null){
+             if (configuration.blackList != null){
                 
                 //add function here
-                conversation.FilterByUser(configuration.filterUser); 
+                conversation.blackListWord(configuration.blackList);
+             }   
+            if (configuration.userFilter != null){
+                
+                //add function here
+                conversation.filterByUser(configuration.userFilter); 
             }
-            if (configuration.filterByKeyword == null){
+            if (configuration.keyFilter != null){
                 
                 //add function here
+                conversation.filterByKeyword(configuration.userKeyword);
+            }
+            if (configuration.obfuscateID != null){
                 
+                //add function here
+                conversation.obfuscateUserID(configuration.obfuscateID);
             }
            
             

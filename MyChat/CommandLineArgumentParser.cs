@@ -3,7 +3,7 @@ namespace MindLink.Recruitment.MyChat
     /// <summary>
     /// Represents a helper to parse command line arguments.
     /// </summary>
-    public sealed class CommandLineArgumentParser
+    public static class CommandLineArgumentParser
     {
 
         /// <summary>
@@ -17,6 +17,10 @@ namespace MindLink.Recruitment.MyChat
         /// </returns>
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
+            string userFilter = ParseParameterSingle();
+            string userKey = ParseParameterSingle();
+            string obfuscateID = ParseParameterSingle(); 
+            
             return new ConversationExporterConfiguration(arguments[0], arguments[1]);
         }
     }

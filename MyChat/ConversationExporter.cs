@@ -11,7 +11,7 @@
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
     /// </summary>
-    public sealed class ConversationExporter
+    public static class ConversationExporter
     {
         /// <summary>
         /// The application entry point.

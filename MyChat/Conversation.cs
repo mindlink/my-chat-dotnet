@@ -6,7 +6,7 @@ namespace MindLink.Recruitment.MyChat
     /// <summary>
     /// Represents the model of a conversation.
     /// </summary>
-    public sealed class Conversation
+    public static class Conversation
     {
         /// <summary>
         /// The name of the conversation.

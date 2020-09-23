@@ -36,10 +36,10 @@ namespace MindLink.Recruitment.MyChat
         public Conversation blackListWords(List<string>blackList)
         {
             
-            //List<string> blkLstWords = new List<string>
+          
             
             string replacement = "*redacted*";
-            //string hiddenWord; 
+     
                 
             for each (var message in this.messages) {
                 
@@ -54,7 +54,7 @@ namespace MindLink.Recruitment.MyChat
             }
             return new Conversation(conversation.name, messages); 
         }
-        ///param name="userFilter">
+        ///<param name="userFilter">
         ///filter messages by user
         ///</param>
         public Conversation filterByUser(string userFilter)
@@ -71,7 +71,7 @@ namespace MindLink.Recruitment.MyChat
             }
             return new Conversation(conversation.name, messages); 
         }
-        ///param name="userKey">
+        ///<param name="userKey">
         ///filter messages by user
         ///</param>
         public Conversation filterByKeyword(string userKey)
@@ -89,7 +89,7 @@ namespace MindLink.Recruitment.MyChat
                    
               return new Conversation(conversation.name, messages); 
         }
-        ///param name="obfuscateID">
+        ///<param name="obfuscateID">
         ///obfuscate user IDs
         ///</param>
         public Conversation obfuscateUserID(string obfuscateID)

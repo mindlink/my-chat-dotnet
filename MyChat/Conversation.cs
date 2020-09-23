@@ -33,7 +33,7 @@ namespace MindLink.Recruitment.MyChat
             this.messages = messages;
         }
         
-        public Conversation blackListWords()
+        public Conversation blackListWords(List<string>blackList)
         {
             
             //List<string> blkLstWords = new List<string>
@@ -54,7 +54,9 @@ namespace MindLink.Recruitment.MyChat
             }
             return new Conversation(conversation.name, messages); 
         }
-        
+        ///param name="userFilter">
+        ///filter messages by user
+        ///</param>
         public Conversation filterByUser(string userFilter)
         {
             List<Message> filterUserMsg = new List<Message>();
@@ -69,7 +71,9 @@ namespace MindLink.Recruitment.MyChat
             }
             return new Conversation(conversation.name, messages); 
         }
-        
+        ///param name="userKey">
+        ///filter messages by user
+        ///</param>
         public Conversation filterByKeyword(string userKey)
         {
             List<Message> filterUserKey = new List<Message>();
@@ -85,7 +89,9 @@ namespace MindLink.Recruitment.MyChat
                    
               return new Conversation(conversation.name, messages); 
         }
-        
+        ///param name="obfuscateID">
+        ///obfuscate user IDs
+        ///</param>
         public Conversation obfuscateUserID(string obfuscateID)
         {
             

@@ -22,22 +22,22 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             var exporter = new ConversationExporter();
 
-            var blackList = new List<string>();
-            blackList.Add("Pie");
+            //var blackList = new List<string>();
+            //blackList.Add("Pie");
             
-            ConversationExporterConfiguration configuration = new ConversationExporterConfiguration("chat.txt", "chat.json", "pie");
-            
-            
+            ConversationExporterConfiguration configuration = new ConversationExporterConfiguration("chat.txt", "chat.json",);
             
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
             
             
-            Assert.AreEqual(savedConversation.name, "My Conversation");
+            Assert.AreEqual("My Conversation", savedConversation.name);
             var messages = savedConversation.messages.ToList();
             
-            
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1448470901), messages[0].timestamp); 
+            Assert.AreEqual("bob", messages[0].senderId);
+            Assert.AreEqual("Hello there!", messages[0].content);
             
             
 

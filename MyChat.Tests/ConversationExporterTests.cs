@@ -14,10 +14,11 @@ namespace MindLink.Recruitment.MyChat.Tests
     [TestFixture]
     public class ConversationExporterTests
     {
+
         /// <summary>
         /// Tests that exporting the conversation exports conversation.
         /// </summary>
-        [Test]
+       /* [Test]
         public void ExportingConversationExportsConversation()
         {
             var exporter = new ConversationExporter();
@@ -59,6 +60,100 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.That(messages[6].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470915)));
             Assert.That(messages[6].senderId, Is.EqualTo("angus"));
             Assert.That(messages[6].content, Is.EqualTo("YES! I'm the head pie eater there..."));
+        }*/
+
+        [Test]
+        public void GeneralTest()
+        {
+            var exporter = new ConversationExporter();
+
+            exporter.ExportConversation("chat.txt", "chat.json");
+
+            var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            Assert.That(savedConversation.name, Is.EqualTo("My Conversation"));
+
+        }
+
+
+        [Test]
+        public void NameFilterTest()
+        {
+            // instance
+
+            var exporter = new ConversationExporter();
+
+            exporter.ExportConversation("chat.txt", "chat.json");
+
+            var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+
+            TextFilter filter = new TextFilter();
+            string user = "bob";
+
+            //actual
+
+            var actual1 = filter.NameFilter(messages, user);
+            var actualString1 = actual1[1].senderId;
+
+            //assert(actual == expected)
+
+            Assert.That(actualString1, Is.EqualTo("bob"));
+
+
+        }
+
+        [Test]
+        public void KeywordFilterTest()
+        {
+            var exporter = new ConversationExporter();
+
+            exporter.ExportConversation("chat.txt", "chat.json");
+
+            var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+
+            TextFilter filter = new TextFilter();
+            string keyword = "angus";
+
+            var actual1 = filter.KeywordFilter(messages, keyword);
+            string actualString1 = actual1[0].content;
+            Assert.That(actualString1, Is.EqualTo("no, let me ask Angus..."));
+
+        }
+
+        [Test]
+        public void RedactedFilterTest()
+        {
+            var exporter = new ConversationExporter();
+
+            exporter.ExportConversation("chat.txt", "chat.json");
+
+            var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
+
+            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
+
+            var messages = savedConversation.messages.ToList();
+
+            TextFilter filter = new TextFilter();
+            string redacted = "*Redacted*";
+
+            var actual1 = filter.RedactedWordFilter(messages, redacted);
+            string actualString1 = actual1[2].content;
+
+            var actual2 = filter.RedactedWordFilter(messages, redacted);
+            string actualString2 = actual2[4].content;
+
+            Assert.That(actualString1, Is.EqualTo("I'm good thanks, do you like *Redacted*?"));
+            Assert.That(actualString2, Is.EqualTo("Hell yes! Are we buying some *Redacted*?"));
         }
     }
 }

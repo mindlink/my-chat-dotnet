@@ -5,6 +5,11 @@ namespace MindLink.Recruitment.MyChat
     /// </summary>
     public sealed class CommandLineArgumentParser
     {
+        // input is the path to text file
+        string input;
+
+        // output is the name of the json file
+        string output;
 
         /// <summary>
         /// Parses the given <paramref name="arguments"/> into the exporter configuration.
@@ -17,7 +22,24 @@ namespace MindLink.Recruitment.MyChat
         /// </returns>
         public ConversationExporterConfiguration ParseCommandLineArguments(string[] arguments)
         {
-            return new ConversationExporterConfiguration(arguments[0], arguments[1]);
+
+            System.Console.WriteLine("File Name to be converted for e.g. chat.txt");
+
+            input = System.Console.ReadLine();
+
+            while (System.IO.File.Exists(input) != true)
+            {
+                // loop until user enters a valid file
+                System.Console.WriteLine("file name doesnt exist, enter again");
+                input = System.Console.ReadLine();
+
+            }
+
+            System.Console.WriteLine("Name of output file");
+            output = System.Console.ReadLine() + ".json";
+
+            return new ConversationExporterConfiguration(input, output);
+
         }
     }
 }

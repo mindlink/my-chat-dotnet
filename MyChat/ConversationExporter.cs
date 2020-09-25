@@ -7,12 +7,17 @@
     using System.Text;
     using MindLink.Recruitment.MyChat;
     using Newtonsoft.Json;
+    using System.Linq;
 
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
     /// </summary>
     public sealed class ConversationExporter
     {
+        // user input
+        string filterType = "";
+        string User;
+
         /// <summary>
         /// The application entry point.
         /// </summary>
@@ -21,10 +26,12 @@
         /// </param>
         static void Main(string[] args)
         {
+
             var conversationExporter = new ConversationExporter();
             ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
 
             conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+
         }
 
         /// <summary>
@@ -45,6 +52,8 @@
         public void ExportConversation(string inputFilePath, string outputFilePath)
         {
             Conversation conversation = this.ReadConversation(inputFilePath);
+
+            //FilterConversation(conversation);
 
             this.WriteConversation(conversation, outputFilePath);
 
@@ -81,11 +90,53 @@
                 while ((line = reader.ReadLine()) != null)
                 {
                     var split = line.Split(' ');
+                    var RefactoredContent = split.Skip(2).ToArray();
+                    var CompleteSentence = string.Join(" ", RefactoredContent);
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], CompleteSentence)); //split[2]
+                }
+                // after reading text file is complete optional message filtering is after
+
+                // insatnce of custom filter class
+                TextFilter filter = new TextFilter();
+
+                Console.WriteLine("Select filter type(Name|Keyword|Redacted) type anything else to ignore");
+
+                filterType = Console.ReadLine();
+
+                switch (filterType.ToLower())
+                {// if user wants to filter by name
+                    case "name":
+                        Console.WriteLine("Filter Type: By Name");
+                        Console.WriteLine("Which Name?");
+                        User = Console.ReadLine();
+                        var NamefilteredMessages = filter.NameFilter(messages, User);
+                        return new Conversation(conversationName, NamefilteredMessages);
+
+                    // if user wants to filter by keyword      
+                    case "keyword":
+                        Console.WriteLine("Filter Type: By Key Word");
+                        Console.WriteLine("Which word?");
+                        User = Console.ReadLine();
+                        var wordfilteredMessages = filter.KeywordFilter(messages, User);
+                        return new Conversation(conversationName, wordfilteredMessages);
+
+                    // if user wants to redact a certain word in messages
+                    case "redacted":
+                        Console.WriteLine("Filter Type: Redact specific word");
+                        Console.WriteLine("Which word?");
+                        User = Console.ReadLine();
+                        var redactFilteredMessages = filter.RedactedWordFilter(messages, User);
+                        return new Conversation(conversationName, redactFilteredMessages);
+
+                    // shown if no filter is applied       
+                    default:
+                        Console.WriteLine("No Filter selected");
+                        break;
                 }
 
-                return new Conversation(conversationName, messages);
+
+                return new Conversation(conversationName, messages);//messages //filteredmessages
             }
             catch (FileNotFoundException)
             {
@@ -96,6 +147,7 @@
                 throw new Exception("Something went wrong in the IO.");
             }
         }
+
 
         /// <summary>
         /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
@@ -117,6 +169,7 @@
             try
             {
                 var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
+                //var messages = new List<Message>();
 
                 var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
 
@@ -125,6 +178,7 @@
                 writer.Flush();
 
                 writer.Close();
+
             }
             catch (SecurityException)
             {
@@ -139,5 +193,7 @@
                 throw new Exception("Something went wrong in the IO.");
             }
         }
+
+
     }
 }

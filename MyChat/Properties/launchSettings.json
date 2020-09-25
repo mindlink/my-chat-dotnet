@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MyChat": {
+      "commandName": "Project",
+      "commandLineArgs": "\"chat.txt\" \"chat.json\""
+    }
+  }
+}

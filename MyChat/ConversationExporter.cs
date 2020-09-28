@@ -11,38 +11,43 @@ namespace MyChat
     public sealed class ConversationExporter
     {
         static void Main(string[] args)
+        
         {
-            ConversationExporter ce = new ConversationExporter();
-            
             string jsonFilePath = new CommandLineArgumentParser().ParseCommandLineArguments(args);
             
             // Setup the config based on what was in the JSON file. 
-            var config =
-                JsonConvert.DeserializeObject<ConversationExporterConfiguration>(File.ReadAllText(jsonFilePath));
+            var config =  JsonConvert.DeserializeObject<ConversationExporterConfiguration>(File.ReadAllText(jsonFilePath));
             
+            ConversationExporter ce = new ConversationExporter();
+            
+            //Now run the code with all of the different dependencies that we need to get going.
+            //Idea here is that future tests could fake IWhatever and for the important thing under test
+            //then we can actually create that and pass it in to run.
+            ce.Run(config, new FilterChainMaker(), new AdjusterChainMaker(), new TextReaderFactory(), new TextWriterFactory(), new JSONConversationWriter());
+        }
+
+        public void Run( ConversationExporterConfiguration config, IFilterChainMaker fcm, IAdjusterChainMaker acm, IReaderFactory trf, IWriterFactory twf, IConversationWriter cw) 
+        {
             //Create chain of IFilters to go through.
-            var filterChain = FilterChainMaker.CreateFilterChain(config);
+            var filterChain = fcm.CreateFilterChain(config);
             
             //Create chain of IAdjusters to go through.
-            var adjusterChain = AdjusterChainMaker.CreateAdjusterChain(config);
+            var adjusterChain = acm.CreateAdjusterChain(config);
 
             // Get the reader.  
-            var reader = TextReaderFactory.GetStreamReader(config.inputFilePath, FileMode.Open, FileAccess.Read,
-                Encoding.ASCII);
+            var reader = trf.GetStreamReader(config);
             
             // Extract lines from conversation based on filtering rules and adjustment rules
-            var conversation = ce.ExtractConversation(reader, filterChain, adjusterChain);
+            var conversation = ExtractConversation(reader, filterChain, adjusterChain);
             
             //Get the writer
-            var writer = TextWriterFactory.GetStreamWriter(config.outputFilePath, FileMode.Create,
-                FileAccess.ReadWrite);
+            var writer = twf.GetStreamWriter(config);
             
-            //Write the conversation out.
-            ce.WriteConversation(writer, conversation);
+            //Write the conversation out using our particular conversation writer style.
+            cw.WriteConversation(writer, conversation);
             
             Console.WriteLine($"Conversation exported from '{config.inputFilePath}' to '{config.outputFilePath}'");
         }
-
 
         public Conversation ExtractConversation(TextReader reader, IFilterer filterChain, IAdjuster bannedTermChain)
         {
@@ -82,16 +87,6 @@ namespace MyChat
             }
 
             return new Conversation(conversationName, messages);
-        }
-
-
-        public void WriteConversation(TextWriter writer, Conversation conversation)
-        {
-            var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
-
-            writer.Write(serialized);
-            writer.Flush();
-            writer.Close();
         }
     }
 }

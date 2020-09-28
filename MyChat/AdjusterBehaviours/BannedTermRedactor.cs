@@ -11,13 +11,9 @@ namespace MindLink.Recruitment.MyChat
          
          public string BannedTerm { get; set; }
 
-         public IFilterer filterer;
-
-         public BannedTermRedactor(string bannedTerm, IFilterer f)
+         public BannedTermRedactor(string bannedTerm)
          {
              BannedTerm = bannedTerm;
-             //TODO: fix this dependency. 
-             filterer = f;
          }
 
          public IMessage Adjust(IMessage m)
@@ -40,12 +36,6 @@ namespace MindLink.Recruitment.MyChat
              //This is our first check. Ostensibly, it's used to see if the banned word is anywhere in the message. 
              //But, because we inject this filterer into the class, it can actually search for anything. 
              //So, theoretically, if you wanted to redact a word __only__ if the message contained a reference to a keyword or user or date, well that's possible now.
-             
-             //Is the banned term contained anywhere in the message?
-             if (!filterer.Filter(message))
-             {
-                 return message;
-             }
              
              List<string> final = new List<string>();
              

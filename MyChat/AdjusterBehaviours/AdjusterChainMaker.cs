@@ -10,7 +10,7 @@ namespace MindLink.Recruitment.MyChat
             
             if (config.BannedTerm != null)
             {
-                chain.Add(new BannedTermRedactor(config.BannedTerm, new KeywordFilterer(config.BannedTerm)));
+                chain.Add(new BannedTermRedactor(config.BannedTerm));
             }
             
             if (chain.Count < 1)

@@ -9,16 +9,24 @@ namespace MindLink.Recruitment.MyChat.Tests
      [Test]
      public void CorrectArgsReturnsCorrectStreamReader()
      {
-         var reader =
-             TextReaderFactory.GetStreamReader("chat.txt", FileMode.Create, FileAccess.ReadWrite, Encoding.ASCII);
-         Assert.That(reader, Is.TypeOf<StreamReader>());
+         var config = new ConversationExporterConfiguration();
+         config.inputFilePath = "niceFile";
+         var r = new TextReaderFactory();
          
+         var reader = r.GetStreamReader(config);
+         
+         Assert.That(reader, Is.TypeOf<StreamReader>());
      }
 
      [Test]
      public void CorrectArgsReturnsCorrectStreamWriter()
      {
-         var writer = TextWriterFactory.GetStreamWriter("output.something", FileMode.Create, FileAccess.ReadWrite);
+         var config = new ConversationExporterConfiguration();
+         config.outputFilePath = "output.something";
+         var tw = new TextWriterFactory(); 
+         
+         var writer = tw.GetStreamWriter(config);
+         
          Assert.That(writer, Is.TypeOf<StreamWriter>());
      }
     }

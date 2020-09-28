@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace MindLink.Recruitment.MyChat
 {
-    public static class FilterChainMaker
+    public class FilterChainMaker : IFilterChainMaker
     {
-        public static IFilterer CreateFilterChain(ConversationExporterConfiguration config)
+        public IFilterer CreateFilterChain(ConversationExporterConfiguration config)
         {
             List<IFilterer> chain = new List<IFilterer>();
             
@@ -17,7 +17,7 @@ namespace MindLink.Recruitment.MyChat
             {
                 chain.Add(new KeywordFilterer(config.KeywordToFilter));
             }
-            
+
             if (chain.Count < 1)
             {
                 //No filters were specified.
@@ -32,5 +32,10 @@ namespace MindLink.Recruitment.MyChat
             
             return chain[0];
         }
+    }
+
+    public interface IFilterChainMaker
+    {
+        IFilterer CreateFilterChain(ConversationExporterConfiguration c);
     }
 }

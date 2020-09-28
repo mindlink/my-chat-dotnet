@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace MindLink.Recruitment.MyChat
 {
-    public static class AdjusterChainMaker
+    public class AdjusterChainMaker : IAdjusterChainMaker
     {
-        public static IAdjuster CreateAdjusterChain(ConversationExporterConfiguration config)
+        public IAdjuster CreateAdjusterChain(ConversationExporterConfiguration config)
         {
             List<IAdjuster> chain = new List<IAdjuster>();
             
@@ -27,5 +27,10 @@ namespace MindLink.Recruitment.MyChat
             
             return chain[0];
         }    
+    }
+
+    public interface IAdjusterChainMaker
+    {
+        IAdjuster CreateAdjusterChain(ConversationExporterConfiguration config);
     }
 }

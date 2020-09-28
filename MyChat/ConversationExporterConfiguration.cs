@@ -1,7 +1,5 @@
 namespace MindLink.Recruitment.MyChat
 {
-    using System;
-
     public sealed class ConversationExporterConfiguration
     {
         public string inputFilePath { get; set; }
@@ -13,6 +11,5 @@ namespace MindLink.Recruitment.MyChat
         public string KeywordToFilter { get; set; }
         
         public string BannedTerm { get; set; }
-
     }
 }

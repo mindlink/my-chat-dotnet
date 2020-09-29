@@ -5,6 +5,7 @@
     using System.IO;
     using System.Security;
     using System.Text;
+    using Microsoft.Extensions.Configuration;
     using MindLink.Recruitment.MyChat;
     using Newtonsoft.Json;
 
@@ -21,10 +22,12 @@
         /// </param>
         static void Main(string[] args)
         {
-            var conversationExporter = new ConversationExporter();
-            ConversationExporterConfiguration configuration = new CommandLineArgumentParser().ParseCommandLineArguments(args);
+            // We use Microsoft.Extensions.Configuration.CommandLine and Configuration.Binder to read command line arguments.
+            var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
+            var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
 
-            conversationExporter.ExportConversation(configuration.inputFilePath, configuration.outputFilePath);
+            var conversationExporter = new ConversationExporter();
+            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
         }
 
         /// <summary>

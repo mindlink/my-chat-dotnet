@@ -19,14 +19,22 @@
         /// </summary>
         /// <param name="args">
         /// The command line arguments.
-        /// </param>
+        /// </param> 
+        /// <summary>
+        /// The message content.
+        /// </summary>
+        public string namefilter{ get; }
+        public ConversationExporter(string args)
+        {
+            this.namefilter = args;
+        }
         static void Main(string[] args)
         {
             // We use Microsoft.Extensions.Configuration.CommandLine and Configuration.Binder to read command line arguments.
             var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
             var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
 
-            var conversationExporter = new ConversationExporter();
+            var conversationExporter = new ConversationExporter(exporterConfiguration.filterByUser);
             conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
         }
 
@@ -85,7 +93,16 @@
                 {
                     var split = line.Split(' ');
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], string.Join(" ",split[2..])));
+                    var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], string.Join(" ",split[2..]));
+
+                    if (this.namefilter == null)
+                    {
+                        messages.Add(message);
+                    }
+                    else if (this.namefilter == split[1])
+                    {
+                        messages.Add(message);
+                    };
                 }
 
                 return new Conversation(conversationName, messages);

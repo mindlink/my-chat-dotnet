@@ -57,6 +57,8 @@
         {
             Conversation conversation = this.ReadConversation(inputFilePath);
 
+            this.EditConversation(conversation);
+
             this.WriteConversation(conversation, outputFilePath);
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
@@ -94,15 +96,7 @@
                     var split = line.Split(' ');
 
                     var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], string.Join(" ",split[2..]));
-
-                    if (this.namefilter == null)
-                    {
-                        messages.Add(message);
-                    }
-                    else if (this.namefilter == split[1])
-                    {
-                        messages.Add(message);
-                    };
+                    messages.Add(message);
                 }
 
                 return new Conversation(conversationName, messages);
@@ -114,6 +108,22 @@
             catch (IOException)
             {
                 throw new Exception("Something went wrong in the IO.");
+            }
+        }
+
+        public void EditConversation(Conversation conversation)
+        {
+            if (this.namefilter != null && this.namefilter != "")
+            {
+                var editedMessages = new List<Message>();
+                foreach(Message message in conversation.messages)
+                {
+                    if (this.namefilter == message.senderId)
+                    {
+                        editedMessages.Add(message);
+                    }
+                };
+                conversation.messages = editedMessages;
             }
         }
 

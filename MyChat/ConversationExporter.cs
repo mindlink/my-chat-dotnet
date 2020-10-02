@@ -113,7 +113,12 @@
 
         public void EditConversation(Conversation conversation)
         {
-            if (this.namefilter != null && this.namefilter != "")
+            this.FilterConversationByUsername(conversation);
+        }
+
+        public void FilterConversationByUsername(Conversation conversation)
+        {
+            if (this.namefilter != null)
             {
                 var editedMessages = new List<Message>();
                 foreach(Message message in conversation.messages)

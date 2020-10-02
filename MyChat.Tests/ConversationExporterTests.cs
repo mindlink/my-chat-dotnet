@@ -20,7 +20,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void ExportingConversationExportsConversation()
         {
-            var exporter = new ConversationExporter("");
+            var exporter = new ConversationExporter(null);
 
             exporter.ExportConversation("chat.txt", "chat.json");
 

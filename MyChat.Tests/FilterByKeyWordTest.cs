@@ -9,22 +9,22 @@ namespace MindLink.Recruitment.MyChat.Tests
     using System;
 
     /// <summary>
-    /// Tests for the <see cref="ConversationExporter - filter by sender"/>.
+    /// Tests for the <see cref="ConversationExporter - filter by keyword"/>.
     /// </summary>
     [TestFixture]
-    public class FilerBySenderNameTests
+    public class FilerByKeywordTests
     {
         /// <summary>
         /// Tests that exporting the conversation exports conversation filtered by the given username.
         /// </summary>
         [Test]
-        public void ExportingConversationFilterByName()
+        public void ExportingConversationFilterByKeyWord()
         {
-            var exporter = new ConversationExporter("bob", null);
+            var exporter = new ConversationExporter(null, "pie");
 
-            exporter.ExportConversation("chat.txt", "chatNameFilter.json");
+            exporter.ExportConversation("chat.txt", "chatKeywordFilter.json");
 
-            var serializedConversation = new StreamReader(new FileStream("chatNameFilter.json", FileMode.Open)).ReadToEnd();
+            var serializedConversation = new StreamReader(new FileStream("chatKeyWordFilter.json", FileMode.Open)).ReadToEnd();
 
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
@@ -32,13 +32,13 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var messages = savedConversation.messages.ToList();
 
-            Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
+            Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));
             Assert.That(messages[0].senderId, Is.EqualTo("bob"));
-            Assert.That(messages[0].content, Is.EqualTo("Hello there!"));
+            Assert.That(messages[0].content, Is.EqualTo("I'm good thanks, do you like pie?"));
 
-            Assert.That(messages[1].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));
-            Assert.That(messages[1].senderId, Is.EqualTo("bob"));
-            Assert.That(messages[1].content, Is.EqualTo("I'm good thanks, do you like pie?"));
+            Assert.That(messages[1].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470912)));
+            Assert.That(messages[1].senderId, Is.EqualTo("angus"));
+            Assert.That(messages[1].content, Is.EqualTo("Hell yes! Are we buying some pie?"));
 
             Assert.That(messages[2].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470914)));
             Assert.That(messages[2].senderId, Is.EqualTo("bob"));

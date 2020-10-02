@@ -24,9 +24,12 @@
         /// The message content.
         /// </summary>
         public string namefilter{ get; }
-        public ConversationExporter(string args)
+
+        public string keywordfilter{ get; }
+        public ConversationExporter(string namefilter, string keywordfilter)
         {
-            this.namefilter = args;
+            this.namefilter = namefilter;
+            this.keywordfilter = keywordfilter;
         }
         static void Main(string[] args)
         {
@@ -34,7 +37,7 @@
             var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
             var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
 
-            var conversationExporter = new ConversationExporter(exporterConfiguration.filterByUser);
+            var conversationExporter = new ConversationExporter(exporterConfiguration.filterByUser, exporterConfiguration.filterByKeyword);
             conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
         }
 
@@ -114,6 +117,7 @@
         public void EditConversation(Conversation conversation)
         {
             this.FilterConversationByUsername(conversation);
+            this.FilterConversationByKeyword(conversation);
         }
 
         public void FilterConversationByUsername(Conversation conversation)
@@ -124,6 +128,22 @@
                 foreach(Message message in conversation.messages)
                 {
                     if (this.namefilter == message.senderId)
+                    {
+                        editedMessages.Add(message);
+                    }
+                };
+                conversation.messages = editedMessages;
+            }
+        }
+
+        public void FilterConversationByKeyword(Conversation conversation)
+        {
+            if (this.keywordfilter != null)
+            {
+                var editedMessages = new List<Message>();
+                foreach(Message message in conversation.messages)
+                {
+                    if (message.content.Contains(this.keywordfilter))
                     {
                         editedMessages.Add(message);
                     }

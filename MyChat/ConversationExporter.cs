@@ -26,10 +26,14 @@
         public string namefilter{ get; }
 
         public string keywordfilter{ get; }
-        public ConversationExporter(string namefilter, string keywordfilter)
+
+        public string[] blacklisted{ get; }
+        public ConversationExporter(string filterByUser, string filterByKeyword, string blacklist)
         {
-            this.namefilter = namefilter;
-            this.keywordfilter = keywordfilter;
+            this.namefilter = filterByUser;
+            this.keywordfilter = filterByKeyword;
+            this.blacklisted = blacklist.Split(',');
+            Console.WriteLine("blacklist = {0}", this.blacklisted[0]);
         }
         static void Main(string[] args)
         {
@@ -37,7 +41,7 @@
             var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
             var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
 
-            var conversationExporter = new ConversationExporter(exporterConfiguration.filterByUser, exporterConfiguration.filterByKeyword);
+            var conversationExporter = new ConversationExporter(exporterConfiguration.filterByUser, exporterConfiguration.filterByKeyword, exporterConfiguration.blacklist);
             conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
         }
 

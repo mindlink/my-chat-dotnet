@@ -8,6 +8,7 @@
     using Microsoft.Extensions.Configuration;
     using MindLink.Recruitment.MyChat;
     using Newtonsoft.Json;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
@@ -32,7 +33,11 @@
         {
             this.namefilter = filterByUser;
             this.keywordfilter = filterByKeyword;
-            this.blacklisted = blacklist.Split(',');
+            if (blacklist != null) {
+                this.blacklisted = blacklist.Split(',');
+            } else {
+                this.blacklisted = new string[] {null};
+            }
             Console.WriteLine("blacklist = {0}", this.blacklisted[0]);
         }
         static void Main(string[] args)
@@ -122,6 +127,7 @@
         {
             this.FilterConversationByUsername(conversation);
             this.FilterConversationByKeyword(conversation);
+            this.RedactBlacklistedWords(conversation);
         }
 
         public void FilterConversationByUsername(Conversation conversation)
@@ -153,6 +159,30 @@
                     }
                 };
                 conversation.messages = editedMessages;
+            }
+        }
+
+        public void RedactBlacklistedWords(Conversation conversation)
+        {
+            if (this.blacklisted[0] != null)
+            {
+                var editedMessages = new List<Message>();
+                foreach(Message message in conversation.messages)
+                {
+                    this.ApplyRegexRedaction(message);
+                };
+            }
+        }
+
+        public void ApplyRegexRedaction(Message message)
+        {
+            foreach(string blacklistedWord in this.blacklisted)
+            {
+                string input = message.content;
+                string pattern = blacklistedWord;
+                string replacement = "*redacted*";
+                Regex rgx = new Regex("\\b"+pattern+"\\b");
+                message.content = rgx.Replace(input, replacement);
             }
         }
 

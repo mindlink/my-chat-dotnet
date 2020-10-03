@@ -15,20 +15,10 @@
     /// </summary>
     public sealed class ConversationExporter
     {
-        /// <summary>
-        /// The application entry point.
-        /// </summary>
-        /// <param name="args">
-        /// The command line arguments.
-        /// </param> 
-        /// <summary>
-        /// The message content.
-        /// </summary>
         public string namefilter{ get; }
-
         public string keywordfilter{ get; }
-
         public string[] blacklisted{ get; }
+        // public bool report{ get; }
         public ConversationExporter(string filterByUser, string filterByKeyword, string blacklist)
         {
             this.namefilter = filterByUser;
@@ -38,15 +28,32 @@
             } else {
                 this.blacklisted = new string[] {null};
             }
-            Console.WriteLine("blacklist = {0}", this.blacklisted[0]);
+            // if (report != false){
+            //     this.report = true;
+            // } else {
+            //     this.report = false;
+            // }
+            Console.WriteLine("report = {0}, input = {1}", this.blacklisted[0], blacklist);
         }
+        /// <summary>
+        /// The application entry point.
+        /// </summary>
+        /// <param name="args">
+        /// The command line arguments.
+        /// </param> 
+        /// <summary>
+        /// The message content.
+        /// </summary>
         static void Main(string[] args)
         {
             // We use Microsoft.Extensions.Configuration.CommandLine and Configuration.Binder to read command line arguments.
             var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
             var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
 
-            var conversationExporter = new ConversationExporter(exporterConfiguration.filterByUser, exporterConfiguration.filterByKeyword, exporterConfiguration.blacklist);
+            // Building a configuration of the editing of the conversation - couldn't get a boolean flag to work in ExporterConfiguration
+            var editingConfiguration = new EditingConfiguration(args);
+
+            var conversationExporter = new ConversationExporter(editingConfiguration.filterByUser, editingConfiguration.filterByKeyword, editingConfiguration.blacklist);
             conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
         }
 

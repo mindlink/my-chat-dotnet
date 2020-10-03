@@ -10,17 +10,17 @@ namespace MindLink.Recruitment.MyChat
          /// <summary>
         /// name filter.
         /// </summary>
-        public string filterByUser { get; }
+        public string filterByUser;
 
         /// <summary>
         /// keyword filter.
         /// </summary>
-        public string filterByKeyword { get; }
+        public string filterByKeyword;
 
         /// <summary>
         /// blacklisted words
         /// </summary>
-        public string blacklist { get; }
+        public string blacklist;
         /// <summary>
         /// switch for wether to add a report
         /// </summary>

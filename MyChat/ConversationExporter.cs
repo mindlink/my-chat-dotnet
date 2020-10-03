@@ -79,7 +79,7 @@
         /// <exception cref="Exception">
         /// Thrown when something else went wrong.
         /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
+        private Conversation ReadConversation(string inputFilePath)
         {
             try
             {
@@ -126,7 +126,7 @@
         /// <exception cref="Exception">
         /// Thrown when something else bad happens.
         /// </exception>
-        public void WriteConversation(Conversation conversation, string outputFilePath)
+        private void WriteConversation(Conversation conversation, string outputFilePath)
         {
             try
             {

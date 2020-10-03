@@ -9,10 +9,10 @@ namespace MindLink.Recruitment.MyChat
     /// </summary>
     public sealed class ConversationEditor
     {
-        public string namefilter{ get; }
-        public string keywordfilter{ get; }
-        public string[] blacklisted{ get; }
-        public bool isReportNeeded{ get; }
+        private string namefilter;
+        private string keywordfilter;
+        private string[] blacklisted;
+        private bool isReportNeeded;
         public ConversationEditor(EditingConfiguration config)
         {
             this.namefilter = config.filterByUser;
@@ -29,10 +29,10 @@ namespace MindLink.Recruitment.MyChat
             this.FilterConversationByUsername(conversation);
             this.FilterConversationByKeyword(conversation);
             this.RedactBlacklistedWords(conversation);
-            this.AddReport(conversation);
+            if(this.isReportNeeded){ this.AddReport(conversation); }
         }
 
-        public void FilterConversationByUsername(Conversation conversation)
+        private void FilterConversationByUsername(Conversation conversation)
         {
             if (this.namefilter != null)
             {
@@ -48,7 +48,7 @@ namespace MindLink.Recruitment.MyChat
             }
         }
 
-        public void FilterConversationByKeyword(Conversation conversation)
+        private void FilterConversationByKeyword(Conversation conversation)
         {
             if (this.keywordfilter != null)
             {
@@ -64,7 +64,7 @@ namespace MindLink.Recruitment.MyChat
             }
         }
 
-        public void RedactBlacklistedWords(Conversation conversation)
+        private void RedactBlacklistedWords(Conversation conversation)
         {
             if (this.blacklisted[0] != null)
             {
@@ -88,22 +88,19 @@ namespace MindLink.Recruitment.MyChat
             }
         }
 
-        public void AddReport(Conversation conversation)
+        private void AddReport(Conversation conversation)
         {
-            if (this.isReportNeeded)
+            var report = new List<Activity>();
+            foreach(Message message in conversation.messages)
             {
-                var report = new List<Activity>();
-                foreach(Message message in conversation.messages)
+                if (report.Any(record=>record.sender == message.senderId) == false)
                 {
-                    if (report.Any(record=>record.sender == message.senderId) == false)
-                    {
-                        int count = conversation.messages.Count(count => count.senderId == message.senderId);
-                        var record = new Activity(message.senderId, count);
-                        report.Add(record);
-                    }
+                    int count = conversation.messages.Count(count => count.senderId == message.senderId);
+                    var record = new Activity(message.senderId, count);
+                    report.Add(record);
                 }
-                conversation.addReport(report.OrderByDescending(record => record.count));
             }
+            conversation.addReport(report.OrderByDescending(record => record.count));
         }
     }
 }

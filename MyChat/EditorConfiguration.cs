@@ -10,21 +10,21 @@ namespace MindLink.Recruitment.MyChat
          /// <summary>
         /// name filter.
         /// </summary>
-        public string filterByUser { get; set; }
+        public string filterByUser { get; }
 
         /// <summary>
         /// keyword filter.
         /// </summary>
-        public string filterByKeyword { get; set; }
+        public string filterByKeyword { get; }
 
         /// <summary>
         /// blacklisted words
         /// </summary>
-        public string blacklist { get; set; }
+        public string blacklist { get; }
         /// <summary>
         /// switch for wether to add a report
         /// </summary>
-        public bool isReportNeeded { get; set; } = false;
+        public bool isReportNeeded { get; } = false;
         public EditorConfiguration(string[] args)
         {
             for(var i = 0; i < args.Length; i++) {

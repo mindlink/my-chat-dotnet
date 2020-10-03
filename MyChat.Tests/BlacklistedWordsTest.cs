@@ -3,7 +3,6 @@ using System.Linq;
 using MyChat;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace MindLink.Recruitment.MyChat.Tests
 {
@@ -23,7 +22,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
              var exporter = new ConversationExporter();
             string[] args = { "--blacklist", "pie" };
-            var editorCofig = new EditingConfiguration(args);
+            var editorCofig = new EditorConfiguration(args);
             var editor = new ConversationEditor(editorCofig);
 
             exporter.ExportConversation("chat.txt", "chatBlacklist.json", editor);
@@ -70,7 +69,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             var exporter = new ConversationExporter();
             string[] args = { "--blacklist", "buying,pie" };
-            var editorCofig = new EditingConfiguration(args);
+            var editorCofig = new EditorConfiguration(args);
             var editor = new ConversationEditor(editorCofig);
 
             exporter.ExportConversation("chat.txt", "chatBlacklist2.json", editor);
@@ -116,7 +115,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         public void OnlyRedactCompleteWordsRedactBlacklistedWords()
         {   
             string[] args = { "--blacklist", "i" };
-            var editorCofig = new EditingConfiguration(args);
+            var editorCofig = new EditorConfiguration(args);
             var editor = new ConversationEditor(editorCofig);
             var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "name", "i tested string");
             
@@ -128,7 +127,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         public void RedactCompleteWordsNextToPunctuationRedactBlacklistedWords()
         {
             string[] args = { "--blacklist", "string" };
-            var editorCofig = new EditingConfiguration(args);
+            var editorCofig = new EditorConfiguration(args);
             var editor = new ConversationEditor(editorCofig);
             var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "name", "tested string!");
             

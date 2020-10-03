@@ -3,7 +3,7 @@ namespace MindLink.Recruitment.MyChat
     /// <summary>
     /// Stores the argument data need to edit the output of the exported JSON
     /// </summary>
-    public sealed class EditingConfiguration
+    public sealed class EditorConfiguration
     {
          /// <summary>
         /// name filter.
@@ -23,7 +23,7 @@ namespace MindLink.Recruitment.MyChat
         /// switch for wether to add a report
         /// </summary>
         public bool isReportNeeded { get; set; } = false;
-        public EditingConfiguration(string[] args)
+        public EditorConfiguration(string[] args)
         {
             for(var i = 0; i < args.Length; i++) {
                 if (args[i] == "--filterByUser") {

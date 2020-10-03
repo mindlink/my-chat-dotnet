@@ -22,7 +22,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
              var exporter = new ConversationExporter();
             string[] args = { "--report" };
-            var editorCofig = new EditingConfiguration(args);
+            var editorCofig = new EditorConfiguration(args);
             var editor = new ConversationEditor(editorCofig);
 
             exporter.ExportConversation("chat.txt", "chatReport.json", editor);

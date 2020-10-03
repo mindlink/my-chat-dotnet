@@ -28,14 +28,16 @@
         {
             // We use Microsoft.Extensions.Configuration.CommandLine and Configuration.Binder to read command line arguments.
             var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
-            var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
+            var exporterConfiguration = configuration.Get<ExporterConfiguration>();
 
-            // Building a configuration of the editing of the conversation - couldn't get a boolean flag to work in ExporterConfiguration
-            var editingConfiguration = new EditingConfiguration(args);
-            var conversationEditor = new ConversationEditor(editingConfiguration);
+            // Building a configuration of the editing of the conversation - 
+            // couldn't get a boolean flag to work in ExporterConfiguration
+            var editorConfiguration = new EditorConfiguration(args);
+            var conversationEditor = new ConversationEditor(editorConfiguration);
 
             var conversationExporter = new ConversationExporter();
-            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath, conversationEditor);
+            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, 
+                exporterConfiguration.OutputFilePath, conversationEditor);
         }
 
         /// <summary>
@@ -95,7 +97,8 @@
                 {
                     var split = line.Split(' ');
 
-                    var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], string.Join(" ",split[2..]));
+                    var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])),
+                        split[1], string.Join(" ",split[2..]));
                     messages.Add(message);
                 }
 

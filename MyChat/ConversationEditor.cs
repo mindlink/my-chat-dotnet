@@ -13,7 +13,7 @@ namespace MindLink.Recruitment.MyChat
         private string keywordfilter;
         private string[] blacklisted;
         private bool isReportNeeded;
-        public ConversationEditor(EditingConfiguration config)
+        public ConversationEditor(EditorConfiguration config)
         {
             this.namefilter = config.filterByUser;
             this.keywordfilter = config.filterByKeyword;

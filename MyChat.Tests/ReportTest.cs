@@ -25,16 +25,16 @@ namespace MindLink.Recruitment.MyChat.Tests
             var editorCofig = new EditingConfiguration(args);
             var editor = new ConversationEditor(editorCofig);
 
-            exporter.ExportConversation("chat.txt", "chatNameFilter.json", editor);
+            exporter.ExportConversation("chat.txt", "chatReport.json", editor);
 
-            var serializedConversation = new StreamReader(new FileStream("chatNameFilter.json", FileMode.Open)).ReadToEnd();
+            var serializedConversation = new StreamReader(new FileStream("chatReport.json", FileMode.Open)).ReadToEnd();
 
             var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
 
             Assert.That(savedConversation.name, Is.EqualTo("My Conversation"));
 
             var messages = savedConversation.messages.ToList();
-            var reportList = savedConversation.activity.ToList()
+            var reportList = savedConversation.activity.ToList();
 
             Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
             Assert.That(messages[0].senderId, Is.EqualTo("bob"));

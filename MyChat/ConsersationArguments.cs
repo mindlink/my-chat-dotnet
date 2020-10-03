@@ -19,6 +19,10 @@ namespace MindLink.Recruitment.MyChat
         /// blacklisted words
         /// </summary>
         public string blacklist { get; set; }
+        /// <summary>
+        /// switch for wether to add a report
+        /// </summary>
+        public bool isReportNeeded { get; set; } = false;
         public EditingConfiguration(string[] args)
         {
             for(var i = 0; i < args.Length; i++) {
@@ -28,6 +32,8 @@ namespace MindLink.Recruitment.MyChat
                     this.filterByKeyword = args[i + 1];
                 } else if (args[i] == "--blacklist") {
                     this.blacklist = args[i + 1];
+                } else if (args[i] == "--report") {
+                    this.isReportNeeded = true;
                 } 
             }
         }

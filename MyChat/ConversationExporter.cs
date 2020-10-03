@@ -8,33 +8,13 @@
     using Microsoft.Extensions.Configuration;
     using MindLink.Recruitment.MyChat;
     using Newtonsoft.Json;
-    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
     /// </summary>
     public sealed class ConversationExporter
     {
-        public string namefilter{ get; }
-        public string keywordfilter{ get; }
-        public string[] blacklisted{ get; }
-        // public bool report{ get; }
-        public ConversationExporter(string filterByUser, string filterByKeyword, string blacklist)
-        {
-            this.namefilter = filterByUser;
-            this.keywordfilter = filterByKeyword;
-            if (blacklist != null) {
-                this.blacklisted = blacklist.Split(',');
-            } else {
-                this.blacklisted = new string[] {null};
-            }
-            // if (report != false){
-            //     this.report = true;
-            // } else {
-            //     this.report = false;
-            // }
-            Console.WriteLine("report = {0}, input = {1}", this.blacklisted[0], blacklist);
-        }
+
         /// <summary>
         /// The application entry point.
         /// </summary>
@@ -52,9 +32,10 @@
 
             // Building a configuration of the editing of the conversation - couldn't get a boolean flag to work in ExporterConfiguration
             var editingConfiguration = new EditingConfiguration(args);
+            var conversationEditor = new ConversationEditor(editingConfiguration);
 
-            var conversationExporter = new ConversationExporter(editingConfiguration.filterByUser, editingConfiguration.filterByKeyword, editingConfiguration.blacklist);
-            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
+            var conversationExporter = new ConversationExporter();
+            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath, conversationEditor);
         }
 
         /// <summary>
@@ -72,11 +53,11 @@
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public void ExportConversation(string inputFilePath, string outputFilePath, ConversationEditor editor)
         {
             Conversation conversation = this.ReadConversation(inputFilePath);
 
-            this.EditConversation(conversation);
+            editor.EditConversation(conversation);
 
             this.WriteConversation(conversation, outputFilePath);
 
@@ -127,69 +108,6 @@
             catch (IOException)
             {
                 throw new Exception("Something went wrong in the IO.");
-            }
-        }
-
-        public void EditConversation(Conversation conversation)
-        {
-            this.FilterConversationByUsername(conversation);
-            this.FilterConversationByKeyword(conversation);
-            this.RedactBlacklistedWords(conversation);
-        }
-
-        public void FilterConversationByUsername(Conversation conversation)
-        {
-            if (this.namefilter != null)
-            {
-                var editedMessages = new List<Message>();
-                foreach(Message message in conversation.messages)
-                {
-                    if (this.namefilter == message.senderId)
-                    {
-                        editedMessages.Add(message);
-                    }
-                };
-                conversation.messages = editedMessages;
-            }
-        }
-
-        public void FilterConversationByKeyword(Conversation conversation)
-        {
-            if (this.keywordfilter != null)
-            {
-                var editedMessages = new List<Message>();
-                foreach(Message message in conversation.messages)
-                {
-                    if (message.content.Contains(this.keywordfilter))
-                    {
-                        editedMessages.Add(message);
-                    }
-                };
-                conversation.messages = editedMessages;
-            }
-        }
-
-        public void RedactBlacklistedWords(Conversation conversation)
-        {
-            if (this.blacklisted[0] != null)
-            {
-                var editedMessages = new List<Message>();
-                foreach(Message message in conversation.messages)
-                {
-                    this.ApplyRegexRedaction(message);
-                };
-            }
-        }
-
-        public void ApplyRegexRedaction(Message message)
-        {
-            foreach(string blacklistedWord in this.blacklisted)
-            {
-                string input = message.content;
-                string pattern = blacklistedWord;
-                string replacement = "*redacted*";
-                Regex rgx = new Regex("\\b"+pattern+"\\b");
-                message.content = rgx.Replace(input, replacement);
             }
         }
 

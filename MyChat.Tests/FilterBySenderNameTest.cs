@@ -20,9 +20,12 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void ExportingConversationFilterByName()
         {
-            var exporter = new ConversationExporter("bob", null, null);
+             var exporter = new ConversationExporter();
+            string[] args = { "--filterByUser", "bob" };
+            var editorCofig = new EditingConfiguration(args);
+            var editor = new ConversationEditor(editorCofig);
 
-            exporter.ExportConversation("chat.txt", "chatNameFilter.json");
+            exporter.ExportConversation("chat.txt", "chatNameFilter.json", editor);
 
             var serializedConversation = new StreamReader(new FileStream("chatNameFilter.json", FileMode.Open)).ReadToEnd();
 

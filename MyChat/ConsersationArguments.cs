@@ -24,7 +24,7 @@ namespace MindLink.Recruitment.MyChat
             for(var i = 0; i < args.Length; i++) {
                 if (args[i] == "--filterByUser") {
                     this.filterByUser = args[i + 1];
-                } else if (args[i] == "--filterByKeyWord") {
+                } else if (args[i] == "--filterByKeyword") {
                     this.filterByKeyword = args[i + 1];
                 } else if (args[i] == "--blacklist") {
                     this.blacklist = args[i + 1];

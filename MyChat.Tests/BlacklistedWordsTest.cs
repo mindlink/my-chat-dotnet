@@ -21,9 +21,12 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void ExportingConversationWithBlacklistedWord()
         {
-            var exporter = new ConversationExporter(null, null, "pie");
+             var exporter = new ConversationExporter();
+            string[] args = { "--blacklist", "pie" };
+            var editorCofig = new EditingConfiguration(args);
+            var editor = new ConversationEditor(editorCofig);
 
-            exporter.ExportConversation("chat.txt", "chatBlacklist.json");
+            exporter.ExportConversation("chat.txt", "chatBlacklist.json", editor);
 
             var serializedConversation = new StreamReader(new FileStream("chatBlacklist.json", FileMode.Open)).ReadToEnd();
 
@@ -65,9 +68,12 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void ExportingConversationWithMultipleBlacklistedWords()
         {
-            var exporter = new ConversationExporter(null, null, "buying,pie");
+            var exporter = new ConversationExporter();
+            string[] args = { "--blacklist", "buying,pie" };
+            var editorCofig = new EditingConfiguration(args);
+            var editor = new ConversationEditor(editorCofig);
 
-            exporter.ExportConversation("chat.txt", "chatBlacklist2.json");
+            exporter.ExportConversation("chat.txt", "chatBlacklist2.json", editor);
 
             var serializedConversation = new StreamReader(new FileStream("chatBlacklist2.json", FileMode.Open)).ReadToEnd();
 
@@ -108,21 +114,25 @@ namespace MindLink.Recruitment.MyChat.Tests
 
         [Test]
         public void OnlyRedactCompleteWordsRedactBlacklistedWords()
-        {
-            var exporter = new ConversationExporter(null, null, "i");
-            var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "name", "tested string");
+        {   
+            string[] args = { "--blacklist", "i" };
+            var editorCofig = new EditingConfiguration(args);
+            var editor = new ConversationEditor(editorCofig);
+            var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "name", "i tested string");
             
-            exporter.ApplyRegexRedaction(message);
-            Assert.That(message.content, Is.EqualTo("tested string"));
+            editor.ApplyRegexRedaction(message);
+            Assert.That(message.content, Is.EqualTo("*redacted* tested string"));
         }
 
         [Test]
         public void RedactCompleteWordsNextToPunctuationRedactBlacklistedWords()
         {
-            var exporter = new ConversationExporter(null, null, "string");
+            string[] args = { "--blacklist", "string" };
+            var editorCofig = new EditingConfiguration(args);
+            var editor = new ConversationEditor(editorCofig);
             var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "name", "tested string!");
             
-            exporter.ApplyRegexRedaction(message);
+            editor.ApplyRegexRedaction(message);
             Assert.That(message.content, Is.EqualTo("tested *redacted*!"));
         }
     }

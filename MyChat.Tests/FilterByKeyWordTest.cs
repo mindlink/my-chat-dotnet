@@ -20,9 +20,12 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void ExportingConversationFilterByKeyWord()
         {
-            var exporter = new ConversationExporter(null, "pie", null);
+             var exporter = new ConversationExporter();
+            string[] args = { "--filterByKeyword", "pie" };
+            var editorCofig = new EditingConfiguration(args);
+            var editor = new ConversationEditor(editorCofig);
 
-            exporter.ExportConversation("chat.txt", "chatKeywordFilter.json");
+            exporter.ExportConversation("chat.txt", "chatKeywordFilter.json", editor);
 
             var serializedConversation = new StreamReader(new FileStream("chatKeyWordFilter.json", FileMode.Open)).ReadToEnd();
 

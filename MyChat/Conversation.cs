@@ -18,6 +18,11 @@ namespace MindLink.Recruitment.MyChat
         public IEnumerable<Message> messages;
 
         /// <summary>
+        /// The messages in the conversation.
+        /// </summary>
+        public IEnumerable<Activity> activity;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Conversation"/> class.
         /// </summary>
         /// <param name="name">
@@ -30,6 +35,11 @@ namespace MindLink.Recruitment.MyChat
         {
             this.name = name;
             this.messages = messages;
+        }
+
+        public void addReport(IEnumerable<Activity> report)
+        {
+            this.activity = report;
         }
     }
 }

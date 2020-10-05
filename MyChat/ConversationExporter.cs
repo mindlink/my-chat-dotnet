@@ -14,9 +14,6 @@
     /// </summary>
     public sealed class ConversationExporter
     {
-        // user input
-        string filterType = "";
-        string User;
 
         /// <summary>
         /// The application entry point.
@@ -53,9 +50,11 @@
         {
             Conversation conversation = this.ReadConversation(inputFilePath);
 
-            //FilterConversation(conversation);
+            IFilterMessages filter = new MessageFilter();
 
-            this.WriteConversation(conversation, outputFilePath);
+            var filteredConversation = filter.FilterMessages(conversation);
+
+            this.WriteConversation(filteredConversation, outputFilePath);
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
         }
@@ -95,45 +94,6 @@
 
                     messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], CompleteSentence)); //split[2]
                 }
-                // after reading text file is complete optional message filtering is after
-
-                // insatnce of custom filter class
-                TextFilter filter = new TextFilter();
-
-                Console.WriteLine("Select filter type(Name|Keyword|Redacted) type anything else to ignore");
-
-                filterType = Console.ReadLine();
-
-                switch (filterType.ToLower())
-                {// if user wants to filter by name
-                    case "name":
-                        Console.WriteLine("Filter Type: By Name");
-                        Console.WriteLine("Which Name?");
-                        User = Console.ReadLine();
-                        var NamefilteredMessages = filter.NameFilter(messages, User);
-                        return new Conversation(conversationName, NamefilteredMessages);
-
-                    // if user wants to filter by keyword      
-                    case "keyword":
-                        Console.WriteLine("Filter Type: By Key Word");
-                        Console.WriteLine("Which word?");
-                        User = Console.ReadLine();
-                        var wordfilteredMessages = filter.KeywordFilter(messages, User);
-                        return new Conversation(conversationName, wordfilteredMessages);
-
-                    // if user wants to redact a certain word in messages
-                    case "redacted":
-                        Console.WriteLine("Filter Type: Redact specific word");
-                        Console.WriteLine("Which word?");
-                        User = Console.ReadLine();
-                        var redactFilteredMessages = filter.RedactedWordFilter(messages, User);
-                        return new Conversation(conversationName, redactFilteredMessages);
-
-                    // shown if no filter is applied       
-                    default:
-                        Console.WriteLine("No Filter selected");
-                        break;
-                }
 
 
                 return new Conversation(conversationName, messages);//messages //filteredmessages
@@ -145,6 +105,10 @@
             catch (IOException)
             {
                 throw new Exception("Something went wrong in the IO.");
+            }
+            catch (FormatException)
+            {
+                throw new Exception("Input string is in incorrect format");
             }
         }
 

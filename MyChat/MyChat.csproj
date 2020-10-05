@@ -21,7 +21,21 @@
     <Product>MyChat</Product>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="blank.txt" />
+    <None Remove="noc.txt" />
+    <None Remove="wrong.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="blank.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="chat.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="noc.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wrong.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

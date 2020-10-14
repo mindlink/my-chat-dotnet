@@ -1,52 +1,35 @@
-using System.IO;
 using System.Linq;
-using MyChat;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace MindLink.Recruitment.MyChat.Tests
 {
     using System;
+    using System.Collections.Generic;
+    using MindLink.Recruitment.MyChat;
 
     /// <summary>
-    /// Tests for the <see cref="ConversationExporter - filter by sender"/>.
+    /// Tests for the <see cref="filter by sender"/>.
     /// </summary>
     [TestFixture]
     public class FilerBySenderNameTests
     {
-        /// <summary>
-        /// Tests that exporting the conversation exports conversation filtered by the given username.
-        /// </summary>
         [Test]
-        public void ExportingConversationFilterByName()
+        public void FilterTest()
         {
-             var exporter = new ConversationExporter();
-            string[] args = { "--filterByUser", "bob" };
-            var editorCofig = new EditorConfiguration(args);
-            var editor = new ConversationEditor(editorCofig);
+            var messages = new List<Message>();
+            var messageOne = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "stan", "i tested string");
+            messages.Add(messageOne);
+            var messageTwo = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "bob", "i tested string");
+            messages.Add(messageTwo);   
 
-            exporter.ExportConversation("chat.txt", "chatNameFilter.json", editor);
+            var conversation = new Conversation("test", messages);
+            var senderfilter = new SenderFilter("bob");
 
-            var serializedConversation = new StreamReader(new FileStream("chatNameFilter.json", FileMode.Open)).ReadToEnd();
+            senderfilter.ApplyFilter(conversation);
 
-            var savedConversation = JsonConvert.DeserializeObject<Conversation>(serializedConversation);
-
-            Assert.That(savedConversation.name, Is.EqualTo("My Conversation"));
-
-            var messages = savedConversation.messages.ToList();
-
-            Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
-            Assert.That(messages[0].senderId, Is.EqualTo("bob"));
-            Assert.That(messages[0].content, Is.EqualTo("Hello there!"));
-
-            Assert.That(messages[1].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));
-            Assert.That(messages[1].senderId, Is.EqualTo("bob"));
-            Assert.That(messages[1].content, Is.EqualTo("I'm good thanks, do you like pie?"));
-
-            Assert.That(messages[2].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470914)));
-            Assert.That(messages[2].senderId, Is.EqualTo("bob"));
-            Assert.That(messages[2].content, Is.EqualTo("No, just want to know if there's anybody else in the pie society..."));
-
+            var filteredMessages = conversation.messages.ToList();
+            Assert.That(filteredMessages[0].senderId, Is.EqualTo("bob"));
         }
+
     }
 }

@@ -31,9 +31,9 @@ namespace MindLink.Recruitment.MyChat.Tests
             var testConversation = new Conversation("test", messages);
             string[] args = { "--report" };
             var editorCofig = new EditorConfiguration(args);
-            var writer = new LogWriter(editorCofig);
+            var logCreator = new LogCreator(editorCofig);
 
-            var reportList = writer.AddReport(testConversation);
+            var reportList = logCreator.AddReport(testConversation);
 
             Assert.That(reportList[0].sender, Is.EqualTo("stan"));
             Assert.That(reportList[0].count, Is.EqualTo(2));

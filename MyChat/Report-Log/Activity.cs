@@ -1,8 +1,7 @@
 namespace MindLink.Recruitment.MyChat
 {
-
     /// <summary>
-    /// Represents a chat message.
+    /// Represents an activity of a user in a conversation.
     /// </summary>
     public sealed class Activity
     {

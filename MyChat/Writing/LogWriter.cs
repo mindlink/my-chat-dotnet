@@ -1,11 +1,9 @@
 namespace MindLink.Recruitment.MyChat
 {
-    using System.Collections.Generic;
     using System;
     using System.IO;
     using System.Security;
     using Newtonsoft.Json;
-    using System.Linq; 
 
     /// <summary>
     /// writes logs to output

@@ -1,6 +1,7 @@
 namespace MindLink.Recruitment.MyChat
 {
     using System.Collections.Generic;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// model for the output, to allow report to be optional in children
@@ -25,6 +26,8 @@ namespace MindLink.Recruitment.MyChat
 
     public sealed class LogWithReport : Log
     {
+        // JsonProperty(Order) means that the activity is ordered after the Log name and message
+        [JsonProperty(Order = 0)]
         public IEnumerable<Activity> activity;
         public LogWithReport(Conversation conversation, List<Activity> report) : base(conversation)
         {

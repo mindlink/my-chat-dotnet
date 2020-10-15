@@ -33,7 +33,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void OnlyRedactCompleteWordsRedactBlacklistedWords()
         {   
-            string[] args = { "--blacklist", "i" };
+            string[] args = { "i" };
             var blacklistFilter = new BlacklistFilter(args);
             var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "name", "i tested string");
             
@@ -44,7 +44,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void RedactCompleteWordsNextToPunctuationRedactBlacklistedWords()
         {
-            string[] args = { "--blacklist", "string" };
+            string[] args = { "string" };
             var blacklistFilter = new BlacklistFilter(args);
             var message = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "name", "tested string!");
             

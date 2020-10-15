@@ -14,7 +14,7 @@ namespace MindLink.Recruitment.MyChat.Tests
     public class FilerBySenderNameTests
     {
         [Test]
-        public void FilterTest()
+        public void FilterTestSenderID()
         {
             var messages = new List<Message>();
             var messageOne = new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64("1448470901")), "stan", "i tested string");

@@ -35,7 +35,7 @@ namespace MindLink.Recruitment.MyChat
             }
         }
 
-        public Log AddReportIfNeeded(Conversation conversation)
+        public Log CreateLog(Conversation conversation)
         {
             if (this.isReportNeeded) {
                 return  new LogWithReport(conversation, this.AddReport(conversation));

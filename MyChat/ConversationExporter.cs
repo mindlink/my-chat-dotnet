@@ -61,7 +61,7 @@
 
             editor.EditConversation(conversation);
 
-            var log = editor.AddReportIfNeeded(conversation);
+            var log = editor.CreateLog(conversation);
 
             this.WriteConversation(log, outputFilePath);
 

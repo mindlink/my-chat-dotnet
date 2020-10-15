@@ -61,7 +61,9 @@
 
             editor.EditConversation(conversation);
 
-            this.WriteConversation(conversation, outputFilePath);
+            var log = editor.AddReportIfNeeded(conversation);
+
+            this.WriteConversation(log, outputFilePath);
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
         }
@@ -129,13 +131,13 @@
         /// <exception cref="Exception">
         /// Thrown when something else bad happens.
         /// </exception>
-        private void WriteConversation(Conversation conversation, string outputFilePath)
+        private void WriteConversation(Log log, string outputFilePath)
         {
             try
             {
                 var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
 
-                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
+                var serialized = JsonConvert.SerializeObject(log, Formatting.Indented);
 
                 writer.Write(serialized);
 

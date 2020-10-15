@@ -1,11 +1,10 @@
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq; 
 
 namespace MindLink.Recruitment.MyChat
 {
     /// <summary>
-    /// Stores the functions to edit the exported JSON
+    /// Stores the filters to edit the exported JSON
     /// </summary>
 
     public sealed class ConversationEditor
@@ -34,22 +33,31 @@ namespace MindLink.Recruitment.MyChat
             {
                 filter.ApplyFilter(conversation);
             }
-            if(this.isReportNeeded){ this.AddReport(conversation); }
         }
 
-        private void AddReport(Conversation conversation)
+        public Log AddReportIfNeeded(Conversation conversation)
         {
-            var report = new List<Activity>();
+            if (this.isReportNeeded) {
+                return  new LogWithReport(conversation, this.AddReport(conversation));
+            }
+            else {
+                return new Log(conversation);
+            }
+        }
+
+        private List<Activity> AddReport(Conversation conversation)
+        {
+            var activityList = new List<Activity>();
             foreach(Message message in conversation.messages)
             {
-                if (report.Any(record=>record.sender == message.senderId) == false)
+                if (activityList.Any(activity=>activity.sender == message.senderId) == false)
                 {
                     int count = conversation.messages.Count(count => count.senderId == message.senderId);
-                    var record = new Activity(message.senderId, count);
-                    report.Add(record);
+                    var activity = new Activity(message.senderId, count);
+                    activityList.Add(activity);
                 }
             }
-            conversation.addReport(report.OrderByDescending(record => record.count));
+            return activityList.OrderByDescending(activity => activity.count).ToList();
         }
     }
 }

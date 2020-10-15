@@ -22,7 +22,7 @@ namespace MindLink.Recruitment.MyChat
         /// </summary>
         public string blacklist;
         /// <summary>
-        /// switch for wether to add a report
+        /// switch for whether to add a report
         /// </summary>
         public bool isReportNeeded { get; } = false;
         public EditorConfiguration(string[] args)

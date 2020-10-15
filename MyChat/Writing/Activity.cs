@@ -1,6 +1,5 @@
 namespace MindLink.Recruitment.MyChat
 {
-    using System;
 
     /// <summary>
     /// Represents a chat message.

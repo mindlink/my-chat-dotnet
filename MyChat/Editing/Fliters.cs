@@ -9,53 +9,53 @@ namespace MindLink.Recruitment.MyChat
     /// </summary>
     public class Filter
     {
-      public virtual void ApplyFilter(Conversation conversation)
-      {
-      }
+        public virtual void ApplyFilter(Conversation conversation)
+        {
+        }
     }
 
     public sealed class SenderFilter : Filter
     {
-      private string namefilter;
+        private string namefilter;
 
-      public SenderFilter(String namefilter){
-        this.namefilter = namefilter;
-      }
+        public SenderFilter(String namefilter){
+            this.namefilter = namefilter;
+        }
 
-      public override void ApplyFilter(Conversation conversation)
-      {
-        var editedMessages = new List<Message>();
-        foreach(Message message in conversation.messages)
+        public override void ApplyFilter(Conversation conversation)
         {
-            if (this.namefilter == message.senderId)
+            var editedMessages = new List<Message>();
+            foreach(Message message in conversation.messages)
             {
-                editedMessages.Add(message);
-            }
-        };
-        conversation.messages = editedMessages;
-      }
+                if (this.namefilter == message.senderId)
+                {
+                    editedMessages.Add(message);
+                }
+            };
+            conversation.messages = editedMessages;
+        }
     }
 
     public sealed class KeywordFilter : Filter
     {
-      private string keywordfilter;
+        private string keywordfilter;
 
-      public KeywordFilter(String keywordfilter){
-        this.keywordfilter = keywordfilter;
-      }
+        public KeywordFilter(String keywordfilter){
+            this.keywordfilter = keywordfilter;
+        }
 
-      public override void ApplyFilter(Conversation conversation)
-      {
-        var editedMessages = new List<Message>();
-        foreach(Message message in conversation.messages)
+        public override void ApplyFilter(Conversation conversation)
         {
-            if (message.content.Contains(this.keywordfilter))
+            var editedMessages = new List<Message>();
+            foreach(Message message in conversation.messages)
             {
-                editedMessages.Add(message);
-            }
-        };
-        conversation.messages = editedMessages;
-      }
+                if (message.content.Contains(this.keywordfilter))
+                {
+                    editedMessages.Add(message);
+                }
+            };
+            conversation.messages = editedMessages;
+        }
     }
 
     public sealed class BlacklistFilter : Filter

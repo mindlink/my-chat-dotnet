@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Linq; 
-
 namespace MindLink.Recruitment.MyChat
 {
+    using System.Collections.Generic;
+    using System.Linq; 
+
     /// <summary>
-    /// Stores the filters to edit the exported JSON
+    /// Stores the filters to edit the exported JSON and generates object to output
     /// </summary>
 
     public sealed class ConversationEditor

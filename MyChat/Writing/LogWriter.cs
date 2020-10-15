@@ -13,46 +13,13 @@ namespace MindLink.Recruitment.MyChat
 
     public sealed class LogWriter
     {
-        public bool isReportNeeded;
-        public LogWriter(EditorConfiguration config)
+       public void WriteToOutput(Log output, string outputFilePath)
         {
-            this.isReportNeeded = config.isReportNeeded;
-        }
-
-        public Log CreateLog(Conversation conversation)
-        {
-            if (this.isReportNeeded) {
-                return  new LogWithReport(conversation, this.AddReport(conversation));
-            }
-            else {
-                return new Log(conversation);
-            }
-        }
-
-
-        private List<Activity> AddReport(Conversation conversation)
-        {
-            var activityList = new List<Activity>();
-            foreach(Message message in conversation.messages)
-            {
-                if (activityList.Any(activity=>activity.sender == message.senderId) == false)
-                {
-                    int count = conversation.messages.Count(count => count.senderId == message.senderId);
-                    var activity = new Activity(message.senderId, count);
-                    activityList.Add(activity);
-                }
-            }
-            return activityList.OrderByDescending(activity => activity.count).ToList();
-        }
-
-         public void WriteLogToOutput(Conversation conversation, string outputFilePath)
-        {
-            var log = CreateLog(conversation);
             try
             {
                 var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
 
-                var serialized = JsonConvert.SerializeObject(log, Formatting.Indented);
+                var serialized = JsonConvert.SerializeObject(output, Formatting.Indented);
 
                 writer.Write(serialized);
 

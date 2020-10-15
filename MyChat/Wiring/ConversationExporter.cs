@@ -30,11 +30,11 @@
             var editorConfiguration = new EditorConfiguration(args);
             var conversationEditor = new ConversationEditor(editorConfiguration);
 
-            var logWriter = new LogWriter(editorConfiguration);
+            var logCreator = new LogCreator(editorConfiguration);
 
             var conversationExporter = new ConversationExporter();
             conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, 
-                exporterConfiguration.OutputFilePath, conversationEditor, logWriter);
+                exporterConfiguration.OutputFilePath, conversationEditor, logCreator);
         }
 
         /// <summary>
@@ -52,16 +52,17 @@
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath, ConversationEditor editor, LogWriter logWriter)
+        public void ExportConversation(string inputFilePath, string outputFilePath, ConversationEditor editor, LogCreator logCreator)
         {
             var conversationReader = new ConversationReader(inputFilePath);
             Conversation conversation = conversationReader.ReadConversation();
 
             editor.EditConversation(conversation);
+            
+            var outputLog = logCreator.CreateLog(conversation);
 
-            logWriter.CreateLog(conversation);
-
-            logWriter.WriteLogToOutput(outputFilePath);
+            LogWriter logWriter = new LogWriter();
+            logWriter.WriteToOutput(outputLog, outputFilePath);
 
             Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
         }

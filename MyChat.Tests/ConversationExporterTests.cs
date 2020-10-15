@@ -24,9 +24,9 @@ namespace MindLink.Recruitment.MyChat.Tests
             string[] args = { };
             var editorCofig = new EditorConfiguration(args);
             var editor = new ConversationEditor(editorCofig);
-            var writer = new LogWriter(editorCofig);
+            var logCreator = new LogCreator(editorCofig);
 
-            exporter.ExportConversation("chat.txt", "chat.json", editor, writer);
+            exporter.ExportConversation("chat.txt", "chat.json", editor, logCreator);
 
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 

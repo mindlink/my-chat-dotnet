@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Security;
     using System.Text;
     using Microsoft.Extensions.Configuration;
@@ -80,12 +81,17 @@
                 var messages = new List<Message>();
 
                 string line;
+                
+                const char space = ' ';
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    var split = line.Split(' ');
+                    var split = line.Split(space);
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    // Fixes bug by using array range operator
+                    var content = string.Join(space, split[2..split.Length]);
+
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], content));
                 }
 
                 return new Conversation(conversationName, messages);

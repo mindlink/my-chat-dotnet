@@ -1,14 +1,18 @@
 ﻿namespace MyChat
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.Extensions.Configuration;
     using MindLink.Recruitment.MyChat;
+    using MindLink.Recruitment.MyChat.Filters;
 
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.
     /// </summary>
     public sealed class ConversationExporter
     {
+        private readonly IEnumerable<IFilter> _filters;
+
         /// <summary>
         /// The application entry point.
         /// </summary>
@@ -21,8 +25,35 @@
             var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
             var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
 
-            var conversationExporter = new ConversationExporter();
+            var filters = new List<IFilter>();
+
+            if(!string.IsNullOrEmpty(exporterConfiguration.FilterByUser))
+            {
+                filters.Add(new UserFilter(exporterConfiguration.FilterByUser.Split(',')));
+            }
+
+            if(!string.IsNullOrEmpty(exporterConfiguration.FilterByKeyword))
+            {
+                filters.Add(new KeywordFilter(exporterConfiguration.FilterByKeyword.Split(',')));
+            }
+
+            if(!string.IsNullOrEmpty(exporterConfiguration.Blacklist))
+            {
+                filters.Add(new Blacklist(exporterConfiguration.Blacklist.Split(',')));
+            }
+
+            if (exporterConfiguration.Report)
+            {
+                filters.Add(new Report());
+            }
+
+            var conversationExporter = new ConversationExporter(filters);
             conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
+        }
+
+        public ConversationExporter(IEnumerable<IFilter> filters = null)
+        {
+            _filters = filters;
         }
 
         /// <summary>
@@ -42,10 +73,15 @@
         /// </exception>
         public void ExportConversation(string inputFilePath, string outputFilePath)
         {
-            ConversationReader conversationReader = new ConversationReader();
-            ConversationWriter conversationWriter = new ConversationWriter();
+            var conversationReader = new ConversationReader();
+            var conversationWriter = new ConversationWriter();
+            
+            var conversation = conversationReader.ReadConversation(inputFilePath);
 
-            Conversation conversation = conversationReader.ReadConversation(inputFilePath);
+            foreach(var filter in _filters)
+            {
+                conversation = filter.Filter(conversation);
+            }
 
             conversationWriter.WriteConversation(conversation, outputFilePath);
 

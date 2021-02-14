@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <StartAction>Project</StartAction>
-    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json</StartArguments>
+    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json --filterByUser bob,angus --filterByKeyword pie,no --blacklist hell,yes --report true</StartArguments>
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
 </Project>

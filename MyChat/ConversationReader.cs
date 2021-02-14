@@ -47,13 +47,13 @@ namespace MindLink.Recruitment.MyChat
 
                 return new Conversation(conversationName, messages);
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException fileNotFoundEx)
             {
-                throw new ArgumentException("The file was not found.");
+                throw new ArgumentException("The file was not found.", fileNotFoundEx);
             }
-            catch (IOException)
+            catch (IOException inputOutputEx)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new IOException("Something went wrong in the IO.", inputOutputEx);
             }
         }
     }

@@ -36,17 +36,17 @@ namespace MindLink.Recruitment.MyChat
 
                 writer.Close();
             }
-            catch (SecurityException)
+            catch (SecurityException securityEx)
             {
-                throw new ArgumentException("No permission to file.");
+                throw new ArgumentException("No permission to file.", securityEx);
             }
-            catch (DirectoryNotFoundException)
+            catch (DirectoryNotFoundException directoryNotFoundEx)
             {
-                throw new ArgumentException("Path invalid.");
+                throw new ArgumentException("Path invalid.", directoryNotFoundEx);
             }
-            catch (IOException)
+            catch (IOException inputOutputEx)
             {
-                throw new Exception("Something went wrong in the IO.");
+                throw new Exception("Something went wrong in the IO.", inputOutputEx);
             }
         }
     }

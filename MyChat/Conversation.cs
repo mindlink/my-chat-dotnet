@@ -1,3 +1,4 @@
+
 namespace MindLink.Recruitment.MyChat
 {
     using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace MindLink.Recruitment.MyChat
         /// The messages in the conversation.
         /// </summary>
         public IEnumerable<Message> messages;
+
+        public IEnumerable<Activity> activity;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Conversation"/> class.

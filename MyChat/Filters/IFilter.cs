@@ -1,4 +1,4 @@
-﻿using System;
+﻿using MindLink.Recruitment.MyChat.Data;
 
 namespace MindLink.Recruitment.MyChat.Filters
 {

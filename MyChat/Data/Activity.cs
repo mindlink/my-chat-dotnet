@@ -1,5 +1,4 @@
-﻿using System;
-namespace MindLink.Recruitment.MyChat
+﻿namespace MindLink.Recruitment.MyChat.Data
 {
     public sealed class Activity
     {

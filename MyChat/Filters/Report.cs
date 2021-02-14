@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using MindLink.Recruitment.MyChat.Data;
+using System.Linq;
 
 namespace MindLink.Recruitment.MyChat.Filters
 {

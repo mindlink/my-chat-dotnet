@@ -5,6 +5,7 @@
     using Microsoft.Extensions.Configuration;
     using MindLink.Recruitment.MyChat;
     using MindLink.Recruitment.MyChat.Filters;
+    using MindLink.Recruitment.MyChat.Data;
 
     /// <summary>
     /// Represents a conversation exporter that can read a conversation and write it out in JSON.

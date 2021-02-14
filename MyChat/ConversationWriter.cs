@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security;
 using Newtonsoft.Json;
+using MindLink.Recruitment.MyChat.Data;
 
 namespace MindLink.Recruitment.MyChat
 {

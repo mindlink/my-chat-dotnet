@@ -1,5 +1,4 @@
-
-namespace MindLink.Recruitment.MyChat
+namespace MindLink.Recruitment.MyChat.Data
 {
     using System.Collections.Generic;
 

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using MindLink.Recruitment.MyChat.Data;
 
 namespace MindLink.Recruitment.MyChat.Filters
 {

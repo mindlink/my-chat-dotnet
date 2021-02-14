@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using MindLink.Recruitment.MyChat.Data;
 
 namespace MindLink.Recruitment.MyChat
 {

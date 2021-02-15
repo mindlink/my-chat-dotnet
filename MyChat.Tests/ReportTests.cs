@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Linq;
-using MindLink.Recruitment.MyChat.Filters;
 using NUnit.Framework;
+using MindLink.Recruitment.MyChat.Filters;
+using MindLink.Recruitment.MyChat.Exceptions;
+using MindLink.Recruitment.MyChat.Data;
+using System.Collections.Generic;
 
 namespace MindLink.Recruitment.MyChat.Tests
 {
@@ -27,10 +30,42 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             var filteredConversation = reportFilter.Filter(readConversation);
 
-            var filteredMessages = filteredConversation.messages.ToList();
+            var filteredActivity = filteredConversation.activity.ToList();
 
-            // Add assertions that would check that the report exprots correctly
+            Assert.That(filteredActivity.Count == 3);
 
+            Assert.That(filteredActivity[0].count == 3);
+            Assert.That(filteredActivity[0].sender == "bob");
+
+            Assert.That(filteredActivity[1].count == 2);
+            Assert.That(filteredActivity[1].sender == "mike");
+
+            Assert.That(filteredActivity[2].count == 2);
+            Assert.That(filteredActivity[2].sender == "angus");
+        }
+
+        /// <summary>
+        /// Tests for a null conversation.
+        /// </summary>
+        [Test]
+        public void NullConversationThrowsArgumentNullException()
+        {
+            var reportFilter = new Report();
+
+            Assert.Throws(typeof(ArgumentNullException), () => { reportFilter.Filter(null); });
+        }
+
+        /// <summary>
+        /// Tests for an empty conversation.
+        /// </summary>
+        [Test]
+        public void NoMessagesThrowsNoMessagesException()
+        {
+            var reportFilter = new Report();
+
+            var conversation = new Conversation("conversation", new List<Message>());
+
+            Assert.Throws(typeof(NoMessagesException), () => { reportFilter.Filter(conversation); });
         }
     }
 }

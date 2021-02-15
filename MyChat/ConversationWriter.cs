@@ -39,15 +39,15 @@ namespace MindLink.Recruitment.MyChat
             }
             catch (SecurityException securityEx)
             {
-                throw new ArgumentException("No permission to file.", securityEx);
+                throw new ArgumentException("You don't have permission to this file.", securityEx);
             }
             catch (DirectoryNotFoundException directoryNotFoundEx)
             {
-                throw new ArgumentException("Path invalid.", directoryNotFoundEx);
+                throw new ArgumentException("The directory path is invalid.", directoryNotFoundEx);
             }
             catch (IOException inputOutputEx)
             {
-                throw new Exception("Something went wrong in the IO.", inputOutputEx);
+                throw new IOException("There's an error in the I/O.", inputOutputEx);
             }
         }
     }

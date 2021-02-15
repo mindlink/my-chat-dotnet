@@ -17,6 +17,9 @@ namespace MindLink.Recruitment.MyChat.Data
         /// </summary>
         public IEnumerable<Message> messages;
 
+        /// <summary>
+        /// The activity in the conversation.
+        /// </summary>
         public IEnumerable<Activity> activity;
 
         /// <summary>

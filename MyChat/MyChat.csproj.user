@@ -2,7 +2,32 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <StartAction>Project</StartAction>
-    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json</StartArguments>
+    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json </StartArguments>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'User Filter' ">
+    <StartAction>Project</StartAction>
+    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json --filterByUser bob</StartArguments>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Keyword Filter' ">
+    <StartAction>Project</StartAction>
+    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json --filterByKeyword you</StartArguments>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Blacklist Filter' ">
+    <StartAction>Project</StartAction>
+    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json --blacklist no</StartArguments>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Report Filter' ">
+    <StartAction>Project</StartAction>
+    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json --report true</StartArguments>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Combined' ">
+    <StartAction>Project</StartAction>
+    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json --filterByUser bob --filterByKeyword you,hello --blacklist no --report true</StartArguments>
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
 </Project>

@@ -54,7 +54,7 @@ namespace MindLink.Recruitment.MyChat
             }
             catch (IOException inputOutputEx)
             {
-                throw new IOException("Something went wrong in the IO.", inputOutputEx);
+                throw new IOException("There's an error the I/O.", inputOutputEx);
             }
         }
     }

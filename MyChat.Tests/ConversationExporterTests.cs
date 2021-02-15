@@ -4,9 +4,13 @@ using MyChat;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
+
 namespace MindLink.Recruitment.MyChat.Tests
 {
     using System;
+    using System.Collections.Generic;
+    using MindLink.Recruitment.MyChat.Data;
+    using MindLink.Recruitment.MyChat.Filters;
 
     /// <summary>
     /// Tests for the <see cref="ConversationExporter"/>.
@@ -14,13 +18,15 @@ namespace MindLink.Recruitment.MyChat.Tests
     [TestFixture]
     public class ConversationExporterTests
     {
+        public List<IFilter> filters = new List<IFilter>();
+
         /// <summary>
         /// Tests that exporting the conversation exports conversation.
         /// </summary>
         [Test]
         public void ExportingConversationExportsConversation()
         {
-            var exporter = new ConversationExporter();
+            var exporter = new ConversationExporter(filters);
 
             exporter.ExportConversation("chat.txt", "chat.json");
 
@@ -35,7 +41,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.That(messages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470901)));
             Assert.That(messages[0].senderId, Is.EqualTo("bob"));
             Assert.That(messages[0].content, Is.EqualTo("Hello there!"));
-
+        
             Assert.That(messages[1].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470905)));
             Assert.That(messages[1].senderId, Is.EqualTo("mike"));
             Assert.That(messages[1].content, Is.EqualTo("how are you?"));

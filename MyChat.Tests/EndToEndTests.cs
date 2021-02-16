@@ -72,12 +72,17 @@ namespace MindLink.Recruitment.MyChat.Tests
             Assert.That(savedConversation.name, Is.EqualTo("My Conversation"));
 
             var combinedFilteredMessages = savedConversation.messages.ToList();
+            var combinedfilteredActivity = savedConversation.activity.ToList();
 
             Assert.That(combinedFilteredMessages.Count() == 1);
+            Assert.That(combinedfilteredActivity.Count == 1);
 
             Assert.That(combinedFilteredMessages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));
             Assert.That(combinedFilteredMessages[0].senderId, Is.EqualTo("bob"));
             Assert.That(combinedFilteredMessages[0].content, Is.EqualTo("I'm good thanks, *redacted* you like pie?"));
+
+            Assert.That(combinedfilteredActivity[0].count == 1);
+            Assert.That(combinedfilteredActivity[0].sender == "bob");
         }
     }
 }

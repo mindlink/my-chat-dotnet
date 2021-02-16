@@ -25,7 +25,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var readConversation = conversationReader.ReadConversation("chat.txt");
 
             var reportFilter = new Report();
-
+            
             Assert.That(readConversation.name, Is.EqualTo("My Conversation"));
 
             var filteredConversation = reportFilter.Filter(readConversation);

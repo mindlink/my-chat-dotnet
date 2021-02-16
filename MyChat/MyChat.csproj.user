@@ -27,7 +27,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Combined' ">
     <StartAction>Project</StartAction>
-    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json --filterByUser bob --filterByKeyword you,hello --blacklist no --report true</StartArguments>
+    <StartArguments>--inputFilePath chat.txt --outputFilePath out.json --filterByUser bob --filterByKeyword you --blacklist do --report true</StartArguments>
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
 </Project>

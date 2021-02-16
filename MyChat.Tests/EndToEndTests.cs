@@ -74,7 +74,7 @@ namespace MindLink.Recruitment.MyChat.Tests
             var combinedFilteredMessages = savedConversation.messages.ToList();
             var combinedfilteredActivity = savedConversation.activity.ToList();
 
-            Assert.That(combinedFilteredMessages.Count() == 1);
+            Assert.That(combinedFilteredMessages.Count == 1);
             Assert.That(combinedfilteredActivity.Count == 1);
 
             Assert.That(combinedFilteredMessages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));

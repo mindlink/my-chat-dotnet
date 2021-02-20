@@ -26,11 +26,6 @@ namespace MindLink.Recruitment.MyChat.Filters
                 throw new ArgumentNullException("There must be a conversation to filter.");
             }
 
-            if (conversation.messages.Count() == 0)
-            {
-                throw new NoMessagesException("There must be at least one message to filter.");
-            }
-
             if (_keywords.Length == 0)
             {
                 throw new NoKeywordsException("You must specify at least one keyword to filter.");

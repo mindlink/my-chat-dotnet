@@ -74,19 +74,6 @@ namespace MindLink.Recruitment.MyChat.Tests
         }
 
         /// <summary>
-        /// Tests for an empty conversation.
-        /// </summary>
-        [Test]
-        public void NoMessagesThrowsNoMessagesException()
-        {
-            var keywordFilter = new KeywordFilter(new string[] { "thanks" });
-
-            var conversation = new Conversation("conversation", new List<Message>());
-
-            Assert.Throws(typeof(NoMessagesException), () => { keywordFilter.Filter(conversation); });
-        }
-
-        /// <summary>
         /// Tests for no keywords input.
         /// </summary>
         [Test]

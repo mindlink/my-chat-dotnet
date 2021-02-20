@@ -19,11 +19,6 @@ namespace MindLink.Recruitment.MyChat.Filters
                 throw new ArgumentNullException("There must be a conversation to report on.");
             }
 
-            if (conversation.messages.Count() == 0)
-            {
-                throw new NoMessagesException("There must be at least one message to issue a report.");
-            }
-
             var listOfUsers = new List<string>();
             var report = new Dictionary<string, int>();
 

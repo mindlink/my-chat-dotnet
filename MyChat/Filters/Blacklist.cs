@@ -27,11 +27,6 @@ namespace MindLink.Recruitment.MyChat.Filters
                 throw new ArgumentNullException("There must be a conversation to blacklist.");
             }
 
-            if (conversation.messages.Count() == 0)
-            {
-                throw new NoMessagesException("There must be at least one message to apply blacklist filter to.");
-            }
-
             if (_words.Length == 0)
             {
                 throw new NoBlacklistedWordsException("You must specify at least one word to blacklist.");

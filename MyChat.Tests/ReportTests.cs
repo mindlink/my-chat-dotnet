@@ -69,18 +69,5 @@ namespace MindLink.Recruitment.MyChat.Tests
 
             Assert.Throws(typeof(ArgumentNullException), () => { reportFilter.Filter(null); });
         }
-
-        /// <summary>
-        /// Tests for an empty conversation.
-        /// </summary>
-        [Test]
-        public void NoMessagesThrowsNoMessagesException()
-        {
-            var reportFilter = new Report();
-
-            var conversation = new Conversation("conversation", new List<Message>());
-
-            Assert.Throws(typeof(NoMessagesException), () => { reportFilter.Filter(conversation); });
-        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MindLink.Recruitment.MyChat.Data;
 using MindLink.Recruitment.MyChat.Exceptions;
@@ -23,11 +24,30 @@ namespace MindLink.Recruitment.MyChat.Filters
                 throw new NoMessagesException("There must be at least one message to issue a report.");
             }
 
-            conversation.activity = conversation.messages
-                    .Select(message => { return message.senderId; })
-                    .Distinct()
-                    .Select(senderId => { return new Activity(senderId, conversation.messages.Count(message => { return message.senderId == senderId; })); })
-                    .OrderByDescending(activity => { return activity.count; });
+            var listOfUsers = new List<string>();
+            var report = new Dictionary<string, int>();
+
+            var activities = new List<Activity>();
+
+            foreach(var message in conversation.messages)
+            {
+                if(!report.ContainsKey(message.senderId))
+                {
+                    report.Add(message.senderId, 1);
+                    listOfUsers.Add(message.senderId);
+                }
+                else
+                {
+                    report[message.senderId] += 1;
+                }
+            }
+
+            for(int i = 0; i < listOfUsers.Count; i++)
+            {
+                activities.Add(new Activity(listOfUsers[i], report[listOfUsers[i]]));
+            }
+
+            conversation.activity = activities;
 
             var newConversation = conversation;
 

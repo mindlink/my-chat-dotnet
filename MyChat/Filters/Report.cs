@@ -29,7 +29,9 @@ namespace MindLink.Recruitment.MyChat.Filters
                     .Select(senderId => { return new Activity(senderId, conversation.messages.Count(message => { return message.senderId == senderId; })); })
                     .OrderByDescending(activity => { return activity.count; });
 
-            return conversation;
+            var newConversation = conversation;
+
+            return newConversation;
         }
     }
 }

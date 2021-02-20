@@ -45,7 +45,8 @@ namespace MindLink.Recruitment.MyChat.Filters
                     message.content = Regex.Replace(message.content, pattern, _replacementWord, RegexOptions.IgnoreCase);
                 }
             }
-            return conversation;
+
+            return new Conversation(conversation.name, conversation.messages);
         }
     }
 }

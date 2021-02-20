@@ -14,35 +14,51 @@ namespace MindLink.Recruitment.MyChat.Tests
     [TestFixture]
     public class KeywordFilterTests
     {
+        private Conversation _dummyConversation;
+
+        /// <summary>
+        /// Sets up the messages and conversation to be used within the tests.
+        /// </summary>
+        [SetUp]
+        public void SetupDummyConversation()
+        {
+            List<Message> dummyMessages = new List<Message>()
+            {
+                new Message(DateTime.Now, "Patrick", "I've completed my interview test and have submitted a pull request!"),
+                new Message(DateTime.Now, "MindLink", "Many thanks! The recruitment team will review your test submission and get back to you with feedback."),
+                new Message(DateTime.Now, "Patrick", "What are some things you didn't like with my test submission?"),
+                new Message(DateTime.Now, "MindLink", "Unit tests actually involve reading from the file system instead of using a dummy Conversation instance"),
+                new Message(DateTime.Now, "Patrick", "Okay thanks, working on it!")
+            };
+
+            Conversation dummyConversation = new Conversation("Dummy Conversation", dummyMessages);
+
+            _dummyConversation = dummyConversation;
+        }
+
         /// <summary>
         /// Tests that the Keyword Filter filters each user correctly.
         /// </summary>
         [Test]
         public void FilteringKeywordFiltersKeyword()
         {
-            var keywordsToTest = new string[] { "you" };
-
-            var conversationReader = new ConversationReader();
-
-            var readConversation = conversationReader.ReadConversation("chat.txt");
+            var keywordsToTest = new string[] { "thanks" };
 
             var keywordFilter = new KeywordFilter(keywordsToTest);
 
-            Assert.That(readConversation.name, Is.EqualTo("My Conversation"));
+            Assert.That(_dummyConversation.name, Is.EqualTo("Dummy Conversation"));
 
-            var filteredConversation = keywordFilter.Filter(readConversation);
+            var filteredConversation = keywordFilter.Filter(_dummyConversation);
 
             var filteredMessages = filteredConversation.messages.ToList();
 
             Assert.That(filteredMessages.Count == 2);
 
-            Assert.That(filteredMessages[0].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470905)));
-            Assert.That(filteredMessages[0].senderId, Is.EqualTo("mike"));
-            Assert.That(filteredMessages[0].content, Is.EqualTo("how are you?"));
+            Assert.That(filteredMessages[0].senderId, Is.EqualTo("MindLink"));
+            Assert.That(filteredMessages[0].content, Is.EqualTo("Many thanks! The recruitment team will review your test submission and get back to you with feedback."));
 
-            Assert.That(filteredMessages[1].senderId, Is.EqualTo("bob"));
-            Assert.That(filteredMessages[1].timestamp, Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1448470906)));
-            Assert.That(filteredMessages[1].content, Is.EqualTo("I'm good thanks, do you like pie?"));
+            Assert.That(filteredMessages[1].senderId, Is.EqualTo("Patrick"));
+            Assert.That(filteredMessages[1].content, Is.EqualTo("Okay thanks, working on it!"));
         }
 
 
@@ -52,7 +68,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void NullConversationThrowsArgumentNullException()
         {
-            var keywordFilter = new KeywordFilter(new string[] { "pie" });
+            var keywordFilter = new KeywordFilter(new string[] { "thanks" });
 
             Assert.Throws(typeof(ArgumentNullException), () => { keywordFilter.Filter(null); });
         }
@@ -63,7 +79,7 @@ namespace MindLink.Recruitment.MyChat.Tests
         [Test]
         public void NoMessagesThrowsNoMessagesException()
         {
-            var keywordFilter = new KeywordFilter(new string[] { "pie" });
+            var keywordFilter = new KeywordFilter(new string[] { "thanks" });
 
             var conversation = new Conversation("conversation", new List<Message>());
 

@@ -14,34 +14,49 @@ namespace MindLink.Recruitment.MyChat.Tests
     [TestFixture]
     public class ReportTests
     {
+        private Conversation _dummyConversation;
+
+        /// <summary>
+        /// Sets up the messages and conversation to be used within the tests.
+        /// </summary>
+        [SetUp]
+        public void SetupDummyConversation()
+        {
+            List<Message> dummyMessages = new List<Message>()
+            {
+                new Message(DateTime.Now, "Patrick", "I've completed my interview test and have submitted a pull request!"),
+                new Message(DateTime.Now, "MindLink", "Many thanks! The recruitment team will review your test submission and get back to you with feedback."),
+                new Message(DateTime.Now, "Patrick", "What are some things you didn't like with my test submission?"),
+                new Message(DateTime.Now, "MindLink", "Unit tests actually involve reading from the file system instead of using a dummy Conversation instance"),
+                new Message(DateTime.Now, "Patrick", "Okay thanks, working on it!")
+            };
+
+            Conversation dummyConversation = new Conversation("Dummy Conversation", dummyMessages);
+
+            _dummyConversation = dummyConversation;
+        }
+
         /// <summary>
         /// Tests that the Report command issues the correct report.
         /// </summary>
         [Test]
         public void ReportIssuesReport()
         {
-            var conversationReader = new ConversationReader();
-
-            var readConversation = conversationReader.ReadConversation("chat.txt");
-
             var reportFilter = new Report();
             
-            Assert.That(readConversation.name, Is.EqualTo("My Conversation"));
+            Assert.That(_dummyConversation.name, Is.EqualTo("Dummy Conversation"));
 
-            var filteredConversation = reportFilter.Filter(readConversation);
+            var filteredConversation = reportFilter.Filter(_dummyConversation);
 
             var filteredActivity = filteredConversation.activity.ToList();
 
-            Assert.That(filteredActivity.Count == 3);
+            Assert.That(filteredActivity.Count == 2);
 
             Assert.That(filteredActivity[0].count == 3);
-            Assert.That(filteredActivity[0].sender == "bob");
+            Assert.That(filteredActivity[0].sender == "Patrick");
 
             Assert.That(filteredActivity[1].count == 2);
-            Assert.That(filteredActivity[1].sender == "mike");
-
-            Assert.That(filteredActivity[2].count == 2);
-            Assert.That(filteredActivity[2].sender == "angus");
+            Assert.That(filteredActivity[1].sender == "MindLink");
         }
 
         /// <summary>

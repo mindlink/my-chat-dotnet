@@ -1,1 +1,40 @@
-<mxfile host="app.diagrams.net" modified="2021-03-09T21:23:00.029Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36" etag="aQ1j_CPD1sXqnscyGOKh" version="14.4.6" type="github"><diagram id="dT-BstXf9z1sqyS1aYiG" name="Page-1">7ZZRb5swEMc/DY+pACdpXhuStpNarVqqTdubCw5YNT5kjob00+8MJpTQSOm0ai+TUOT7+Wzs+//t4LEor28ML7J7SITyQj+pPbbywvByEdKvBfsWTC/nLUiNTFoU9GAjX4WDvqOVTEQ5SEQAhbIYwhi0FjEOGDcGdsO0LajhWwueihHYxFyN6Q+ZYNbSxczv+a2Qada9OfBdT867ZAfKjCewe4PY2mORAcC2ldeRULZ2XV3acdcneg8LM0LjOQPWfv799tfP2WTzkjKW4eM+u5+4WV64qtyGH6onJWNiG0FFSCLQL8KUHCXodV2AQWGIbWVamQZexKXbH+67opU7mSuuKVpuQePG9QQUcyVTTe2YVi0MAZodJdX7ynUgFETjTKrkju+hsnsrkcfPXbTMwMhXmpYrNyd1G3TWCeeDjI0dSdgnakRJOQ9dwYIjdM/rQeIdL9GBGJTiRSmfDtvIuUmlXgIi5C7JVZK2I+qTEgUH4enACMgFmj2l1EPTu7OycOGuNx5jjmVvTedPneGd2dPDzL0fqOEs8QF7hCN7eOGy0dpInXrsitpfdFHhtVRURlol1T9kQVuP48yvFQ5Sj1xDdcNGTQPPIgIFZI+VhtZGUqkj1DlJiS2e9FFZ8Jjef9fkrKY9+ebKZxHQ2K1qzmYmk0Ro6wFAjrwV3O6mAKmxKe9sSQ+pEPkXM29GC48oDvqYHptukI4J7YXLRntBbtoJ66jzjHL6tI7d4+wSzs+zy/Sz3MLeccuRxko22rUadxdq8EcC5ySVEr2ij1bw1SQYqc7GqrN3FFb8SagHKKW91YiZNvdI+X8l7uWZd8Hik7SdjrS9EWi9b/8o8P9Z/ttyL86TuzvzH9Cbwv6jo+l78+XG1r8B</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-03-09T21:37:19.428Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36" etag="yMpSU3qxKqGO8EhqcC49" version="14.4.6" type="github">
+  <diagram id="dT-BstXf9z1sqyS1aYiG" name="Page-1">
+    <mxGraphModel dx="782" dy="476" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="E0mVHZY5-Svg33htTyhM-1" value="Public Sealed Class ConversationExporterConfiguration.cs" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="30" y="120" width="360" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="E0mVHZY5-Svg33htTyhM-2" value="+ InputFilePath : string&#xa;+ OutputFilePath : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="E0mVHZY5-Svg33htTyhM-1" vertex="1">
+          <mxGeometry y="26" width="360" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="E0mVHZY5-Svg33htTyhM-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="E0mVHZY5-Svg33htTyhM-1" vertex="1">
+          <mxGeometry y="70" width="360" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="E0mVHZY5-Svg33htTyhM-4" value="Get, Set" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="E0mVHZY5-Svg33htTyhM-1" vertex="1">
+          <mxGeometry y="78" width="360" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="0P48gXg5jcKvVJu8oGB--1" value="Public Sealed Class ConversationExporter.cs" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
+          <mxGeometry x="420" y="129" width="450" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="0P48gXg5jcKvVJu8oGB--4" value="+ Main(args : string[]) : void&#xa;+ ExportConversation(inputFilePath : string, outputFile : string) : void&#xa;+ ReadConversation (inputFilePath : string) : Conversation&#xa;+ WriteConversation (conversation : Conversation, outputFilePath : string) : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="0P48gXg5jcKvVJu8oGB--1">
+          <mxGeometry y="26" width="450" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="0P48gXg5jcKvVJu8oGB--5" value="Public Sealed Class Conversation" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="290" width="370" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="0P48gXg5jcKvVJu8oGB--6" value="+ name : string&#xa;+ messages : IEnumerable&lt;Message&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="0P48gXg5jcKvVJu8oGB--5">
+          <mxGeometry y="26" width="370" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="0P48gXg5jcKvVJu8oGB--7" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="0P48gXg5jcKvVJu8oGB--5">
+          <mxGeometry y="70" width="370" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="0P48gXg5jcKvVJu8oGB--8" value="+ Conversation(name:string, messages:IEnumerable&lt;Message&gt;)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="0P48gXg5jcKvVJu8oGB--5">
+          <mxGeometry y="78" width="370" height="26" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

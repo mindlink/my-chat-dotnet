@@ -1,6 +1,7 @@
 ﻿namespace MyChat
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
     using System.Security;
@@ -27,7 +28,10 @@
             var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
 
             var conversationExporter = new ConversationExporter();
-            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
+
+            var additionalOptions = new AdditionalConversationOptions(exporterConfiguration);
+
+            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath,additionalOptions);
         }
 
         /// <summary>
@@ -45,9 +49,9 @@
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public void ExportConversation(string inputFilePath, string outputFilePath, AdditionalConversationOptions additionalConversationOptions)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            Conversation conversation = this.ReadConversation(inputFilePath, additionalConversationOptions);
 
             this.WriteConversation(conversation, outputFilePath);
 
@@ -69,7 +73,7 @@
         /// <exception cref="Exception">
         /// Thrown when something else went wrong.
         /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
+        public Conversation ReadConversation(string inputFilePath,AdditionalConversationOptions additionalConversationOptions)
         {
             try
             {
@@ -96,7 +100,7 @@
                     messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(unixTime)), senderName, senderMessage));
                 }
 
-                return new Conversation(conversationName, messages);
+                return additionalConversationOptions.ApplyOptionsToMessages(conversationName,messages);
             }
             catch (FileNotFoundException)
             {
@@ -114,6 +118,7 @@
 
         /// <summary>
         /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
+        /// Apply any additional conversation options to JSON file, such as filter word,name and appending report to JSON object
         /// </summary>
         /// <param name="conversation">
         /// The conversation.

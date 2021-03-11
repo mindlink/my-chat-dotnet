@@ -85,7 +85,15 @@
                 {
                     var split = line.Split(' ');
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    var unixTime = split[0];
+                    var senderName = split[1];
+                    var senderMessage = "";
+
+                    var senderMessageArray = split[2..split.Length];
+
+                    senderMessage = string.Join(' ', senderMessageArray);
+
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(unixTime)), senderName, senderMessage));
                 }
 
                 return new Conversation(conversationName, messages);
@@ -97,6 +105,10 @@
             catch (IOException)
             {
                 throw new Exception("Something went wrong in the IO.");
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentException("Something is wrong with the sender's message content");
             }
         }
 

@@ -16,8 +16,13 @@ namespace MindLink.Recruitment.MyChat
         public string OutputFilePath { get; set; }
 
         /// <summary>
-        /// Name of user to filter
+        /// Name of user to filter messages with
         /// </summary>
         public string FilterByUser { get; set; }
+
+        /// <summary>
+        /// Word to filter messages with
+        /// </summary>
+        public string FilterByWord { get; set; }
     }
 }

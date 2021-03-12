@@ -31,19 +31,21 @@
 
             var additionalOptions = new AdditionalConversationOptions(exporterConfiguration);
 
-            Console.WriteLine(args[0]);
-
             conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath,additionalOptions);
         }
 
         /// <summary>
         /// Exports the conversation at <paramref name="inputFilePath"/> as JSON to <paramref name="outputFilePath"/>.
+        /// Takes in <paramref name="additionalConversationOptions"> for ReadConversation helper method
         /// </summary>
         /// <param name="inputFilePath">
         /// The input file path.
         /// </param>
         /// <param name="outputFilePath">
         /// The output file path.
+        /// </param>
+        /// <param name="additionalConversationOptions">
+        /// The additional configuration options for filtering and manipulation of JSON result file
         /// </param>
         /// <exception cref="ArgumentException">
         /// Thrown when a path is invalid.
@@ -53,18 +55,37 @@
         /// </exception>
         public void ExportConversation(string inputFilePath, string outputFilePath, AdditionalConversationOptions additionalConversationOptions)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath, additionalConversationOptions);
+            try
+            {
+                Conversation conversation = this.ReadConversation(inputFilePath, additionalConversationOptions);
 
-            this.WriteConversation(conversation, outputFilePath);
+                this.WriteConversation(conversation, outputFilePath);
 
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+                Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+            }
+            catch (IOException) 
+            {
+                throw new Exception("Something went wrong with the IO");
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentException("Either inputFilePath or outputFilePath is null");
+            }
+            catch (FormatException)
+            {
+                throw new Exception("Format of inputFilePath or outputFilePath is invalid");
+            }
         }
 
         /// <summary>
         /// Helper method to read the conversation from <paramref name="inputFilePath"/>.
+        /// Use <paramref name="additionalConversationOptions"> to apply filter/manipulation options on read conversation
         /// </summary>
         /// <param name="inputFilePath">
         /// The input file path.
+        /// </param>
+        /// <param name="additionalConversationOptions">
+        /// The additional configuration options for filtering and manipulation of JSON result file
         /// </param>
         /// <returns>
         /// A <see cref="Conversation"/> model representing the conversation.

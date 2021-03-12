@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2021-03-12T01:14:37.582Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36" etag="wevCYeQF2hVVkLDnHc-R" version="14.4.6" type="github">
+<mxfile host="app.diagrams.net" modified="2021-03-12T01:39:22.347Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36" etag="F3UvCDRgop-3khZWnVTt" version="14.4.6" type="github">
   <diagram id="dT-BstXf9z1sqyS1aYiG" name="Page-1">
-    <mxGraphModel dx="1795" dy="689" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="647" dy="683" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -146,6 +146,24 @@
             <mxPoint x="180" y="480" as="sourcePoint" />
             <mxPoint x="340" y="480" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="ljQ4co_ca2o6-AypBJDi-1" value="Public Sealed Class ProcessingParser" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
+          <mxGeometry x="640" y="812" width="420" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="ljQ4co_ca2o6-AypBJDi-2" value="+ filters : BaseFilter[]&#xa;+ blacklists : IBlacklist[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ljQ4co_ca2o6-AypBJDi-1">
+          <mxGeometry y="26" width="420" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="ljQ4co_ca2o6-AypBJDi-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="ljQ4co_ca2o6-AypBJDi-1">
+          <mxGeometry y="70" width="420" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ljQ4co_ca2o6-AypBJDi-4" value="+ ProcessingParser()&#xa;+ ProcessingParser(filters BaseFilter[])&#xa;+ ProcessingParser(filters BaseFilter[], IBlacklist[] blacklists)&#xa;+ RunLineCheck(unixSeconds:string, userId:string, contents:string):string[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ljQ4co_ca2o6-AypBJDi-1">
+          <mxGeometry y="78" width="420" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="ljQ4co_ca2o6-AypBJDi-5" value="Public Static Class TextFunctions" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
+          <mxGeometry x="265" y="740" width="320" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ljQ4co_ca2o6-AypBJDi-8" value="+ Static ReplaceWords(sentence:string, oldWord:string,&#xa;     newWord:string):string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ljQ4co_ca2o6-AypBJDi-5">
+          <mxGeometry y="26" width="320" height="54" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

@@ -17,7 +17,10 @@ namespace MindLink.Recruitment.MyChat
 
             var filterByName = new FilterByName();
 
-            filteredMessages = filterByName.Filter(filteredMessages,exporterConfiguration);
+            if (exporterConfiguration.FilterByUser != null)
+            {
+                filteredMessages = filterByName.Filter(filteredMessages, exporterConfiguration.FilterByUser);
+            }
 
             return new Conversation(conversationName, filteredMessages);
         }

@@ -4,17 +4,15 @@ namespace MindLink.Recruitment.MyChat
 {
     public abstract class FilterOptions
     {
-        public abstract List<Message> Filter(List<Message> messages, ConversationExporterConfiguration exporterConfiguration);
+        public abstract List<Message> Filter(List<Message> messages, string filterTarget);
 
     }
 
     public class FilterByName : FilterOptions
     {
-        public override List<Message> Filter(List<Message> messages, ConversationExporterConfiguration exporterConfiguration)
+        public override List<Message> Filter(List<Message> messages, string nameToFilter)
         {
             var filteredMessages = new List<Message>();
-
-            var nameToFilter = exporterConfiguration.FilterByUser;
 
             foreach (var message in messages)
             {

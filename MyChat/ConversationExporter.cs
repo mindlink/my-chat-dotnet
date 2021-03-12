@@ -31,6 +31,8 @@
 
             var additionalOptions = new AdditionalConversationOptions(exporterConfiguration);
 
+            Console.WriteLine(args[0]);
+
             conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath,additionalOptions);
         }
 

@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace MindLink.Recruitment.MyChat.Tests
 {
+    using Microsoft.Extensions.Configuration;
     using System;
 
     /// <summary>
@@ -22,7 +23,14 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             var exporter = new ConversationExporter();
 
-            var additionalOptions = new AdditionalConversationOptions(null);
+            var args = new string[2];
+            args[0] = "--inputFilePath";
+            args[1] = "./MyChat/chat.txt";
+
+            var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
+            var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
+
+            var additionalOptions = new AdditionalConversationOptions(exporterConfiguration);
 
             exporter.ExportConversation("chat.txt", "chat.json",additionalOptions);
 

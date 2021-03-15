@@ -22,7 +22,12 @@ namespace MindLink.Recruitment.MyChat.Tests
         {
             var exporter = new ConversationExporter();
 
-            exporter.ExportConversation("chat.txt", "chat.json");
+            ConversationExporterConfiguration exporterConfiguration = new ConversationExporterConfiguration();
+
+            exporterConfiguration.InputFilePath = "chat.txt";
+            exporterConfiguration.OutputFilePath = "chat.json";
+
+            exporter.ExportConversation(exporterConfiguration);
 
             var serializedConversation = new StreamReader(new FileStream("chat.json", FileMode.Open)).ReadToEnd();
 

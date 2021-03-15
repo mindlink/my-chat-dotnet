@@ -7,6 +7,10 @@
     using System.Text;
     using Microsoft.Extensions.Configuration;
     using MindLink.Recruitment.MyChat;
+    using MindLink.Recruitment.MyChat.Blacklisting;
+    using MindLink.Recruitment.MyChat.Exceptions.CustomIOExceptions;
+    using MindLink.Recruitment.MyChat.Filters;
+    using MindLink.Recruitment.MyChat.Text_Processing;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -25,9 +29,18 @@
             // We use Microsoft.Extensions.Configuration.CommandLine and Configuration.Binder to read command line arguments.
             var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
             var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
-
             var conversationExporter = new ConversationExporter();
-            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
+
+            foreach (var arg in args)
+            {
+                if (arg.Equals("--report"))
+                {
+                    exporterConfiguration.generateReport = true;
+                    break;
+                }
+            }
+
+            conversationExporter.ExportConversation(exporterConfiguration);
         }
 
         /// <summary>
@@ -45,13 +58,40 @@
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+       
+        public void ExportConversation(ConversationExporterConfiguration exporterConfiguration)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            var filters = new List<BaseFilter>();
+            var blacklists = new List<IBlacklist>();
+            Conversation conversation;
 
-            this.WriteConversation(conversation, outputFilePath);
+            if (exporterConfiguration.filterByUser != null)
+            {
+                var userFilter = new UserFilter(new string[] { exporterConfiguration.filterByUser });
+                filters.Add(userFilter);
+            }
 
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+            if (exporterConfiguration.filterByKeyword != null)
+            {
+                var keywordFilter = new KeywordFilter(new string[] { exporterConfiguration.filterByKeyword });
+                filters.Add(keywordFilter);
+            }
+
+            if (exporterConfiguration.blacklist != null)
+            {
+                var blacklistWords = exporterConfiguration.blacklist.Split(',');
+                blacklists.Add(new KeywordBlacklist(blacklistWords, "*redacted*"));
+
+            }
+
+            if (exporterConfiguration.generateReport)
+                conversation = this.ReadConversation(exporterConfiguration.InputFilePath, filters.ToArray() , blacklists.ToArray(),true);
+            else
+                conversation = this.ReadConversation(exporterConfiguration.InputFilePath, filters.ToArray(), blacklists.ToArray());
+
+            this.WriteConversation(conversation, exporterConfiguration.OutputFilePath);
+
+            Console.WriteLine("Conversation exported from '{0}' to '{1}'", exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
         }
 
         /// <summary>
@@ -69,26 +109,64 @@
         /// <exception cref="Exception">
         /// Thrown when something else went wrong.
         /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
+        /// 
+
+
+
+
+
+
+        public Conversation ReadConversation(string inputFilePath, BaseFilter[] filters, IBlacklist[] blacklists, bool generateReport = false)
         {
             try
             {
                 var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
                     Encoding.ASCII);
-
-                string conversationName = reader.ReadLine();
                 var messages = new List<Message>();
+                var conversationName = reader.ReadLine();
+
 
                 string line;
-
                 while ((line = reader.ReadLine()) != null)
                 {
                     var split = line.Split(' ');
+                    var messageInfo = new string[3];
+                    var processingParser = new ProcessingParser(filters, blacklists);
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    if (split[1].Length <= 0)
+                        throw new InvalidUserIdException("Invalid User ID, Check input");
+
+                    if (split.Length <= 2)
+                        throw new MessageFormatException("Empty or Incorrectly formatted Message, Check input");
+
+                    messageInfo[0] = split[0];
+                    messageInfo[1] = split[1];
+                    messageInfo[2] = line.Substring(split[0].Length + split[1].Length + 1).Trim();
+                    messageInfo = processingParser.RunLineCheck(messageInfo[0], messageInfo[1], messageInfo[2]);
+
+                    //if timestamp is empty, then message didn't pass through filter or blacklist
+                    if (messageInfo[0] != "")
+                    {
+                        messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(messageInfo[0])), messageInfo[1], messageInfo[2]));
+                    }
                 }
 
-                return new Conversation(conversationName, messages);
+                if (generateReport)
+                {
+                    var reported = new ConversationReport(conversationName, messages);
+
+                    reported.GenerateReportData();
+                    reported.SortDataAscending();
+                    return reported;
+                }
+                else
+                {
+                    return new Conversation(conversationName, messages);
+                }
+            }
+            catch (FormatException)
+            {
+                throw new Exception("Incorrect Unix Format, Please Check input");
             }
             catch (FileNotFoundException)
             {
@@ -115,6 +193,14 @@
         /// <exception cref="Exception">
         /// Thrown when something else bad happens.
         /// </exception>
+        /// 
+
+
+
+
+
+
+
         public void WriteConversation(Conversation conversation, string outputFilePath)
         {
             try

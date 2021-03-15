@@ -5,7 +5,7 @@ namespace MindLink.Recruitment.MyChat
     /// <summary>
     /// Represents the model of a conversation.
     /// </summary>
-    public sealed class Conversation
+    public class Conversation
     {
         /// <summary>
         /// The name of the conversation.
@@ -26,6 +26,7 @@ namespace MindLink.Recruitment.MyChat
         /// <param name="messages">
         /// The messages in the conversation.
         /// </param>
+        
         public Conversation(string name, IEnumerable<Message> messages)
         {
             this.name = name;

@@ -14,5 +14,22 @@ namespace MindLink.Recruitment.MyChat
         /// The output file path.
         /// </summary>
         public string OutputFilePath { get; set; }
+        
+        /// <summary>
+        /// Filter via username
+        /// </summary>
+        public string filterByUser { get; set; }
+
+        /// <summary>
+        /// Filter via keyword
+        /// </summary>
+        public string filterByKeyword { get; set; }
+
+        /// <summary>
+        /// Blacklist words
+        /// </summary>
+        public string blacklist { get; set; }
+
+        public bool generateReport { get; set; }
     }
 }

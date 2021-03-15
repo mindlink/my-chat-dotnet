@@ -24,5 +24,15 @@ namespace MindLink.Recruitment.MyChat
         /// Word to filter messages with
         /// </summary>
         public string FilterByWord { get; set; }
+
+        /// <summary>
+        /// Words to blacklist
+        /// </summary>
+        public string Blacklist { get; set; }
+
+        /// <summary>
+        /// Indicate report option enabled or disabled
+        /// </summary>
+        public bool Report { get; set; } = false;
     }
 }

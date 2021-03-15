@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Security;
     using System.Text;
     using Microsoft.Extensions.Configuration;
@@ -31,7 +32,13 @@
 
             var additionalOptions = new AdditionalConversationOptions(exporterConfiguration);
 
-            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath,additionalOptions);
+            var argList = args.ToList();
+            if (argList.Contains("--report"))
+            {
+                exporterConfiguration.Report = true;
+            }
+
+            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath, additionalOptions);
         }
 
         /// <summary>
@@ -57,7 +64,7 @@
         {
             try
             {
-                Conversation conversation = this.ReadConversation(inputFilePath, additionalConversationOptions);
+                Conversation conversation = additionalConversationOptions.ApplyOptionsToConversation(this.ReadConversation(inputFilePath));
 
                 this.WriteConversation(conversation, outputFilePath);
 
@@ -79,13 +86,9 @@
 
         /// <summary>
         /// Helper method to read the conversation from <paramref name="inputFilePath"/>.
-        /// Use <paramref name="additionalConversationOptions"> to apply filter/manipulation options on read conversation
         /// </summary>
         /// <param name="inputFilePath">
         /// The input file path.
-        /// </param>
-        /// <param name="additionalConversationOptions">
-        /// The additional configuration options for filtering and manipulation of JSON result file
         /// </param>
         /// <returns>
         /// A <see cref="Conversation"/> model representing the conversation.
@@ -96,7 +99,7 @@
         /// <exception cref="Exception">
         /// Thrown when something else went wrong.
         /// </exception>
-        public Conversation ReadConversation(string inputFilePath,AdditionalConversationOptions additionalConversationOptions)
+        public Conversation ReadConversation(string inputFilePath)
         {
             try
             {
@@ -123,7 +126,7 @@
                     messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(unixTime)), senderName, senderMessage));
                 }
 
-                return additionalConversationOptions.ApplyOptionsToMessages(conversationName,messages);
+                return new Conversation(conversationName,messages,null);
             }
             catch (FileNotFoundException)
             {
@@ -141,7 +144,6 @@
 
         /// <summary>
         /// Helper method to write the <paramref name="conversation"/> as JSON to <paramref name="outputFilePath"/>.
-        /// Apply any additional conversation options to JSON file, such as filter word,name and appending report to JSON object
         /// </summary>
         /// <param name="conversation">
         /// The conversation.

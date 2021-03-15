@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace MindLink.Recruitment.MyChat
 {
-    public abstract class FilterOptions
+    public abstract class FilterOptions : ConversationOptions
     {
         public abstract List<Message> Filter(List<Message> messages, string filterTarget);
 
@@ -12,6 +12,18 @@ namespace MindLink.Recruitment.MyChat
 
     public class FilterByName : FilterOptions
     {
+        /// <summary>
+        /// Filter and return messages from user that matches chosen name
+        /// </summary>
+        /// <param name="messages">
+        /// Messages from the conversation
+        /// </param>
+        /// <param name="nameToFilter">
+        /// Name of a user
+        /// </param>
+        /// <returns>
+        /// Filtered list of <see cref="Message">
+        /// </returns>
         public override List<Message> Filter(List<Message> messages, string nameToFilter)
         {
             var filteredMessages = new List<Message>();
@@ -30,6 +42,18 @@ namespace MindLink.Recruitment.MyChat
 
     public class FilterByWord : FilterOptions
     {
+        /// <summary>
+        /// Filter and return messages containing the keyword
+        /// </summary>
+        /// <param name="messages">
+        /// Messages from the conversation
+        /// </param>
+        /// <param name="wordToFilter">
+        /// The keyword to filter the message
+        /// </param>
+        /// <returns>
+        /// Filtered list of <see cref="Message">
+        /// </returns>
         public override List<Message> Filter(List<Message> messages, string wordToFilter)
         {
             try
@@ -41,7 +65,7 @@ namespace MindLink.Recruitment.MyChat
                     var messageContent = message.content;
                     var messageContentArray = messageContent.Split(' ');
 
-                    Regex wordToFilterRegex = new Regex(@"\b" + wordToFilter + @"[!?.,]?\b", RegexOptions.IgnoreCase);
+                    Regex wordToFilterRegex = new Regex(@"\b" + wordToFilter + @"[!?.,']?\b", RegexOptions.IgnoreCase);
                     
                     foreach(var word in messageContentArray)
                     {

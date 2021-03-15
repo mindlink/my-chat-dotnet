@@ -1,5 +1,6 @@
 namespace MindLink.Recruitment.MyChat
 {
+    using Newtonsoft.Json;
     using System.Collections.Generic;
 
     /// <summary>
@@ -18,7 +19,12 @@ namespace MindLink.Recruitment.MyChat
         public IEnumerable<Message> messages;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Conversation"/> class.
+        /// Additional info of conversation
+        /// </summary>
+        public IEnumerable<Report> activity;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Conversation"/> class. Overloaded to include an additional list of <see cref="Report">
         /// </summary>
         /// <param name="name">
         /// The name of the conversation.
@@ -26,10 +32,14 @@ namespace MindLink.Recruitment.MyChat
         /// <param name="messages">
         /// The messages in the conversation.
         /// </param>
-        public Conversation(string name, IEnumerable<Message> messages)
+        /// <param name="activity">
+        /// Activity report of the conversation
+        /// </param>
+        public Conversation(string name, IEnumerable<Message> messages, IEnumerable<Report> activity)
         {
             this.name = name;
             this.messages = messages;
+            this.activity = activity;
         }
     }
 }

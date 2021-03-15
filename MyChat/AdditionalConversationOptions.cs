@@ -7,10 +7,10 @@ namespace MindLink.Recruitment.MyChat
         private ConversationExporterConfiguration exporterConfiguration;
 
         /// <summary>
-        /// Constructor of this class, initialise exporter configration
+        /// Initialise new instance of <see cref="AdditionalConversationOptions">
         /// </summary>
         /// <param name="exporterConfig">
-        /// Contains configurations for filter/manipulation options
+        /// Configuration of commandline arguments
         /// </param>
         public AdditionalConversationOptions(ConversationExporterConfiguration exporterConfig)
         {
@@ -18,33 +18,48 @@ namespace MindLink.Recruitment.MyChat
         }
 
         /// <summary>
-        /// Apply all options to conversation passed from command-line argument
+        /// Apply all commandline argument options to conversation
         /// </summary>
-        /// <param name="conversationName">
-        /// Name of conversation
+        /// <param name="conversation">
+        /// model representing the conversation
         /// </param>
         /// <param name="messages">
         /// All messages sent by users from conversation
         /// </param>
-        /// <returns></returns>
-        public Conversation ApplyOptionsToMessages(string conversationName, List<Message> messages)
+        /// <returns>
+        /// A <see cref="Conversation"/> model representing the conversation. May return overloaded <see cref="Conversation"> instead
+        /// </returns>
+        public Conversation ApplyOptionsToConversation(Conversation conversation)
         {
-            var filteredMessages = messages;
+            var messages = (List<Message>)conversation.messages;
+            var conversationName = conversation.name;
 
-            var filterByName = new FilterByName();
-            var filterByWord = new FilterByWord();
-
+            /// Filter by user name
             if (exporterConfiguration.FilterByUser != null)
             {
-                filteredMessages = filterByName.Filter(filteredMessages, exporterConfiguration.FilterByUser);
+                messages = new FilterByName().Filter(messages, exporterConfiguration.FilterByUser);
             }
 
+            /// Filter by keyword
             if (exporterConfiguration.FilterByWord != null)
             {
-                filteredMessages = filterByWord.Filter(filteredMessages, exporterConfiguration.FilterByWord);
+                messages = new FilterByWord().Filter(messages, exporterConfiguration.FilterByWord);
             }
 
-            return new Conversation(conversationName, filteredMessages);
+            /// Blacklist words
+            if (exporterConfiguration.Blacklist != null)
+            {
+                new ReplaceWithRedact().Replace(messages,exporterConfiguration.Blacklist.Split(','));
+            }
+
+            /// Generate Report
+            if (exporterConfiguration.Report)
+            {
+                var messageCountPerUserReport = new MessageCountPerUserReportOption().GenerateReport(messages);
+                return new Conversation(conversationName,messages,messageCountPerUserReport);
+            }
+            
+            return new Conversation(conversationName, messages,null);
         }
     }
 }

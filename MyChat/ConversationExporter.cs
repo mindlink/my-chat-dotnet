@@ -26,18 +26,35 @@
             var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
             var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
 
-            var conversationExporter = new ConversationExporter();
-            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
+            if(Array.IndexOf(args, "--report") != -1)
+            {
+                exporterConfiguration.Report = true;
+            }
+            ManageArguments(exporterConfiguration);
         }
 
         /// <summary>
-        /// Exports the conversation at <paramref name="inputFilePath"/> as JSON to <paramref name="outputFilePath"/>.
+        /// Helper method to initialise the command line arguments and throw argument null errors.
         /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
+        /// <param name="exporterConfiguration">
+        /// The configuration for the conversation to be exported.
         /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when input path is null.
+        /// </exception>
+        public static void ManageArguments(ConversationExporterConfiguration exporterConfiguration)
+        {
+            var conversationExporter = new ConversationExporter();
+            var exporterParameters = new ConversationExporterParameters(exporterConfiguration);
+
+            conversationExporter.ExportConversation(exporterParameters);
+        }
+
+        /// <summary>
+        /// Exports the conversation at InputFilePath as JSON to OutputFilePath, where both file paths are stored in <paramref name="exporterParameters"/>.
+        /// </summary>
+        /// <param name="exporterParameters">
+        /// Class containing all the parameters for the exporter
         /// </param>
         /// <exception cref="ArgumentException">
         /// Thrown when a path is invalid.
@@ -45,21 +62,21 @@
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public void ExportConversation(ConversationExporterParameters exporterParameters)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            Conversation conversation = this.ReadConversation(exporterParameters);
 
-            this.WriteConversation(conversation, outputFilePath);
+            this.WriteConversation(conversation, exporterParameters.OutputFilePath);
 
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+            Console.WriteLine("Conversation exported from '{0}' to '{1}'", exporterParameters.InputFilePath, exporterParameters.OutputFilePath);
         }
 
         /// <summary>
         /// Helper method to read the conversation from <paramref name="inputFilePath"/>.
         /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
+        /// <param name="exporterParameters">
+        /// Class containing all the parameters for the exporter
+        /// </param>"
         /// <returns>
         /// A <see cref="Conversation"/> model representing the conversation.
         /// </returns>
@@ -69,14 +86,15 @@
         /// <exception cref="Exception">
         /// Thrown when something else went wrong.
         /// </exception>
-        public Conversation ReadConversation(string inputFilePath)
+        public Conversation ReadConversation(ConversationExporterParameters exporterParameters)
         {
             try
             {
-                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
+                var reader = new StreamReader(new FileStream(exporterParameters.InputFilePath, FileMode.Open, FileAccess.Read),
                     Encoding.ASCII);
 
                 string conversationName = reader.ReadLine();
+
                 var messages = new List<Message>();
 
                 string line;
@@ -84,11 +102,24 @@
                 while ((line = reader.ReadLine()) != null)
                 {
                     var split = line.Split(' ');
+                    var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0]));
+                    var senderId = split[1];
+                    var content = string.Join(' ', split[2..split.Length]);
+                    var message = ConversationModifier.ApplyMessageModifiers(timestamp, senderId, content, exporterParameters);
+                    if(message != null)
+                    {
+                        messages.Add(message);
+                    }
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
                 }
 
-                return new Conversation(conversationName, messages);
+                var activity = ConversationModifier.GenerateReport(messages, exporterParameters);
+                
+                return new Conversation(conversationName, messages, activity);
+            }
+            catch (FormatException)
+            {
+                throw new FormatException("The file could not be converted.");
             }
             catch (FileNotFoundException)
             {
@@ -121,7 +152,10 @@
             {
                 var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite));
 
-                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented);
+                var serialized = JsonConvert.SerializeObject(conversation, Formatting.Indented, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
 
                 writer.Write(serialized);
 

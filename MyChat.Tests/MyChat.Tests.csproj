@@ -9,12 +9,22 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="chatIncorrect.txt" />
+    <None Remove="OneWord.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\MyChat\MyChat.csproj">
       <Project>{246D2511-9B28-44F3-8D05-7EBFAB79C95F}</Project>
       <Name>MyChat</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="chatIncorrect.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OneWord.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="chat.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -25,4 +35,5 @@
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 </Project>

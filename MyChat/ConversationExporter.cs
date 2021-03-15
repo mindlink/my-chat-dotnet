@@ -1,8 +1,10 @@
 ﻿namespace MyChat
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Security;
     using System.Text;
     using Microsoft.Extensions.Configuration;
@@ -27,11 +29,21 @@
             var exporterConfiguration = configuration.Get<ConversationExporterConfiguration>();
 
             var conversationExporter = new ConversationExporter();
-            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath);
+
+            var additionalOptions = new AdditionalConversationOptions(exporterConfiguration);
+
+            var argList = args.ToList();
+            if (argList.Contains("--report"))
+            {
+                exporterConfiguration.Report = true;
+            }
+
+            conversationExporter.ExportConversation(exporterConfiguration.InputFilePath, exporterConfiguration.OutputFilePath, additionalOptions);
         }
 
         /// <summary>
         /// Exports the conversation at <paramref name="inputFilePath"/> as JSON to <paramref name="outputFilePath"/>.
+        /// Takes in <paramref name="additionalConversationOptions"> for ReadConversation helper method
         /// </summary>
         /// <param name="inputFilePath">
         /// The input file path.
@@ -39,19 +51,37 @@
         /// <param name="outputFilePath">
         /// The output file path.
         /// </param>
+        /// <param name="additionalConversationOptions">
+        /// The additional configuration options for filtering and manipulation of JSON result file
+        /// </param>
         /// <exception cref="ArgumentException">
         /// Thrown when a path is invalid.
         /// </exception>
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath)
+        public void ExportConversation(string inputFilePath, string outputFilePath, AdditionalConversationOptions additionalConversationOptions)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath);
+            try
+            {
+                Conversation conversation = additionalConversationOptions.ApplyOptionsToConversation(this.ReadConversation(inputFilePath));
 
-            this.WriteConversation(conversation, outputFilePath);
+                this.WriteConversation(conversation, outputFilePath);
 
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+                Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+            }
+            catch (IOException) 
+            {
+                throw new Exception("Something went wrong with the IO");
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentException("Either inputFilePath or outputFilePath is null");
+            }
+            catch (FormatException)
+            {
+                throw new Exception("Format of inputFilePath or outputFilePath is invalid");
+            }
         }
 
         /// <summary>
@@ -85,10 +115,18 @@
                 {
                     var split = line.Split(' ');
 
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), split[1], split[2]));
+                    var unixTime = split[0];
+                    var senderName = split[1];
+                    var senderMessage = "";
+
+                    var senderMessageArray = split[2..split.Length];
+
+                    senderMessage = string.Join(' ', senderMessageArray);
+
+                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(unixTime)), senderName, senderMessage));
                 }
 
-                return new Conversation(conversationName, messages);
+                return new Conversation(conversationName,messages,null);
             }
             catch (FileNotFoundException)
             {
@@ -97,6 +135,10 @@
             catch (IOException)
             {
                 throw new Exception("Something went wrong in the IO.");
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentException("Something is wrong with the sender's message content");
             }
         }
 

@@ -45,64 +45,16 @@
         public static void ManageArguments(ConversationExporterConfiguration exporterConfiguration)
         {
             var conversationExporter = new ConversationExporter();
-            String[] blacklist = null;
-            if(exporterConfiguration.BlackList != null)
-            {
-                blacklist = exporterConfiguration.BlackList.Split(',');
-            }
-            if (exporterConfiguration.InputFilePath != null)
-            {
-                if (exporterConfiguration.OutputFilePath == null)
-                {
-                    exporterConfiguration.OutputFilePath = exporterConfiguration.InputFilePath.Replace(".txt", ".json");
-                }
-                conversationExporter.ExportConversation(exporterConfiguration.InputFilePath,
-                                                            exporterConfiguration.OutputFilePath,
-                                                            exporterConfiguration.FilterByUser,
-                                                            exporterConfiguration.FilterByKeyword,
-                                                            blacklist,
-                                                            exporterConfiguration.Report);
-            }
-            else
-            {
-                throw new ArgumentNullException("Input File Path");
-            }
+            var exporterParameters = new ConversationExporterParameters(exporterConfiguration);
+
+            conversationExporter.ExportConversation(exporterParameters);
         }
 
         /// <summary>
-        /// Helper function to simplify testing when only the basic parameters are necessary.
+        /// Exports the conversation at InputFilePath as JSON to OutputFilePath, where both file paths are stored in <paramref name="exporterParameters"/>.
         /// </summary>
-        /// <param name="InputFilePath">
-        /// The input file path.
-        /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
-        /// </param>
-        public void ExportConversation(string InputFilePath, string outputFilePath) 
-        {
-            ExportConversation(InputFilePath, outputFilePath, null, null, null, false);
-        }
-
-        /// <summary>
-        /// Exports the conversation at <paramref name="inputFilePath"/> as JSON to <paramref name="outputFilePath"/>.
-        /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
-        /// <param name="outputFilePath">
-        /// The output file path.
-        /// </param>
-        /// <param name="filterByUser">
-        /// The userId to filter by, null is there is none.
-        /// </param>
-        /// <param name="filterByKeyword">
-        /// The keyword to filter by, null if there is none.
-        /// </param>
-        /// <param name="blacklist">
-        /// Lists of strings to redact from the conversation.
-        /// </param>
-        /// <param name="report">
-        /// Boolean marker for whether to include the report after the messages.
+        /// <param name="exporterParameters">
+        /// Class containing all the parameters for the exporter
         /// </param>
         /// <exception cref="ArgumentException">
         /// Thrown when a path is invalid.
@@ -110,33 +62,21 @@
         /// <exception cref="Exception">
         /// Thrown when something bad happens.
         /// </exception>
-        public void ExportConversation(string inputFilePath, string outputFilePath, string filterByUser, string filterByKeyword, string[] blacklist, bool report)
+        public void ExportConversation(ConversationExporterParameters exporterParameters)
         {
-            Conversation conversation = this.ReadConversation(inputFilePath, filterByUser, filterByKeyword, blacklist, report);
+            Conversation conversation = this.ReadConversation(exporterParameters);
 
-            this.WriteConversation(conversation, outputFilePath);
+            this.WriteConversation(conversation, exporterParameters.OutputFilePath);
 
-            Console.WriteLine("Conversation exported from '{0}' to '{1}'", inputFilePath, outputFilePath);
+            Console.WriteLine("Conversation exported from '{0}' to '{1}'", exporterParameters.InputFilePath, exporterParameters.OutputFilePath);
         }
 
         /// <summary>
         /// Helper method to read the conversation from <paramref name="inputFilePath"/>.
         /// </summary>
-        /// <param name="inputFilePath">
-        /// The input file path.
-        /// </param>
-        /// <param name="filterByUser">
-        /// The userId to filter by, null is there is none.
-        /// </param>
-        /// <param name="filterByKeyword">
-        /// The keyword to filter by, null if there is none.
-        /// </param>
-        /// <param name="blacklist">
-        /// Lists of strings to redact from the conversation.
-        /// </param>
-        /// <param name="report">
-        /// Boolean marker for whether to include the report after the messages.
-        /// </param>
+        /// <param name="exporterParameters">
+        /// Class containing all the parameters for the exporter
+        /// </param>"
         /// <returns>
         /// A <see cref="Conversation"/> model representing the conversation.
         /// </returns>
@@ -146,45 +86,34 @@
         /// <exception cref="Exception">
         /// Thrown when something else went wrong.
         /// </exception>
-        /// 
-        public Conversation ReadConversation(string inputFilePath, string filterByUser, string filterByKeyword, string[] blacklist, bool report)
+        public Conversation ReadConversation(ConversationExporterParameters exporterParameters)
         {
             try
             {
-                var reader = new StreamReader(new FileStream(inputFilePath, FileMode.Open, FileAccess.Read),
+                var reader = new StreamReader(new FileStream(exporterParameters.InputFilePath, FileMode.Open, FileAccess.Read),
                     Encoding.ASCII);
 
                 string conversationName = reader.ReadLine();
 
                 var messages = new List<Message>();
-                var messageCount = new Dictionary<string, int>();
 
                 string line;
 
                 while ((line = reader.ReadLine()) != null)
                 {
                     var split = line.Split(' ');
+                    var timestamp = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0]));
                     var senderId = split[1];
                     var content = string.Join(' ', split[2..split.Length]);
+                    var message = ConversationModifier.ApplyMessageModifiers(timestamp, senderId, content, exporterParameters);
+                    if(message != null)
+                    {
+                        messages.Add(message);
+                    }
 
-                    if (messageCount.ContainsKey(senderId))
-                    {
-                        messageCount[senderId]++;
-                    }
-                    else
-                    {
-                        messageCount[senderId] = 1;
-                    }
-                    if(!IsInFilters(senderId, content, filterByUser, filterByKeyword))
-                    {
-                        continue;
-                    }
-                    content = ApplyBlacklist(content, blacklist);
-
-                    messages.Add(new Message(DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(split[0])), senderId, content));
                 }
 
-                var activity = GenerateReport(messageCount, report);
+                var activity = ConversationModifier.GenerateReport(messages, exporterParameters);
                 
                 return new Conversation(conversationName, messages, activity);
             }
@@ -200,92 +129,6 @@
             {
                 throw new Exception("Something went wrong in the IO.");
             }
-        }
-
-        /// <summary>
-        /// Helper function to generate a report of activity as a list.
-        /// </summary>
-        /// <param name="messageCount">
-        /// Dictionary holding a tally of number of messages sent by each sender.
-        /// </param>
-        /// <param name="report">
-        /// Boolean marker for whether to include the report after the messages. 
-        /// </param>
-        /// <returns>
-        /// A list of message counts for each sender sorted in descending order.
-        /// </returns>
-        private List<Activity> GenerateReport(Dictionary<string, int> messageCount, bool report)
-        {
-            var activity = new List<Activity>();
-            if (report)
-            {
-                foreach (KeyValuePair<string, int> entry in messageCount)
-                {
-                    activity.Add(new Activity(entry.Key, entry.Value));
-                }
-                activity.Sort((x, y) => -x.count.CompareTo(y.count));
-            }
-            else
-            {
-                activity = null;
-            }
-            return activity;
-        }
-
-        /// <summary>
-        /// Helper function which applies redaction on the <paramref name="content"/> using the <paramref name="blacklist"/>
-        /// </summary>
-        /// <param name="content">
-        /// Message string on which to apply redactions.
-        /// </param>
-        /// <param name="blacklist">
-        /// Array of strings to be replaced.
-        /// </param>
-        /// <returns>
-        /// String <paramref name="content"/> with blacklisted words replaced with "\\*redacted\\*"
-        /// </returns>
-        private string ApplyBlacklist(string content, string[] blacklist)
-        {
-            if(blacklist != null)
-            {
-                foreach (string redaction in blacklist)
-                {
-                    content = content.Replace(redaction, @"\*redacted\*", true, null);
-                }
-            }
-            return content;
-        }
-
-        /// <summary>
-        /// Helper function to check whether given conversation entry is within given filters.
-        /// </summary>
-        /// <param name="senderId">
-        /// String username of the message sender.
-        /// </param>
-        /// <param name="content">
-        /// String contents of the message.
-        /// </param>
-        /// <param name="filterByUser">
-        /// SenderId by which to filter the conversation.
-        /// </param>
-        /// <param name="filterByKeyword">
-        /// Keyword by which to filter the conversation.
-        /// </param>
-        /// <returns>
-        /// Returns true iff message passes all filters, false if not. 
-        /// </returns>
-        public bool IsInFilters(string senderId, string content, string filterByUser, string filterByKeyword)
-        {
-
-            if (filterByUser != null && senderId != filterByUser)
-            {
-                return false;
-            }
-            if (filterByKeyword != null && !content.Contains(filterByKeyword))
-            {
-                return false;
-            }
-            return true;
         }
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace MindLink.Recruitment.MyChat
         /// <summary>
         /// The list of blacklisted words.
         /// </summary>
-        public string BlackList { get; set; }
+        public string Blacklist { get; set; }
 
         public bool Report { get; set; }
 

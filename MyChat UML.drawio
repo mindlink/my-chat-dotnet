@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2021-03-14T02:06:46.967Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36" etag="JsLPiudp2FmCBqZZj0pB" version="14.4.8" type="github">
+<mxfile host="app.diagrams.net" modified="2021-03-15T01:19:19.149Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36" etag="MRr0ZEDLoSS54XCKpt0f" version="14.4.8" type="github">
   <diagram id="dT-BstXf9z1sqyS1aYiG" name="Page-1">
-    <mxGraphModel dx="2564" dy="2153" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1795" dy="1858" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -224,27 +224,6 @@
           <mxGeometry x="-1" y="3" relative="1" as="geometry">
             <mxPoint x="1160" y="690" as="sourcePoint" />
             <mxPoint x="1300" y="528" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="GlFhxpqN5REVrIhfS1rC-27" value="Public Class CountReport" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
-          <mxGeometry x="2110" y="336" width="290" height="128" as="geometry" />
-        </mxCell>
-        <mxCell id="GlFhxpqN5REVrIhfS1rC-28" value="+" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="GlFhxpqN5REVrIhfS1rC-27" vertex="1">
-          <mxGeometry y="26" width="290" height="44" as="geometry" />
-        </mxCell>
-        <mxCell id="GlFhxpqN5REVrIhfS1rC-29" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="GlFhxpqN5REVrIhfS1rC-27" vertex="1">
-          <mxGeometry y="70" width="290" height="8" as="geometry" />
-        </mxCell>
-        <mxCell id="GlFhxpqN5REVrIhfS1rC-30" value="+ RecordData()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="GlFhxpqN5REVrIhfS1rC-27" vertex="1">
-          <mxGeometry y="78" width="290" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="xUxn2ESmo1hToQ6ovUWh-1" value="«interface»&lt;br&gt;&lt;b&gt;IReporting&lt;/b&gt;" style="html=1;" vertex="1" parent="1">
-          <mxGeometry x="1920" y="230" width="110" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="xUxn2ESmo1hToQ6ovUWh-2" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0.997;exitY=0.722;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" edge="1" parent="1" source="GlFhxpqN5REVrIhfS1rC-6" target="xUxn2ESmo1hToQ6ovUWh-1">
-          <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="1940" y="420" as="sourcePoint" />
-            <mxPoint x="2100" y="420" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>

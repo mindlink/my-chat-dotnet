@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="MyChat.ConversationExporter">
+    <Position X="14.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAABAAAAAAAAAAAAAABAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>ConversationExporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.ConversationExporterConfiguration">
+    <Position X="1.5" Y="10.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAQAABAAAAAQACABAA=</HashCode>
+      <FileName>ConversationExporterConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.Conversation">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABQAAAAAAAAAA=</HashCode>
+      <FileName>Conversation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.AdditionalConversationOptions">
+    <Position X="1.5" Y="7.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCAAAAAAAAAAA=</HashCode>
+      <FileName>AdditionalConversationOptions.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="exporterConfiguration" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.ConversationOptions" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ConversationOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.FilterOptions">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FilterOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.FilterByName">
+    <Position X="2.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FilterOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.FilterByWord">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FilterOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.Message">
+    <Position X="13" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAEAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.ReplaceOptions">
+    <Position X="5" Y="1.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>ReplaceOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.ReplaceWithRedact">
+    <Position X="5.75" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>ReplaceOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.ReportOptions">
+    <Position X="9.5" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReportOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.MessageCountPerUserReportOption">
+    <Position X="9" Y="3.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReportOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindLink.Recruitment.MyChat.Report">
+    <Position X="14.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Report.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
